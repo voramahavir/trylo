@@ -680,8 +680,8 @@
                 html +=   '<td> ' + items.TRCOLOR + '</td> ';
                 html +=   '<td> ' + items.TRSZCD + '</td> ';
                 html +=   '<td> <input type="number" class="form-control qty" value=1 /> </td> ';
-                html +=   '<td> <label class="nt_amt"' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
-                html +=   '<td> <label class="ntt_amt"' + 1 *  parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
+                html +=   '<td> <label class="nt_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
+                html +=   '<td> <label class="ntt_amt">' + 1 *  parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
                 html +=   '<td> <input type="number" class="form-control d_per" value="0.00" /> </td> ';
                 html +=   '<td> <label class="d_amt">' + ((0).toFixed(2)) + '</label> </td> ';
                 html +=   '<td> <label class="t_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
@@ -689,7 +689,11 @@
                 html +=   '<td> ' + $('.sales_code').val() + ' </td> ';
                 html +=   '<td> <a class="btn btn-danger remove"> <i class="fa fa-trash-o"> </i> </a> </td> ';
                 html += '</tr> ';
-                $(".items").append(html);
+                if ($(".items tr:first").length) {
+                  $(".items tr:first").before(html);
+                } else {
+                  $(".items").append(html);
+                }
                 barCodeArray.push(items.BARCODF);
                 clear();
                 $('.barCode').focus();
@@ -700,16 +704,30 @@
             }
 
             function total_amt() {
-              var amount, total, disc_amount;
+              var qty, amount, total, disc_amount, gTotalAmt = 0, gTotalQty = 0;
+              
               $.each($('.itemBarCode'), function () {
-                amount = parseInt($(this).find('.qty').val()) * parseInt($(this).find('.nt_amt').text());
-                disc_amount = parseInt($(this).find('.d_per')) * amount / 100;
+                qty = $(this).find('.qty').val();
+                amount = parseInt(qty) * parseInt($(this).find('.nt_amt').text());
+                disc_amount = parseInt($(this).find('.d_per').val()) * amount / 100;
                 total = amount - disc_amount;
+                gTotalAmt += total;
+                gTotalQty += qty;
                 $(this).find('.ntt_amt').text(amount);
                 $(this).find('.d_amt').text(disc_amount);
                 $(this).find('.t_amt').text(total);
-              })
+              });
+              $('.t_qty').val(gTotalQty);
+              $('.n_amt').val(gTotalAmt);
             }
+
+            $(document).on('change', ".qty", function () {
+              total_amt();
+            });
+
+            $(document).on('change', ".d_per", function () {
+              total_amt();
+            });
 
             function dis_per(p, f) {
               return ((p - f) * 100 / p).toFixed(2);
