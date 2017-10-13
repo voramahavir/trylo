@@ -13,7 +13,7 @@
                   <input type="text" class="form-control barCode" name="item_code" autocapitalize="characters">
                 </div>
                 <span><b>PUT BARCODE OR GUN IN THIS BOX</b></span>
-            </div>
+              </div>
               <p class="col-md-offset-2"><b>TYPE "EXIT" IN THE ABOVE BOX TO FINISH PHYSICAL VERIFICATION</b></p>
               <div class="row">
                 <label class="col-md-2 text-right"> Item Name : </label>
@@ -76,6 +76,80 @@
             <!-- end loading -->
           </div>
         </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-offset-2">
+          <span><b>LAST ENTRY DONE</b></span>
+        </div>
+      </div>
+
+      <div class="row form-group"></div>
+
+      <div class="row">
+        
+        <div class="col-md-6">
+          <div>
+            <div class="box">
+              <div class="row form-group"></div>
+
+              <div class="row form-group">
+                <label class="col-md-3 text-right"> Item Code : </label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control item_name_last" disabled>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <label class="col-md-3 text-right"> Size : </label>
+                <div class="col-md-3">
+                  <input type="text" class="form-control size_last" disabled>
+                </div>
+                <label class="col-md-2 text-right"> Color : </label>
+                <div class="col-md-3">
+                  <input type="text" class="form-control color_last" disabled>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <label class="col-md-3 text-right"> Qnty : </label>
+                <div class="col-md-3">
+                  <input type="text" class="form-control qtny_last" disabled>
+                </div>
+                <div class="col-md-5">
+                  <input type="text" class="form-control barCode_last" disabled>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <label class="col-md-3 text-right"> MRP : </label>
+                <div class="col-md-3">
+                  <input type="text" class="form-control mrp_last" disabled>
+                </div>
+              </div>
+
+              <div class="row form-group"></div>
+
+              <!-- Loading (remove the following to stop the loading)-->
+              <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+
+          <div class="row form-group"></div>
+          <div class="row form-group"></div>
+          <div class="row form-group">
+              <label class="col-md-3 text-right"> Total Qty : </label>
+              <div class="col-md-3">
+                <input type="text" class="form-control total_qty" disabled>
+              </div>
+          </div>
+        </div>
+        
       </div>
 
       <div class="row">
@@ -207,7 +281,7 @@
         (function($){
           $(document).ready(function() {
             loadingStop();
-            var items;
+            var items, all_qty = 0;
             var barCodeArray = [];
             
             $("input, textarea").keyup(function() {
@@ -249,13 +323,22 @@
             function selectItem(result) {
             
               items = result;
+              all_qty = all_qty + 1;
+
               $('.item_name').val(result.TRITNM);
               $('.size').val(result.TRSZCD);
               $('.color').val(result.TRCOLOR);
               $('.qtny').val(1);
               $('.mrp').val(parseFloat(result.TRMRP1).toFixed(2));
 
-              
+              $('.item_name_last').val(result.TRITNM);
+              $('.size_last').val(result.TRSZCD);
+              $('.color_last').val(result.TRCOLOR);
+              $('.barCode_last').val(result.BARCODF);
+              $('.qtny_last').val(1);
+              $('.mrp_last').val(parseFloat(result.TRMRP1).toFixed(2));
+              $('.total_qty').val(all_qty);
+
                 addNewItem();
             }
 
@@ -266,6 +349,7 @@
                 clear();
                 $('.barCode').focus();
               } else if (items && barCode) {
+
                 html = '<tr class="itemBarCode '+ items.BARCODF + '">';
                 html +=   '<td> ' + items.TRITNM + '</td> ';
                 html +=   '<td> ' + items.TRCOLOR + '</td> ';
@@ -289,8 +373,6 @@
               $('.item_name').val('');
               $('.size').val('');
               $('.color').val('');
-              $('.qtny').val('');
-              $('.mrp').val('');
             }
 
             function loadingStart() {
