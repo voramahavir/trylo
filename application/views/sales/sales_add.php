@@ -17,60 +17,64 @@
               <h3 class="box-title"> USER : name / <?php echo date('d/m/Y / H:i'); ?> / New Entry</h3>
             </div>
             <div class="box-body">
-              <div class="row form-group">
-                <label class="col-md-2 text-right"> Item Code : </label>
-                <div class="col-md-6">
-                  <input type="text" class="form-control barCode" name="item_code" autocapitalize="characters">
+              <div class="col-md-7">
+                <div class="row form-group">
+                  <label class="col-md-2 text-right"> Item Code : </label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control barCode" name="item_code" autocapitalize="characters">
+                  </div>
+                  <span><b>PUT BARCODE OR GUN IN THIS BOX</b></span>
                 </div>
-                <span><b>PUT BARCODE OR GUN IN THIS BOX</b></span>
+                <div class="row form-group">
+                  <label class="col-md-2 text-right"> Sales Code : </label>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control sales_code" name="sales_code">
+                  </div>
+                </div>
+                <p class="col-md-offset-2"><b>TYPE "EXIT" IN THE ABOVE BOX TO FINISH THE BILL</b></p>
               </div>
-              <div class="row form-group">
-                <label class="col-md-2 text-right"> Sales Code : </label>
-                <div class="col-md-3">
-                  <input type="text" class="form-control sales_code" name="sales_code">
+              <div class="col-md-5">
+                <div class="row">
+                  <label class="col-md-2 text-right"> Item Name </label>
+                  <div class="col-md-10">
+                    <input type="text" class="form-control item_name" disabled>
+                  </div>
                 </div>
-              </div>
-              <p class="col-md-offset-2"><b>TYPE "EXIT" IN THE ABOVE BOX TO FINISH THE BILL</b></p>
-              <div class="row">
-                <label class="col-md-2 text-right"> Item Name : </label>
-                <div class="col-md-5">
-                  <input type="text" class="form-control item_name" disabled>
+                <div class="row">
+                  <label class="col-md-2 text-right"> Size </label>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control size" disabled>
+                  </div>
+                  <label class="col-md-2 text-right"> Color </label>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control color" disabled>
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <label class="col-md-2 text-right"> Size : </label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control size" disabled>
+                <div class="row">
+                  <label class="col-md-2 text-right"> Qnty </label>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control qtny" disabled>
+                  </div>
+                  <label class="col-md-2 text-right"> Rate Rs. </label>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control rate_rs" disabled>
+                  </div>
                 </div>
-                <label class="col-md-1 text-right"> Color : </label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control color" disabled>
+                <div class="row">
+                  <label class="col-md-2 text-right"> Disc(%) </label>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control disc" disabled>
+                  </div>
+                  <label class="col-md-2 text-right"> Disc.Amt </label>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control disc_amt" disabled>
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <label class="col-md-2 text-right"> Qnty : </label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control qtny" disabled>
-                </div>
-                <label class="col-md-1 text-right"> Rate Rs. : </label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control rate_rs" disabled>
-                </div>
-              </div>
-              <div class="row">
-                <label class="col-md-2 text-right"> Disc(%) : </label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control disc" disabled>
-                </div>
-                <label class="col-md-1 text-right"> Disc.Amt : </label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control disc_amt" disabled>
-                </div>
-              </div>
-              <div class="row">
-                <label class="col-md-2 text-right"> Nett.Amt : </label>
-                <div class="col-md-2">
-                  <input type="text" class="form-control net_amt" disabled>
+                <div class="row">
+                  <label class="col-md-2 text-right"> Nett.Amt </label>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control net_amt" disabled>
+                  </div>
                 </div>
               </div>
             </div>
@@ -89,18 +93,18 @@
                 <table class="col-md-12 table table-bordered table-hover dataTable">
                   <thead>
                     <tr>
-                      <th>Name of Item</th>
-                      <th>Color</th>
-                      <th>Size</th>
-                      <th>Qnty</th>
-                      <th>Rate Rs.</th>
-                      <th>Amount Rs.</th>
-                      <th>Disc(%)</th>
-                      <th>Disc. Amt</th>
-                      <th>Total Amount</th>
-                      <th>BarCode</th>
-                      <th>SICode</th>
-                      <th>Action</th>
+                      <th class="col-md-1">Name of Item</th>
+                      <th class="col-md-1">Color</th>
+                      <th class="col-md-1">Size</th>
+                      <th class="col-md-1">Qnty</th>
+                      <th class="col-md-1">Rate Rs.</th>
+                      <th class="col-md-1">Amount Rs.</th>
+                      <th class="col-md-1">Disc(%)</th>
+                      <th class="col-md-1">Disc. Amt</th>
+                      <th class="col-md-1">Total Amount</th>
+                      <th class="col-md-1">BarCode</th>
+                      <th class="col-md-1">SICode</th>
+                      <th class="col-md-1">Action</th>
                     </tr>
                   </thead>
                   <tbody class="items"></tbody>
@@ -132,7 +136,7 @@
 
       <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#save-modal">Save</button>
+            <a class="btn btn-primary save">Save</a>
         </div>
       </div>
 
@@ -155,15 +159,6 @@
                           <option> Debit </option>
                           <option> Cr.Card-DebitCard </option>
                           <option> Mobile Payment </option>
-                        </select>
-                      </div>
-                      <label class="col-md-2 text-right"> Salesman : </label>
-                      <div class="col-md-3">
-                        <select class="form-control">
-                          <option> Salesman 1</option>
-                          <option> Salesman 2</option>
-                          <option> Salesman 3</option>
-                          <option> Salesman 4</option>
                         </select>
                       </div>
                     </div>
@@ -253,17 +248,17 @@
                         <div class="row">
                           <label class="col-md-2 text-right"> Gross </label>
                           <div class="col-md-10">
-                            <input type="text" name="gross" class="form-control" disabled>
+                            <input type="text" name="gross" class="form-control gross" disabled>
                           </div>
                         </div>
                         <div class="row">
                           <label class="col-md-2 text-right"> Disc(%) </label>
                           <div class="col-md-4">
-                            <input type="text" name="disc" class="form-control" disabled>
+                            <input type="text" name="disc" class="form-control" value="0.00" disabled>
                           </div>
                           <label class="col-md-1 text-right"> Amt: </label>
                           <div class="col-md-5">
-                            <input type="text" name="amt" class="form-control" disabled>
+                            <input type="text" name="amt" class="form-control" value="0.00" disabled>
                           </div>
                         </div>
                         <div class="row">
@@ -273,9 +268,9 @@
                           </div>
                         </div>
                         <div class="row">
-                          <label class="col-md-3 text-right"> Other Amt </label>
-                          <div class="col-md-9">
-                            <input type="text" class="form-control oth_amt">
+                          <label class="col-md-4 text-right"> Other Amt </label>
+                          <div class="col-md-8">
+                            <input type="number" value="0" class="form-control oth_amt">
                           </div>
                         </div>
                       </div>
@@ -339,7 +334,7 @@
                         <div class="row">
                           <label class="col-md-3 text-right"> Total Qty </label>
                           <div class="col-md-9">
-                            <input type="text" class="form-control" disabled>
+                            <input type="text" class="form-control m_t_qty" disabled>
                           </div>
                         </div>
                       </div>
@@ -538,8 +533,8 @@
                         </div>
                       </div>
                       <div class="col-md-4">
-                        <h3> RETURN TO CUSTOMER </h3>
-                        <h3 class="ret_cus">  </h3>
+                        <h3 class="text-center"> RETURN TO CUSTOMER </h3>
+                        <h3 class="ret_cus text-center">  </h3>
                         <div class="row">
                           <label class="col-md-4 text-right"> Nett Amt Rcvd </label>
                           <div class="col-md-8">
@@ -571,6 +566,14 @@
             loadingStop();
             var items;
             var barCodeArray = [];
+
+            $('.save').click(function () {
+                if (barCodeArray.length > 0) {
+                  $("#save-modal").modal();
+                } else {
+                  alert("Required to add items");
+                }
+            });
             
             $("input, textarea").keyup(function() {
                 var val = $(this).val()
@@ -649,6 +652,7 @@
                     if (result.code) {
                       selectItem(result.data);
                     } else {
+                      clear();
                       alert(result.message);
                     }
                   }
@@ -671,45 +675,66 @@
             function addNewItem() {
               var barCode = $('.barCode').val().trim();
               if (barCode && items && barCodeArray.indexOf(items.BARCODF) !== -1) {
+                if ($('.sales_code').val()) {
+                  $('tr.'+items.BARCODF).find('.i_salesCode').text($('.sales_code').val());
+                }
                 $('tr.'+items.BARCODF).find('.qty').val(parseInt($('tr.'+ items.BARCODF).find('.qty').val()) + 1);
-                clear();
-                $('.barCode').focus();
+                total_amt();
               } else if (items && barCode) {
                 html = '<tr class="itemBarCode '+ items.BARCODF + '">';
                 html +=   '<td> ' + items.TRITNM + '</td> ';
                 html +=   '<td> ' + items.TRCOLOR + '</td> ';
                 html +=   '<td> ' + items.TRSZCD + '</td> ';
-                html +=   '<td> <input type="number" class="form-control qty" value=1 /> </td> ';
-                html +=   '<td> <label class="nt_amt"' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
-                html +=   '<td> <label class="ntt_amt"' + 1 *  parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
-                html +=   '<td> <input type="number" class="form-control d_per" value="0.00" /> </td> ';
+                html +=   '<td> <input type="number" class="form-control qty" min=1 value=1 /> </td> ';
+                html +=   '<td> <label class="nt_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
+                html +=   '<td> <label class="ntt_amt">' + 1 *  parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
+                html +=   '<td> <input type="number" class="form-control d_per" min=0 value="0.00" /> </td> ';
                 html +=   '<td> <label class="d_amt">' + ((0).toFixed(2)) + '</label> </td> ';
                 html +=   '<td> <label class="t_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
-                html +=   '<td> ' + items.BARCODF + '</td> ';
+                html +=   '<td> <label class="i_salesCode">' + items.BARCODF + ' </label> </td> ';
                 html +=   '<td> ' + $('.sales_code').val() + ' </td> ';
                 html +=   '<td> <a class="btn btn-danger remove"> <i class="fa fa-trash-o"> </i> </a> </td> ';
                 html += '</tr> ';
-                $(".items").append(html);
+                if ($(".items tr:first").length) {
+                  $(".items tr:first").before(html);
+                } else {
+                  $(".items").append(html);
+                }
                 barCodeArray.push(items.BARCODF);
-                clear();
-                $('.barCode').focus();
-              } else {
-                clear();
+                total_amt();
               }
-              total_amt();
+              clear();
+              $('.barCode').focus();
             }
 
             function total_amt() {
-              var amount, total, disc_amount;
+              var qty, amount, total, disc_amount, gTotalAmt = 0, gTotalQty = 0;
+              
               $.each($('.itemBarCode'), function () {
-                amount = parseInt($(this).find('.qty').val()) * parseInt($(this).find('.nt_amt').text());
-                disc_amount = parseInt($(this).find('.d_per')) * amount / 100;
+                qty = parseInt($(this).find('.qty').val());
+                amount = qty * parseFloat($(this).find('.nt_amt').text());
+                disc_amount = parseFloat($(this).find('.d_per').val()) * amount / 100;
                 total = amount - disc_amount;
+                gTotalAmt += total;
+                gTotalQty += qty;
                 $(this).find('.ntt_amt').text(amount);
                 $(this).find('.d_amt').text(disc_amount);
                 $(this).find('.t_amt').text(total);
-              })
+              });
+              $('.t_qty').val(gTotalQty);
+              $('.n_amt').val(gTotalAmt);
+              $('.m_t_qty').val(gTotalQty);
+              $('.gross').val(gTotalAmt);
+              $('.net_amount').val(gTotalAmt + parseFloat($('.oth_amt').val()));
             }
+
+            $(document).on('change', ".qty", function () {
+              total_amt();
+            });
+
+            $(document).on('change', ".d_per", function () {
+              total_amt();
+            });
 
             function dis_per(p, f) {
               return ((p - f) * 100 / p).toFixed(2);
@@ -739,22 +764,31 @@
             function dr_total() {
               var t = 0;
               $.each($('.dr_value'), function() {
-                t += parseInt($(this).val());
+                t += parseFloat($(this).val());
               });
               $('.dr_total').val(t);
+              nett_amt_rcvd();
             }
 
             function dre_total() {
               var t = 0;
               $.each($('.dre_value'), function() {
-                t += parseInt($(this).val());
+                t += parseFloat($(this).val());
               });
               $('.dre_total').val(t);
+              nett_amt_rcvd();
             }
 
             function nett_amt_rcvd() {
-              $('.nett_amt_rcvd').val(parseInt($('.dr_total').val()) - parseInt($('.dre_total').val()));  
-              $('.ret_cus').text(parseInt($('.dr_total').val()) - parseInt($('.net_amount').val()) -  - parseInt($('.dre_total').val()));
+              $('.nett_amt_rcvd').val(parseFloat($('.dr_total').val()) - parseFloat($('.dre_total').val()));  
+              var ret_cus = parseFloat($('.dr_total').val()) - parseFloat($('.net_amount').val()) - parseFloat($('.dre_total').val());
+              if (ret_cus > 0) {
+                $('.ret_cus').show();
+                $('.ret_cus').text(ret_cus);
+              } else {
+                $('.ret_cus').hide();
+              }
+              $('.net_amount').val(parseFloat($('.gross').val()) + parseFloat($('.oth_amt').val()));
             }
 
           });
