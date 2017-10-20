@@ -40,6 +40,8 @@
           <ul class="treeview-menu">
             <li class="<?php echo isset($page_title) && $page_title == 'Sales Add' ? 'active' : ''; ?>"><a href="<?php echo site_url('salesAdd'); ?>"><i class="fa fa-circle-o"></i> Sales Add</a></li>
             <li class="<?php echo isset($page_title) && $page_title == 'Sales Return' ? 'active' : ''; ?>"><a href="#"><i class="fa fa-circle-o"></i> Sales Return</a></li>
+              <li class="<?php echo isset($page_title) && $page_title == 'Sales Bill' ? 'active' : ''; ?>"><a href="#"><i class="fa fa-circle-o"></i> Sales BIll</a></li>
+
           </ul>
         </li>
 
