@@ -533,12 +533,16 @@
                         </div>
                       </div>
                       <div class="col-md-4">
-                        <h3 class="text-center"> RETURN TO CUSTOMER </h3>
-                        <h3 class="ret_cus text-center">  </h3>
+                        <div class="row ret_cus_div">
+                          <label class="col-md-4 text-right"> RETURN TO CUSTOMER </label>
+                          <div class="col-md-8">
+                            <input type="text" class="form-control ret_cus" value="0" disabled>
+                          </div>
+                        </div>
                         <div class="row">
                           <label class="col-md-4 text-right"> Nett Amt Rcvd </label>
                           <div class="col-md-8">
-                            <input type="text" class="form-control nett_amt_rcvd" value="0">
+                            <input type="text" class="form-control nett_amt_rcvd" value="0" disabled>
                           </div>
                         </div>
                       </div>
@@ -783,10 +787,10 @@
               $('.nett_amt_rcvd').val(parseFloat($('.dr_total').val()) - parseFloat($('.dre_total').val()));  
               var ret_cus = parseFloat($('.dr_total').val()) - parseFloat($('.net_amount').val()) - parseFloat($('.dre_total').val());
               if (ret_cus > 0) {
-                $('.ret_cus').show();
+                $('.ret_cus_div').show();
                 $('.ret_cus').text(ret_cus);
               } else {
-                $('.ret_cus').hide();
+                $('.ret_cus_div').hide();
               }
               $('.net_amount').val(parseFloat($('.gross').val()) + parseFloat($('.oth_amt').val()));
             }
