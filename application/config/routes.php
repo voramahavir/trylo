@@ -58,5 +58,6 @@ $route['dashboard'] = 'MainController';
 $route['branch/(:any)'] = 'MainController/branch/$1';
 $route['users/(:any)'] = 'MainController/users/$1';
 $route['salesAdd'] = 'SalesController/add';
+$route['salesBill'] = 'SalesController/salesBill';
 $route['sales/(:any)'] = 'SalesController/$1';
 $route['stock/(:any)'] = 'StockController/$1';

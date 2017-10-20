@@ -16,24 +16,27 @@
                 <div class="row form-group">
                     <label class="col-md-1 text-left">Fr Date : </label>
                     <div class="col-md-2">
-                        <input id="from_date" type="text" value="01/10/2017">
+                        <input id="from_date" type="text" value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
                     </div>
                     <label class="col-md-1 text-left"> To Date : </label>
                     <div class="col-md-2">
-                        <input id="to_date" type="text" value="18/10/2017">
+                        <input id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>">
                     </div>
 
-                    <div class="col-md-6">
-                        <input type="radio" name="payment" value="pending payment"> Pending Payment
-                        <input type="radio" name="payment" value="pending rcvd"> Pending Rcvd
-                        <input type="radio" name="payment" value="all"> All
-                        <input type="radio" name="payment" value="cancelled bill"> Cancelled Bill <br>
-                        <input type="radio" name="payment_mode" value="all"> All
-                        <input type="radio" name="payment_mode" value="cash"> Cash
-                        <input type="radio" name="payment_mode" value="debit"> Debit
-                        <input type="radio" name="payment_mode" value="cr/dr card"> Cr/Dr Card
-                        <input type="radio" name="payment_mode" value="mobile payment"> Mobile Payment
-
+                    <div class="col-md-5 col-md-offset-1">
+                        <div class="row radio">
+                            <label> <input type="radio" name="payment" value="pending payment"> Pending Payment </label>
+                            <label> <input type="radio" name="payment" value="pending rcvd"> Pending Rcvd </label>
+                            <label> <input type="radio" name="payment" value="all"> All </label>
+                            <label> <input type="radio" name="payment" value="cancelled bill"> Cancelled Bill </label>
+                        </div>
+                        <div class="row radio">
+                            <label> <input type="radio" name="payment_mode" value="all"> All </label>
+                            <label> <input type="radio" name="payment_mode" value="cash"> Cash </label>
+                            <label> <input type="radio" name="payment_mode" value="debit"> Debit </label>
+                            <label> <input type="radio" name="payment_mode" value="cr/dr card"> Cr/Dr Card </label>
+                            <label> <input type="radio" name="payment_mode" value="mobile payment"> Mobile Payment </label>
+                        </div>
                     </div>
                 </div>
                 <button type="button" class="btn btn-default">
@@ -88,13 +91,15 @@
 <script type="text/javascript">
     (function ($) {
         $(document).ready(function () {
-            $('#sales_bill_table').DataTable();
+            // $('#sales_bill_table').DataTable();
             //Date picker
             $('#from_date').datepicker({
-                autoclose: true
+                autoclose: true,
+                format: 'dd/mm/yyyy'
             });
             $('#to_date').datepicker({
-                autoclose: true
+                autoclose: true,
+                format: 'dd/mm/yyyy'
             });
         });
     }(jQuery));
