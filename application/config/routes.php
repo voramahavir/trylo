@@ -61,3 +61,6 @@ $route['salesAdd'] = 'SalesController/add';
 $route['salesBill'] = 'SalesController/salesBill';
 $route['sales/(:any)'] = 'SalesController/$1';
 $route['stock/(:any)'] = 'StockController/$1';
+$route['searchItem'] = 'ItemController/searchIem';
+$route['item/(:any)'] = 'ItemController/$1';
+

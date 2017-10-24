@@ -68,6 +68,8 @@
             <li class="<?php echo isset($page_title) && $page_title == 'Stock Add' ? 'active' : ''; ?>"><a href="<?php echo site_url('stock/add'); ?>"><i class="fa fa-circle-o"></i> Add</a></li>
           </ul>
         </li>
+
+        <li><a href="<?php echo site_url('searchItem'); ?>"><i class="fa fa-dashboard"></i> <span>Search Item</span></a></li>
         
         <li class="header">REPORTS</li>
 
