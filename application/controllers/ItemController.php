@@ -25,4 +25,9 @@ class ItemController extends CI_Controller {
 		$this->load->model('ItemModel');
 		$this->ItemModel->getItems();
 	}
+
+	public function getDropDownData(){
+		$this->load->model('ItemModel');
+		$this->ItemModel->getDropDownData();
+	}
 }
