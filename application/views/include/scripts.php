@@ -3,6 +3,7 @@
 
 <!-- jQuery 3 -->
 <script src="<?php echo base_url('assets/theme/bower_components/jquery/dist/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/custom/js/jquery.serializeObject.min.js'); ?>"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="<?php echo base_url('assets/theme/bower_components/jquery-ui/jquery-ui.min.js'); ?>"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -34,6 +35,10 @@
 <script src="<?php echo base_url('assets/theme/bower_components/fastclick/lib/fastclick.js'); ?>"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url('assets/theme/dist/js/adminlte.min.js'); ?>"></script>
+<script type="text/javascript">
+    var base_url = "<?php echo base_url(); ?>";
+    var site_url = "<?php echo site_url(); ?>/";
+</script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="<?php // echo base_url('assets/theme/dist/js/pages/dashboard.js'); ?>"></script> -->
 <!-- AdminLTE for demo purposes -->

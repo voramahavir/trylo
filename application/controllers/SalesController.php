@@ -18,6 +18,8 @@ class SalesController extends CI_Controller {
 
 	public function add() {
 		$data['page_title'] = 'Sales Add';
+		$currentBill = $this->SalesModel->getCurrentBillNo();
+        $data['currentBill'] = $currentBill;
 		$this->load->view('sales/sales_add', $data);
 	}
 
@@ -31,5 +33,9 @@ class SalesController extends CI_Controller {
     {
         $data['page_title'] = 'Sales Bill';
         $this->load->view('sales/sales_bill', $data);
+    }
+
+    public function create() {
+	    $this->SalesModel->salesAdd();
     }
 }
