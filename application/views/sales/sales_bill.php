@@ -103,6 +103,82 @@
             });
         });
     }(jQuery));
+    function setTable() {
+        table = $('#sales_bill_table').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "destroy": true,
+            "aoColumnDefs": [
+                {
+                    "bSortable": false,
+                    "aTargets": [0],
+                    "data": "billno"
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [1],
+                    "data": "date"
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [2],
+                    "data": "type"
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [3],
+                    "data": "name"
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [4],
+                    "data": 'repeat'
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [5],
+                    "data": 'qty'
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [6],
+                    "data": 'bamount'
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [7],
+                    "data": 'ramount'
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [8],
+                    "data": 'salesman'
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [9],
+                    "data": 'discount'
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [10],
+                    "data": 'other'
+                }
+            ],
+            "ajax": {
+                url: "<?= site_url('SalesController/getSalesBills') ?>",
+                pages: 2, // number of pages to cache
+                method: 'POST',
+                data : {
+                    to_date : $('#to_date').val(),
+                    from_date : $('#from_date').val(),
+                    payment : $('#payment').val(),
+                    payment_mode : $('#payment_mode').val()
+                }
+            }
+        });
+    }
+    setTable();
 </script>
 
 <?php $this->load->view('include/page_footer.php'); ?>

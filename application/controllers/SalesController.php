@@ -32,4 +32,9 @@ class SalesController extends CI_Controller {
         $data['page_title'] = 'Sales Bill';
         $this->load->view('sales/sales_bill', $data);
     }
+
+    public function getSalesBills(){
+    	$this->load->model('SalesModel');
+		$this->SalesModel->getSalesBills();
+    }
 }

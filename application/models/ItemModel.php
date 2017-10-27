@@ -7,6 +7,7 @@ class ItemModel extends CI_Model {
 		parent::__construct();
 		$this->load->database();
 		ini_set('memory_limit', '-1');
+		set_time_limit(100000);
 	}
 
 	function getItems(){
