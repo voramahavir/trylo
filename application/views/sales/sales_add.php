@@ -230,22 +230,24 @@
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Phone-1 </label>
                                             <div class="col-md-3">
-                                                <input type="text" name="TRPH1" class="form-control">
+                                                <input type="number" min="10" max="10" name="TRPH1"
+                                                       class="form-control">
                                             </div>
                                             <label class="col-md-1 text-right"> D.O.B </label>
                                             <div class="col-md-3">
-                                                <input type="text" name="TRDOB" class="form-control">
+                                                <input type="text" name="TRDOB" class="form-control datepicker">
                                             </div>
 
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Phone-2 </label>
                                             <div class="col-md-3">
-                                                <input type="text" name="TRPH2" class="form-control">
+                                                <input type="number" min="10" max="10" name="TRPH2"
+                                                       class="form-control">
                                             </div>
                                             <label class="col-md-1 text-right"> M.A.D. </label>
                                             <div class="col-md-3">
-                                                <input type="text" name="TRMAD" class="form-control">
+                                                <input type="text" name="TRMAD" class="form-control datepicker">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -600,6 +602,10 @@
 <script type="text/javascript">
     (function ($) {
         $(document).ready(function () {
+            $('.datepicker').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy'
+            });
             loadingStop();
             var items;
             var barCodeArray = [];
@@ -866,7 +872,24 @@
                         "itemsData": itemsData
                     },
                     success: function (response) {
-                        console.log(response);
+                        bootbox.alert(response.msg);
+                        $("#save-modal").modal('hide');
+                        bootbox.confirm({
+                            message: "Do you want to print the bill now?",
+                            buttons: {
+                                confirm: {
+                                    label: 'Yes',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: 'No',
+                                    className: 'btn-danger'
+                                }
+                            },
+                            callback: function (result) {
+                                window.location.href = site_url + "salesPrint/" + <?php echo $currentBill; ?>;
+                            }
+                        });
                     }
                 });
             }
