@@ -25,22 +25,22 @@
 
                     <div class="col-md-5 col-md-offset-1">
                         <div class="row radio">
-                            <label> <input type="radio" name="payment" value="pending payment"> Pending Payment </label>
-                            <label> <input type="radio" name="payment" value="pending rcvd"> Pending Rcvd </label>
-                            <label> <input type="radio" name="payment" value="all"> All </label>
-                            <label> <input type="radio" name="payment" value="cancelled bill"> Cancelled Bill </label>
+                            <label> <input type="radio" id="payment" name="payment" value="pending payment" checked="true"> Pending Payment </label>
+                            <label> <input type="radio" id="payment" name="payment" value="pending rcvd"> Pending Rcvd </label>
+                            <label> <input type="radio" id="payment" name="payment" value="all"> All </label>
+                            <label> <input type="radio" id="payment" name="payment" value="cancelled bill"> Cancelled Bill </label>
                         </div>
                         <div class="row radio">
-                            <label> <input type="radio" name="payment_mode" value="all"> All </label>
-                            <label> <input type="radio" name="payment_mode" value="1"> Cash </label>
-                            <label> <input type="radio" name="payment_mode" value="2"> Debit </label>
-                            <label> <input type="radio" name="payment_mode" value="3"> Cr/Dr Card </label>
-                            <label> <input type="radio" name="payment_mode" value="4"> Mobile Payment </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="all" checked="true"> All </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="1"> Cash </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="2"> Debit </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="3"> Cr/Dr Card </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="4"> Mobile Payment </label>
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span> Add
+                <button type="button" class="btn btn-default" id="search">
+                    <span class="glyphicon glyphicon-search"></span> Search
                 </button>
                 <div class="box-body">
                     <div id="sales_bill wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -89,6 +89,7 @@
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 
 <script type="text/javascript">
+    var payment_mode = 'all';
     (function ($) {
         $(document).ready(function () {
             // $('#sales_bill_table').DataTable();
@@ -103,6 +104,14 @@
             });
         });
     }(jQuery));
+
+    $("#search").click(function(){
+        setTable();
+    });
+    $("input[name=payment_mode]").on('change', function() {
+        payment_mode = this.value;
+    });
+
     function setTable() {
         table = $('#sales_bill_table').DataTable({
             "processing": true,
@@ -173,7 +182,7 @@
                     to_date : $('#to_date').val(),
                     from_date : $('#from_date').val(),
                     payment : $('#payment').val(),
-                    payment_mode : $('#payment_mode').val()
+                    payment_mode : payment_mode
                 }
             },
             "rowCallback":function(nRow,aData,iDisplayindex){                        
