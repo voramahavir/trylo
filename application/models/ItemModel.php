@@ -14,6 +14,12 @@ class ItemModel extends CI_Model {
 		// echo "hello";exit();
 		$msg = '';
 		$code = 0;
+		$search=array('value'=>'');
+        if(isset($_POST['search'])){$search=$_POST['search'];}
+        if(isset($search['value'])){$search=$search['value'];}
+        $start=0; if(isset($_POST['start'])){ $start =$_POST['start'];}
+        $length=10;if(isset($_POST['length'])){$length=$_POST['length'];}
+        $draw=1;if(isset($_POST['draw'])){$draw=$_POST['draw'];}
 		$filter_type = $this->input->post('filter_type');
 		if($filter_type == "barcode"){
 			$barcode = $this->input->post('barcode');
@@ -56,16 +62,21 @@ class ItemModel extends CI_Model {
                 	$this->db->where('t2.PRDNM',$group);
                 }
 		}
-		$output = new stdClass();
+		$output=array("code"=>0,
+            'draw' => $draw,
+            'recordsTotal' => 0,
+            'recordsFiltered' => 0,
+            'search'=>$search
+        );
 		$code = 1;
 		$this->db->select('t.TRITNM as name, t2.PRDNM as group, t.TRCUP as cup, t1.TRSZCD as size, t1.TRCOLOR as color, t.TRMRP1 as mrp, t1.BARCODF as barcode, t1.TRPACQTY as qty');
 		$this->db->join("tritem1 as t1", "t1.TRITCD1 = t.TRITCD"); 
 		$this->db->join("trprgrp as t2", "t2.PRDCD = t.TRPRDGRP");
-		$result = $this->db->get('tritem as t')->result();
-		if (count($result)) {
-			$output = $result;
-		} 
-		echo json_encode(array('code' => $code, 'data' => $output, 'message' => $msg));
+        $output['data'] = $this->db->get('tritem as t')->result();
+        $output['recordsTotal']=count($output['data']);
+        $output['recordsFiltered']=count($output['data']);
+        if(!empty($output['data'])){$output['code']=1;}
+        echo json_encode($output);
 		exit;
 	}
 

@@ -29,14 +29,19 @@ class SalesModel extends CI_Model {
         	$from_date =$_POST['from_date'];
         	$this->db->where('t.TRBLDT >= ',$from_date);
         }
-
+        if(isset($_POST['payment_mode'])){
+            $payment_mode = $_POST['payment_mode'];
+            if($payment_mode!=null && $payment_mode!='all'){
+                $this->db->where('t.TRTYPE',$payment_mode);
+            }
+        }
         $output=array("code"=>0,
             'draw' => $draw,
             'recordsTotal' => 0,
             'recordsFiltered' => 0,
             'search'=>$search
         );
-        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty');
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t1.TRBLAMT as bamount,(t.EXRCVD - t.EXBACK) as ramount,t.TRTYPE as type');
         $this->db->limit($length,$start);
 		$this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO"); 
         $output['data']=$this->db->get('trbil as t')->result();

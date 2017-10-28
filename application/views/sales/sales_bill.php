@@ -32,10 +32,10 @@
                         </div>
                         <div class="row radio">
                             <label> <input type="radio" name="payment_mode" value="all"> All </label>
-                            <label> <input type="radio" name="payment_mode" value="cash"> Cash </label>
-                            <label> <input type="radio" name="payment_mode" value="debit"> Debit </label>
-                            <label> <input type="radio" name="payment_mode" value="cr/dr card"> Cr/Dr Card </label>
-                            <label> <input type="radio" name="payment_mode" value="mobile payment"> Mobile Payment </label>
+                            <label> <input type="radio" name="payment_mode" value="1"> Cash </label>
+                            <label> <input type="radio" name="payment_mode" value="2"> Debit </label>
+                            <label> <input type="radio" name="payment_mode" value="3"> Cr/Dr Card </label>
+                            <label> <input type="radio" name="payment_mode" value="4"> Mobile Payment </label>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                 {
                     "bSortable": false,
                     "aTargets": [4],
-                    "data": 'repeat'
+                    "data": ''
                 },
                 {
                     "bSortable": false,
@@ -152,17 +152,17 @@
                 {
                     "bSortable": false,
                     "aTargets": [8],
-                    "data": 'salesman'
+                    "data": ''
                 },
                 {
                     "bSortable": false,
                     "aTargets": [9],
-                    "data": 'discount'
+                    "data": ''
                 },
                 {
                     "bSortable": false,
                     "aTargets": [10],
-                    "data": 'other'
+                    "data": ''
                 }
             ],
             "ajax": {
@@ -175,7 +175,18 @@
                     payment : $('#payment').val(),
                     payment_mode : $('#payment_mode').val()
                 }
-            }
+            },
+            "rowCallback":function(nRow,aData,iDisplayindex){                        
+                        if(aData.type==1){
+                            $('td:eq(3)',nRow).html("Cash Memo");
+                        }else if(aData.type==2){
+                            $('td:eq(3)',nRow).html("Debit");
+                        }else if(aData.type==3){
+                            $('td:eq(3)',nRow).html("Master/Visa");
+                        }else if(aData.type==4){
+                            $('td:eq(3)',nRow).html("PAYTM");
+                        }
+                    }
         });
     }
     setTable();
