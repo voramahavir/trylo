@@ -101,7 +101,7 @@
                 </button>
                 <div class="box-body">
                     <div id="sales_bill" class="dataTables_wrapper form-inline dt-bootstrap">
-                        <table id="sales_bill_table" class="table table-bordered table-hover dataTable" role="grid">
+                        <table id="item_table" class="table table-bordered table-hover dataTable" role="grid">
                             <thead>
                                 <tr role="row">
                                     <th data-field="group">Group</th>
@@ -154,7 +154,7 @@
             $("#byname").show();
             $("#bybarcode").hide();
             $("#advanced_search").hide();
-            $('#sales_bill_table').bootstrapTable({
+            $('#item_table').bootstrapTable({
                 data: items
             });
             $('.fixed-table-loading').remove();
@@ -215,18 +215,83 @@
         } 
     });
     $("#search").click(function(){
-        getItems();
+        setItemsTable();
     });
 
     function setItemsTable(){
-        (nodee=document.getElementById('sales_bill_table')).parentNode.removeChild(nodee);
-        var div = document.getElementById('sales_bill');
-        var tablehtml = '<table id="sales_bill_table" class="table table-bordered table-hover dataTable" role="grid"><thead><tr role="row"><th data-field="group">Group</th><th data-field="name">Item Name</th><th data-field="cup">Cup</th><th data-field="size">Size</th><th data-field="color">Color</th><th data-field="mrp">MRP</th><th data-field="barcode">BarCode</th><th data-field="qty">StockQty</th></tr></thead><tbody></tbody></table>';
-        div.insertAdjacentHTML( 'beforeend', tablehtml );
-        $('#sales_bill_table').bootstrapTable({
-            data: items
+        var params = {};
+        if(filter_type == "name"){
+            params = {
+                filter_type:"name",
+                name : $("input[name=item_name]").val()
+            };
+        }else if (filter_type=="barcode"){
+            params = {
+                filter_type:"barcode",
+                barcode : $("input[name=barcode]").val()
+            };
+        } else {
+            params = {
+                color : color,
+                size : size,
+                group : group,
+                freeze : $('input[name=freeze]:checked').val(),
+                filter_type : "advance"
+            };
+        }
+
+        table = $('#item_table').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "destroy": true,
+            "aoColumnDefs": [
+                {
+                    "bSortable": false,
+                    "aTargets": [0],
+                    "data": "group"
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [1],
+                    "data": "name"
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [2],
+                    "data": "cup"
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [3],
+                    "data": "size"
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [4],
+                    "data": 'color'
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [5],
+                    "data": 'mrp'
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [6],
+                    "data": 'barcode'
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [7],
+                    "data": 'qty'
+                }
+            ],
+            "ajax": {
+                url: "<?= site_url('ItemController/getItems') ?>",
+                method: 'POST',
+                data : params
+            }
         });
-        $('.fixed-table-loading').remove();
     }
 
     function setDropDownData(){
@@ -256,39 +321,6 @@
                 option.value = result.group[i].code;
                 select.add(option);
             }
-          }
-        });
-    }
-
-    function getItems(){
-        var params = {};
-        if(filter_type == "name"){
-            params = {
-                filter_type:"name",
-                name : $("input[name=item_name]").val()
-            };
-        }else if (filter_type=="barcode"){
-            params = {
-                filter_type:"barcode",
-                barcode : $("input[name=barcode]").val()
-            };
-        } else {
-            params = {
-                color : color,
-                size : size,
-                group : group,
-                freeze : $('input[name=freeze]:checked').val(),
-                filter_type : "advance"
-            };
-        }
-        $.ajax({
-          url: "<?= site_url('ItemController/getItems') ?>",
-          dataType: 'json',
-          data : params,
-          method : 'POST',
-          success: function(result) {
-            items = result.data;
-            setItemsTable();
           }
         });
     }
