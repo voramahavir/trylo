@@ -26,7 +26,7 @@
                     <div class="col-md-6" id="byname">
                         <label class="col-md-3 text-left" style="margin-left: 8px">Item Name :</label>
                         <div class="col-md-5">
-                            <input name="item_name" type="text" value="jhfkd" class="form-control">
+                            <input name="item_name" type="text" value="" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6" id="bybarcode">

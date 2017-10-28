@@ -1584,9 +1584,9 @@ die;*/
             <TD class="tr5 td17"><P class="p1 ft8">&nbsp;</P></TD>
         </TR>
         <?php $i = 0;
-        foreach ($itemData as $data) { ?>
+        foreach ($itemData as $data) { $i++?>
             <TR>
-                <TD class="tr6 td51"><P class="p20 ft10"><?php echo $i++; ?></P></TD>
+                <TD class="tr6 td51"><P class="p20 ft10"><?php echo $i; ?></P></TD>
                 <TD colspan=3 class="tr6 td70">
                     <P class="p26 ft10">
                         <?php echo $data->particular; ?>

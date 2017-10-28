@@ -15,6 +15,7 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title"> USER : name / <?php echo date('d/m/Y / H:i'); ?> / New Entry</h3>
+                <button type="button" id="searchItem" class="btn btn-info pull-right"><i class="fa fa-search"></i> Search Item</button>
             </div>
             <div class="box-body">
                 <div class="col-md-7">
@@ -784,6 +785,9 @@
                 total_amt();
             });
 
+            $('#searchItem').click(function () {
+                window.open(site_url + "searchItem", "popupWindow", "width=1200, height=600, scrollbars=yes");
+            });
             function dis_per(p, f) {
                 return ((p - f) * 100 / p).toFixed(2);
             }
