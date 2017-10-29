@@ -20,11 +20,11 @@ die;*/
         #page_1 {
             position: relative;
             overflow: hidden;
-            margin: 0px 0px 0px 8px;
+            margin: 0px 0px 527px 8px;
             padding: 0px;
             border: none;
-            width: 736px;
-            height: 595px;
+            width: 785px;
+            height: 596px;
         }
 
         #page_1 #p1dimg1 {
@@ -103,18 +103,18 @@ die;*/
         }
 
         .ft12 {
-            font: italic 11px 'Arial';
+            font: bold 11px 'Arial';
             line-height: 14px;
         }
 
         .ft13 {
-            font: bold 9px 'Arial';
-            line-height: 11px;
+            font: italic 11px 'Arial';
+            line-height: 14px;
         }
 
         .ft14 {
-            font: bold 11px 'Arial';
-            line-height: 14px;
+            font: italic 10px 'Arial';
+            line-height: 13px;
         }
 
         .ft15 {
@@ -228,6 +228,7 @@ die;*/
 
         .p8 {
             text-align: right;
+            padding-right: 22px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
@@ -283,7 +284,7 @@ die;*/
 
         .p15 {
             text-align: left;
-            padding-left: 3px;
+            padding-left: 8px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
@@ -323,15 +324,15 @@ die;*/
 
         .p20 {
             text-align: right;
-            padding-right: 10px;
+            padding-right: 13px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
         }
 
         .p21 {
-            text-align: center;
-            padding-right: 74px;
+            text-align: right;
+            padding-right: 10px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
@@ -347,7 +348,7 @@ die;*/
 
         .p23 {
             text-align: right;
-            padding-right: 13px;
+            padding-right: 1px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
@@ -362,8 +363,8 @@ die;*/
         }
 
         .p25 {
-            text-align: right;
-            padding-right: 3px;
+            text-align: center;
+            padding-right: 74px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
@@ -371,7 +372,7 @@ die;*/
 
         .p26 {
             text-align: center;
-            padding-right: 73px;
+            padding-left: 29px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
@@ -402,24 +403,24 @@ die;*/
         }
 
         .p30 {
-            text-align: left;
-            padding-left: 26px;
+            text-align: center;
+            padding-left: 31px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
         }
 
         .p31 {
-            text-align: right;
-            padding-right: 1px;
+            text-align: left;
+            padding-left: 3px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
         }
 
         .p32 {
-            text-align: left;
-            padding-left: 14px;
+            text-align: right;
+            padding-right: 11px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
@@ -427,15 +428,15 @@ die;*/
 
         .p33 {
             text-align: left;
-            padding-left: 17px;
+            padding-left: 14px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
         }
 
         .p34 {
-            text-align: right;
-            padding-right: 47px;
+            text-align: left;
+            padding-left: 17px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
@@ -443,7 +444,7 @@ die;*/
 
         .p35 {
             text-align: right;
-            padding-right: 7px;
+            padding-right: 47px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
@@ -451,13 +452,21 @@ die;*/
 
         .p36 {
             text-align: right;
-            padding-right: 26px;
+            padding-right: 7px;
             margin-top: 0px;
             margin-bottom: 0px;
             white-space: nowrap;
         }
 
         .p37 {
+            text-align: right;
+            padding-right: 26px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            white-space: nowrap;
+        }
+
+        .p38 {
             text-align: left;
             padding-left: 12px;
             margin-top: 0px;
@@ -465,7 +474,7 @@ die;*/
             white-space: nowrap;
         }
 
-        .p38 {
+        .p39 {
             text-align: right;
             padding-right: 35px;
             margin-top: 0px;
@@ -473,21 +482,21 @@ die;*/
             white-space: nowrap;
         }
 
-        .p39 {
+        .p40 {
             text-align: left;
             padding-left: 7px;
             margin-top: 0px;
             margin-bottom: 0px;
         }
 
-        .p40 {
+        .p41 {
             text-align: left;
             padding-left: 8px;
             margin-top: 0px;
             margin-bottom: 0px;
         }
 
-        .p41 {
+        .p42 {
             text-align: left;
             padding-left: 605px;
             margin-top: 7px;
@@ -843,7 +852,7 @@ die;*/
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 39px;
+            width: 85px;
             vertical-align: bottom;
         }
 
@@ -942,7 +951,7 @@ die;*/
             border-right: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 38px;
+            width: 43px;
             vertical-align: bottom;
         }
 
@@ -1027,7 +1036,7 @@ die;*/
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 58px;
+            width: 43px;
             vertical-align: bottom;
         }
 
@@ -1036,7 +1045,7 @@ die;*/
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 65px;
+            width: 58px;
             vertical-align: bottom;
         }
 
@@ -1045,15 +1054,16 @@ die;*/
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 12px;
+            width: 65px;
             vertical-align: bottom;
         }
 
         .td70 {
             border-right: #000000 1px solid;
+            border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 159px;
+            width: 12px;
             vertical-align: bottom;
         }
 
@@ -1061,11 +1071,35 @@ die;*/
             border-right: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 39px;
+            width: 159px;
             vertical-align: bottom;
         }
 
         .td72 {
+            border-right: #000000 1px solid;
+            padding: 0px;
+            margin: 0px;
+            width: 63px;
+            vertical-align: bottom;
+        }
+
+        .td73 {
+            border-right: #000000 1px solid;
+            padding: 0px;
+            margin: 0px;
+            width: 12px;
+            vertical-align: bottom;
+        }
+
+        .td74 {
+            border-right: #000000 1px solid;
+            padding: 0px;
+            margin: 0px;
+            width: 39px;
+            vertical-align: bottom;
+        }
+
+        .td75 {
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
@@ -1073,7 +1107,7 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td73 {
+        .td76 {
             border-right: #000000 1px solid;
             border-bottom: #000000 1px solid;
             padding: 0px;
@@ -1082,7 +1116,7 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td74 {
+        .td77 {
             border-right: #000000 1px solid;
             border-bottom: #000000 1px solid;
             padding: 0px;
@@ -1091,7 +1125,7 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td75 {
+        .td78 {
             border-right: #000000 1px solid;
             border-bottom: #000000 1px solid;
             padding: 0px;
@@ -1100,7 +1134,7 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td76 {
+        .td79 {
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
@@ -1108,7 +1142,7 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td77 {
+        .td80 {
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
@@ -1116,7 +1150,15 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td78 {
+        .td81 {
+            border-bottom: #000000 1px solid;
+            padding: 0px;
+            margin: 0px;
+            width: 44px;
+            vertical-align: bottom;
+        }
+
+        .td82 {
             border-right: #000000 1px solid;
             border-bottom: #000000 1px solid;
             padding: 0px;
@@ -1125,7 +1167,7 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td79 {
+        .td83 {
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
@@ -1133,7 +1175,7 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td80 {
+        .td84 {
             border-right: #000000 1px solid;
             border-bottom: #000000 1px solid;
             padding: 0px;
@@ -1142,59 +1184,28 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td81 {
+        .td85 {
             padding: 0px;
             margin: 0px;
             width: 15px;
             vertical-align: bottom;
         }
 
-        .td82 {
+        .td86 {
             padding: 0px;
             margin: 0px;
             width: 4px;
             vertical-align: bottom;
         }
 
-        .td83 {
+        .td87 {
             padding: 0px;
             margin: 0px;
             width: 26px;
             vertical-align: bottom;
         }
 
-        .td84 {
-            padding: 0px;
-            margin: 0px;
-            width: 34px;
-            vertical-align: bottom;
-        }
-
-        .td85 {
-            padding: 0px;
-            margin: 0px;
-            width: 39px;
-            vertical-align: bottom;
-        }
-
-        .td86 {
-            padding: 0px;
-            margin: 0px;
-            width: 50px;
-            vertical-align: bottom;
-        }
-
-        .td87 {
-            border-right: #000000 1px solid;
-            padding: 0px;
-            margin: 0px;
-            width: 4px;
-            vertical-align: bottom;
-        }
-
         .td88 {
-            border-right: #000000 1px solid;
-            border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
             width: 34px;
@@ -1202,36 +1213,33 @@ die;*/
         }
 
         .td89 {
-            border-right: #000000 1px solid;
-            border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 43px;
+            width: 44px;
             vertical-align: bottom;
         }
 
         .td90 {
-            border-right: #000000 1px solid;
-            border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 27px;
+            width: 50px;
             vertical-align: bottom;
         }
 
         .td91 {
-            border-bottom: #000000 1px solid;
+            border-right: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 51px;
+            width: 4px;
             vertical-align: bottom;
         }
 
         .td92 {
             border-right: #000000 1px solid;
+            border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 143px;
+            width: 34px;
             vertical-align: bottom;
         }
 
@@ -1240,7 +1248,7 @@ die;*/
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 101px;
+            width: 27px;
             vertical-align: bottom;
         }
 
@@ -1248,32 +1256,32 @@ die;*/
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 79px;
+            width: 51px;
             vertical-align: bottom;
         }
 
         .td95 {
             border-right: #000000 1px solid;
-            border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 25px;
+            width: 143px;
             vertical-align: bottom;
         }
 
         .td96 {
+            border-right: #000000 1px solid;
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 147px;
+            width: 101px;
             vertical-align: bottom;
         }
 
         .td97 {
-            border-right: #000000 1px solid;
+            border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 12px;
+            width: 79px;
             vertical-align: bottom;
         }
 
@@ -1282,7 +1290,7 @@ die;*/
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 118px;
+            width: 25px;
             vertical-align: bottom;
         }
 
@@ -1290,7 +1298,7 @@ die;*/
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 64px;
+            width: 147px;
             vertical-align: bottom;
         }
 
@@ -1298,11 +1306,58 @@ die;*/
             border-right: #000000 1px solid;
             padding: 0px;
             margin: 0px;
-            width: 25px;
+            width: 101px;
             vertical-align: bottom;
         }
 
         .td101 {
+            padding: 0px;
+            margin: 0px;
+            width: 79px;
+            vertical-align: bottom;
+        }
+
+        .td102 {
+            border-right: #000000 1px solid;
+            padding: 0px;
+            margin: 0px;
+            width: 25px;
+            vertical-align: bottom;
+        }
+
+        .td103 {
+            padding: 0px;
+            margin: 0px;
+            width: 147px;
+            vertical-align: bottom;
+        }
+
+        .td104 {
+            border-right: #000000 1px solid;
+            border-bottom: #000000 1px solid;
+            padding: 0px;
+            margin: 0px;
+            width: 118px;
+            vertical-align: bottom;
+        }
+
+        .td105 {
+            border-bottom: #000000 1px solid;
+            padding: 0px;
+            margin: 0px;
+            width: 64px;
+            vertical-align: bottom;
+        }
+
+        .td106 {
+            border-bottom: #000000 1px solid;
+            padding: 0px;
+            margin: 0px;
+            width: 101px;
+            vertical-align: bottom;
+        }
+
+        .td107 {
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
@@ -1310,7 +1365,7 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td102 {
+        .td108 {
             border-bottom: #000000 1px solid;
             padding: 0px;
             margin: 0px;
@@ -1318,35 +1373,35 @@ die;*/
             vertical-align: bottom;
         }
 
-        .td103 {
+        .td109 {
             padding: 0px;
             margin: 0px;
             width: 190px;
             vertical-align: bottom;
         }
 
-        .td104 {
+        .td110 {
             padding: 0px;
             margin: 0px;
             width: 64px;
             vertical-align: bottom;
         }
 
-        .td105 {
+        .td111 {
             padding: 0px;
             margin: 0px;
             width: 115px;
             vertical-align: bottom;
         }
 
-        .td106 {
+        .td112 {
             padding: 0px;
             margin: 0px;
             width: 86px;
             vertical-align: bottom;
         }
 
-        .td107 {
+        .td113 {
             padding: 0px;
             margin: 0px;
             width: 95px;
@@ -1394,11 +1449,11 @@ die;*/
         }
 
         .tr10 {
-            height: 7px;
+            height: 20px;
         }
 
         .tr11 {
-            height: 28px;
+            height: 7px;
         }
 
         .tr12 {
@@ -1417,7 +1472,7 @@ die;*/
     </STYLE>
 </HEAD>
 
-<BODY onload="window.print()">
+<BODY onload="">
 <DIV id="page_1">
     <DIV id="p1dimg1">
         <IMG src="data:image/jpg;base64,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UUAFFFFADSo/u5/GsDxN4M0PxXbiLVLBZJF/1dwnySp9GHb2OR7V0NFAHzx4g+A+rWheXQbqLUIOf3MxEco/H7p/Mdq841PQdV0OQpqelXVmegaWIqvr16Gvs3B45qOWFJY2SRVkVhyrruUj6fjQB8S4R+flbt60bFyTgc9eOtfWmpfDfwhqzFrrQbRXbnfAvlNn6qRXL3vwG8Lzc2l1qNqxz0lDqPwI/rQB86EAjBGR70oGBgcfSvbp/wBnxCf9F8RyKCOBLagkfiGFZ8n7P+sA/utdsW9N0Lj/ABoA8f2JjGxfypQqjoAPwr1n/hQHiEYA1fS8fST/AAp0fwB14n59Z04Dj7qSf4UAeSFVbqAfqKNqkY2jH0r2eD9ny8YD7R4ihX/rnak/zate0/Z/0dGX7ZrWoTDuI1SPP6GgDwEADoAKdGjzyCKFHlc9FjUsfyFfT1h8HPBVg2W0x7ts9bqZn/TgV12naNpmkps07TbW1UcfuYQpPPrgUAfM+hfCfxdrhVhp5sLc/wDLW8Pl/wDjn3j+VeseFvgvoGhtHcalnVLtSCBIu2FTx/B3/H8q9O256/lTqAIo0VECqMDHABwMVieO/wDknniX/sFXX/opq6DtzXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+SeeJf8AsFXX/opqADwJ/wAk88Nf9gq1/wDRS10Fc/4E/wCSeeGv+wVa/wDopa6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuf8d/8AJPPEv/YKuv8A0U1dBXP+O/8AknniX/sFXX/opqADwJ/yTzw1/wBgq1/9FLXQVz/gT/knnhr/ALBVr/6KWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn/Hf/JPPEv/AGCrr/0U1dBXP+O/+See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"
@@ -1431,7 +1486,7 @@ die;*/
             <TD class="tr0 td2"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr0 td3"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr0 td4"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=5 class="tr0 td5"><P class="p2 ft2">RETAIL INVOICE</P></TD>
+            <TD colspan=4 class="tr0 td5"><P class="p2 ft2">RETAIL INVOICE</P></TD>
             <TD class="tr0 td6"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr0 td7"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr0 td8"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1455,7 +1510,7 @@ die;*/
             <TD class="tr1 td20"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr1 td21"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr1 td22"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=11 class="tr1 td23">
+            <TD colspan=10 class="tr1 td23">
                 <P class="p3 ft3">GDHAM
                     <NOBR>17-18</NOBR>
                 </P>
@@ -1479,7 +1534,7 @@ die;*/
             <TD class="tr2 td19"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr2 td20"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr2 td21"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=14 class="tr2 td35">
+            <TD colspan=13 class="tr2 td35">
                 <P class="p4 ft4">GANDHIDHAM Phone:02752 243507
                     <NOBR>E-Mail:</NOBR>
                 </P>
@@ -1502,7 +1557,7 @@ die;*/
             <TD class="tr3 td38"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td39"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td1"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=11 class="tr3 td40"><P class="p5 ft0">GST NO : 24ALDPP2571P1ZP</P></TD>
+            <TD colspan=10 class="tr3 td40"><P class="p5 ft0">GST NO : 24ALDPP2571P1ZP</P></TD>
             <TD class="tr3 td9"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td10"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td7"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1523,9 +1578,7 @@ die;*/
             <TD class="tr4 td1"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr4 td43"><P class="p1 ft1">&nbsp;</P></TD>
             <TD colspan=3 class="tr4 td44"><P class="p7 ft4">Mobile:</P></TD>
-            <TD colspan=2 class="tr4 td45"><P class="p8 ft5"><?php echo $billData->phoneno; ?></P></TD>
-            <TD class="tr4 td45"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr4 td11"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=3 class="tr4 td45"><P class="p8 ft5"><?php echo $billData->phoneno; ?></P></TD>
             <TD class="tr4 td46"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr4 td7"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr4 td8"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1534,8 +1587,8 @@ die;*/
             <TD class="tr4 td11"><P class="p1 ft1">&nbsp;</P></TD>
             <TD colspan=5 class="tr4 td48"><P class="p9 ft0"><?php echo $billData->billno; ?></P></TD>
             <TD colspan=2 class="tr4 td49"><P class="p6 ft4">Date:</P></TD>
-            <TD colspan=2 class="tr4 td50"><P
-                        class="p10 ft7"><?php echo date("d/m/Y", strtotime($billData->billdate)); ?></P></TD>
+            <TD colspan=2 class="tr4 td50"><P class="p10 ft7"><?php echo date("d/m/Y", strtotime($billData->billdate));
+                    ?></P></TD>
         </TR>
         <TR>
             <TD class="tr3 td51"><P class="p11 ft6">Sr.</P></TD>
@@ -1545,7 +1598,6 @@ die;*/
             <TD colspan=2 class="tr3 td54"><P class="p14 ft6">Qty</P></TD>
             <TD class="tr3 td55"><P class="p1 ft1">&nbsp;</P></TD>
             <TD colspan=2 class="tr3 td56"><P class="p2 ft6">Rate Rs.</P></TD>
-            <TD class="tr3 td24"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td57"><P class="p15 ft6">Disc.</P></TD>
             <TD class="tr3 td27"><P class="p1 ft1">&nbsp;</P></TD>
             <TD colspan=2 class="tr3 td58"><P class="p14 ft6">Discount</P></TD>
@@ -1554,10 +1606,9 @@ die;*/
             <TD colspan=4 class="tr3 td58"><P class="p1 ft6">Net Rate</P></TD>
             <TD colspan=2 class="tr3 td60"><P class="p16 ft6">Net Rate</P></TD>
             <TD class="tr3 td24"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=4 class="tr3 td61"><P class="p1 ft6">Below 1000</P></TD>
+            <TD colspan=4 class="tr3 td61"><P class="p14 ft6">Below 1000</P></TD>
             <TD class="tr3 td34"><P class="p17 ft6">Above 1000</P></TD>
         </TR>
-
         <TR>
             <TD class="tr5 td62"><P class="p1 ft8">&nbsp;</P></TD>
             <TD class="tr5 td37"><P class="p1 ft8">&nbsp;</P></TD>
@@ -1568,54 +1619,66 @@ die;*/
             <TD class="tr5 td3"><P class="p1 ft8">&nbsp;</P></TD>
             <TD class="tr5 td65"><P class="p1 ft8">&nbsp;</P></TD>
             <TD colspan=2 class="tr5 td66"><P class="p19 ft9">Per Pc</P></TD>
-            <TD class="tr5 td9"><P class="p1 ft8">&nbsp;</P></TD>
-            <TD class="tr5 td49"><P class="p2 ft9">(%)</P></TD>
+            <TD class="tr5 td67"><P class="p20 ft9">(%)</P></TD>
             <TD class="tr5 td11"><P class="p1 ft8">&nbsp;</P></TD>
-            <TD colspan=2 class="tr5 td67"><P class="p17 ft9">Amount</P></TD>
+            <TD colspan=2 class="tr5 td68"><P class="p17 ft9">Amount</P></TD>
             <TD class="tr5 td8"><P class="p1 ft8">&nbsp;</P></TD>
             <TD class="tr5 td9"><P class="p1 ft8">&nbsp;</P></TD>
-            <TD colspan=4 class="tr5 td67"><P class="p0 ft9">Per Pc</P></TD>
-            <TD colspan=2 class="tr5 td68"><P class="p16 ft9">Bf Tax</P></TD>
+            <TD colspan=4 class="tr5 td68"><P class="p0 ft9">Per Pc</P></TD>
+            <TD colspan=2 class="tr5 td69"><P class="p16 ft9">Bf Tax</P></TD>
             <TD class="tr5 td9"><P class="p1 ft8">&nbsp;</P></TD>
             <TD class="tr5 td2"><P class="p1 ft8">&nbsp;</P></TD>
             <TD class="tr5 td11"><P class="p1 ft8">&nbsp;</P></TD>
             <TD class="tr5 td15"><P class="p1 ft8">&nbsp;</P></TD>
-            <TD class="tr5 td69"><P class="p1 ft8">&nbsp;</P></TD>
+            <TD class="tr5 td70"><P class="p1 ft8">&nbsp;</P></TD>
             <TD class="tr5 td17"><P class="p1 ft8">&nbsp;</P></TD>
         </TR>
         <?php $i = 0;
-        foreach ($itemData as $data) { $i++?>
+        $billData->cgstlper = 0;
+        $billData->sgstlper = 0;
+        $billData->cgsthper = 0;
+        $billData->sgsthper = 0;
+        foreach ($itemData as $data) {
+            $i++;
+            $billData->cgstlper = ($billData->cgstlper) ? $billData->cgstlper : $data->cgstlper;
+            $billData->sgstlper = ($billData->sgstlper) ? $billData->sgstlper : $data->sgstlper;
+            $billData->cgsthper = ($billData->cgsthper) ? $billData->cgsthper : $data->cgsthper;
+            $billData->sgsthper = ($billData->sgsthper) ? $billData->sgsthper : $data->sgsthper;
+            ?>
             <TR>
-                <TD class="tr6 td51"><P class="p20 ft10"><?php echo $i; ?></P></TD>
-                <TD colspan=3 class="tr6 td70">
-                    <P class="p26 ft10">
+                <TD class="tr6 td51"><P class="p21 ft10"><?php echo $i; ?></P></TD>
+                <TD colspan=3 class="tr6 td71">
+                    <P class="p9 ft10">
                         <?php echo $data->particular; ?>
                     </P>
                 </TD>
-                <TD class="tr6 td53"><P class="p22 ft10"></P></TD>
-                <TD colspan=2 class="tr6 td54"><P class="p23 ft4"><?php echo $data->qty; ?></P></TD>
+                <TD class="tr6 td53"><P class="p22 ft10"><?php echo $data->hsn; ?></P></TD>
+                <TD colspan=2 class="tr6 td54"><P class="p20 ft4"><?php echo $data->qty; ?></P></TD>
                 <TD class="tr6 td55"><P class="p1 ft1">&nbsp;</P></TD>
-                <TD colspan=2 class="tr6 td56"><P class="p19 ft4"><?php echo $data->rate; ?></P></TD>
-                <TD class="tr6 td24"><P class="p1 ft1">&nbsp;</P></TD>
-                <TD class="tr6 td57"><P class="p2 ft4"><?php echo $data->disper; ?></P></TD>
+                <TD colspan=2 class="tr6 td56"><P class="p21 ft4"><?php echo $data->rate; ?></P></TD>
+                <TD class="tr6 td57"><P class="p23 ft4"><?php echo $data->disper; ?></P></TD>
                 <TD class="tr6 td27"><P class="p1 ft1">&nbsp;</P></TD>
                 <TD colspan=2 class="tr6 td58"><P class="p24 ft4"><?php echo $data->disamt; ?></P></TD>
                 <TD class="tr6 td59"><P class="p1 ft1">&nbsp;</P></TD>
-                <TD class="tr6 td24"><P class="p1 ft1">&nbsp;</P></TD>
-                <TD class="tr6 td25"><P class="p1 ft1">&nbsp;</P></TD>
-                <TD colspan=3 class="tr6 td71"><P
-                            class="p24 ft11"><?php echo ($data->netrt) ? $data->netrt : 0.00; ?></P></TD>
-                <TD colspan=2 class="tr6 td60"><P
-                            class="p24 ft4"><?php echo ($data->netbt) ? $data->netbt : 0.00; ?></P></TD>
-                <TD class="tr6 td24"><P class="p1 ft1">&nbsp;</P></TD>
-                <TD colspan=4 class="tr6 td61"><P
-                            class="p25 ft4"><?php echo ($data->below) ? $data->below : 0.00; ?></P></TD>
-                <TD class="tr6 td34"><P class="p1 ft1">&nbsp;</P></TD>
-                <!--<TD colspan=2 class="tr6 td60"><P class="p25 ft4"><?php /*echo ($data->above) ? $data->above : 0.00; */ ?></P></TD>-->
-
+                <TD colspan=5 class="tr6 td72"><P class="p24 ft4"><?php echo ($data->netrt) ? $data->netrt : ''; ?></P>
+                </TD>
+                <TD colspan=2 class="tr6 td60"><P class="p24 ft4"><?php echo ($data->netbt) ? $data->netbt : ''; ?></P>
+                </TD>
+                <?php if ($data->below) { ?>
+                    <TD class="tr6 td24"><P class="p1 ft1">&nbsp;</P></TD>
+                    <TD colspan=4 class="tr6 td61"><P class="p26 ft4"><?php echo $data->below ?></P></TD>
+                    <TD class="tr6 td34"><P class="p1 ft1">&nbsp;</P></TD>
+                <?php } else { ?>
+                    <TD class="tr6 td24"><P class="p1 ft1">&nbsp;</P></TD>
+                    <TD class="tr6 td31"><P class="p1 ft1">&nbsp;</P></TD>
+                    <TD class="tr6 td27"><P class="p1 ft1">&nbsp;</P></TD>
+                    <TD class="tr6 td32"><P class="p1 ft1">&nbsp;</P></TD>
+                    <TD class="tr6 td73"><P class="p1 ft1">&nbsp;</P></TD>
+                    <TD class="tr6 td34"><P class="p18 ft4"><?php echo $data->above; ?></P></TD>
+                <?php } ?>
             </TR>
-
         <?php } ?>
+
         <TR>
             <TD class="tr7 td62"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td37"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1625,10 +1688,9 @@ die;*/
             <TD class="tr7 td2"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td3"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td65"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr7 td72"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr7 td73"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr7 td9"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr7 td49"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr7 td75"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr7 td76"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr7 td67"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td11"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td6"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td47"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1637,14 +1699,14 @@ die;*/
             <TD class="tr7 td10"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td7"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td11"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr7 td74"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr7 td77"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td13"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr7 td75"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr7 td78"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td9"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td2"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td11"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td15"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr7 td69"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr7 td70"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr7 td17"><P class="p1 ft1">&nbsp;</P></TD>
         </TR>
         <TR>
@@ -1652,26 +1714,25 @@ die;*/
             <TD class="tr3 td37"><P class="p1 ft1">&nbsp;</P></TD>
             <TD colspan=2 class="tr3 td42"><P class="p27 ft6">Total</P></TD>
             <TD class="tr3 td1"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=2 class="tr3 td76"><P class="p28 ft6"><?php echo $billData->totqty; ?></P></TD>
+            <TD colspan=2 class="tr3 td79"><P class="p28 ft6"><?php echo $billData->totqty; ?></P></TD>
             <TD class="tr3 td4"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td72"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td77"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td9"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td45"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td75"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td80"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td81"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td11"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td6"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td7"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td8"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td78"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td82"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td10"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td7"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td11"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td12"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=3 class="tr3 td79"><P class="p29 ft6">Gross:</P></TD>
-            <TD colspan=4 class="tr3 td80"><P
-                        class="p30 ft6"><?php echo ($billData->netblamt) ? $billData->netblamt : 0.00; ?></P></TD>
-            <TD class="tr3 td17"><P
-                        class="p14 ft6"><?php echo ($billData->netabamt) ? $billData->netabamt : 0.00; ?></P></TD>
+            <TD colspan=3 class="tr3 td83"><P class="p29 ft6">Gross:</P></TD>
+            <TD colspan=4 class="tr3 td84"><P
+                        class="p30 ft6"><?php echo ($billData->netblamt) ? $billData->netblamt : ''; ?></P></TD>
+            <TD class="tr3 td17"><P class="p14 ft6"><?php echo ($billData->netabamt) ? $billData->netabamt : ''; ?></P>
+            </TD>
         </TR>
         <TR>
             <TD class="tr3 td18"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1680,27 +1741,28 @@ die;*/
             <TD class="tr3 td21"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td22"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td31"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td81"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td82"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td83"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td84"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td24"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td85"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td27"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td86"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td87"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td88"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td89"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td27"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td90"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td26"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td59"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td87"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=3 class="tr6 td88"><P class="p15 ft6">CGST</P></TD>
-            <TD colspan=2 class="tr6 td89"><P
-                        class="p17 ft12"><?php echo ($billData->cgstper) ? $billData->cgstper : 0.00; ?> %</P></TD>
+            <TD class="tr3 td91"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=3 class="tr6 td92"><P class="p31 ft6">CGST</P></TD>
+            <TD colspan=2 class="tr6 td67"><P
+                        class="p17 ft13"><?php echo ($billData->cgstlper) ? $billData->cgstlper . ' %' : ''; ?> </P>
+            </TD>
             <TD class="tr6 td14"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr6 td9"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=2 class="tr6 td90"><P
-                        class="p31 ft13"><?php echo ($billData->cgstamt) ? $billData->cgstamt : 0.00; ?></P></TD>
-            <TD class="tr6 td15"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr6 td69"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr6 td17"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=2 class="tr6 td93"><P
+                        class="p23 ft12"><?php echo ($billData->cgstlamt) ? $billData->cgstlamt : ''; ?></P></TD>
+            <TD colspan=2 class="tr6 td44"><P
+                        class="p32 ft14"><?php echo ($billData->cgsthper) ? $billData->cgsthper . ' %' : ''; ?></P></TD>
+            <TD class="tr6 td17"><P class="p14 ft12"><?php echo ($billData->cgsthamt) ? $billData->cgsthamt : ''; ?></P>
+            </TD>
         </TR>
         <TR>
             <TD class="tr3 td18"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1709,26 +1771,26 @@ die;*/
             <TD class="tr3 td21"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td22"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td31"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td81"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td82"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td83"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td84"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td24"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td85"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td27"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td86"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td87"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td88"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td89"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td27"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td90"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td26"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td59"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr3 td87"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=3 class="tr6 td88"><P class="p7 ft6">SGST</P></TD>
-            <TD colspan=2 class="tr6 td89"><P
-                        class="p7 ft12"><?php echo ($billData->sgstper) ? $billData->sgstper : 0.00; ?> %</P></TD>
-            <TD colspan=2 class="tr6 td91"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=2 class="tr6 td90"><P
-                        class="p1 ft14"><?php echo ($billData->sgstamt) ? $billData->sgstamt : 0.00; ?></P></TD>
-            <TD class="tr6 td15"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr6 td69"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr6 td17"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr3 td91"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=3 class="tr6 td92"><P class="p7 ft6">SGST</P></TD>
+            <TD colspan=2 class="tr6 td67"><P
+                        class="p7 ft13"><?php echo ($billData->sgstlper) ? $billData->sgstlper . ' %' : ''; ?></P></TD>
+            <TD colspan=2 class="tr6 td94"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=2 class="tr6 td93"><P
+                        class="p23 ft12"><?php echo ($billData->sgstlamt) ? $billData->sgstlamt : ''; ?></P></TD>
+            <TD colspan=2 class="tr6 td44"><P
+                        class="p32 ft14"><?php echo ($billData->sgsthper) ? $billData->sgsthper . ' %' : ''; ?></P></TD>
+            <TD class="tr6 td17"><P class="p14 ft12"><?php echo ($billData->sgsthamt) ? $billData->sgsthamt : ''; ?></P>
+            </TD>
         </TR>
         <TR>
             <TD class="tr8 td36"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1739,32 +1801,31 @@ die;*/
             <TD class="tr8 td2"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr8 td3"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr8 td4"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr8 td72"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr8 td77"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr8 td9"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr8 td45"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr8 td75"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr8 td80"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr8 td81"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr8 td11"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr8 td6"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr8 td7"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr8 td8"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr8 td78"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr8 td82"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr6 td25"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr6 td26"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr6 td27"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr6 td28"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=7 class="tr6 td92"><P class="p14 ft6">Net Inclusive of Taxes :</P></TD>
+            <TD colspan=7 class="tr6 td95"><P class="p14 ft6">Net Inclusive of Taxes :</P></TD>
             <TD class="tr6 td34"><P class="p14 ft6"><?php echo $billData->grsamt; ?></P></TD>
         </TR>
         <TR>
             <TD class="tr5 td36"><P class="p1 ft8">&nbsp;</P></TD>
             <TD class="tr5 td37"><P class="p1 ft8">&nbsp;</P></TD>
-            <TD class="tr5 td93"><P class="p0 ft15">Rcvd Rs.</P></TD>
+            <TD class="tr5 td96"><P class="p0 ft15">Rcvd Rs.</P></TD>
             <TD class="tr5 td39"><P class="p1 ft8">&nbsp;</P></TD>
-            <TD colspan=3 class="tr5 td94"><P class="p32 ft15">Return Rs.</P></TD>
+            <TD colspan=3 class="tr5 td97"><P class="p33 ft15">Return Rs.</P></TD>
             <TD class="tr5 td4"><P class="p1 ft8">&nbsp;</P></TD>
-            <TD class="tr5 td95"><P class="p1 ft8">&nbsp;</P></TD>
-            <TD colspan=7 class="tr5 td96"><P class="p33 ft15">Nett Paid By Customer</P></TD>
-            <TD class="tr5 td78"><P class="p1 ft8">&nbsp;</P></TD>
+            <TD class="tr5 td98"><P class="p1 ft8">&nbsp;</P></TD>
+            <TD colspan=6 class="tr5 td99"><P class="p34 ft15">Nett Paid By Customer</P></TD>
+            <TD class="tr5 td82"><P class="p1 ft8">&nbsp;</P></TD>
             <TD class="tr9 td25"><P class="p1 ft16">&nbsp;</P></TD>
             <TD class="tr9 td26"><P class="p1 ft16">&nbsp;</P></TD>
             <TD class="tr9 td27"><P class="p1 ft16">&nbsp;</P></TD>
@@ -1772,26 +1833,23 @@ die;*/
             <TD class="tr9 td29"><P class="p1 ft16">&nbsp;</P></TD>
             <TD class="tr9 td30"><P class="p1 ft16">&nbsp;</P></TD>
             <TD class="tr9 td24"><P class="p1 ft16">&nbsp;</P></TD>
-            <TD class="tr9 td31"><P class="p1 ft16">&nbsp;</P></TD>
-            <TD class="tr9 td27"><P class="p1 ft16">&nbsp;</P></TD>
-            <TD class="tr9 td32"><P class="p1 ft16">&nbsp;</P></TD>
-            <TD class="tr9 td97"><P class="p1 ft16">&nbsp;</P></TD>
-            <TD class="tr9 td34"><P class="p1 ft16">&nbsp;</P></TD>
+            <TD colspan=4 rowspan=2 class="tr10 td84"><P class="p31 ft6">R.Off Rs. :</P></TD>
+            <TD rowspan=2 class="tr10 td17">
+                <P class="p14 ft6">
+                    <NOBR><?php echo $billData->rndoff; ?></NOBR>
+                </P>
+            </TD>
         </TR>
         <TR>
-            <TD class="tr10 td18"><P class="p1 ft17">&nbsp;</P></TD>
-            <TD colspan=2 rowspan=2 class="tr11 td98"><P class="p34 ft6"><?php echo $billData->rcdamt; ?></P></TD>
-            <TD rowspan=2 class="tr11 td39"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=2 rowspan=2 class="tr11 td99"><P class="p35 ft6"><?php echo $billData->retamt; ?></P></TD>
-            <TD class="tr10 td81"><P class="p1 ft17">&nbsp;</P></TD>
-            <TD class="tr10 td82"><P class="p1 ft17">&nbsp;</P></TD>
-            <TD class="tr10 td100"><P class="p1 ft17">&nbsp;</P></TD>
-            <TD class="tr10 td84"><P class="p1 ft17">&nbsp;</P></TD>
-            <TD class="tr10 td24"><P class="p1 ft17">&nbsp;</P></TD>
-            <TD colspan=3 rowspan=2 class="tr11 td50"><P class="p36 ft6"><?php echo $billData->custamt; ?></P></TD>
-            <TD class="tr10 td26"><P class="p1 ft17">&nbsp;</P></TD>
-            <TD class="tr10 td59"><P class="p1 ft17">&nbsp;</P></TD>
-            <TD class="tr10 td87"><P class="p1 ft17">&nbsp;</P></TD>
+            <TD class="tr11 td18"><P class="p1 ft17">&nbsp;</P></TD>
+            <TD class="tr11 td19"><P class="p1 ft17">&nbsp;</P></TD>
+            <TD class="tr11 td100"><P class="p1 ft17">&nbsp;</P></TD>
+            <TD class="tr11 td21"><P class="p1 ft17">&nbsp;</P></TD>
+            <TD colspan=3 class="tr11 td101"><P class="p1 ft17">&nbsp;</P></TD>
+            <TD class="tr11 td86"><P class="p1 ft17">&nbsp;</P></TD>
+            <TD class="tr11 td102"><P class="p1 ft17">&nbsp;</P></TD>
+            <TD colspan=6 class="tr11 td103"><P class="p1 ft17">&nbsp;</P></TD>
+            <TD class="tr11 td91"><P class="p1 ft17">&nbsp;</P></TD>
             <TD class="tr12 td10"><P class="p1 ft18">&nbsp;</P></TD>
             <TD class="tr12 td7"><P class="p1 ft18">&nbsp;</P></TD>
             <TD class="tr12 td11"><P class="p1 ft18">&nbsp;</P></TD>
@@ -1799,40 +1857,38 @@ die;*/
             <TD class="tr12 td13"><P class="p1 ft18">&nbsp;</P></TD>
             <TD class="tr12 td14"><P class="p1 ft18">&nbsp;</P></TD>
             <TD class="tr12 td9"><P class="p1 ft18">&nbsp;</P></TD>
-            <TD class="tr12 td2"><P class="p1 ft18">&nbsp;</P></TD>
-            <TD class="tr12 td11"><P class="p1 ft18">&nbsp;</P></TD>
-            <TD class="tr12 td15"><P class="p1 ft18">&nbsp;</P></TD>
-            <TD class="tr12 td69"><P class="p1 ft18">&nbsp;</P></TD>
-            <TD class="tr12 td17"><P class="p1 ft18">&nbsp;</P></TD>
         </TR>
         <TR>
             <TD class="tr13 td36"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=2 class="tr13 td104"><P class="p35 ft6"><?php echo $billData->rcdamt; ?></P></TD>
+            <TD class="tr13 td39"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=2 class="tr13 td105"><P class="p36 ft6"><?php echo $billData->retamt; ?></P></TD>
             <TD class="tr13 td3"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr13 td4"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr13 td95"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr13 td77"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr13 td9"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr13 td98"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr13 td80"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=3 class="tr13 td106"><P class="p37 ft6"><?php echo $billData->custamt; ?></P></TD>
             <TD class="tr13 td7"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr13 td8"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr13 td78"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD class="tr13 td82"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr13 td10"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr13 td7"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr13 td11"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=4 class="tr13 td101"><P class="p6 ft0">Nett Amount</P></TD>
+            <TD colspan=4 class="tr13 td107"><P class="p6 ft0">Nett Amount</P></TD>
             <TD class="tr13 td2"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr13 td11"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=2 class="tr13 td102"><P class="p37 ft0">Rs.</P></TD>
-            <TD class="tr13 td17"><P class="p38 ft19"><?php echo $billData->netamt; ?></P></TD>
+            <TD colspan=2 class="tr13 td108"><P class="p38 ft0">Rs.</P></TD>
+            <TD class="tr13 td17"><P class="p39 ft19"><?php echo $billData->netamt; ?></P></TD>
         </TR>
         <TR>
-            <TD colspan=4 class="tr13 td103"><P class="p2 ft20">Your Total Purchase is Rs.</P></TD>
-            <TD colspan=2 class="tr13 td104"><P class="p18 ft21"><?php echo $billData->netamt; ?>/-</P></TD>
-            <TD class="tr13 td81"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=6 class="tr13 td105"><P class="p1 ft20">and you have got</P></TD>
-            <TD colspan=5 class="tr13 td106"><P class="p31 ft21"><?php echo $billData->totdis; ?>/-</P></TD>
+            <TD colspan=4 class="tr13 td109"><P class="p2 ft20">Your Total Purchase is Rs.</P></TD>
+            <TD colspan=2 class="tr13 td110"><P class="p18 ft21"><?php echo $billData->netamt; ?>/-</P></TD>
+            <TD class="tr13 td85"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=5 class="tr13 td111"><P class="p1 ft20">and you have got</P></TD>
+            <TD colspan=5 class="tr13 td112"><P class="p18 ft21"><?php echo $billData->totdis; ?>/-</P></TD>
             <TD class="tr13 td26"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr13 td27"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=4 class="tr13 td107"><P class="p0 ft20">this purchase.</P></TD>
+            <TD colspan=4 class="tr13 td113"><P class="p0 ft20">this purchase.</P></TD>
             <TD class="tr13 td31"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr13 td27"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr13 td32"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1840,9 +1896,9 @@ die;*/
             <TD class="tr13 td34"><P class="p1 ft1">&nbsp;</P></TD>
         </TR>
     </TABLE>
-    <P class="p39 ft22">THANKING YOU</P>
-    <P class="p40 ft23">after 15 days from the date of bill. * Goods Return will not be exchange E. & O.E.</P>
-    <P class="p41 ft4">AUTHORIZED SIGN.</P>
+    <P class="p40 ft22">THANKING YOU</P>
+    <P class="p41 ft23">after 15 days from the date of bill. * Goods Return will not be exchange E. & O.E.</P>
+    <P class="p42 ft4">AUTHORIZED SIGN.</P>
 </DIV>
 </BODY>
 </HTML>

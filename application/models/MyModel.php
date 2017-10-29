@@ -28,8 +28,9 @@ class MyModel extends CI_Model {
 		$code = 0;
 		if (!empty($barcode)) {
 			$code = 1;
-			$this->db->select('t1.*, t.TRITNM, t.TRMRP1, t.TRPURT');
+			$this->db->select('t1.*, t.TRITNM, t.TRMRP1, t.TRPURT, p.TRSGSTL, p.TRCGSTL, p.TRIGSTL, p.TRLOW, p.TRSGSTH, p.TRCGSTH, p.TRIGSTH');
 			$this->db->join("tritem as t", "t.TRITCD = t1.TRITCD1");
+			$this->db->join("trprgrp as p", "t.TRPRDGRP = p.PRDCD");
 			$querry = $this->db->get_where('tritem1 as t1', array('BARCODF' => $barcode))->first_row();
 			if (count($querry)) {
 				$output = $querry;
