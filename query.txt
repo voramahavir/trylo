@@ -5,3 +5,13 @@ ALTER TABLE `users` CHANGE `user_id` `user_id` INT(11) NOT NULL AUTO_INCREMENT;
 INSERT INTO `users` (`user_id`, `user_name`, `password`, `is_active`) VALUES (NULL, 'admin', MD5('Admin@123'), 1);
 
 CREATE TABLE `trylo`.`branch` ( `branch_id` INT NOT NULL AUTO_INCREMENT , `branch_name` TINYTEXT NOT NULL , `is_active` TINYINT NOT NULL DEFAULT '1' , `created_by` INT NOT NULL , `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` DATETIME on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`branch_id`), INDEX (`is_active`)) ENGINE = InnoDB;
+
+Bhavesh : for role management
+
+CREATE TABLE `forms` ( `form_id` INT NOT NULL AUTO_INCREMENT , `form_name` VARCHAR(100) NOT NULL , `active_tab` VARCHAR(100) NOT NULL , `icon` TINYTEXT NOT NULL , `redirect_url` TINYTEXT NOT NULL , PRIMARY KEY (`form_id`)) ENGINE = InnoDB;
+
+ALTER TABLE `users` ADD `branch_id` INT NOT NULL AFTER `is_active`, ADD `role_id` INT NOT NULL COMMENT '1: Super Admin 2: Admin 3: User' AFTER `branch_id`;
+
+CREATE TABLE `assign_forms` ( `assign_form_id` INT NOT NULL AUTO_INCREMENT , `user_id` INT NOT NULL , `form_id` INT NOT NULL , PRIMARY KEY (`assign_form_id`)) ENGINE = InnoDB;
+
+CREATE TRIGGER `AddedNewForm` BEFORE INSERT ON `forms` FOR EACH ROW INSERT INTO `assign_forms`(`user_id`, `form_id`) SELECT id, NEW.form_id FROM users where role_id = 1 OR role_id = 2
