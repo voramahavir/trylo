@@ -11,7 +11,6 @@ class MemberShipCardController extends CI_Controller {
 	}
 
 	public function index() {
-		echo "index";
 		$data['page_title'] = 'Dashboard';
 		$this->load->view('dashboard', $data);
 	}
@@ -23,6 +22,16 @@ class MemberShipCardController extends CI_Controller {
 
 	public function getMemberShipCardList(){
         $this->load->model('MemberShipCardModel');
-        $this->MemberShipCardModel->getSalesBills();
+        $this->MemberShipCardModel->getMemberShipCardList();
+	}
+
+	public function delete($id){
+        $this->load->model('MemberShipCardModel');
+        $this->MemberShipCardModel->delete($id);
+	}
+
+	public function recover($id){
+        $this->load->model('MemberShipCardModel');
+        $this->MemberShipCardModel->recover($id);
 	}
 }
