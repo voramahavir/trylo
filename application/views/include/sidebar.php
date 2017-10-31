@@ -30,7 +30,7 @@
           </a>
         </li>
         <li class="header">TRANSACTION</li>
-        <li class="treeview<?php echo isset($page_title) && ($page_title == 'Sales Add' || $page_title == 'Sales Bill') ? ' active' : ''; ?>">
+        <li class="treeview<?php echo (isset($page_title) && ($page_title == 'Sales Add' || $page_title == 'Sales Bill')) ? ' active' : ''; ?>">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Sales</span>
             <span class="pull-right-container">
@@ -69,7 +69,7 @@
           </ul>
         </li>
 
-        <li class="treeview <?php echo isset($page_title) && $page_title == 'Membership Card Registration' || 'Loyalty Card Issue Entry' ? 'active' : ''; ?>">
+        <li class="treeview <?php echo (isset($page_title) && ($page_title == 'Membership Card Registration' ||  $page_title == 'Loyalty Card Issue Entry' ||  $page_title == 'Add Membership Card')) ? 'active' : ''; ?>">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Membership & Loyalty Card Registration</span>
             <span class="pull-right-container">

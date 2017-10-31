@@ -626,14 +626,14 @@
             var barCodeArray = [], itemsArray = [];
 
             $('.save').click(function () {
-//                if (barCodeArray.length > 0) {
+                if (barCodeArray.length > 0) {
                 $("#save-modal").modal();
                 gTotalAmt = 0;
                 itemsData = setItemsData();
                 total_amt();
-                /*} else {
+                } else {
                     alert("Required to add items");
-                }*/
+                }
             });
 
             $("input, .address").keyup(function () {
