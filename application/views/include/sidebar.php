@@ -69,6 +69,19 @@
           </ul>
         </li>
 
+        <li class="treeview <?php echo isset($page_title) && $page_title == 'Membership Card Registration' || 'Loyalty Card Issue Entry' ? 'active' : ''; ?>">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Membership & Loyalty Card Registration</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?php echo isset($page_title) && $page_title == 'Membership Card Registration' ? 'active' : ''; ?>"><a href="<?php echo site_url('membershipcard/list'); ?>"><i class="fa fa-circle-o"></i> Membership Card Registration</a></li>
+            <li class="<?php echo isset($page_title) && $page_title == 'Loyalty Card Issue Entry' ? 'active' : ''; ?>"><a href="<?php echo site_url(); ?>"><i class="fa fa-circle-o"></i> Loyalty Card Issue Entry</a></li>
+          </ul>
+        </li>
+
         <li><a href="<?php echo site_url('searchItem'); ?>"><i class="fa fa-dashboard"></i> <span>Search Item</span></a></li>
         
         <li class="header">REPORTS</li>

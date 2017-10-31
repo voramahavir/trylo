@@ -60,13 +60,7 @@
                 </div>
               </div>
               <div class="row form-group">
-                <div class="col-md-12">
-                  <?php
-                    for ($i=0; $i < 20; $i++) { 
-                        $a = 'ajaj';
-                        echo "<div class='col-md-3'><input type='checkbox' name='roles[]' value='".$a."'> ".$a."</div>";
-                    }
-                  ?>
+                <div class="col-md-12" id="roles_div" name="roles_div">
                 </div>
               </div>
             </div>
@@ -85,7 +79,7 @@
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-
+        getForms();
         $('#table_branch').DataTable({
           "paging": true,
           "lengthChange": true,
@@ -151,5 +145,29 @@
           },
         });
     });
+    function getForms() {
+      $.ajax({
+          url: "<?php echo site_url('users/forms'); ?>",
+          dataType: 'json',
+          type: "GET",
+          success: function (response) {
+              if(response.length > 0){
+                  var mainDiv = document.getElementById('roles_div');
+                  var html = "";
+                  for (var i = 0; i < response.length; i++) {
+                      var div = document.createElement('div');
+                      div.addClass("col-md-3");
+                      var checkbox = document.createElement('input');
+                      checkbox.type = "checkbox";
+                      checkbox.name = "roles[]";
+                      checkbox.value = response[i].form_id;
+                      checkbox.id = "roles[]";
+                      div.appendChild(checkbox);
+                      mainDiv.appendChild(div);
+                  }
+              }
+          }
+      });
+    }
     </script>
 <?php $this->load->view('include/page_footer.php'); ?>
