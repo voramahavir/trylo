@@ -147,10 +147,12 @@
 <div class="modal fade" id="save-modal">
     <div class="modal-dialog my-modal-lg">
         <div class="modal-content">
+            <div class="modal-header">
+            </div>
             <div class="modal-body">
                 <form role="form" id="salesBill">
                     <div class="col-md-12">
-                        <div class="box">
+                        <div class="box box-success">
                             <div class="box-body">
                                 <div class="row">
                                     <label class="col-md-1 text-right"> Bill No : </label>
@@ -172,19 +174,16 @@
                                             <option value="4"> Mobile Payment</option>
                                         </select>
                                     </div>
-                                    <label class="col-md-1">Salesman:</label>
-                                    <div class="col-md-3">
-                                        <select class="form-control">
-                                        </select>
-                                    </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-2 text-right"> Prefix : </label>
+                                    <label class="col-md-1 text-right"> Prefix : </label>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" name="CRDPREF" value="GCHGDM" readonly>
                                     </div>
+                                    <div class="col-md-2">
+                                    </div>
                                     <label class="col-md-1 text-right"> No : </label>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <input type="text" class="form-control" name="CRDNUM">
                                     </div>
                                 </div>
@@ -192,7 +191,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="box">
+                        <div class="box box-warning">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -265,7 +264,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="box">
+                        <div class="box box-info">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -276,26 +275,14 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-md-2 text-right"> Disc(%) </label>
-                                            <div class="col-md-4">
-                                                <input type="text" name="TRDSPR" class="form-control" value="0.00"
-                                                       readonly>
-                                            </div>
-                                            <label class="col-md-1 text-right"> Amt: </label>
-                                            <div class="col-md-5">
-                                                <input type="text" name="TRDSPRAM" class="form-control" value="0.00"
-                                                       readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                             <label class="col-md-2 text-right"> Other </label>
                                             <div class="col-md-10">
                                                 <input type="text" name="TROTH1" class="form-control">
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-md-4 text-right"> Other Amt </label>
-                                            <div class="col-md-8">
+                                            <label class="col-md-2 text-right"> Other Amt </label>
+                                            <div class="col-md-10">
                                                 <input type="number" value="0" name="TROTH2"
                                                        class="form-control oth_amt">
                                             </div>
@@ -350,17 +337,18 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="row">
-                                            <label class="col-md-3 text-right"> Nett Amount Rs. </label>
-                                            <div class="col-md-9">
+                                            <label class="col-md-2 text-right"> Nett Amount Rs. </label>
+                                            <div class="col-md-10">
                                                 <input type="text" name="TRNET" class="form-control net_amount"
                                                        readonly>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <div class="row">
                                             <label class="col-md-3 text-right"> Total Qty </label>
                                             <div class="col-md-9">
@@ -368,13 +356,14 @@
                                                        readonly>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="box">
+                        <div class="box box-danger">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -383,7 +372,8 @@
                                             <label class="col-md-1 text-right dr_amount"> 2000 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC2000" class="form-control dr_note" value="0">
+                                                <input type="text" name="RC2000" class="form-control dr_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
@@ -394,7 +384,8 @@
                                             <label class="col-md-1 text-right dr_amount"> 500 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC500" class="form-control dr_note" value="0">
+                                                <input type="text" name="RC500" class="form-control dr_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
@@ -405,7 +396,8 @@
                                             <label class="col-md-1 text-right dr_amount"> 100 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC100" class="form-control dr_note" value="0">
+                                                <input type="text" name="RC100" class="form-control dr_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
@@ -416,7 +408,8 @@
                                             <label class="col-md-1 text-right dr_amount"> 50 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC50" class="form-control dr_note" value="0">
+                                                <input type="text" name="RC50" class="form-control dr_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
@@ -427,7 +420,8 @@
                                             <label class="col-md-1 text-right dr_amount"> 20 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC20" class="form-control dr_note" value="0">
+                                                <input type="text" name="RC20" class="form-control dr_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
@@ -438,7 +432,8 @@
                                             <label class="col-md-1 text-right dr_amount"> 10 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC10" class="form-control dr_note" value="0">
+                                                <input type="text" name="RC10" class="form-control dr_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
@@ -449,7 +444,8 @@
                                             <label class="col-md-1 text-right dr_amount"> 5 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC5" class="form-control dr_note" value="0">
+                                                <input type="text" name="RC5" class="form-control dr_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
@@ -460,14 +456,16 @@
                                             <label class="col-md-5 text-right"> MISC. </label>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" name="RCMIS" class="form-control dr_misc dr_value"
+                                                <input type="text" name="RCMIS"
+                                                       class="form-control dr_misc dr_value"
                                                        value="0">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-6 text-right"> Rcvd AMt. </label>
                                             <div class="col-md-5">
-                                                <input type="text" name="EXRCVD" class="form-control dr_total" value="0"
+                                                <input type="text" name="EXRCVD" class="form-control dr_total"
+                                                       value="0"
                                                        readonly>
                                             </div>
                                         </div>
@@ -483,80 +481,94 @@
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0" disabled>
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-1 text-right dre_amount"> 500 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD500" class="form-control dre_note" value="0">
+                                                <input type="text" name="PD500" class="form-control dre_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0" disabled>
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-1 text-right dre_amount"> 100 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD100" class="form-control dre_note" value="0">
+                                                <input type="text" name="PD100" class="form-control dre_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0" disabled>
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-1 text-right dre_amount"> 50 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD50" class="form-control dre_note" value="0">
+                                                <input type="text" name="PD50" class="form-control dre_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0" disabled>
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-1 text-right dre_amount"> 20 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD20" class="form-control dre_note" value="0">
+                                                <input type="text" name="PD20" class="form-control dre_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0" disabled>
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-1 text-right dre_amount"> 10 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD10" class="form-control dre_note" value="0">
+                                                <input type="text" name="PD10" class="form-control dre_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0" disabled>
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-1 text-right dre_amount"> 5 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD5" class="form-control dre_note" value="0">
+                                                <input type="text" name="PD5" class="form-control dre_note"
+                                                       value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0" disabled>
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-5 text-right dr_amount"> MISC. </label>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" name="PDMIS" class="form-control dre_misc dre_value"
+                                                <input type="text" name="PDMIS"
+                                                       class="form-control dre_misc dre_value"
                                                        value="0">
                                             </div>
                                         </div>
@@ -614,14 +626,14 @@
             var barCodeArray = [], itemsArray = [];
 
             $('.save').click(function () {
-                if (barCodeArray.length > 0) {
-                    $("#save-modal").modal();
-                    gTotalAmt = 0;
-                    itemsData = setItemsData();
-                    total_amt();
-                } else {
+//                if (barCodeArray.length > 0) {
+                $("#save-modal").modal();
+                gTotalAmt = 0;
+                itemsData = setItemsData();
+                total_amt();
+                /*} else {
                     alert("Required to add items");
-                }
+                }*/
             });
 
             $("input, .address").keyup(function () {
@@ -781,7 +793,7 @@
                 $('.m_t_qty').val(gTotalQty);
                 $('.gross').val(gTotalAmt);
                 var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val())).toFixed(2);
-                var rndOff = parseFloat(Math.round(netAmt) -  parseFloat(netAmt)).toFixed(2);
+                var rndOff = parseFloat(Math.round(netAmt) - parseFloat(netAmt)).toFixed(2);
                 netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
                 $('.net_amount').val(netAmt);
                 $('.rndOff').val(rndOff);
@@ -852,7 +864,7 @@
                     $('.ret_cus_div').hide();
                 }
                 var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val())).toFixed(2);
-                var rndOff = parseFloat(Math.round(netAmt) -  parseFloat(netAmt)).toFixed(2);
+                var rndOff = parseFloat(Math.round(netAmt) - parseFloat(netAmt)).toFixed(2);
                 netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
                 $('.net_amount').val(netAmt);
                 $('.rndOff').val(rndOff);
