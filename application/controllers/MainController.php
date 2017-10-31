@@ -11,7 +11,6 @@ class MainController extends CI_Controller {
 	}
 
 	public function index() {
-		echo "index";
 		$data['page_title'] = 'Dashboard';
 		$this->load->view('dashboard', $data);
 	}
@@ -20,7 +19,6 @@ class MainController extends CI_Controller {
 		$data['page_title'] = 'Branch List';
 		switch ($view) {
 			case 'list':
-				echo "list";
 				$this->load->view('userbranch/branch', $data);
 				break;
 			case 'get':

@@ -67,5 +67,5 @@ $route['salesBill/(:any)'] = 'SalesController/$1';
 $route['salesCreate'] = 'SalesController/create';
 $route['salesPrint/(:any)'] = 'SalesController/printBill/$1';
 $route['membershipcard/(:any)'] = 'MemberShipCardController/$1';
-
+$route['membershipcard/(:any)/(:any)'] = 'MemberShipCardController/$1/$2';
 
