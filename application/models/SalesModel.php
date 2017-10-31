@@ -68,14 +68,14 @@ class SalesModel extends CI_Model
             $draw = $_POST['draw'];
         }
 
-        if (isset($_POST['to_date'])) {
-            $to_date = $_POST['to_date'];
-            $this->db->where('t.TRBLDT <= ', $to_date);
-        }
-        if (isset($_POST['from_date'])) {
-            $from_date = $_POST['from_date'];
-            $this->db->where('t.TRBLDT >= ', $from_date);
-        }
+        // if (isset($_POST['to_date'])) {
+        //     $to_date = $_POST['to_date'];
+        //     $this->db->where('t.TRBLDT <= ', $to_date);
+        // }
+        // if (isset($_POST['from_date'])) {
+        //     $from_date = $_POST['from_date'];
+        //     $this->db->where('t.TRBLDT >= ', $from_date);
+        // }
         if(isset($_POST['payment_mode'])){
             $payment_mode = $_POST['payment_mode'];
             if($payment_mode!=null && $payment_mode!='all'){
