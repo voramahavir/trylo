@@ -353,6 +353,7 @@
                     success: function (response) {
                         loadingStop();
                         bootbox.alert(response.msg);
+                        $("#addCard")[0].reset();
                     }
                 });
 

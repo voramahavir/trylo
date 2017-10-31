@@ -50,11 +50,13 @@ class MemberShipCardController extends CI_Controller
 
     public function create()
     {
+        $this->load->model('MemberShipCardModel');
         $this->MemberShipCardModel->createCard();
     }
 
     public function details($cardNo = null)
     {
+        $this->load->model('MemberShipCardModel');
         $cardNo = ($cardNo) ? $cardNo : $_POST['cardNo'];
         $this->MemberShipCardModel->getDataByCardNo($cardNo);
     }
