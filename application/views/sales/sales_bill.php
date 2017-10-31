@@ -16,7 +16,8 @@
                 <div class="row form-group">
                     <label class="col-md-1 text-left">Fr Date : </label>
                     <div class="col-md-2">
-                        <input id="from_date" type="text" value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
+                        <input id="from_date" type="text"
+                               value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
                     </div>
                     <label class="col-md-1 text-left"> To Date : </label>
                     <div class="col-md-2">
@@ -25,23 +26,32 @@
 
                     <div class="col-md-5 col-md-offset-1">
                         <div class="row radio">
-                            <label> <input type="radio" id="payment" name="payment" value="pending payment" checked="true"> Pending Payment </label>
-                            <label> <input type="radio" id="payment" name="payment" value="pending rcvd"> Pending Rcvd </label>
+                            <label> <input type="radio" id="payment" name="payment" value="pending payment"
+                                           checked="true"> Pending Payment </label>
+                            <label> <input type="radio" id="payment" name="payment" value="pending rcvd"> Pending Rcvd
+                            </label>
                             <label> <input type="radio" id="payment" name="payment" value="all"> All </label>
-                            <label> <input type="radio" id="payment" name="payment" value="cancelled bill"> Cancelled Bill </label>
+                            <label> <input type="radio" id="payment" name="payment" value="cancelled bill"> Cancelled
+                                Bill </label>
                         </div>
                         <div class="row radio">
-                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="all" checked="true"> All </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="all"
+                                           checked="true"> All </label>
                             <label> <input type="radio" id="payment_mode" name="payment_mode" value="1"> Cash </label>
                             <label> <input type="radio" id="payment_mode" name="payment_mode" value="2"> Debit </label>
-                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="3"> Cr/Dr Card </label>
-                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="4"> Mobile Payment </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="3"> Cr/Dr Card
+                            </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="4"> Mobile Payment
+                            </label>
                         </div>
                     </div>
                 </div>
                 <button type="button" class="btn btn-default" id="search">
                     <span class="glyphicon glyphicon-search"></span> Search
                 </button>
+                <a href="<?php echo site_url('salesAdd'); ?>" class="btn btn-info pull-right">
+                    <span class="glyphicon glyphicon-plus"></span> Add
+                </a>
                 <div class="box-body">
                     <div id="sales_bill wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row">
@@ -50,7 +60,8 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <table id="sales_bill_table" class="table table-bordered table-hover dataTable" role="grid">
+                                <table id="sales_bill_table" class="table table-bordered table-hover dataTable"
+                                       role="grid">
                                     <thead>
                                     <tr role="row">
                                         <th>Bill No.</th>
@@ -64,6 +75,7 @@
                                         <th>Salesman</th>
                                         <th>Discount</th>
                                         <th>Other</th>
+                                        <th>Action</th>
 
                                     </tr>
                                     </thead>
@@ -105,10 +117,10 @@
         });
     }(jQuery));
 
-    $("#search").click(function(){
+    $("#search").click(function () {
         setTable();
     });
-    $("input[name=payment_mode]").on('change', function() {
+    $("input[name=payment_mode]").on('change', function () {
         payment_mode = this.value;
     });
 
@@ -172,32 +184,40 @@
                     "bSortable": false,
                     "aTargets": [10],
                     "data": ''
+                },
+                {
+                    "bSortable": false,
+                    "aTargets": [11],
+                    "data": null
                 }
             ],
             "ajax": {
                 url: "<?= site_url('SalesController/getSalesBills') ?>",
                 pages: 2, // number of pages to cache
                 method: 'POST',
-                data : {
-                    to_date : $('#to_date').val(),
-                    from_date : $('#from_date').val(),
-                    payment : $('#payment').val(),
-                    payment_mode : payment_mode
+                data: {
+                    to_date: $('#to_date').val(),
+                    from_date: $('#from_date').val(),
+                    payment: $('#payment').val(),
+                    payment_mode: payment_mode
                 }
             },
-            "rowCallback":function(nRow,aData,iDisplayindex){                        
-                        if(aData.type==1){
-                            $('td:eq(3)',nRow).html("Cash Memo");
-                        }else if(aData.type==2){
-                            $('td:eq(3)',nRow).html("Debit");
-                        }else if(aData.type==3){
-                            $('td:eq(3)',nRow).html("Master/Visa");
-                        }else if(aData.type==4){
-                            $('td:eq(3)',nRow).html("PAYTM");
-                        }
-                    }
+            "rowCallback": function (nRow, aData, iDisplayindex) {
+                if (aData.type == 1) {
+                    $('td:eq(3)', nRow).html("Cash Memo");
+                } else if (aData.type == 2) {
+                    $('td:eq(3)', nRow).html("Debit");
+                } else if (aData.type == 3) {
+                    $('td:eq(3)', nRow).html("Master/Visa");
+                } else if (aData.type == 4) {
+                    $('td:eq(3)', nRow).html("PAYTM");
+                }
+                var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' class='btn btn-success'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
+                $('td:eq(11)', nRow).html(printStr);
+            }
         });
     }
+
     setTable();
 </script>
 

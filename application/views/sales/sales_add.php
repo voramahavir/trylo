@@ -15,6 +15,9 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title"> USER : name / <?php echo date('d/m/Y / H:i'); ?> / New Entry</h3>
+                <button type="button" id="searchItem" class="btn btn-info pull-right"><i class="fa fa-search"></i>
+                    Search Item
+                </button>
             </div>
             <div class="box-body">
                 <div class="col-md-7">
@@ -326,7 +329,7 @@
                                         <div class="row">
                                             <label class="col-md-3 text-right"> Rnd Off </label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="TRRND">
+                                                <input type="text" class="form-control rndOff" name="TRRND">
                                             </div>
                                         </div>
                                     </div>
@@ -607,19 +610,22 @@
                 format: 'dd/mm/yyyy'
             });
             loadingStop();
-            var items;
-            var barCodeArray = [];
+            var items, itemsData, gTotalAmt = 0;
+            var barCodeArray = [], itemsArray = [];
 
             $('.save').click(function () {
                 if (barCodeArray.length > 0) {
                     $("#save-modal").modal();
+                    gTotalAmt = 0;
+                    itemsData = setItemsData();
+                    total_amt();
                 } else {
                     alert("Required to add items");
                 }
             });
 
             $("input, .address").keyup(function () {
-                var val = $(this).val()
+                var val = $(this).val();
                 $(this).val(val.toUpperCase());
             });
 
@@ -709,6 +715,7 @@
 
             function selectItem(result) {
                 items = result;
+                itemsArray[items.TRITCD1] = items;
                 $('.item_name').val(result.TRITNM);
                 $('.size').val(result.TRSZCD);
                 $('.color').val(result.TRCOLOR);
@@ -756,24 +763,28 @@
             }
 
             function total_amt() {
-                var qty, amount, total, disc_amount, gTotalAmt = 0, gTotalQty = 0;
+                var qty, amount, total, disc_amount, _gTotalAmt = 0, gTotalQty = 0;
 
                 $.each($('.itemBarCode'), function () {
                     qty = parseInt($(this).find('.qty').val());
                     amount = qty * parseFloat($(this).find('.nt_amt').text());
                     disc_amount = parseFloat($(this).find('.d_per').val()) * amount / 100;
                     total = amount - disc_amount;
-                    gTotalAmt += total;
+                    _gTotalAmt += total;
                     gTotalQty += qty;
                     $(this).find('.ntt_amt').text(amount);
                     $(this).find('.d_amt').text(disc_amount);
                     $(this).find('.t_amt').text(total);
                 });
                 $('.t_qty').val(gTotalQty);
-                $('.n_amt').val(gTotalAmt);
+                $('.n_amt').val(_gTotalAmt);
                 $('.m_t_qty').val(gTotalQty);
                 $('.gross').val(gTotalAmt);
-                $('.net_amount').val(gTotalAmt + parseFloat($('.oth_amt').val()));
+                var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val())).toFixed(2);
+                var rndOff = parseFloat(Math.round(netAmt) -  parseFloat(netAmt)).toFixed(2);
+                netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
+                $('.net_amount').val(netAmt);
+                $('.rndOff').val(rndOff);
             }
 
             $(document).on('change', ".qty", function () {
@@ -782,6 +793,10 @@
 
             $(document).on('change', ".d_per", function () {
                 total_amt();
+            });
+
+            $('#searchItem').click(function () {
+                window.open(site_url + "searchItem", "popupWindow", "width=1200, height=600, scrollbars=yes");
             });
 
             function dis_per(p, f) {
@@ -836,33 +851,87 @@
                 } else {
                     $('.ret_cus_div').hide();
                 }
-                $('.net_amount').val(parseFloat($('.gross').val()) + parseFloat($('.oth_amt').val()));
+                var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val())).toFixed(2);
+                var rndOff = parseFloat(Math.round(netAmt) -  parseFloat(netAmt)).toFixed(2);
+                netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
+                $('.net_amount').val(netAmt);
+                $('.rndOff').val(rndOff);
+//                $('.net_amount').val(parseFloat($('.gross').val()) + parseFloat($('.oth_amt').val()));
             }
 
             function setItemsData() {
-                var itemsData = [];
+                var _itemsData = [];
                 $("tr.itemBarCode").each(function () {
                     var col = $(this).find("td");
+                    var itcd = col.eq(0).text().trim();
+                    var qty = parseFloat(col.eq(4).find('.qty').val().trim());
+                    var rate = parseFloat(col.eq(5).text().trim());
+                    var disamt = parseFloat(col.eq(8).text().trim());
+
+                    var sgstl = parseFloat(itemsArray[itcd].TRSGSTL);//Low SGST per
+                    var cgstl = parseFloat(itemsArray[itcd].TRCGSTL);//Low CGST per
+                    var sgsth = parseFloat(itemsArray[itcd].TRSGSTH);//High SGST per
+                    var cgsth = parseFloat(itemsArray[itcd].TRCGSTH);//High CGST per
+                    var lowAmt = parseFloat(itemsArray[itcd].TRLOW);//Low amount
+                    var totLowTax = sgstl + cgstl;
+                    var totHighTax = sgsth + cgsth;
+
+                    var netrt = parseFloat(rate - (disamt / qty)).toFixed(2);//Net Rate per pc
+
+                    var netbt = parseFloat((netrt * 100) / (100 + totLowTax)).toFixed(2);//Net Rate before tax
+                    var netAmt = col.eq(9).text().trim();//Net amt of item
+                    var belowAmt = netbt * qty;
+                    var aboveAmt = 0;
+
+                    if (netbt > lowAmt) {
+                        netbt = parseFloat((netrt * 100) / (100 + totHighTax)).toFixed(2);
+                        aboveAmt = netbt * qty;
+                        belowAmt = 0;
+                        sgstl = 0;
+                        cgstl = 0;
+                    }
+                    else {
+                        sgsth = 0;
+                        cgsth = 0;
+                    }
+                    var sgstla = parseFloat(((netbt * sgstl) / 100) * qty).toFixed(2);//Low SGST amt
+                    var cgstla = parseFloat(((netbt * cgstl) / 100) * qty).toFixed(2);//Low CGST amt
+                    var sgstha = parseFloat(((netbt * sgsth) / 100) * qty).toFixed(2);//High SGST amt
+                    var cgstha = parseFloat(((netbt * cgsth) / 100) * qty).toFixed(2);//High CGST amtw
+                    gTotalAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat(belowAmt) + parseFloat(aboveAmt) + parseFloat(sgstla) + parseFloat(cgstla) + parseFloat(sgstha) + parseFloat(cgstha)).toFixed(2);
+
                     var data = {
                         TRBLNO1: "<?php echo $currentBill; ?>",// BillNo
-                        TRITCD: col.eq(0).text().trim(),//Item Id
+                        TRITCD: itcd,//Item Id
                         TRSZ: col.eq(3).text().trim(),//Size
                         TRCLR: col.eq(2).text().trim(),//Color
 //                        TRBRCD: col.eq(10).text().trim(),//Barcode
-                        TRQTY: col.eq(4).find('.qty').val().trim(),//Qty
-                        TRRATE: col.eq(5).text().trim(),//Rate
+                        TRQTY: qty,//Qty
+                        TRRATE: rate,//Rate
                         TRDS1: col.eq(7).find('.d_per').val().trim(),//Dis. %
-                        TRDS2: col.eq(8).text().trim(),//Dis Amt
-                        TRBLAMT: col.eq(9).text().trim()//Net Amt
+                        TRDS2: disamt,//Dis Amt
+                        TRBLAMT: netAmt,//Net Amt
+                        TRNETRT: netrt,//Net Rate
+                        TRNETBT: netbt,//Net Rate before tax
+                        TRLSGST: sgstl,
+                        TRLSGSTA: sgstla,
+                        TRLCGST: cgstl,
+                        TRLCGSTA: cgstla,
+                        TRHSGST: sgsth,
+                        TRHSGSTA: sgstha,
+                        TRHCGST: cgsth,
+                        TRHCGSTA: cgstha,
+                        TRFBEL: belowAmt,
+                        TRFABV: aboveAmt
                     };
-                    itemsData.push(data);
+                    _itemsData.push(data);
                 });
-                return itemsData;
+                return _itemsData;
             }
 
             function saveBill() {
                 var salesData = $("#salesBill").serializeObject();
-                var itemsData = setItemsData();
+
                 $.ajax({
                     url: site_url + "salesCreate",
                     dataType: 'json',
