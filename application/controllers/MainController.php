@@ -42,6 +42,9 @@ class MainController extends CI_Controller {
 				$this->load->model('MyModel');
 				$this->MyModel->getUsers();
 				break;
+			case 'forms':
+				$this->load->model('MyModel');
+				$this->MyModel->getForms();
 			default:
 				break;
 		}

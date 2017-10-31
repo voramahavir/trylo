@@ -110,4 +110,11 @@ class MyModel extends CI_Model {
 		echo json_encode(array('code' => $code, 'data' => $output, 'message' => $msg));
 		exit;
 	}
+
+    public function getForms()
+    {
+        $data = $this->db->get('forms')->result();
+        echo json_encode($data);
+        exit();
+    }
 }
