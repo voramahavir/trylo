@@ -31,6 +31,19 @@ class MemberShipCardModel extends CI_Model
         if (isset($_POST['draw'])) {
             $draw = $_POST['draw'];
         }
+        if(isset($_POST['order']) && count($_POST['order'])){
+            $column = $_POST['order'][0]['column'];
+            $sorttype = $_POST['order'][0]['dir'];
+            if($column == 0){
+                $this->db->order_by("CARDNO", $sorttype);
+            }elseif ($column == 1) {
+                $this->db->order_by("CARDNO1", $sorttype);
+            }elseif ($column == 2) {
+                $this->db->order_by("NAME", $sorttype);
+            }elseif ($column == 7) {
+                $this->db->order_by("CREADT", $sorttype);
+            }
+        }
         $output = array("code" => 0, "response" => array(),
             'draw' => $draw,
             'recordsTotal' => 0,
