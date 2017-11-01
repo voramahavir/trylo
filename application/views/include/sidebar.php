@@ -77,7 +77,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="<?php echo isset($page_title) && $page_title == 'Membership Card Registration' ? 'active' : ''; ?>"><a href="<?php echo site_url('membershipcard/list'); ?>"><i class="fa fa-circle-o"></i> Membership Card Registration</a></li>
+            <li class="<?php echo isset($page_title) && $page_title == 'Membership Card Registration' ? 'active' : ''; ?>"><a href="<?php echo site_url('membershipcard/cardList'); ?>"><i class="fa fa-circle-o"></i> Membership Card Registration</a></li>
             <li class="<?php echo isset($page_title) && $page_title == 'Loyalty Card Issue Entry' ? 'active' : ''; ?>"><a href="<?php echo site_url(); ?>"><i class="fa fa-circle-o"></i> Loyalty Card Issue Entry</a></li>
           </ul>
         </li>

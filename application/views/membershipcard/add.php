@@ -300,7 +300,7 @@
                                    readonly>
                         </div>
                     </div>
-                    <a class="btn btn-default pull-right" href="<?php echo site_url('membershipcard/list') ?>"><i
+                    <a class="btn btn-default pull-right" href="<?php echo site_url('membershipcard/cardList') ?>"><i
                                 class="fa fa-times"></i> Cancel</a>
                 </div>
                 <div class="overlay">

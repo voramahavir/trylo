@@ -68,21 +68,7 @@ class SalesModel extends CI_Model
             $draw = $_POST['draw'];
         }
 
-        // if (isset($_POST['to_date'])) {
-        //     $to_date = $_POST['to_date'];
-        //     $this->db->where('t.TRBLDT <= ', $to_date);
-        // }
-        // if (isset($_POST['from_date'])) {
-        //     $from_date = $_POST['from_date'];
-        //     $this->db->where('t.TRBLDT >= ', $from_date);
-        // }
-        if(isset($_POST['payment_mode'])){
-            $payment_mode = $_POST['payment_mode'];
-            if($payment_mode!=null && $payment_mode!='all'){
-                $this->db->where('t.TRTYPE',$payment_mode);
-            }
-        }
-
+        $this->filterData();
         $output = array("code" => 0,
             'draw' => $draw,
             'recordsTotal' => 0,
@@ -94,8 +80,12 @@ class SalesModel extends CI_Model
         $this->db->limit($length,$start);
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO"); 
         $output['data']=$this->db->get('trbil as t')->result();
-        $output['recordsTotal']=count($output['data']);
-        $output['recordsFiltered']=count($output['data']);
+        // echo $this->db->last_query();
+        $output['recordsTotal']=$this->db->get('trbil as t')->num_rows();
+        $this->filterData();
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t1.TRBLAMT as bamount,(t.EXRCVD - t.EXBACK) as ramount,t.TRTYPE as type');
+        $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
+        $output['recordsFiltered']=$this->db->get('trbil as t')->num_rows();
         if (!empty($output['data'])) {
             $output['code'] = 1;
         }
@@ -171,5 +161,22 @@ class SalesModel extends CI_Model
             $printData = compact("billData","itemData");
         }
         return $printData;
+    }
+
+    public function filterData(){
+        if (isset($_POST['to_date'])) {
+            $to_date = $_POST['to_date'];
+            $this->db->where('t.TRBLDT <= ', $to_date);
+        }
+        if (isset($_POST['from_date'])) {
+            $from_date = $_POST['from_date'];
+            $this->db->where('t.TRBLDT >= ', $from_date);
+        }
+        if(isset($_POST['payment_mode'])){
+            $payment_mode = $_POST['payment_mode'];
+            if($payment_mode!=null && $payment_mode!='all'){
+                $this->db->where('t.TRTYPE',$payment_mode);
+            }
+        }
     }
 }

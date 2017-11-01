@@ -141,6 +141,8 @@
     var size = "all";
     var group = "all";
     var freeze = "no";
+    var table = null;
+    var params = {};
     (function ($) {
         $(document).ready(function () {
             $('#from_date').datepicker({
@@ -159,6 +161,11 @@
             });
             $('.fixed-table-loading').remove();
             setDropDownData();
+            params = {
+                filter_type:"name",
+                name : "-1"
+            };
+            setItemsTable();
         });
     }(jQuery));
 
@@ -215,11 +222,6 @@
         } 
     });
     $("#search").click(function(){
-        setItemsTable();
-    });
-
-    function setItemsTable(){
-        var params = {};
         if(filter_type == "name"){
             params = {
                 filter_type:"name",
@@ -239,50 +241,47 @@
                 filter_type : "advance"
             };
         }
+        table.ajax.reload();
+    });
 
+    function setItemsTable(){
         table = $('#item_table').DataTable({
             "processing": true,
             "serverSide": true,
-            "destroy": true,
-            "aoColumnDefs": [
+            "paging": true,
+            "lengthChange" : false,
+            "searching" : false,
+            "columns": [
                 {
                     "bSortable": false,
-                    "aTargets": [0],
                     "data": "group"
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [1],
                     "data": "name"
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [2],
                     "data": "cup"
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [3],
                     "data": "size"
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [4],
                     "data": 'color'
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [5],
                     "data": 'mrp'
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [6],
                     "data": 'barcode'
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [7],
                     "data": 'qty'
                 }
             ],

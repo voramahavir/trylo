@@ -18,7 +18,7 @@ class MemberShipCardController extends CI_Controller
         $this->load->view('dashboard', $data);
     }
 
-    public function list()
+    public function cardList()
     {
         $data['page_title'] = 'Membership Card Registration';
         $this->load->view('membershipcard/list', $data);

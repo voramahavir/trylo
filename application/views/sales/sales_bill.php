@@ -17,11 +17,11 @@
                     <label class="col-md-1 text-left">Fr Date : </label>
                     <div class="col-md-2">
                         <input id="from_date" type="text"
-                               value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
+                               value="<?php echo date('Y-m-d', strtotime('first day of this month', time())); ?>">
                     </div>
                     <label class="col-md-1 text-left"> To Date : </label>
                     <div class="col-md-2">
-                        <input id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>">
+                        <input id="to_date" type="text" value="<?php echo date('Y-m-d'); ?>">
                     </div>
 
                     <div class="col-md-5 col-md-offset-1">
@@ -108,11 +108,11 @@
             //Date picker
             $('#from_date').datepicker({
                 autoclose: true,
-                format: 'dd/mm/yyyy'
+                format: 'yyyy-mm-dd'
             });
             $('#to_date').datepicker({
                 autoclose: true,
-                format: 'dd/mm/yyyy'
+                format: 'yyyy-mm-dd'
             });
         });
     }(jQuery));
@@ -129,66 +129,56 @@
             "processing": true,
             "serverSide": true,
             "destroy": true,
-            "aoColumnDefs": [
+            "lengthChange" : false,
+            "searching" : false,
+            "columns": [
                 {
                     "bSortable": false,
-                    "aTargets": [0],
                     "data": "billno"
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [1],
                     "data": "date"
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [2],
                     "data": "type"
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [3],
                     "data": "name"
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [4],
-                    "data": ''
+                    "data": null
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [5],
                     "data": 'qty'
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [6],
                     "data": 'bamount'
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [7],
                     "data": 'ramount'
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [8],
-                    "data": ''
-                },
-                {
-                    "bSortable": false,
-                    "aTargets": [9],
-                    "data": ''
-                },
-                {
-                    "bSortable": false,
-                    "aTargets": [10],
-                    "data": ''
-                },
-                {
-                    "bSortable": false,
-                    "aTargets": [11],
                     "data": null
+                },
+                {
+                    "bSortable": false,
+                    "data": null
+                },
+                {
+                    "bSortable": false,
+                     "data": null
+                },
+                {
+                    "bSortable": false,
+                     "data": null
                 }
             ],
             "ajax": {
@@ -204,14 +194,18 @@
             },
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 if (aData.type == 1) {
-                    $('td:eq(3)', nRow).html("Cash Memo");
+                    $('td:eq(2)', nRow).html("Cash Memo");
                 } else if (aData.type == 2) {
-                    $('td:eq(3)', nRow).html("Debit");
+                    $('td:eq(2)', nRow).html("Debit");
                 } else if (aData.type == 3) {
-                    $('td:eq(3)', nRow).html("Master/Visa");
+                    $('td:eq(2)', nRow).html("Master/Visa");
                 } else if (aData.type == 4) {
-                    $('td:eq(3)', nRow).html("PAYTM");
+                    $('td:eq(2)', nRow).html("PAYTM");
                 }
+                $('td:eq(4)', nRow).html("");
+                $('td:eq(8)', nRow).html("");
+                $('td:eq(9)', nRow).html("");
+                $('td:eq(10)', nRow).html("");
                 var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' class='btn btn-success'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
                 $('td:eq(11)', nRow).html(printStr);
             }
