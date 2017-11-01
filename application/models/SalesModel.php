@@ -21,6 +21,7 @@ class SalesModel extends CI_Model
             $salesData['TRBLDT'] = date("Y-m-d", strtotime($salesData['TRBLDT']));
             $salesData['TRDOB'] = ($salesData['TRDOB']) ? date("Y-m-d", strtotime($salesData['TRDOB'])) : NULL;
             $salesData['TRMAD'] = ($salesData['TRMAD']) ? date("Y-m-d", strtotime($salesData['TRMAD'])) : NULL;
+            $salesData['TRCRDEXP'] = ($salesData['TRCRDEXP']) ? date("Y-m-d", strtotime($salesData['TRCRDEXP'])) : NULL;
             if ($this->db->trans_begin()) {
                 $this->db->insert("trbil", $salesData);
                 $lastId = $this->db->insert_id();
