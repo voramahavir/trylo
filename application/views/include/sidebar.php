@@ -71,7 +71,7 @@
 
         <li class="treeview <?php echo (isset($page_title) && ($page_title == 'Membership Card Registration' ||  $page_title == 'Loyalty Card Issue Entry' ||  $page_title == 'Add Membership Card')) ? 'active' : ''; ?>">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Membership & Loyalty Card Registration</span>
+            <i class="fa fa-dashboard"></i> <span>Membership & Loyalty</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
