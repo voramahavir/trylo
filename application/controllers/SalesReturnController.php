@@ -1,0 +1,30 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class SalesReturnController extends CI_Controller
+{
+
+    function __construct()
+    {
+        parent::__construct();
+        if (!access()) {
+            logout();
+        } else {
+            $this->load->model('SalesReturnModel');
+        }
+    }
+
+    public function index()
+    {
+        $this->load->view('salesreturn');
+    }
+
+    public function add()
+    {
+        $this->load->model('SalesModel');
+        $data['page_title'] = 'Sales Return Add';
+        $currentBill = $this->SalesModel->getCurrentBillNo();
+        $data['currentBill'] = $currentBill;
+        $this->load->view('salesreturn/sales_return_add', $data);
+    }
+}

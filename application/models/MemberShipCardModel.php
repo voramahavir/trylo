@@ -50,9 +50,9 @@ class MemberShipCardModel extends CI_Model
         $output['data'] = $this->db->get('maincrd')->result();
         $output['recordsTotal'] = $this->db->get('maincrd')->num_rows();
         // $this->db->limit($length,$start);
-        if (!empty($search)) {
-            $this->db->like("NAME", $search)->or_like("MOBILENO", $search)->or_like("CARDNO", $search);
-        }
+        // if (!empty($search)) {
+        //     $this->db->like("NAME", $search)->or_like("MOBILENO", $search)->or_like("CARDNO", $search);
+        // }
         $output['recordsFiltered'] = $this->db->get('maincrd')->num_rows();
         if (!empty($output['data'])) {
             $output['code'] = 1;
