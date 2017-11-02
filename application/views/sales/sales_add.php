@@ -167,7 +167,7 @@
                                     </div>
                                     <label class="col-md-1 text-right"> Type : </label>
                                     <div class="col-md-2">
-                                        <select class="form-control" name="TRTYPE">
+                                        <select class="form-control trtype" name="TRTYPE">
                                             <option value="1"> Cash</option>
                                             <option value="2"> Debit</option>
                                             <option value="3"> Cr.Card-DebitCard</option>
@@ -184,7 +184,7 @@
                                     </div>
                                     <label class="col-md-1 text-right"> No : </label>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" name="CRDNUM">
+                                        <input type="text" class="form-control crdnum" name="CRDNUM">
                                     </div>
                                 </div>
                             </div>
@@ -206,25 +206,25 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control" name="TRPRNM" value="">
+                                                <input type="text" class="form-control party" name="TRPRNM" value="">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Address </label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control address" name="TRPAD1"/>
+                                                <input type="text" class="form-control address ad1" name="TRPAD1"/>
                                             </div>
                                             <div class="col-md-10 col-md-offset-2">
-                                                <input type="text" class="form-control address" name="TRPAD2"/>
+                                                <input type="text" class="form-control address ad2" name="TRPAD2"/>
                                             </div>
                                             <div class="col-md-10 col-md-offset-2">
-                                                <input type="text" class="form-control address" name="TRPAD3"/>
+                                                <input type="text" class="form-control address ad3" name="TRPAD3"/>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> City </label>
                                             <div class="col-md-10">
-                                                <input type="text" name="TRCITY" class="form-control">
+                                                <input type="text" name="TRCITY" class="form-control city">
                                             </div>
                                         </div>
                                     </div>
@@ -233,11 +233,11 @@
                                             <label class="col-md-2 text-right"> Phone-1 </label>
                                             <div class="col-md-3">
                                                 <input type="number" min="10" max="10" name="TRPH1"
-                                                       class="form-control">
+                                                       class="form-control ph1">
                                             </div>
                                             <label class="col-md-1 text-right"> D.O.B </label>
                                             <div class="col-md-3">
-                                                <input type="text" name="TRDOB" class="form-control datepicker">
+                                                <input type="text" name="TRDOB" class="form-control datepicker dob">
                                             </div>
 
                                         </div>
@@ -245,17 +245,35 @@
                                             <label class="col-md-2 text-right"> Phone-2 </label>
                                             <div class="col-md-3">
                                                 <input type="number" min="10" max="10" name="TRPH2"
-                                                       class="form-control">
+                                                       class="form-control ph2">
                                             </div>
                                             <label class="col-md-1 text-right"> M.A.D. </label>
                                             <div class="col-md-3">
-                                                <input type="text" name="TRMAD" class="form-control datepicker">
+                                                <input type="text" name="TRMAD" class="form-control datepicker mad">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Email </label>
                                             <div class="col-md-5">
-                                                <input type="email" name="TREMAIL" class="form-control">
+                                                <input type="email" name="TREMAIL" class="form-control email">
+                                            </div>
+                                        </div>
+                                        <div class="row crcrd">
+                                            <label class="col-md-2 text-right"> Card No. </label>
+                                            <div class="col-md-5">
+                                                <input type="text" name="TRCRDNO" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row crcrd">
+                                            <label class="col-md-2 text-right"> Exp.Dt </label>
+                                            <div class="col-md-5">
+                                                <input type="text" name="TRCRDEXP" class="form-control datepicker">
+                                            </div>
+                                        </div>
+                                        <div class="row crcrd">
+                                            <label class="col-md-2 text-right"> Card Holder </label>
+                                            <div class="col-md-5">
+                                                <input type="text" name="TRCRDHOLD" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -617,20 +635,22 @@
 <script type="text/javascript">
     (function ($) {
         $(document).ready(function () {
+            $('body').addClass("sidebar-collapse");
             $('.datepicker').datepicker({
                 autoclose: true,
                 format: 'dd/mm/yyyy'
             });
+            showTypeDetails();
             loadingStop();
             var items, itemsData, gTotalAmt = 0;
             var barCodeArray = [], itemsArray = [];
 
             $('.save').click(function () {
                 if (barCodeArray.length > 0) {
-                $("#save-modal").modal();
-                gTotalAmt = 0;
-                itemsData = setItemsData();
-                total_amt();
+                    $("#save-modal").modal();
+                    gTotalAmt = 0;
+                    itemsData = setItemsData();
+                    total_amt();
                 } else {
                     alert("Required to add items");
                 }
@@ -692,6 +712,9 @@
             $(".sales_code").focusout(function () {
                 addNewItem();
             });
+            $('.crdnum').focusout(function () {
+                getDetailsByCard();
+            });
 
             $(document).on('click', '.remove', function () {
                 $(this).parent().parent().remove();
@@ -703,6 +726,9 @@
 
             $(document).on('click', '.saveBill', function () {
                 saveBill();
+            });
+            $(document).on('change', '.trtype', function () {
+                showTypeDetails();
             });
 
             function getIteminfo() {
@@ -797,6 +823,24 @@
                 netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
                 $('.net_amount').val(netAmt);
                 $('.rndOff').val(rndOff);
+            }
+
+            function showTypeDetails() {
+                var type = $(".trtype").val();
+                switch (parseInt(type)) {
+                    case 1:
+                        $(".crcrd").hide();
+                        break;
+                    case 2:
+                        $(".crcrd").hide();
+                        break;
+                    case 3:
+                        $(".crcrd").show();
+                        break;
+                    case 4:
+                        $(".crcrd").hide();
+                        break;
+                }
             }
 
             $(document).on('change', ".qty", function () {
@@ -973,6 +1017,48 @@
                         });
                     }
                 });
+            }
+
+            function getDetailsByCard() {
+
+                var cardNo = $('.crdnum').val().trim();
+                if (cardNo) {
+                    loadingStart();
+                    var data = {
+                        cardNo: cardNo
+                    };
+                    $.ajax({
+                        url: site_url + 'membershipcard/details',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: data,
+                        success: function (response) {
+                            if (response.code) {
+                                data = response.data;
+                                var dob = new Date(data.DATEOFB);
+                                dob = dob.toString("dd/MM/yyyy");
+                                var mad = new Date(data.MDATE);
+                                mad = mad.toString("dd/MM/yyyy");
+                                $('.party').val(data.NAME);
+                                $('.ad1').val(data.ADR1);
+                                $('.ad2').val(data.ADR2);
+                                $('.ad3').val(data.ADR3);
+                                $('.city').val(data.CITY);
+                                $('.ph1').val(data.MOBILENO);
+                                $('.ph2').val(data.PHONENO);
+                                $('.email').val(data.EMAIL);
+                                $(".dob").datepicker("setDate", dob);
+                                $(".mad").datepicker("setDate", mad);
+                            }
+                            else {
+                                bootbox.alert(response.msg, function () {
+                                    $('.crdnum').val('');
+                                });
+                            }
+                            loadingStop();
+                        }
+                    });
+                }
             }
 
         });
