@@ -23,14 +23,19 @@ class SalesReturnController extends CI_Controller
     {
         $this->load->model('SalesModel');
         $data['page_title'] = 'Sales Return Add';
-        $currentBill = $this->SalesReturnModel->getCurrentBillNo();
+        $currentBill = $this->SalesModel->getCurrentBillNo();
         $data['currentBill'] = $currentBill;
         $this->load->view('salesreturn/sales_return_add', $data);
     }
 
-
-    public function validateBillNo()
+    public function salesreturnList()
     {
-        $this->SalesReturnModel->validateBillNo();
+        $data['page_title'] = 'Sales Return List';
+        $this->load->view('salesreturn/sales_return_list', $data);
+    }
+
+    public function getSalesReturns()
+    {
+        $this->SalesReturnModel->getSalesReturns();
     }
 }
