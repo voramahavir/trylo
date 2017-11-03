@@ -112,6 +112,7 @@ class SalesReturnModel extends CI_Model
             "TRSZ" => $itemSz,
         );
         $this->db->where($where);
+        $this->db->join("trbil","trbil.TRBLNO = trbil1.TRBLNO1");
         $this->db->limit(1);
         $data = $this->db->get("trbil1")->row();
         if (count($data)) {

@@ -150,6 +150,441 @@
         <a class="btn btn-primary save">Save</a>
     </div>
 </div>
+
+<div class="modal fade" id="save-modal">
+    <div class="modal-dialog my-modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <form role="form" id="salesBill">
+                    <div class="col-md-12">
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <div class="row">
+                                    <label class="col-md-1 text-right"> C N No : </label>
+                                    <div class="col-md-1">
+                                        <input type="text" class="form-control" name="TRBLNO"
+                                               value="<?php echo $currentBill; ?>" readonly>
+                                    </div>
+                                    <label class="col-md-1 text-right"> Date : </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" name="TRBLDT"
+                                               value="<?php echo date('d-m-Y'); ?>" readonly>
+                                    </div>
+                                    <label class="col-md-1 text-right"> Type : </label>
+                                    <div class="col-md-2">
+                                        <select class="form-control trtype" name="TRTYPE">
+                                            <option value="1"> Cash</option>
+                                            <option value="2"> Debit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-1 text-right"> Prefix : </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" name="CRDPREF" value="GCHGDM" readonly>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>
+                                    <label class="col-md-1 text-right"> No : </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control crdnum" name="CRDNUM">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="box box-warning">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Party </label>
+                                            <div class="col-md-7">
+                                                <input type="text" class="form-control party" name="TRPRNM" value="">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Address </label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control address ad1" name="TRPAD1"/>
+                                            </div>
+                                            <div class="col-md-10 col-md-offset-2">
+                                                <input type="text" class="form-control address ad2" name="TRPAD2"/>
+                                            </div>
+                                            <div class="col-md-10 col-md-offset-2">
+                                                <input type="text" class="form-control address ad3" name="TRPAD3"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> City </label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="TRCITY" class="form-control city">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Phone-1 </label>
+                                            <div class="col-md-3">
+                                                <input type="number" min="10" max="10" name="TRPH1"
+                                                       class="form-control ph1">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Phone-2 </label>
+                                            <div class="col-md-3">
+                                                <input type="number" min="10" max="10" name="TRPH2"
+                                                       class="form-control ph2">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Email </label>
+                                            <div class="col-md-5">
+                                                <input type="email" name="TREMAIL" class="form-control email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="box box-info">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Gross </label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="TRGROS" class="form-control gross" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Other </label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="TROTH1" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Other Amt </label>
+                                            <div class="col-md-10">
+                                                <input type="number" value="0" name="TROTH2"
+                                                       class="form-control oth_amt">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <label class="col-md-3 text-right"> Rnd Off </label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control rndOff" name="TRRND">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Nett Amount Rs. </label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="TRNET" class="form-control net_amount"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <label class="col-md-3 text-right"> Total Qty </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="TRTOTQTY" class="form-control m_t_qty"
+                                                       readonly>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="box box-danger">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h3> DENOMINATION RECEIVED </h3>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dr_amount"> 2000 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="RC2000" class="form-control dr_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dr_amount"> 500 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="RC500" class="form-control dr_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dr_amount"> 200 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="RC200" class="form-control dr_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dr_amount"> 100 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="RC100" class="form-control dr_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dr_amount"> 50 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="RC50" class="form-control dr_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dr_amount"> 20 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="RC20" class="form-control dr_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dr_amount"> 10 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="RC10" class="form-control dr_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dr_amount"> 5 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="RC5" class="form-control dr_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-5 text-right"> MISC. </label>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" name="RCMIS"
+                                                       class="form-control dr_misc dr_value"
+                                                       value="0">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-6 text-right"> Rcvd AMt. </label>
+                                            <div class="col-md-5">
+                                                <input type="text" name="EXRCVD" class="form-control dr_total"
+                                                       value="0"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h3> DENOMINATION RETURNED </h3>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dre_amount"> 2000 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="PD2000" class="form-control dre_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dre_amount"> 500 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="PD500" class="form-control dre_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dre_amount"> 200 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="PD200" class="form-control dre_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dre_amount"> 100 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="PD100" class="form-control dre_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dre_amount"> 50 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="PD50" class="form-control dre_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dre_amount"> 20 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="PD20" class="form-control dre_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dre_amount"> 10 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="PD10" class="form-control dre_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dre_amount"> 5 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="PD5" class="form-control dre_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-5 text-right dr_amount"> MISC. </label>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" name="PDMIS"
+                                                       class="form-control dre_misc dre_value"
+                                                       value="0">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-6 text-right"> Return to </label>
+                                            <div class="col-md-5">
+                                                <input type="text" name="EXBACK" class="form-control dre_total"
+                                                       value="0" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row ret_cus_div">
+                                            <label class="col-md-4 text-right"> RETURN TO CUSTOMER </label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control ret_cus" value="0" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-4 text-right"> Nett Amt Rcvd </label>
+                                            <div class="col-md-8">
+                                                <input type="text" name="TRCRAMT" class="form-control nett_amt_rcvd"
+                                                       value="0" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary saveBill">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <?php $this->load->view('include/template/common_footer'); ?>
 
 <script type="text/javascript">
@@ -160,9 +595,19 @@
                 format: 'dd/mm/yyyy'
             });
             loadingStop();
-            var items;
-            var barCodeArray = [], itemsArray = [];
+            var items, billItems, gTotalAmt = 0, itemsData;
+            var barCodeArray = [], itemsArray = [], billItemsArray = [];
 
+            $('.save').click(function () {
+                if (barCodeArray.length > 0) {
+                    $("#save-modal").modal();
+                    gTotalAmt = 0;
+                    itemsData = setItemsData();
+                    total_amt();
+                } else {
+                    alert("Required to add items");
+                }
+            });
             $(".barCode").keyup(function (event) {
                 if (event.keyCode == 13) {
                     $('.return_bill').focus();
@@ -175,6 +620,32 @@
 
             $(".return_bill").focusout(function () {
                 validateBillNo();
+            });
+
+            $(document).on('click', '.remove', function () {
+                $(this).parent().parent().remove();
+                index = barCodeArray.indexOf(items.BARCODF);
+                if (index > -1) {
+                    barCodeArray.splice(index, 1);
+                }
+            });
+            $(document).on('focusin', ".qty", function () {
+                $(this).data('val', $(this).val());
+            }).on('change', ".qty", function () {
+                var prevQty = $(this).data('val');
+                var _qty = parseFloat($(this).val());
+                if (parseFloat(billItemsArray[billItems.subid].TRQTY) < _qty) {
+                    bootbox.alert("Enter quantity is greater than billing quantity");
+                    $(this).val(prevQty);
+                    $(this).trigger("change");
+                }
+                else {
+                    total_amt();
+                }
+            });
+
+            $(document).on('change', ".d_per", function () {
+                total_amt();
             });
 
             function getIteminfo() {
@@ -221,7 +692,7 @@
                 $('.disc').val('');
                 $('.disc_amt').val('');
                 $('.net_amt').val('');
-                $('.return_bill').val('');
+//                $('.return_bill').val('');
             }
 
             function loadingStart() {
@@ -235,31 +706,33 @@
             function addNewItem() {
                 console.log("items", items);
                 console.log("itemsArray", itemsArray);
-//                return;
+                console.log("billItems", billItems);
+                console.log("billItemsArray", billItemsArray);
                 var barCode = $('.barCode').val().trim();
                 if (barCode && items && barCodeArray.indexOf(items.BARCODF) !== -1) {
-                    var _qty = $('tr.' + items.BARCODF).find('.qty');
-                    if (parseInt(_qty.val()) < parseInt(items.TRQTY)) {
-                        _qty.val(parseInt($('tr.' + items.BARCODF).find('.qty').val()) + 1);
-                    }
-                    else {
-                        bootbox.alert("Return quantity is greater than billing quantity");
-                    }
+                    $('tr.' + (itemsArray[billItems.TRITCD].BARCODF).replace("/", "-")).find('.qty').val(parseInt($('tr.' + (itemsArray[billItems.TRITCD].BARCODF).replace("/", "-")).find('.qty').val()) + 1);
+                    $(this).trigger("change");
+                    $('tr.' + (itemsArray[billItems.TRITCD].BARCODF).replace("/", "-")).find('.qty').val(parseInt($('tr.' + (itemsArray[billItems.TRITCD].BARCODF).replace("/", "-")).find('.qty').val()) - 1);
                     total_amt();
                 } else if (items && barCode) {
-                    html = '<tr class="itemBarCode ' + itemsArray[items.TRITCD].BARCODF + '">';
-                    html += '<td class="hide"> ' + items.TRITCD + '</td> ';
-                    html += '<td> ' + itemsArray[items.TRITCD].TRITNM + '</td> ';
-                    html += '<td> ' + itemsArray[items.TRITCD].TRCOLOR + '</td> ';
-                    html += '<td> ' + itemsArray[items.TRITCD].TRSZCD + '</td> ';
+                    var _totQty = parseInt(billItems.TRQTY);
+                    var _disAmt = parseFloat(billItems.TRDS2);
+                    var _perQtyDis = parseFloat(_disAmt / _totQty).toFixed(2);
+                    var _finDisAmt = Math.round(_perQtyDis);
+                    var ntAmt = Math.round(billItems.TRNETRT);
+                    html = '<tr class="itemBarCode ' + (itemsArray[billItems.TRITCD].BARCODF).replace("/", "-") + '">';
+                    html += '<td class="hide"> ' + billItems.TRITCD + '</td> ';
+                    html += '<td> ' + itemsArray[billItems.TRITCD].TRITNM + '</td> ';
+                    html += '<td> ' + itemsArray[billItems.TRITCD].TRCOLOR + '</td> ';
+                    html += '<td> ' + itemsArray[billItems.TRITCD].TRSZCD + '</td> ';
                     html += '<td> <input type="number" class="form-control qty" min=1 value=1 /> </td> ';
-                    html += '<td> <label class="nt_amt">' + parseFloat(items.TRRATE).toFixed(2) + '</label> </td> ';
-                    html += '<td> <label class="ntt_amt">' + 1 * parseFloat(items.TRRATE).toFixed(2) + '</label> </td> ';
-                    html += '<td> ' + items.TRDS1 + ' </td> ';
-                    html += '<td> <label class="d_amt">' + items.TRDS1 + '</label> </td> ';
-                    html += '<td> <label class="t_amt">' + parseFloat(items.TRBLAMT).toFixed(2) + '</label> </td> ';
-                    html += '<td> <label class="i_salesCode">' + itemsArray[items.TRITCD].BARCODF + ' </label> </td> ';
-                    html += '<td> <label class="i_salesCode">' + items.TRBLNO1 + ' </label> </td>';
+                    html += '<td> <label class="nt_amt">' + parseFloat(billItems.TRRATE).toFixed(2) + '</label> </td> ';
+                    html += '<td> <label class="ntt_amt">' + 1 * parseFloat(billItems.TRRATE).toFixed(2) + '</label> </td> ';
+                    html += '<td> <input type="number" class="form-control d_per" min=0 value="' + billItems.TRDS1 + '" /> </td> ';
+                    html += '<td> <label class="d_amt">' + _finDisAmt + '</label> </td> ';
+                    html += '<td> <label class="t_amt">' + ntAmt + '</label> </td> ';
+                    html += '<td> <label class="i_salesCode">' + itemsArray[billItems.TRITCD].BARCODF + ' </label> </td> ';
+                    html += '<td> <label class="i_salesCode">' + billItems.TRBLNO1 + ' </label> </td>';
                     html += '<td> <a class="btn btn-danger remove"> <i class="fa fa-trash-o"> </i> </a> </td> ';
                     html += '</tr> ';
                     if ($(".items tr:first").length) {
@@ -275,13 +748,12 @@
             }
 
             function total_amt() {
-                return;
                 var qty, amount, total, disc_amount, _gTotalAmt = 0, gTotalQty = 0;
 
                 $.each($('.itemBarCode'), function () {
                     qty = parseInt($(this).find('.qty').val());
                     amount = qty * parseFloat($(this).find('.nt_amt').text());
-                    disc_amount = parseFloat($(this).find('.d_per').val()) * amount / 100;
+                    disc_amount = Math.round(parseFloat($(this).find('.d_per').val()) * amount / 100);
                     total = amount - disc_amount;
                     _gTotalAmt += total;
                     gTotalQty += qty;
@@ -316,12 +788,25 @@
                         data: data,
                         success: function (response) {
                             if (response.code) {
-                                items = response.data;
-                                bootbox.prompt("Please enter Authentication code", function (result) {
-                                    if(result != null){
-                                        addNewItem();
-                                    }
-                                });
+                                billItems = response.data;
+                                if (!billItemsArray[billItems.subid]) {
+                                    billItemsArray[billItems.subid] = billItems;
+                                    billItemsArray[billItems.subid].TRFQTY = billItemsArray[billItems.subid].TRQTY;
+                                    bootbox.prompt("Please enter Authentication code", function (result) {
+                                        if (result != null) {
+                                            addNewItem();
+                                            billItemsArray[billItems.subid].TRFQTY -= 1;
+                                        }
+                                    });
+                                }
+                                else if (billItemsArray[billItems.subid].TRFQTY) {
+                                    addNewItem();
+                                    billItemsArray[billItems.subid].TRFQTY -= 1;
+                                }
+                                else {
+                                    bootbox.alert("Enter quantity is greater than billing quantity");
+                                    $(".return_bill").val("");
+                                }
                             }
                             else {
                                 bootbox.alert(response.msg, function () {
@@ -333,6 +818,84 @@
                         }
                     });
                 }
+            }
+
+            function setItemsData() {
+                var _itemsData = [];
+                $("tr.itemBarCode").each(function () {
+                    var col = $(this).find("td");
+                    var itcd = col.eq(0).text().trim();
+                    var qty = parseFloat(col.eq(4).find('.qty').val().trim());
+                    var rate = parseFloat(col.eq(5).text().trim());
+                    var disamt = parseFloat(col.eq(8).text().trim());
+
+                    var sgstl = parseFloat(itemsArray[itcd].TRSGSTL);//Low SGST per
+                    var cgstl = parseFloat(itemsArray[itcd].TRCGSTL);//Low CGST per
+                    var sgsth = parseFloat(itemsArray[itcd].TRSGSTH);//High SGST per
+                    var cgsth = parseFloat(itemsArray[itcd].TRCGSTH);//High CGST per
+                    var lowAmt = parseFloat(itemsArray[itcd].TRLOW);//Low amount
+                    var totLowTax = sgstl + cgstl;
+                    var totHighTax = sgsth + cgsth;
+
+                    var netrt = parseFloat(rate - (disamt / qty)).toFixed(2);//Net Rate per pc
+
+                    var netbt = parseFloat((netrt * 100) / (100 + totLowTax)).toFixed(2);//Net Rate before tax
+                    var netAmt = col.eq(9).text().trim();//Net amt of item
+                    var belowAmt = netbt * qty;
+                    var aboveAmt = 0;
+
+                    if (netbt > lowAmt) {
+                        netbt = parseFloat((netrt * 100) / (100 + totHighTax)).toFixed(2);
+                        aboveAmt = netbt * qty;
+                        belowAmt = 0;
+                        sgstl = 0;
+                        cgstl = 0;
+                    }
+                    else {
+                        sgsth = 0;
+                        cgsth = 0;
+                    }
+                    var sgstla = parseFloat(((netbt * sgstl) / 100) * qty).toFixed(2);//Low SGST amt
+                    var cgstla = parseFloat(((netbt * cgstl) / 100) * qty).toFixed(2);//Low CGST amt
+                    var sgstha = parseFloat(((netbt * sgsth) / 100) * qty).toFixed(2);//High SGST amt
+                    var cgstha = parseFloat(((netbt * cgsth) / 100) * qty).toFixed(2);//High CGST amtw
+                    gTotalAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat(belowAmt) + parseFloat(aboveAmt) + parseFloat(sgstla) + parseFloat(cgstla) + parseFloat(sgstha) + parseFloat(cgstha)).toFixed(2);
+
+                    var data = {
+                        TRBLNO1: "<?php echo $currentBill; ?>",// BillNo
+                        TRITCD: itcd,//Item Id
+                        TRSZ: col.eq(3).text().trim(),//Size
+                        TRCLR: col.eq(2).text().trim(),//Color
+//                        TRBRCD: col.eq(10).text().trim(),//Barcode
+                        TRQTY: qty,//Qty
+                        TRRATE: rate,//Rate
+                        TRDS1: col.eq(7).find('.d_per').val().trim(),//Dis. %
+                        TRDS2: disamt,//Dis Amt
+                        TRBLAMT: netAmt,//Net Amt
+                        TRNETRT: netrt,//Net Rate
+                        TRNETBT: netbt,//Net Rate before tax
+                        TRLSGST: sgstl,
+                        TRLSGSTA: sgstla,
+                        TRLCGST: cgstl,
+                        TRLCGSTA: cgstla,
+                        TRHSGST: sgsth,
+                        TRHSGSTA: sgstha,
+                        TRHCGST: cgsth,
+                        TRHCGSTA: cgstha,
+                        TRFBEL: belowAmt,
+                        TRFABV: aboveAmt
+                    };
+                    $(".party").val(billItems.TRPRNM);
+                    $(".ad1").val(billItems.TRPAD1);
+                    $(".ad2").val(billItems.TRPAD2);
+                    $(".ad3").val(billItems.TRPAD3);
+                    $(".city").val(billItems.TRCITY);
+                    $(".ph1").val(billItems.TRPH1);
+                    $(".ph2").val(billItems.TRPH2);
+                    $(".email").val(billItems.TREMAIL);
+                    _itemsData.push(data);
+                });
+                return _itemsData;
             }
         });
 

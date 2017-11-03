@@ -411,6 +411,18 @@
                                             </div>
                                         </div>
                                         <div class="row">
+                                            <label class="col-md-1 text-right dr_amount"> 200 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="RC200" class="form-control dr_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
                                             <label class="col-md-1 text-right dr_amount"> 100 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
@@ -508,6 +520,19 @@
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
                                                 <input type="text" name="PD500" class="form-control dre_note"
+                                                       value="0">
+                                            </div>
+                                            <span class="col-md-1">'=</span>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control dre_value" value="0"
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-1 text-right dre_amount"> 200 </label>
+                                            <span class="col-md-1 text-right">X</span>
+                                            <div class="col-md-3">
+                                                <input type="text" name="PD200" class="form-control dre_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
