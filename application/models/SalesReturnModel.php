@@ -70,12 +70,12 @@ class SalesReturnModel extends CI_Model
             if ($cn_type != null && $cn_type != 'all') {
                 if ($cn_type == "1") {
                     $this->db->where('t.TRREF', 'N');
-                    $this->db->where('t.CANBL != ', 'T');
+                    $this->db->where('t.CANBL IS NULL', NULL, FALSE);
                 } elseif ($cn_type == "2") {
                     $this->db->where('t.TRREF', 'Y');
-                    $this->db->where('t.CANBL != ', 'T');
+                    $this->db->where('t.CANBL IS NULL', NULL, FALSE);
                 } elseif ($cn_type == "3") {
-                    $this->db->where('t.CANBL', 'T');
+                    $this->db->where('t.CANBL IS NOT NULL', NULL, FALSE);
                 }
             }
         }

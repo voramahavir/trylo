@@ -222,25 +222,6 @@
         } 
     });
     $("#search").click(function(){
-        if(filter_type == "name"){
-            params = {
-                filter_type:"name",
-                name : $("input[name=item_name]").val()
-            };
-        }else if (filter_type=="barcode"){
-            params = {
-                filter_type:"barcode",
-                barcode : $("input[name=barcode]").val()
-            };
-        } else {
-            params = {
-                color : color,
-                size : size,
-                group : group,
-                freeze : $('input[name=freeze]:checked').val(),
-                filter_type : "advance"
-            };
-        }
         table.ajax.reload();
     });
 
@@ -248,6 +229,7 @@
         table = $('#item_table').DataTable({
             "processing": true,
             "serverSide": true,
+            "destroy" : true,
             "paging": true,
             "lengthChange" : false,
             "searching" : false,
@@ -288,7 +270,7 @@
             "ajax": {
                 url: "<?= site_url('ItemController/getItems') ?>",
                 method: 'POST',
-                data : params
+                data : getParams
             }
         });
     }
@@ -322,6 +304,30 @@
             }
           }
         });
+    }
+
+    function getParams(){
+
+        if(filter_type == "name"){
+            params = {
+                filter_type:"name",
+                name : $("input[name=item_name]").val()
+            };
+        }else if (filter_type=="barcode"){
+            params = {
+                filter_type:"barcode",
+                barcode : $("input[name=barcode]").val()
+            };
+        } else {
+            params = {
+                color : color,
+                size : size,
+                group : group,
+                freeze : $('input[name=freeze]:checked').val(),
+                filter_type : "advance"
+            };
+        }
+        return params;
     }
 </script>
 

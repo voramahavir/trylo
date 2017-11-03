@@ -197,5 +197,19 @@ class SalesModel extends CI_Model
                 $this->db->where('t.TRTYPE', $payment_mode);
             }
         }
+
+        if (isset($_POST['payment'])) {
+            $payment = $_POST['payment'];
+            if ($payment != null || $payment != "") {
+                if($payment == 'all'){
+                    $this->db->where('t.CANBL IS NULL', NULL, FALSE);
+                }elseif ($payment == 1) {
+                    $this->db->where('t.TRTYPE', '2');
+                    $this->db->where('t.CANBL IS NOT NULL', NULL, FALSE);
+                }elseif ($payment == 3) {
+                    $this->db->where('t.CANBL IS NOT NULL', NULL, FALSE);
+                }
+            }
+        }
     }
 }

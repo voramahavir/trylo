@@ -26,12 +26,12 @@
 
                     <div class="col-md-5 col-md-offset-1">
                         <div class="row radio">
-                            <label> <input type="radio" id="payment" name="payment" value="pending payment"
+                            <label> <input type="radio" id="payment" name="payment" value="1"
                                            checked="true"> Pending Payment </label>
-                            <label> <input type="radio" id="payment" name="payment" value="pending rcvd"> Pending Rcvd
+                            <label> <input type="radio" id="payment" name="payment" value="2"> Payment Rcvd
                             </label>
-                            <label> <input type="radio" id="payment" name="payment" value="all"> All </label>
-                            <label> <input type="radio" id="payment" name="payment" value="cancelled bill"> Cancelled
+                            <label> <input type="radio" id="payment" name="payment" value="all"> All (Except Cancelled) </label>
+                            <label> <input type="radio" id="payment" name="payment" value="3"> Cancelled
                                 Bill </label>
                         </div>
                         <div class="row radio">
@@ -102,6 +102,7 @@
 
 <script type="text/javascript">
     var payment_mode = 'all';
+    var payment = 1;
     (function ($) {
         $(document).ready(function () {
             // $('#sales_bill_table').DataTable();
@@ -118,12 +119,14 @@
     }(jQuery));
 
     $("#search").click(function () {
-        setTable();
+        table.ajax.reload();
     });
     $("input[name=payment_mode]").on('change', function () {
         payment_mode = this.value;
     });
-
+    $("input[name=payment]").on('change', function () {
+        payment = this.value;
+    });
     function setTable() {
         table = $('#sales_bill_table').DataTable({
             "processing": true,
@@ -185,12 +188,7 @@
                 url: "<?= site_url('SalesController/getSalesBills') ?>",
                 pages: 2, // number of pages to cache
                 method: 'POST',
-                data: {
-                    to_date: $('#to_date').val(),
-                    from_date: $('#from_date').val(),
-                    payment: $('#payment').val(),
-                    payment_mode: payment_mode
-                }
+                data: getParams
             },
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 if (aData.type == 1) {
@@ -211,7 +209,15 @@
             }
         });
     }
-
+    function getParams() {
+        var params = {
+            to_date: $('#to_date').val(),
+            from_date: $('#from_date').val(),
+            payment: payment,
+            payment_mode: payment_mode
+        };
+        return params;
+    }
     setTable();
 </script>
 
