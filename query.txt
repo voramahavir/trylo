@@ -22,6 +22,10 @@ Ajaj : for card listing
 
 ALTER TABLE `maincrd` ADD `ISACTIVE` TINYINT NOT NULL DEFAULT '0' AFTER `TRUPWEB`;
 
+Ajaj : for loyalty card listing
+
+ALTER TABLE `trloyl` ADD `ISACTIVE` TINYINT NOT NULL DEFAULT '0' AFTER `LOP200`;
+
 Bhavesh : for 200 denomination
 
 ALTER TABLE trbil ADD RC200 DOUBLE DEFAULT NULL NULL;

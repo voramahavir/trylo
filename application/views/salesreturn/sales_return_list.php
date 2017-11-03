@@ -88,6 +88,7 @@
 
 <script type="text/javascript">
     var cn_type = 'all';
+    var table = null;
     (function ($) {
         $(document).ready(function () {
             // $('#sales_return_table').DataTable();
@@ -104,7 +105,7 @@
     }(jQuery));
 
     $("#search").click(function () {
-        setTable();
+        table.ajax.reload();
     });
     $("input[name=cn_type]").on('change', function () {
         cn_type = this.value;
@@ -158,11 +159,7 @@
                 url: "<?= site_url('SalesReturnController/getSalesReturns') ?>",
                 pages: 2, // number of pages to cache
                 method: 'POST',
-                data: {
-                    to_date: $('#to_date').val(),
-                    from_date: $('#from_date').val(),
-                    cn_type: cn_type
-                }
+                data: getParams
             },
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 if (aData.type == 1) {
@@ -185,6 +182,14 @@
                 $('td:eq(8)', nRow).html("");
             }
         });
+        function getParams(){
+            var params = {
+                    to_date: $('#to_date').val(),
+                    from_date: $('#from_date').val(),
+                    cn_type: cn_type
+                };
+            return params;
+        }
     }
 
     setTable();
