@@ -681,11 +681,6 @@
                 }
             });
 
-            $("input, .address").keyup(function () {
-                var val = $(this).val();
-                $(this).val(val.toUpperCase());
-            });
-
             $(".dr_note").change(function () {
                 var p = $(this).parent().parent();
                 if ($(this).val() > 0) {

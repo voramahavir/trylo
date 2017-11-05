@@ -44,8 +44,8 @@ class LoyaltyCardController extends CI_Controller
 
     public function add()
     {
-        $data['page_title'] = 'Add Membership Card';
-        $this->load->view('membershipcard/add', $data);
+        $data['page_title'] = 'Add Loyalty Card';
+        $this->load->view('loyaltycard/add', $data);
     }
 
     public function create()
@@ -59,5 +59,29 @@ class LoyaltyCardController extends CI_Controller
         $this->load->model('LoyaltyCardModel');
         $cardNo = ($cardNo) ? $cardNo : $_POST['cardNo'];
         $this->LoyaltyCardModel->getDataByCardNo($cardNo);
+    }
+
+    public function schemeList()
+    {
+        $data['page_title'] = 'Loyalty Card Setup';
+        $this->load->view('loyaltycard/scheme_list', $data);
+    }
+
+    public function schemeAdd()
+    {
+        $data['page_title'] = 'Add Loyalty Card Scheme';
+        $this->load->view('loyaltycard/scheme_add', $data);
+    }
+
+    public function schemeCreate()
+    {
+        $this->load->model('LoyaltyCardModel');
+        $this->LoyaltyCardModel->schemeCreate();
+    }
+
+    public function schemeListCard()
+    {
+        $this->load->model('LoyaltyCardModel');
+        $this->LoyaltyCardModel->schemeListCard();
     }
 }

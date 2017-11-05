@@ -82,4 +82,72 @@ class LoyaltyCardModel extends CI_Model
         echo json_encode(array("code" => $code, "response" => $response));
         exit();
     }
+
+    public function createCard()
+    {
+        $code = 0;
+        $msg = "No data found to save";
+        $data = $_POST;
+        if (count($data)) {
+            $data['LODOB'] = ($data['LODOB']) ? date('Y-m-d', strtotime($data['LODOB'])) : NULL;
+            $data['LOMAR'] = ($data['LOMAR']) ? date('Y-m-d', strtotime($data['LOMAR'])) : NULL;
+            $data['LOSTDT'] = ($data['LOSTDT']) ? date('Y-m-d', strtotime($data['LOSTDT'])) : NULL;
+            $data['LOENDT'] = ($data['LOENDT']) ? date('Y-m-d', strtotime($data['LOENDT'])) : NULL;
+            $data["NOENTRY"] = 1;
+            $data["ENTRYDATE"] = date('Y-m-d H:i:s');
+            $succ = $this->db->insert("trloyl", $data);
+            if ($succ) {
+                $code = 1;
+                $msg = "Data saved successfully";
+            } else {
+                $code = 0;
+                $msg = "Unable to save data";
+            }
+        }
+        $response = compact("code", "msg");
+        echo json_encode($response);
+        exit;
+    }
+
+    public function schemeCreate()
+    {
+        $code = 0;
+        $msg = "No data found to save";
+        $data = $_POST;
+        if (count($data)) {
+            $schNo = $this->db->select("LOYSCHNO")->order_by("LOYSCHNO", "desc")->limit(1)->get("trloys")->row();
+            $schNo = ($schNo) ? $schNo->LOYSCHNO : 0;
+            $schNo++;
+            $data["LOYSCHNO"] = $schNo;
+            $data["NOENTRY"] = 1;
+            $succ = $this->db->insert("trloys", $data);
+            if ($succ) {
+                $code = 1;
+                $msg = "Data saved successfully";
+            } else {
+                $code = 0;
+                $msg = "Unable to save data";
+            }
+        }
+        $response = compact("code", "msg");
+        echo json_encode($response);
+        exit;
+    }
+
+    public function schemeListCard()
+    {
+        $code = 0;
+        $msg = "No schemes found";
+        $data = array();
+        $schemes = $this->db->select("*")->get("trloys")->result();
+        if (count($schemes)) {
+            $code = 1;
+            $msg = "Data fetched successfully";
+            $data = $schemes;
+        }
+        $response = compact("code", "msg", "data");
+        echo json_encode($response);
+        exit;
+    }
 }
+

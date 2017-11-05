@@ -27,7 +27,7 @@
                 <button type="button" class="btn btn-default" id="search">
                     <span class="glyphicon glyphicon-search"></span> Search
                 </button>
-                <a href="<?php echo site_url(''); ?>" class="btn btn-info pull-right">
+                <a href="<?php echo site_url('loyaltycard/add'); ?>" class="btn btn-info pull-right">
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </a>
                 <div class="dataTables_wrapper">
