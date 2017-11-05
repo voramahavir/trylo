@@ -43,4 +43,8 @@ class SalesReturnController extends CI_Controller
     {
         $this->SalesReturnModel->validateBillNo();
     }
+
+    public function create(){
+        $this->SalesReturnModel->salesRetAdd();
+    }
 }

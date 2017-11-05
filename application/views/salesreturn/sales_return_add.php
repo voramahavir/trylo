@@ -157,7 +157,7 @@
             <div class="modal-header">
             </div>
             <div class="modal-body">
-                <form role="form" id="salesBill">
+                <form role="form" id="salesRetBill">
                     <div class="col-md-12">
                         <div class="box box-success">
                             <div class="box-body">
@@ -306,16 +306,25 @@
                                         </div>
 
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <input type="checkbox" class="chkRfnd">
+                                            </div>
+                                            <label class="col-md-10">Goods Return Money Refunded</label>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="box box-danger">
+                        <div class="box box-danger dnm">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <h3> DENOMINATION RECEIVED </h3>
+                                        <h3> DENOMINATION RETURNED </h3>
                                         <div class="row">
                                             <label class="col-md-1 text-right dr_amount"> 2000 </label>
                                             <span class="col-md-1 text-right">X</span>
@@ -430,144 +439,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <h3> DENOMINATION RETURNED </h3>
-                                        <div class="row">
-                                            <label class="col-md-1 text-right dre_amount"> 2000 </label>
-                                            <span class="col-md-1 text-right">X</span>
-                                            <div class="col-md-3">
-                                                <input type="text" name="PD2000" class="form-control dre_note"
-                                                       value="0">
-                                            </div>
-                                            <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-1 text-right dre_amount"> 500 </label>
-                                            <span class="col-md-1 text-right">X</span>
-                                            <div class="col-md-3">
-                                                <input type="text" name="PD500" class="form-control dre_note"
-                                                       value="0">
-                                            </div>
-                                            <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-1 text-right dre_amount"> 200 </label>
-                                            <span class="col-md-1 text-right">X</span>
-                                            <div class="col-md-3">
-                                                <input type="text" name="PD200" class="form-control dre_note"
-                                                       value="0">
-                                            </div>
-                                            <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-1 text-right dre_amount"> 100 </label>
-                                            <span class="col-md-1 text-right">X</span>
-                                            <div class="col-md-3">
-                                                <input type="text" name="PD100" class="form-control dre_note"
-                                                       value="0">
-                                            </div>
-                                            <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-1 text-right dre_amount"> 50 </label>
-                                            <span class="col-md-1 text-right">X</span>
-                                            <div class="col-md-3">
-                                                <input type="text" name="PD50" class="form-control dre_note"
-                                                       value="0">
-                                            </div>
-                                            <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-1 text-right dre_amount"> 20 </label>
-                                            <span class="col-md-1 text-right">X</span>
-                                            <div class="col-md-3">
-                                                <input type="text" name="PD20" class="form-control dre_note"
-                                                       value="0">
-                                            </div>
-                                            <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-1 text-right dre_amount"> 10 </label>
-                                            <span class="col-md-1 text-right">X</span>
-                                            <div class="col-md-3">
-                                                <input type="text" name="PD10" class="form-control dre_note"
-                                                       value="0">
-                                            </div>
-                                            <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-1 text-right dre_amount"> 5 </label>
-                                            <span class="col-md-1 text-right">X</span>
-                                            <div class="col-md-3">
-                                                <input type="text" name="PD5" class="form-control dre_note"
-                                                       value="0">
-                                            </div>
-                                            <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
-                                                <input type="text" class="form-control dre_value" value="0"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-5 text-right dr_amount"> MISC. </label>
-                                            <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
-                                                <input type="text" name="PDMIS"
-                                                       class="form-control dre_misc dre_value"
-                                                       value="0">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-6 text-right"> Return to </label>
-                                            <div class="col-md-5">
-                                                <input type="text" name="EXBACK" class="form-control dre_total"
-                                                       value="0" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row ret_cus_div">
-                                            <label class="col-md-4 text-right"> RETURN TO CUSTOMER </label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control ret_cus" value="0" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-4 text-right"> Nett Amt Rcvd </label>
-                                            <div class="col-md-8">
-                                                <input type="text" name="TRCRAMT" class="form-control nett_amt_rcvd"
-                                                       value="0" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -595,6 +466,7 @@
                 format: 'dd/mm/yyyy'
             });
             loadingStop();
+
             var items, billItems, gTotalAmt = 0, itemsData;
             var barCodeArray = [], itemsArray = [], billItemsArray = [];
 
@@ -629,6 +501,9 @@
                     barCodeArray.splice(index, 1);
                 }
             });
+            $(document).on('click', '.saveBill', function () {
+                saveBill();
+            });
             $(document).on('focusin', ".qty", function () {
                 $(this).data('val', $(this).val());
             }).on('change', ".qty", function () {
@@ -647,7 +522,15 @@
             $(document).on('change', ".d_per", function () {
                 total_amt();
             });
-
+            $(document).on('change', ".chkRfnd", function () {
+                if($(this).is(":checked")){
+                    $(".dnm").show();
+                }
+                else{
+                    $(".dnm").hide();
+                }
+            });
+            $(".chkRfnd").trigger("change");
             function getIteminfo() {
                 var barCode = $(".barCode").val().trim();
                 if (barCode) {
@@ -828,7 +711,7 @@
                     var qty = parseFloat(col.eq(4).find('.qty').val().trim());
                     var rate = parseFloat(col.eq(5).text().trim());
                     var disamt = parseFloat(col.eq(8).text().trim());
-
+                    var retBillNo = col.eq(11).text().trim();
                     var sgstl = parseFloat(itemsArray[itcd].TRSGSTL);//Low SGST per
                     var cgstl = parseFloat(itemsArray[itcd].TRCGSTL);//Low CGST per
                     var sgsth = parseFloat(itemsArray[itcd].TRSGSTH);//High SGST per
@@ -872,6 +755,7 @@
                         TRDS1: col.eq(7).find('.d_per').val().trim(),//Dis. %
                         TRDS2: disamt,//Dis Amt
                         TRBLAMT: netAmt,//Net Amt
+                        RETBILLNO: retBillNo,//Return Bill NO
                         TRNETRT: netrt,//Net Rate
                         TRNETBT: netbt,//Net Rate before tax
                         TRLSGST: sgstl,
@@ -896,6 +780,42 @@
                     _itemsData.push(data);
                 });
                 return _itemsData;
+            }
+
+            function saveBill() {
+                var salesData = $("#salesRetBill").serializeObject();
+
+                $.ajax({
+                    url: site_url + "salesreturn/create",
+                    dataType: 'json',
+                    type: "POST",
+                    data: {
+                        "salesData": salesData,
+                        "itemsData": itemsData
+                    },
+                    success: function (response) {
+                        bootbox.alert(response.msg,function(){
+                            window.location.href = site_url + "salesreturn/salesreturnList";
+                        });
+                        $("#save-modal").modal('hide');
+                        /*bootbox.confirm({
+                            message: "Do you want to print the bill now?",
+                            buttons: {
+                                confirm: {
+                                    label: 'Yes',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: 'No',
+                                    className: 'btn-danger'
+                                }
+                            },
+                            callback: function (result) {
+                                window.location.href = site_url + "salesPrint/" + <?php //echo $currentBill; ?>;
+                            }
+                        });*/
+                    }
+                });
             }
         });
 

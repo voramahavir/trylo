@@ -123,6 +123,41 @@ class SalesReturnModel extends CI_Model
         echo json_encode($response);
         exit;
     }
+
+    public function salesRetAdd()
+    {
+        $code = 0;
+        $msg = "Unable to save data";
+        $lastId = 0;
+        if (isset($_POST['salesData']) && count($_POST['salesData']) && isset($_POST['itemsData']) && count($_POST['itemsData'])) {
+            $salesData = $_POST['salesData'];
+            $itemsData = $_POST['itemsData'];
+            $salesData['TRBLDT'] = date("Y-m-d", strtotime($salesData['TRBLDT']));
+            $salesData['TRCRDEXP'] = (isset($salesData['TRCRDEXP']) && $salesData['TRCRDEXP']) ? date("Y-m-d", strtotime($salesData['TRCRDEXP'])) : NULL;
+            if ($this->db->trans_begin()) {
+                $this->db->insert("trslret", $salesData);
+                $lastId = $this->db->insert_id();
+                $this->db->insert_batch("trslret1", $itemsData);
+                $this->db->trans_complete();
+                if ($this->db->trans_status()) {
+                    $code = 1;
+                    $msg = "Data saved successfully";
+                } else {
+                    $code = 0;
+                    $msg = "Unable to save data";
+                }
+            } else {
+                $code = 0;
+                $msg = "Unable to save data";
+            }
+        } else {
+            $msg = "No data found to save";
+        }
+//        $response = compact("code", "msg", "lastId");
+        $response = compact("code", "msg");
+        echo json_encode($response);
+        exit;
+    }
 }
 
 ?>
