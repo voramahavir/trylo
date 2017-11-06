@@ -49,9 +49,16 @@ class SalesController extends CI_Controller
     {
         $this->SalesModel->salesAdd();
     }
+
     public function printBill($billNo)
     {
         $data = $this->SalesModel->printSalesBill($billNo);
         $this->load->view('sales/sales_bill_print', $data);
+    }
+
+    public function getCardByMobile($mobileNo = NULL)
+    {
+        $mobileNo = ($mobileNo) ? $mobileNo : $_POST['mobileNo'];
+        $this->SalesModel->getCardByMobile($mobileNo);
     }
 }

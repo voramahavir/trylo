@@ -201,15 +201,50 @@ class SalesModel extends CI_Model
         if (isset($_POST['payment'])) {
             $payment = $_POST['payment'];
             if ($payment != null || $payment != "") {
-                if($payment == 'all'){
+                if ($payment == 'all') {
                     $this->db->where('t.CANBL IS NULL', NULL, FALSE);
-                }elseif ($payment == 1) {
+                } elseif ($payment == 1) {
                     $this->db->where('t.TRTYPE', '2');
                     $this->db->where('t.CANBL IS NOT NULL', NULL, FALSE);
-                }elseif ($payment == 3) {
+                } elseif ($payment == 3) {
                     $this->db->where('t.CANBL IS NOT NULL', NULL, FALSE);
                 }
             }
         }
+    }
+
+    public function getCardByMobile($mobileNo)
+    {
+        $code = 0;
+        $msg = "No data found with this number";
+        $data = array();
+        $select = array(
+            "MOBILEID",
+            "LONAME",
+            "LODOB",
+            "LOMAR",
+            "LODISCPR",
+            "TRPAD1",
+            "TRPAD2",
+            "TRPAD3",
+            "TRCITY",
+        );
+        $where = array(
+            "MOBILEID" => $mobileNo,
+            "ISACTIVE" => 0
+        );
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->join("trbil", "trbil.TRPH1 = trloyl.MOBILEID");
+        $this->db->limit(1);
+        $cardData = $this->db->get("trloyl")->row();
+        if (count($cardData)) {
+            $code = 1;
+            $msg = "Data fetched successfully";
+            $data = $cardData;
+        }
+        $response = compact("code", "msg", "data");
+        echo json_encode($response);
+        exit;
     }
 }

@@ -827,6 +827,8 @@
                     qty = parseInt($(this).find('.qty').val());
                     amount = qty * parseFloat($(this).find('.nt_amt').text());
                     disc_amount = parseFloat($(this).find('.d_per').val()) * amount / 100;
+                    console.log("d_per.val", $(this).find('.d_per').val());
+                    console.log("disc_amount", disc_amount);
                     total = amount - disc_amount;
                     _gTotalAmt += total;
                     gTotalQty += qty;
@@ -869,6 +871,10 @@
 
             $(document).on('change', ".d_per", function () {
                 total_amt();
+            });
+
+            $(document).on('focusout', ".ph1", function () {
+                getCardDetailsByMobile();
             });
 
             $('#searchItem').click(function () {
@@ -943,7 +949,7 @@
                     var qty = parseFloat(col.eq(4).find('.qty').val().trim());
                     var rate = parseFloat(col.eq(5).text().trim());
                     var disamt = parseFloat(col.eq(8).text().trim());
-
+                    console.log("disamt", disamt);
                     var sgstl = parseFloat(itemsArray[itcd].TRSGSTL);//Low SGST per
                     var cgstl = parseFloat(itemsArray[itcd].TRCGSTL);//Low CGST per
                     var sgsth = parseFloat(itemsArray[itcd].TRSGSTH);//High SGST per
@@ -975,6 +981,7 @@
                     var sgstha = parseFloat(((netbt * sgsth) / 100) * qty).toFixed(2);//High SGST amt
                     var cgstha = parseFloat(((netbt * cgsth) / 100) * qty).toFixed(2);//High CGST amtw
                     gTotalAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat(belowAmt) + parseFloat(aboveAmt) + parseFloat(sgstla) + parseFloat(cgstla) + parseFloat(sgstha) + parseFloat(cgstha)).toFixed(2);
+                    console.log("gTotalAmt", gTotalAmt);
 
                     var data = {
                         TRBLNO1: "<?php echo $currentBill; ?>",// BillNo
@@ -1076,6 +1083,54 @@
                                 });
                             }
                             loadingStop();
+                        }
+                    });
+                }
+            }
+
+            function getCardDetailsByMobile() {
+                var mobileNo = $('.ph1').val();
+                if (mobileNo) {
+                    var data = {
+                        mobileNo: mobileNo
+                    };
+                    $.ajax({
+                        url: site_url + 'sales/getCardByMobile',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: data,
+                        success: function (response) {
+                            if (response.code) {
+                                data = response.data;
+                                var party = $('.party').val();
+                                var ad1 = $('.ad1').val();
+                                var ad2 = $('.ad2').val();
+                                var ad3 = $('.ad3').val();
+                                var city = $('.city').val();
+
+                                party = (party) ? party : data.LONAME;
+                                ad1 = (ad1) ? ad1 : data.TRPAD1;
+                                ad2 = (ad2) ? ad2 : data.TRPAD2;
+                                ad3 = (ad3) ? ad3 : data.TRPAD3;
+                                city = (city) ? city : data.TRCITY;
+
+                                var discPer = data.LODISCPR;
+
+                                $('.party').val(party);
+                                $('.ad1').val(ad1);
+                                $('.ad2').val(ad2);
+                                $('.ad3').val(ad3);
+                                $('.city').val(city);
+
+                                $(".d_per").each(function () {
+                                    $(this).val(discPer);
+                                });
+
+                                total_amt();
+                                gTotalAmt = 0;
+                                itemsData = setItemsData();
+                                total_amt();
+                            }
                         }
                     });
                 }
