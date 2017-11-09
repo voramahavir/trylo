@@ -31,7 +31,7 @@ class MemberShipCardModel extends CI_Model
         if (isset($_POST['draw'])) {
             $draw = $_POST['draw'];
         }
-        if(isset($_POST['order']) && count($_POST['order'])){
+        if (isset($_POST['order']) && count($_POST['order'])) {
             $column = $_POST['order'][0]['column'];
             $sorttype = $_POST['order'][0]['dir'];
             $this->db->order_by($_POST['columns'][$column]['data'], $sorttype);
@@ -145,12 +145,15 @@ class MemberShipCardModel extends CI_Model
                 'PSCHCALL',
                 'PSCHSMS',
                 'PSCHMAIL',
+                '(ifnull(sum(CREDITCRD1),0) - ifnull(sum(DBREDPN),0)) AS totalPoints'
             );
             $where = array(
                 'CARDNO' => $cardNo
             );
             $this->db->select($select);
             $this->db->where($where);
+            $this->db->group_by('CARDNO');
+            $this->db->join('crdtran', 'crdtran.CARDNO1 = maincrd.CARDNO', 'LEFT');
             $this->db->limit(1);
             $details = $this->db->get('maincrd')->row();
             if ($details) {
