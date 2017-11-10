@@ -467,6 +467,10 @@
             });
             loadingStop();
 
+            $('#searchItem').click(function () {
+                window.open(site_url + "searchItem", "popupWindow", "width=1200, height=600, scrollbars=yes");
+            });
+
             var items, billItems, gTotalAmt = 0, itemsData;
             var barCodeArray = [], itemsArray = [], billItemsArray = [];
 

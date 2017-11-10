@@ -77,6 +77,7 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
+	//'password' => 'Intimates*Localhost',
 	'password' => '',
 	'database' => 'trylo',
 	'dbdriver' => 'mysqli',

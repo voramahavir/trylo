@@ -79,7 +79,7 @@
           <ul class="treeview-menu">
             <li class="<?php echo isset($page_title) && $page_title == 'Membership Card Registration' ? 'active' : ''; ?>"><a href="<?php echo site_url('membershipcard/cardList'); ?>"><i class="fa fa-circle-o"></i> Membership Card Registration</a></li>
             <li class="<?php echo isset($page_title) && $page_title == 'Loyalty Card Issue Entry' ? 'active' : ''; ?>"><a href="<?php echo site_url('loyaltycard/cardList'); ?>"><i class="fa fa-circle-o"></i> Loyalty Card Issue Entry</a></li>
-            <li class="<?php echo isset($page_title) && $page_title == 'Loyalty Card Setup' ? 'active' : ''; ?>"><a href="<?php echo site_url('scheme/list'); ?>"><i class="fa fa-circle-o"></i> Loyalty Card Setup</a></li>
+            <!-- <li class="<?php // echo isset($page_title) && $page_title == 'Loyalty Card Setup' ? 'active' : ''; ?>"><a href="<?php // echo site_url('scheme/list'); ?>"><i class="fa fa-circle-o"></i> Loyalty Card Setup</a></li> -->
           </ul>
         </li>
 

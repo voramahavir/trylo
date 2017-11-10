@@ -4,7 +4,7 @@
 </style>
 <link rel="stylesheet"
       href="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'); ?>">
-<?php $this->load->view('include/template/common_header') ?>
+<?php // $this->load->view('include/template/common_header') ?>
       <!-- Main row -->
       <div class="row">
         <div class="col-md-12">
