@@ -16,7 +16,7 @@
                 <div class="dataTables_wrapper">
                   <div class="row form-group">
                     <div class="col-md-12">
-                      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                      <button type="button" class="btn btn-default addbranch">
                         Add New Branch
                       </button>
                     </div>
@@ -82,6 +82,9 @@
     <script type="text/javascript">
       $(document).ready(function(){
 
+        $(document).on('click', '.addbranch', function () {
+            window.location = "<?php echo site_url('branch/add'); ?>";
+        });
         $('#table_branch').DataTable({
           "paging": true,
           "lengthChange": true,
