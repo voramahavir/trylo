@@ -31,3 +31,13 @@ Bhavesh : for 200 denomination
 ALTER TABLE trbil ADD RC200 DOUBLE DEFAULT NULL NULL;
 
 ALTER TABLE trbil ADD PD200 DOUBLE DEFAULT NULL NULL;
+
+Ajaj : for branch creation
+
+ALTER TABLE `branch` ADD `address1` VARCHAR(50) NULL DEFAULT NULL AFTER `branch_name`, ADD `address2` VARCHAR(50) NULL DEFAULT NULL AFTER `address1`, ADD `address3` VARCHAR(50) NULL DEFAULT NULL AFTER `address2`, ADD `city` VARCHAR(50) NULL DEFAULT NULL AFTER `address3`, ADD `district` VARCHAR(50) NULL DEFAULT NULL AFTER `city`, ADD `state` VARCHAR(50) NULL DEFAULT NULL AFTER `district`, ADD `telephone1` VARCHAR(15) NULL DEFAULT NULL AFTER `state`, ADD `telephone2` VARCHAR(15) NULL DEFAULT NULL AFTER `telephone1`;
+
+
+ALTER TABLE `branch` ADD `jurisdiction` VARCHAR(256) NULL DEFAULT NULL AFTER `telephone2`, ADD `tinno` VARCHAR(50) NULL DEFAULT NULL AFTER `jurisdiction`, ADD `prefix` VARCHAR(50) NULL DEFAULT NULL AFTER `tinno`, ADD `chnoofpoints` INT NULL DEFAULT NULL AFTER `prefix`, ADD `refnoofpoints` INT NULL DEFAULT NULL AFTER `chnoofpoints`, ADD `chrs` DOUBLE NULL DEFAULT NULL AFTER `refnoofpoints`, ADD `refrs` DOUBLE NULL DEFAULT NULL AFTER `chrs`, ADD `redaftminpoints` INT NULL DEFAULT NULL AFTER `refrs`, ADD `redperpoints` INT NULL DEFAULT NULL AFTER `redaftminpoints`, ADD `redvaluers` DOUBLE NULL DEFAULT NULL AFTER `redperpoints`, ADD `roundofflimit` DECIMAL NULL DEFAULT NULL AFTER `redvaluers`, ADD `mobileno` VARCHAR(10) NULL DEFAULT NULL AFTER `roundofflimit`, ADD `pettycashtype` INT NULL DEFAULT NULL AFTER `mobileno`, ADD `smscode` VARCHAR(20) NULL DEFAULT NULL AFTER `pettycashtype`, ADD `smslast` VARCHAR(20) NULL DEFAULT NULL AFTER `smscode`;
+
+
+ALTER TABLE `branch` ADD `gstinno` VARCHAR(50) NULL DEFAULT NULL AFTER `smslast`, ADD `defaultmail` INT NULL DEFAULT NULL AFTER `gstinno`, ADD `bdaysms` TINYINT NULL DEFAULT NULL AFTER `defaultmail`, ADD `mrgsms` TINYINT NULL DEFAULT NULL AFTER `bdaysms`, ADD `bdaydiscdays` INT NULL DEFAULT NULL AFTER `mrgsms`, ADD `mrgdiscdays` INT NULL DEFAULT NULL AFTER `bdaydiscdays`, ADD `bdaydisc` DECIMAL NULL DEFAULT NULL AFTER `mrgdiscdays`, ADD `mrgdisc` DECIMAL NULL DEFAULT NULL AFTER `bdaydisc`, ADD `bdaysendbefore` INT NULL DEFAULT NULL AFTER `mrgdisc`, ADD `mrgsendbefore` INT NULL DEFAULT NULL AFTER `bdaysendbefore`;

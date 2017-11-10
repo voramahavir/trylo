@@ -18,6 +18,7 @@ class SalesModel extends CI_Model
         if (isset($_POST['salesData']) && count($_POST['salesData']) && isset($_POST['itemsData']) && count($_POST['itemsData'])) {
             $salesData = $_POST['salesData'];
             $itemsData = $_POST['itemsData'];
+            $cardData = $_POST['cardData'];
             $salesData['TRBLDT'] = date("Y-m-d", strtotime($salesData['TRBLDT']));
             $salesData['TRDOB'] = ($salesData['TRDOB']) ? date("Y-m-d", strtotime($salesData['TRDOB'])) : NULL;
             $salesData['TRMAD'] = ($salesData['TRMAD']) ? date("Y-m-d", strtotime($salesData['TRMAD'])) : NULL;
@@ -26,6 +27,9 @@ class SalesModel extends CI_Model
                 $this->db->insert("trbil", $salesData);
                 $lastId = $this->db->insert_id();
                 $this->db->insert_batch("trbil1", $itemsData);
+                if(count($cardData)){
+                    $this->db->insert("crdtran", $cardData);
+                }
                 $this->db->trans_complete();
                 if ($this->db->trans_status()) {
                     $code = 1;

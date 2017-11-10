@@ -178,7 +178,8 @@
                                 <div class="row">
                                     <label class="col-md-1 text-right"> Prefix : </label>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" name="CRDPREF" value="GCHGDM" readonly>
+                                        <input type="text" class="form-control" name="CRDPREF"
+                                               value="<?php echo getSessionData('prefix'); ?>" readonly>
                                     </div>
                                     <div class="col-md-2">
                                     </div>
@@ -342,14 +343,16 @@
                                         <div class="row">
                                             <label class="col-md-7 text-right"> Current Bill Points </label>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control" style="background: green"
+                                                <input type="text" class="form-control currBillPoint"
+                                                       style="background: green;color: white"
                                                        disabled>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-7 text-right"> Total Balance Point </label>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control" style="background: red"
+                                                <input type="text" class="form-control totBalPoint"
+                                                       style="background: red;color: white"
                                                        disabled>
                                             </div>
                                         </div>
@@ -668,7 +671,7 @@
             showTypeDetails();
             loadingStop();
             var items, itemsData, gTotalAmt = 0;
-            var barCodeArray = [], itemsArray = [];
+            var barCodeArray = [], itemsArray = [], cardData = {};
 
             $('.save').click(function () {
                 if (barCodeArray.length > 0) {
@@ -827,8 +830,6 @@
                     qty = parseInt($(this).find('.qty').val());
                     amount = qty * parseFloat($(this).find('.nt_amt').text());
                     disc_amount = parseFloat($(this).find('.d_per').val()) * amount / 100;
-                    console.log("d_per.val", $(this).find('.d_per').val());
-                    console.log("disc_amount", disc_amount);
                     total = amount - disc_amount;
                     _gTotalAmt += total;
                     gTotalQty += qty;
@@ -949,7 +950,6 @@
                     var qty = parseFloat(col.eq(4).find('.qty').val().trim());
                     var rate = parseFloat(col.eq(5).text().trim());
                     var disamt = parseFloat(col.eq(8).text().trim());
-                    console.log("disamt", disamt);
                     var sgstl = parseFloat(itemsArray[itcd].TRSGSTL);//Low SGST per
                     var cgstl = parseFloat(itemsArray[itcd].TRCGSTL);//Low CGST per
                     var sgsth = parseFloat(itemsArray[itcd].TRSGSTH);//High SGST per
@@ -981,7 +981,6 @@
                     var sgstha = parseFloat(((netbt * sgsth) / 100) * qty).toFixed(2);//High SGST amt
                     var cgstha = parseFloat(((netbt * cgsth) / 100) * qty).toFixed(2);//High CGST amtw
                     gTotalAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat(belowAmt) + parseFloat(aboveAmt) + parseFloat(sgstla) + parseFloat(cgstla) + parseFloat(sgstha) + parseFloat(cgstha)).toFixed(2);
-                    console.log("gTotalAmt", gTotalAmt);
 
                     var data = {
                         TRBLNO1: "<?php echo $currentBill; ?>",// BillNo
@@ -1021,7 +1020,8 @@
                     type: "POST",
                     data: {
                         "salesData": salesData,
-                        "itemsData": itemsData
+                        "itemsData": itemsData,
+                        "cardData": cardData,
                     },
                     success: function (response) {
                         bootbox.alert(response.msg);
@@ -1082,6 +1082,7 @@
                                     $('.crdnum').val('');
                                 });
                             }
+                            setCurrPoints(data.totalPoints);
                             loadingStop();
                         }
                     });
@@ -1134,6 +1135,34 @@
                         }
                     });
                 }
+            }
+
+            function setCurrPoints(totalPoints) {
+
+                var _pointAmt = 0;
+                var crdHolPoint = "<?php echo getSessionData('chnoofpoints'); ?>";
+                var crdHolVal = "<?php echo getSessionData('chrs'); ?>";
+                for (var i = 0; i < itemsData.length; i++) {
+                    if (!parseFloat(itemsData[i].TRDS1)) {
+                        _pointAmt += parseFloat(itemsData[i].TRBLAMT);
+                    }
+                }
+                var currBillPoint = parseFloat((_pointAmt * crdHolPoint) / crdHolVal).toFixed(2);
+                if (currBillPoint) {
+                    cardData = {
+                        BILLNO: "<?php echo $currentBill; ?>",// BillNo
+                        BILLDT: "<?php echo date('Y-m-d'); ?>",
+                        FINYEAR: "<?php echo fin_year(array("full" => true));?>",
+                        BILLVALUE: $('.net_amount').val(),
+                        PREFIX1: "<?php echo getSessionData('prefix'); ?>",
+                        CARDNO1: $('.crdnum').val(),
+                        CREDITCRD1: currBillPoint,
+                        APVALUE: $('.n_amt').val()
+                    };
+                }
+                totalPoints = parseFloat(totalPoints) + parseFloat(currBillPoint);
+                $('.currBillPoint').val(currBillPoint);
+                $('.totBalPoint').val(totalPoints);
             }
 
         });

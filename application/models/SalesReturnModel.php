@@ -158,6 +158,16 @@ class SalesReturnModel extends CI_Model
         echo json_encode($response);
         exit;
     }
+
+    public function getSalesRetByCN($billNo)
+    {
+        $select = array();
+        $where = array(
+            "TRBLNO" => $billNo
+        );
+        $this->db->select($select);
+        $this->db->where($where);
+    }
 }
 
 ?>

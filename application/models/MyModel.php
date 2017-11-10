@@ -117,4 +117,26 @@ class MyModel extends CI_Model {
         echo json_encode($data);
         exit();
     }
+
+    public function addBranch(){
+        $salesData = $_POST;
+        if ($this->db->trans_begin()) {
+            $this->db->insert("branch", $salesData);
+            $lastId = $this->db->insert_id();
+            $this->db->trans_complete();
+            if ($this->db->trans_status()) {
+                $code = 1;
+                $msg = "Data saved successfully";
+            } else {
+                $code = 0;
+                $msg = "Unable to save data";
+            }
+        } else {
+            $code = 0;
+            $msg = "Unable to save data";
+        }
+        $response = compact("code", "msg");
+        echo json_encode($response);
+        exit;
+    }
 }
