@@ -46,10 +46,10 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-default" id="search">
+                <!-- <button type="button" class="btn btn-default" id="search" visible='false'>
                     <span class="glyphicon glyphicon-search"></span> Search
-                </button>
-                <a href="<?php echo site_url('salesAdd'); ?>" class="btn btn-info pull-right">
+                </button> -->
+                <a href="<?php echo site_url('salesAdd'); ?>" class="btn btn-info">
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </a>
                 <div class="box-body">
@@ -118,14 +118,22 @@
         });
     }(jQuery));
 
-    $("#search").click(function () {
+    // $("#search").click(function () {
+    //     table.ajax.reload();
+    // });
+    $("#from_date").on('change', function () {
+        table.ajax.reload();
+    });
+    $("#to_date").on('change', function () {
         table.ajax.reload();
     });
     $("input[name=payment_mode]").on('change', function () {
         payment_mode = this.value;
+        table.ajax.reload();
     });
     $("input[name=payment]").on('change', function () {
         payment = this.value;
+        table.ajax.reload();
     });
     function setTable() {
         table = $('#sales_bill_table').DataTable({
@@ -188,7 +196,12 @@
                 url: "<?= site_url('SalesController/getSalesBills') ?>",
                 pages: 2, // number of pages to cache
                 method: 'POST',
-                data: getParams
+                data: function (d) {
+                    d.to_date = $('#to_date').val();
+                    d.from_date = $('#from_date').val();
+                    d.payment = payment;
+                    d.payment_mode = payment_mode;
+                }
             },
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 if (aData.type == 1) {
@@ -208,15 +221,6 @@
                 $('td:eq(11)', nRow).html(printStr);
             }
         });
-    }
-    function getParams() {
-        var params = {
-            to_date: $('#to_date').val(),
-            from_date: $('#from_date').val(),
-            payment: payment,
-            payment_mode: payment_mode
-        };
-        return params;
     }
     setTable();
 </script>

@@ -321,7 +321,13 @@
           type: "POST",
           data : data,
           success: function (response) {
-              console.log(response);
+            if(response.code == 1){
+                bootbox.alert("Branch added successfully.", function () {
+                    window.location = "<?php echo site_url('branch/list'); ?>";
+                });
+            }else{
+              bootbox.alert("Error in adding branch,Try again.");
+            }
           }
       });
     }

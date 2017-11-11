@@ -16,8 +16,8 @@
                 <div class="dataTables_wrapper">
                   <div class="row form-group">
                     <div class="col-md-12">
-                      <button type="button" class="btn btn-default addbranch">
-                        Add New Branch
+                      <button type="button" class="btn btn-info addbranch">
+                        <span class="glyphicon glyphicon-plus"></span> Add New Branch
                       </button>
                     </div>
                   </div>

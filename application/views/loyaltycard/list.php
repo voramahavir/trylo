@@ -24,10 +24,10 @@
                     </div>
 
                 </div>
-                <button type="button" class="btn btn-default" id="search">
+                <!-- <button type="button" class="btn btn-default" id="search">
                     <span class="glyphicon glyphicon-search"></span> Search
-                </button>
-                <a href="<?php echo site_url('loyaltycard/add'); ?>" class="btn btn-info pull-right">
+                </button> -->
+                <a href="<?php echo site_url('loyaltycard/add'); ?>" class="btn btn-info">
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </a>
                 <div class="dataTables_wrapper">
@@ -121,8 +121,14 @@
             });
             setTable();
       });
-      $("#search").click(function () {
-        table.ajax.reload();
+      // $("#search").click(function () {
+      //   table.ajax.reload();
+      // });
+      $("#from_date").on('change', function () {
+          table.ajax.reload();
+      });
+      $("#to_date").on('change', function () {
+          table.ajax.reload();
       });
       function setTable() {
         table = $('#table_loyaltycard').DataTable({
@@ -135,7 +141,10 @@
               url: "<?= site_url('LoyaltyCardController/getLoyaltyCardList') ?>",
               pages: 2, // number of pages to cache
               method: 'POST',
-              data: getParams
+              data: function(d) {
+                  d.to_date = $('#to_date').val();
+                  d.from_date = $('#from_date').val();
+              }
           },
           "columns": [
               { 
@@ -233,12 +242,5 @@
         });
         $(".recoverCard").prop("disabled",false);
     });
-    function getParams() {
-        var params = {
-            to_date: $('#to_date').val(),
-            from_date: $('#from_date').val(),
-        };
-        return params;
-    }
     </script>
 <?php $this->load->view('include/page_footer.php'); ?>

@@ -15,8 +15,8 @@
                 <div class="dataTables_wrapper">
                   <div class="row form-group">
                     <div class="col-md-12">
-                      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-                        Add New User
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                        <span class="glyphicon glyphicon-plus"></span> Add New User
                       </button>
                     </div>
                   </div>

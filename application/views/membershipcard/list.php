@@ -15,7 +15,7 @@
                 <div class="dataTables_wrapper">
                   <div class="row form-group">
                     <div class="col-md-12">
-                      <a href="<?php echo site_url('membershipcard/add'); ?>"><button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                      <a href="<?php echo site_url('membershipcard/add'); ?>"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
                         <span class="glyphicon glyphicon-plus"></span> Add
                       </button></a>
                     </div>

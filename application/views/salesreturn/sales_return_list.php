@@ -26,19 +26,19 @@
 
                     <div class="col-md-5 col-md-offset-1">
                         <div class="row radio">
-                            <label> <input type="radio" id="cntype" name="cntype" value="1"
+                            <label> <input type="radio" name="cntype" value="1"
                                            checked="true"> Pending CN </label>
-                            <label> <input type="radio" id="cntype" name="cntype" value="2"> Adjusted CN
+                            <label> <input type="radio" name="cntype" value="2"> Adjusted CN
                             </label>
-                            <label> <input type="radio" id="cntype" name="cntype" value="3"> Cancel CN </label>
-                            <label> <input type="radio" id="cntype" name="cntype" value="all"> All CN </label>
+                            <label> <input type="radio" name="cntype" value="3"> Cancel CN </label>
+                            <label> <input type="radio" name="cntype" value="all"> All CN </label>
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-default" id="search">
+              <!--   <button type="button" class="btn btn-default" id="search">
                     <span class="glyphicon glyphicon-search"></span> Search
-                </button>
-                <a href="<?php echo site_url('salesreturn/add'); ?>" class="btn btn-info pull-right">
+                </button> -->
+                <a href="<?php echo site_url('salesreturn/add'); ?>" class="btn btn-info">
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </a>
                 <div class="box-body">
@@ -103,12 +103,18 @@
             });
         });
     }(jQuery));
-
-    $("#search").click(function () {
+    $("#from_date").on('change', function () {
         table.ajax.reload();
     });
-    $("input[name=cn_type]").on('change', function () {
+    $("#to_date").on('change', function () {
+        table.ajax.reload();
+    });
+    // $("#search").click(function () {
+    //     table.ajax.reload();
+    // });
+    $("input[name=cntype]").on('change', function () {
         cn_type = this.value;
+        table.ajax.reload();
     });
 
     function setTable() {
@@ -159,7 +165,11 @@
                 url: "<?= site_url('SalesReturnController/getSalesReturns') ?>",
                 pages: 2, // number of pages to cache
                 method: 'POST',
-                data: getParams
+                data: function(d){
+                    d.to_date = $('#to_date').val();
+                    d.from_date = $('#from_date').val();
+                    d.cn_type = cn_type;
+                }
             },
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 if (aData.type == 1) {
@@ -182,14 +192,6 @@
                 $('td:eq(8)', nRow).html("");
             }
         });
-        function getParams(){
-            var params = {
-                    to_date: $('#to_date').val(),
-                    from_date: $('#from_date').val(),
-                    cn_type: cn_type
-                };
-            return params;
-        }
     }
 
     setTable();

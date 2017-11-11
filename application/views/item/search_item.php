@@ -270,7 +270,21 @@
             "ajax": {
                 url: "<?= site_url('ItemController/getItems') ?>",
                 method: 'POST',
-                data : getParams
+                data : function(d){
+                    if(filter_type == "name"){
+                        d.filter_type="name";
+                        d.name = $("input[name=item_name]").val();
+                    }else if (filter_type=="barcode"){
+                        d.filter_type="barcode";
+                        d.barcode = $("input[name=barcode]").val();
+                    } else {
+                        d.color = color;
+                        d.size = size;
+                        d.group = group;
+                        d.freeze = $('input[name=freeze]:checked').val();
+                        d.filter_type = "advance";
+                    }
+                }
             }
         });
     }
@@ -304,30 +318,6 @@
             }
           }
         });
-    }
-
-    function getParams(){
-
-        if(filter_type == "name"){
-            params = {
-                filter_type:"name",
-                name : $("input[name=item_name]").val()
-            };
-        }else if (filter_type=="barcode"){
-            params = {
-                filter_type:"barcode",
-                barcode : $("input[name=barcode]").val()
-            };
-        } else {
-            params = {
-                color : color,
-                size : size,
-                group : group,
-                freeze : $('input[name=freeze]:checked').val(),
-                filter_type : "advance"
-            };
-        }
-        return params;
     }
 </script>
 

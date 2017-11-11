@@ -81,10 +81,14 @@ class ItemModel extends CI_Model
         $filter_type = $this->input->post('filter_type');
         if ($filter_type == "barcode") {
             $barcode = $this->input->post('barcode');
-            $this->db->like("t1.BARCODF", $barcode);
+            if ($barcode != null && $barcode != '') {
+                $this->db->like("t1.BARCODF", $barcode);
+            }
         } else if ($filter_type == "name") {
-            $name = $this->input->post('name');;
-            $this->db->like("t.TRITNM", $name);
+            $name = $this->input->post('name');
+            if ($name != null && $name != '') {
+                $this->db->like("t.TRITNM", $name);
+            }
         } elseif ($filter_type == 'advance') {
             if (isset($_POST['color'])) {
                 $color = $this->input->post('color');
