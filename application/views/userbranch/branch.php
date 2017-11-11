@@ -41,51 +41,56 @@
           </div>
         </div>
       </div>
-      <div class="modal" id="modal-default">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title">Add New Branch</h4>
-            </div>
-            <div class="modal-body">
-              <div class="row form-group">
-                <div class="col-md-6">
-                  <input type="text" name="branch_name" placeholder="Branch name" class="form-control">
-                </div>
+      <!-- DeleteModal -->
+      <div class="modal fade modal-3d-flip-horizontal" id="deleteBranchModal" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Are you sure you want to delete the Branch ? </h4>
+                <input type="hidden" name="id" value="">
               </div>
-              <div class="row form-group">
-                <div class="col-md-6">
-                  <input type="text" name="username" placeholder="User Name" class="form-control">
-                </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger deleteBranch">Delete</button>
               </div>
-              <div class="row form-group">
-                <div class="col-md-6">
-                  <input type="password" name="password" placeholder="Password" class="form-control">
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
       </div>
+      <!-- End DeleteModal -->
+      <!-- RecoverModal -->
+      <div class="modal fade modal-3d-flip-horizontal" id="recoverBranchModal" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Are you sure you want to recover the Branch ?</h4>
+                <input type="hidden" name="id" value="">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success recoverBranch">Recover</button>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- End RecoverModal -->
 <?php $this->load->view('include/template/common_footer'); ?>
 <!-- Bootstrap-notify -->
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
     <script type="text/javascript">
+      var table = {};
       $(document).ready(function(){
 
         $(document).on('click', '.addbranch', function () {
             window.location = "<?php echo site_url('branch/add'); ?>";
         });
-        $('#table_branch').DataTable({
+        table = $('#table_branch').DataTable({
           "paging": true,
           "lengthChange": true,
           "searching": true,
@@ -114,7 +119,7 @@
           ],
           "rowCallback":function(nRow,aData,iDisplayindex){
               branchid = 1;
-              if(aData.is_active==1){
+              if(aData.is_active==0){
                   if(aData.branch_id==branchid){
                       $('td:eq(2)',nRow).html(""
                           +"<button class='btn btn-info' onclick='return EditTheRow("+iDisplayindex+","+aData.branch_id+");'>"
@@ -149,6 +154,42 @@
               }
           },
         });
+    });
+    function DeleteTheRow(index,id){
+      $("#deleteBranchModal").modal("show");
+      $("#deleteBranchModal").find("[name=id]").attr("value",id);
+    }
+    function RecoverTheRow(index,id){
+      $("#recoverBranchModal").modal("show");
+      $("#recoverBranchModal").find("[name=id]").attr("value",id);
+    }
+    $(".deleteBranch").on("click",function(){
+        $(".deleteBranch").prop("disabled",true);
+        var id=-1;
+        id=$("#deleteBranchModal").find("[name=id]").val();
+        $.post("<?php echo site_url('branch/delete/'); ?>"+id,{})
+        .done(function(result){
+            result=JSON.parse(result);
+            if(result.code==1){
+                table.ajax.reload();
+            }
+            $("#deleteBranchModal").modal("hide");
+        });
+        $(".deleteBranch").prop("disabled",false);
+    });
+    $(".recoverBranch").on("click",function(){
+        $(".recoverBranch").prop("disabled",true);
+        var id=-1;
+        id=$("#recoverBranchModal").find("[name=id]").val();
+        $.post("<?php echo site_url('branch/recover/'); ?>"+id,{})
+        .done(function(result){
+            result=JSON.parse(result);
+            if(result.code==1){
+                table.ajax.reload();
+            }
+            $("#recoverBranchModal").modal("hide");
+        });
+        $(".recoverBranch").prop("disabled",false);
     });
     </script>
 <?php $this->load->view('include/page_footer.php'); ?>

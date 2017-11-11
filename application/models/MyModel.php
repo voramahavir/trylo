@@ -139,4 +139,31 @@ class MyModel extends CI_Model {
         echo json_encode($response);
         exit;
     }
+
+    public function deleteBranch($id)
+    {
+        $code = 0;
+        $response = "";
+        $this->db->where('branch_id', $id)->set(array(
+            'is_active' => 1
+        ))->update("branch");
+        $code = 1;
+        $response = "Branch deleted successfully.";
+        echo json_encode(array("code" => $code, "response" => $response));
+        exit();
+    }
+
+    public function recoverBranch($id)
+    {
+        $code = 0;
+        $response = "";
+        $this->db->where('branch_id', $id)->set(array(
+            'is_active' => 0
+        ))->update("branch");
+        $code = 1;
+        $response = "Branch recover successfully.";
+        echo json_encode(array("code" => $code, "response" => $response));
+        exit();
+    }
+
 }

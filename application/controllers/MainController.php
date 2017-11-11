@@ -15,7 +15,7 @@ class MainController extends CI_Controller {
 		$this->load->view('dashboard', $data);
 	}
 
-	public function branch($view) {
+	public function branch($view,$id='') {
 		$data['page_title'] = 'Branch List';
 		switch ($view) {
 			case 'list':
@@ -31,6 +31,14 @@ class MainController extends CI_Controller {
 			case 'adddata':
 				$this->load->model('MyModel');
 				$this->MyModel->addBranch();
+				break;
+			case 'delete':
+				$this->load->model('MyModel');
+				$this->MyModel->deleteBranch($id);
+				break;
+			case 'recover':
+				$this->load->model('MyModel');
+				$this->MyModel->recoverBranch($id);
 				break;
 			default:
 				break;
