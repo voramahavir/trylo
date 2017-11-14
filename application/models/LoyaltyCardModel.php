@@ -48,8 +48,16 @@ class LoyaltyCardModel extends CI_Model
         $this->db->limit($length, $start);
         $this->db->select("MOBILEID,LONAME,LODOB,LOMAR,LOTYPE,LOVAL,LOSTDT,LOENDT,LODISCPR,ISACTIVE");
         $output['data'] = $this->db->get('trloyl')->result();
+        if (isset($_POST['to_date'])) {
+            $to_date = $_POST['to_date'];
+            $this->db->where('LOENDT', $to_date);
+        }
+        if (isset($_POST['from_date'])) {
+            $from_date = $_POST['from_date'];
+            $this->db->where('LOSTDT', $from_date);
+        }
         $output['recordsTotal'] = $this->db->get('trloyl')->num_rows();
-        $output['recordsFiltered'] = $this->db->get('trloyl')->num_rows();
+        $output['recordsFiltered'] = $output['recordsTotal'];
         if (!empty($output['data'])) {
             $output['code'] = 1;
         }

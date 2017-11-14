@@ -37,9 +37,9 @@ class MyModel extends CI_Model {
         );
         if(!empty($search)){$this->db->like("branch_name",$search);}
 		$output['data'] = $this->db->select('branch_id, branch_name, is_active')->get('branch')->result();
-        $output['recordsTotal']=$this->db->get('branch')->num_rows();
         if(!empty($search)){$this->db->like("branch_name",$search);}
-        $output['recordsFiltered']=$this->db->get('branch')->num_rows();
+        $output['recordsTotal']=$this->db->get('branch')->num_rows();
+        $output['recordsFiltered']=$output['recordsTotal'];
         if (!empty($output['data'])) {
             $output['code'] = 1;
         }
@@ -76,9 +76,9 @@ class MyModel extends CI_Model {
         );
         if(!empty($search)){$this->db->like("user_name",$search);}
 		$output['data'] = $this->db->select('user_id, user_name, is_active')->get('users')->result();
-        $output['recordsTotal']=$this->db->get('users')->num_rows();
         if(!empty($search)){$this->db->like("user_name",$search);}
-        $output['recordsFiltered']=$this->db->get('users')->num_rows();
+        $output['recordsTotal']=$this->db->get('users')->num_rows();
+        $output['recordsFiltered']=$output['recordsTotal'];
         if (!empty($output['data'])) {
             $output['code'] = 1;
         }

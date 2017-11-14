@@ -48,12 +48,12 @@ class MemberShipCardModel extends CI_Model
         }
         $this->db->select("CRDNO,CONCAT(PREFIX, ' ', CARDNO) AS CARDHOLDERNO,CONCAT(PREFIX1, ' ', CARDNO1) AS REFCARDHOLDERNO,NAME,CITY,PHONENO,MOBILENO,BILLNO,CREADT,ISACTIVE");
         $output['data'] = $this->db->get('maincrd')->result();
-        $output['recordsTotal'] = $this->db->get('maincrd')->num_rows();
         // $this->db->limit($length,$start);
-        // if (!empty($search)) {
-        //     $this->db->like("NAME", $search)->or_like("MOBILENO", $search)->or_like("CARDNO", $search);
-        // }
-        $output['recordsFiltered'] = $this->db->get('maincrd')->num_rows();
+        if (!empty($search)) {
+            $this->db->like("NAME", $search)->or_like("MOBILENO", $search)->or_like("CARDNO", $search);
+        }
+        $output['recordsTotal'] = $this->db->get('maincrd')->num_rows();
+        $output['recordsFiltered'] = $output['recordsTotal'];
         if (!empty($output['data'])) {
             $output['code'] = 1;
         }

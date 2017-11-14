@@ -43,11 +43,10 @@ class SalesReturnModel extends CI_Model
         $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRTYPE as type,t.TRCITY as city,t.CANBL,t.TRREF');
         $this->db->limit($length, $start);
         $output['data'] = $this->db->get('trslret as t')->result();
-        // echo $this->db->last_query();
-        $output['recordsTotal'] = $this->db->get('trslret as t')->num_rows();
         $this->filterData();
         $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRTYPE as type,t.TRCITY as city,t.CANBL,t.TRREF');
-        $output['recordsFiltered'] = $this->db->get('trslret as t')->num_rows();
+        $output['recordsTotal'] = $this->db->get('trslret as t')->num_rows();
+        $output['recordsFiltered'] = $output['recordsTotal'];
         if (!empty($output['data'])) {
             $output['code'] = 1;
         }

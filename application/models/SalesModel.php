@@ -85,12 +85,11 @@ class SalesModel extends CI_Model
         $this->db->limit($length, $start);
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
         $output['data'] = $this->db->get('trbil as t')->result();
-        // echo $this->db->last_query();
-        $output['recordsTotal'] = $this->db->get('trbil as t')->num_rows();
         $this->filterData();
         $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t1.TRBLAMT as bamount,(t.EXRCVD - t.EXBACK) as ramount,t.TRTYPE as type');
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
-        $output['recordsFiltered'] = $this->db->get('trbil as t')->num_rows();
+        $output['recordsTotal'] = $this->db->get('trbil as t')->num_rows();
+        $output['recordsFiltered'] = $output['recordsTotal'];
         if (!empty($output['data'])) {
             $output['code'] = 1;
         }
