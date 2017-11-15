@@ -166,4 +166,36 @@ class MyModel extends CI_Model {
         exit();
     }
 
+    public function getBranchDetails($id="")
+    {
+        $code = 0;
+        $response = "";
+        $data = [];
+        if(!empty($id)){
+            $this->db->where('branch_id',$id);
+            $data = $this->db->get('branch')->first_row();
+            $code = 1;
+        } else{
+            $response = "Branch id is missing.";
+        }
+        echo json_encode(array("code" => $code, "response" => $response, "data" => $data));
+        exit();
+    }
+
+    public function updateBranch($id='')
+    {
+        $code = 0;
+        $response = "";
+        $data = [];
+        if(!empty($id)){
+            $this->db->where('branch_id',$id)->set($_POST)->update('branch');
+            $data = $this->db->get('branch')->first_row();
+            $code = 1;
+        } else{
+            $response = "Branch id is missing.";
+        }
+        echo json_encode(array("code" => $code, "response" => $response, "data" => $data));
+        exit();
+    }
+
 }

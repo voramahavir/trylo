@@ -17,12 +17,16 @@ class MainController extends CI_Controller {
 
 	public function branch($view,$id='') {
 		$data['page_title'] = 'Branch List';
+		$data['id'] = $id;
 		switch ($view) {
 			case 'list':
 				$this->load->view('userbranch/branch', $data);
 				break;
 			case 'add':
 				$this->load->view('userbranch/branchadd', $data);
+				break;
+			case 'edit':
+				$this->load->view('userbranch/branchedit', $data);
 				break;
 			case 'get':
 				$this->load->model('MyModel');
@@ -39,6 +43,14 @@ class MainController extends CI_Controller {
 			case 'recover':
 				$this->load->model('MyModel');
 				$this->MyModel->recoverBranch($id);
+				break;
+			case 'branchDetails':
+				$this->load->model('MyModel');
+				$this->MyModel->getBranchDetails($id);
+				break;
+			case 'updatedata':
+				$this->load->model('MyModel');
+				$this->MyModel->updateBranch($id);
 				break;
 			default:
 				break;

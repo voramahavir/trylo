@@ -162,6 +162,9 @@
       $("#recoverBranchModal").modal("show");
       $("#recoverBranchModal").find("[name=id]").attr("value",id);
     }
+    function EditTheRow(index,id){
+      window.location.href = "<?php echo site_url('branch/edit/'); ?>"+id;
+    }
     $(".deleteBranch").on("click",function(){
         $(".deleteBranch").prop("disabled",true);
         var id=-1;
