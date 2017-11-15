@@ -82,6 +82,9 @@
                     </div>
                 </div>
             </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -143,6 +146,9 @@
                     </div>
                 </div>
             </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -193,6 +199,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
             </div>
           </div>
         </div>
@@ -260,6 +269,9 @@
                     </div>
                 </div>
             </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -279,6 +291,7 @@
         });
     });
     function updateBranch() {
+      loadingStart();
       var data = {
           branch_name : $(".branch_name").val(),
           address1 : $(".address1").val(),
@@ -320,6 +333,7 @@
           type: "POST",
           data : data,
           success: function (response) {
+            loadingStop();
             if(response.code == 1){
                 bootbox.alert("Branch updated successfully.", function () {
                     window.location = "<?php echo site_url('branch/list'); ?>";
@@ -376,6 +390,14 @@
           $(".mrgdisc").val(data.mrgdisc);
           $(".bdaysendbefore").val(data.bdaysendbefore);
           $(".mrgsendbefore").val(data.mrgsendbefore);
+          loadingStop();
+    }
+    function loadingStart() {
+        $('.overlay').show();
+    }
+
+    function loadingStop() {
+        $('.overlay').hide();
     }
 </script>
 <?php $this->load->view('include/page_footer.php'); ?>

@@ -83,6 +83,9 @@
                     </div>
                 </div>
             </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -144,6 +147,9 @@
                     </div>
                 </div>
             </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -194,6 +200,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
             </div>
           </div>
         </div>
@@ -261,6 +270,9 @@
                     </div>
                 </div>
             </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -274,12 +286,21 @@
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 <script type="text/javascript">
+    function loadingStart() {
+        $('.overlay').show();
+    }
+
+    function loadingStop() {
+        $('.overlay').hide();
+    }
     $(document).ready(function(){
+        loadingStop();
         $(".save").click(function(){
             addBranch();
         });
     });
     function addBranch() {
+      loadingStart();
       var data = {
           branch_name : $(".branch_name").val(),
           address1 : $(".address1").val(),
@@ -321,6 +342,7 @@
           type: "POST",
           data : data,
           success: function (response) {
+            loadingStop();
             if(response.code == 1){
                 bootbox.alert("Branch added successfully.", function () {
                     window.location = "<?php echo site_url('branch/list'); ?>";
