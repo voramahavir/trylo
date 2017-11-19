@@ -52,7 +52,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#<?php // echo base_url('Purchase/add'); ?>"><i class="fa fa-circle-o"></i> Purchase Add</a></li>
+            <li><a href="<?php echo site_url('purchase/list'); ?>"><i class="fa fa-circle-o"></i> Purchase Bill [IN TRANSIT]</a></li>
+            <li><a href="#<?php echo site_url('Purchase/add'); ?>"><i class="fa fa-circle-o"></i> Purchase Add</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Purchase Return</a></li>
           </ul>
         </li>
