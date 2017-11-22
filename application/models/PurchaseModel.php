@@ -47,7 +47,7 @@ class PurchaseModel extends CI_Model
             'search' => $search
         );
 
-        $this->db->select('t.TRBLNO,t.TRPRBL,t.TRBLDT,TRTOTQTY,t.TRNET,t.TRSPINST');
+        $this->db->select('t.TRBLNO,t.TRPRBL,t.TRBLDT,TRTOTQTY,t.TRNET,t.TRSPINST,T.PHVER1');
         $this->db->limit($length, $start);
         // $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
         $output['data'] = $this->db->get('trtrbl as t')->result();
@@ -56,7 +56,7 @@ class PurchaseModel extends CI_Model
         if (!empty($search)) {
             $this->db->like("t.TRBLDT", $search);
         }
-        $this->db->select('t.TRBLNO,t.TRBLDT,TRTOTQTY,t.TRNET,t.TRSPINST');
+        $this->db->select('t.TRBLNO,t.TRBLDT,TRTOTQTY,t.TRNET,t.TRSPINST,T.PHVER1');
         // $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
         $output['recordsTotal'] = $this->db->get('trtrbl as t')->num_rows();
         $output['recordsFiltered'] = $output['recordsTotal'];
