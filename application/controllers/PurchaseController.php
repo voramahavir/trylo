@@ -25,6 +25,12 @@ class PurchaseController extends CI_Controller
         $this->load->view('purchase/list', $data);
     }
 
+    public function verify()
+    {
+        $data['page_title'] = 'Verify InTransit Bill';
+        $this->load->view('purchase/verifiedlist', $data);
+    }
+
     public function getData()
     {
         $this->PurchaseModel->getData();

@@ -9,7 +9,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title"> Purchase Bill (IN TRANSIT)</h3>
+              <h3 class="box-title"> Verify InTransit Bill</h3>
             </div>
             <div class="box-body">
               <div class="row form-group">
@@ -44,6 +44,7 @@
                             <th>Amount Rs.</th>
                             <th>Total Qty.</th>
                             <th>Product</th>
+                            <th>VerifyBy</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -131,7 +132,11 @@
               { 
                 "data": "CREADT", 
                 "bSortable": true
-              },              
+              },   
+              { 
+                "data": "PHVER1", 
+                "bSortable": true
+              },            
               { 
                 "data": null,
                 "bSortable": false
@@ -139,9 +144,9 @@
           ],
           "rowCallback":function(nRow,aData,iDisplayindex){
                 // if(aData.ISACTIVE==0){
-                    $('td:eq(8)',nRow).html(""
-                        +"<button class='btn btn-info' onclick='return transferToBil();'>"
-                        +"<i class='fa fa-sign-in'></i>"
+                    $('td:eq(9)',nRow).html(""
+                        +"<button class='btn btn-info' onclick='return verifyBill();'>"
+                        +"<i class='fa fa-check'></i>"
                         +"</button>"
                     +"");
                 // }else{
@@ -160,7 +165,7 @@
         $('.dataTables_filter input').attr("placeholder", "Search by Party Name");
 
       }
-    function transferToBil() {
+    function verifyBill() {
 
     }
     </script>
