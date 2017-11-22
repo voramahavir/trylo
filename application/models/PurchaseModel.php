@@ -47,7 +47,7 @@ class PurchaseModel extends CI_Model
             'search' => $search
         );
 
-        $this->db->select('t.TRBLNO,t.TRBLDT,TRTOTQTY,t.TRNET,t.TRSPINST');
+        $this->db->select('t.TRBLNO,t.TRPRBL,t.TRBLDT,TRTOTQTY,t.TRNET,t.TRSPINST');
         $this->db->limit($length, $start);
         // $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
         $output['data'] = $this->db->get('trtrbl as t')->result();
@@ -85,5 +85,28 @@ class PurchaseModel extends CI_Model
                 $this->db->where('t.PHVER1 !=', null);
             }
         }
+    }
+
+    public function getInTrnsBill($billNo)
+    {
+        $billItems = array();
+        $this->db->where(array('TRPRBL' => $billNo));
+        $this->db->limit(1);
+        $billData = $this->db->get('trtrbl')->row();
+
+        if ($billData) {
+            $select = array(
+                't.*',
+                'i.TRITNM',
+                'i.TRMRP1',
+                'i1.BARCODF'
+            );
+            $this->db->where(array('TRSBL' => $billData->TRBLNO));
+            $this->db->join('tritem i', 'i.TRITCD = t.TRSITCD');
+            $this->db->join('tritem1 i1', 'i.TRITCD = i1.TRITCD1 AND i1.TRSZCD = t.TRSSZ AND i1.TRCOLOR = t.TRSCLR');
+            $billItems = $this->db->get('trtrbl1 t')->result();
+        }
+
+        return compact('billData', 'billItems');
     }
 }

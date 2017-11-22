@@ -147,7 +147,7 @@
           },
           "columns": [
               { 
-                "data": "TRBLNO", 
+                "data": "TRPRBL",
                 "bSortable": true
               },
               { 

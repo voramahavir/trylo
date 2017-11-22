@@ -75,5 +75,7 @@ $route['scheme/list'] = 'LoyaltyCardController/schemeList';
 $route['scheme/add'] = 'LoyaltyCardController/schemeAdd';
 $route['scheme/create'] = 'LoyaltyCardController/schemeCreate';
 $route['branch/(:any)/(:any)'] = 'MainController/branch/$1/$2';
+$route['purchase/list'] = 'PurchaseController/purList';
 $route['purchase/(:any)'] = 'PurchaseController/$1';
+$route['purchase/(:any)/(:any)'] = 'PurchaseController/$1/$2';
 
