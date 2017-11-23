@@ -25,7 +25,7 @@ class PurchaseController extends CI_Controller
         $this->load->view('purchase/list', $data);
     }
 
-    public function verify()
+    public function verifyList()
     {
         $data['page_title'] = 'Verify InTransit Bill';
         $this->load->view('purchase/verifiedlist', $data);
@@ -48,5 +48,9 @@ class PurchaseController extends CI_Controller
         $billNo = ($billNo) ? $billNo : $_POST['billNo'];
         $billData = $this->PurchaseModel->getInTrnsBill($billNo);
         echo json_encode($billData);
+    }
+
+    public function verifyBill(){
+        $this->PurchaseModel->verifyBill();
     }
 }

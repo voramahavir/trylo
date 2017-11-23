@@ -109,4 +109,50 @@ class PurchaseModel extends CI_Model
 
         return compact('billData', 'billItems');
     }
+
+    public function verifyBill()
+    {
+        $code = 0;
+        $msg = "No Bill found to verify";
+        if (isset($_POST['items']) && count($_POST['items'])) {
+            $items = $_POST['items'];
+            if($this->db->trans_begin()){
+                foreach ($items as $item) {
+                    $where = array(
+                        'TRSBL' => $item['TRSBL'],
+                        'TRSSZ' => $item['TRSSZ'],
+                        'TRSCLR' => $item['TRSCLR'],
+                        'TRSITCD' => $item['TRSITCD'],
+                    );
+                    $updateData = array(
+                        'PHQTY' => $item['PHQTY'],
+                        'PHRES' => $item['PHRES'],
+                    );
+                    $this->db->where($where);
+                    $this->db->update('trtrbl1', $updateData);
+                }
+                $where = array(
+                    'TRPRBL' => $_POST['billNo']
+                );
+                $updateData = array(
+                    'PHVER1' => getSessionData('user_name')
+                );
+                $this->db->where($where);
+                $this->db->update('trtrbl', $updateData);
+                $this->db->trans_complete();
+                if($this->db->trans_status()){
+                    $code = 1;
+                    $msg = "Bill Verified Successfully";
+                }
+                else{
+                    $msg = "Unable to save data";
+                }
+            }
+            else{
+                $msg = "Unable to save data";
+            }
+        }
+        $response = compact('code', 'msg');
+        echo json_encode($response);
+    }
 }

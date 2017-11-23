@@ -226,6 +226,7 @@ die;*/
                             loadingStop();
                             if (result.code) {
                                 selectItem(result.data);
+                                $(".barCode").val('');
                             } else {
                                 clear();
                                 bootbox.alert(result.message);
@@ -322,6 +323,8 @@ die;*/
                 var totQty = 0, totPhyQty = 0, diff = 0;
                 $.each(data, function (index, items) {
                     html += '<tr class="itemBarCode ' + items.BARCODF + '">';
+                    html += '<td class="hide">' + items.TRITCD + ' </td>';
+                    html += '<td class="hide">' + items.TRSBL + ' </td>';
                     html += '<td>' + items.TRITNM + ' </td>';
                     html += '<td>' + items.TRSCLR + ' </td>';
                     html += '<td>' + items.TRSSZ + ' </td>';
@@ -333,7 +336,7 @@ die;*/
                     html += '<td>' + items.TRMRP1 + ' </td>';
                     html += '<td class="phqty">' + items.PHQTY + ' </td>';
                     totPhyQty = parseFloat(totPhyQty) + parseFloat(items.PHQTY);
-                    diff =  parseFloat(items.TRSQTY) - parseFloat(items.PHQTY);
+                    diff = parseFloat(items.TRSQTY) - parseFloat(items.PHQTY);
                     html += '<td class="diff">' + diff + '</td>';
                     html += '<td></td>';
                     html += '</tr>';
@@ -351,26 +354,71 @@ die;*/
             function setPhyQty() {
 
                 var barcd = $('.barCode').val();
-                var tr = $('.items tr.' + barcd);
-                if(tr.length){
-                    var phQtyTd = tr.find('.phqty');
-                    var qtyTd = tr.find('.qty');
-                    var diffTd = tr.find('.diff');
-                    var phQty = parseFloat(phQtyTd.text().trim());
-                    var qty = parseFloat(qtyTd.text().trim());
-                    phQty = phQty + 1;
-                    phQtyTd.text(phQty);
-                    var diff = parseFloat(qty) - parseFloat(phQty);
-                    diffTd.text(diff);
+                if (barcd) {
+                    var tr = $('.items tr.' + barcd);
+                    if (tr.length) {
+                        var phQtyTd = tr.find('.phqty');
+                        var qtyTd = tr.find('.qty');
+                        var diffTd = tr.find('.diff');
+                        var phQty = parseFloat(phQtyTd.text().trim());
+                        var qty = parseFloat(qtyTd.text().trim());
+                        phQty = phQty + 1;
+                        phQtyTd.text(phQty);
+                        var diff = parseFloat(qty) - parseFloat(phQty);
+                        diffTd.text(diff);
 
-                    var totPhyQty = parseFloat($('.totPhyQty').val());
-                    totPhyQty = totPhyQty + 1;
-                    $('.totPhyQty').val(totPhyQty);
+                        var totPhyQty = parseFloat($('.totPhyQty').val());
+                        totPhyQty = totPhyQty + 1;
+                        $('.totPhyQty').val(totPhyQty);
+                        $(".barCode").focus();
+                    }
                 }
             }
 
             function saveBill() {
+//                loadingStart();
+                var billItemData = [];
+                var billNo = "<?php echo $billNo; ?>";
+                $("tr.itemBarCode").each(function () {
+                    var col = $(this).find("td");
+                    var itcd = col.eq(0).text().trim();
+                    var trbill = col.eq(1).text().trim();
+                    var itclr = col.eq(3).text().trim();
+                    var itsz = col.eq(4).text().trim();
+                    var phqty = col.eq(10).text().trim();
+                    var res = col.eq(12).text().trim();
 
+                    var data = {
+                        TRSBL: trbill,
+                        TRSITCD: itcd,
+                        TRSSZ: itsz,
+                        TRSCLR: itclr,
+                        PHQTY: phqty,
+                        PHRES: res
+                    };
+                    billItemData.push(data);
+                });
+//                return;
+                $.ajax({
+                    url: site_url + 'purchase/verifyBill',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {
+                        "items": billItemData,
+                        "billNo": billNo
+                    },
+                    success: function (response) {
+                        loadingStop();
+                        if (response.code) {
+                            bootbox.alert(response.msg, function () {
+                                window.location.href = site_url + 'purchase/verifyList';
+                            });
+                        }
+                        else {
+                            bootbox.alert(response.msg);
+                        }
+                    }
+                });
             }
         });
 
