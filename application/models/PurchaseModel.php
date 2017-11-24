@@ -47,18 +47,26 @@ class PurchaseModel extends CI_Model
             'search' => $search
         );
 
-        $this->db->select('t.TRBLNO,t.TRPRBL,t.TRBLDT,TRTOTQTY,t.TRNET,t.TRSPINST,T.PHVER1');
+        $this->db->select('T.TRBLNO,T.TRPRBL,T.TRBLDT,TRTOTQTY,T.TRNET,T.TRSPINST,T.PHVER1,ta.TRNAME as NAME,ta.TRCITY as CITY,group_concat(DISTINCT ti.TRPRDGRP SEPARATOR "+") AS product');
+        $this->db->join('trac ta', 'ta.TRCODE = t.TRPRCD');
+        $this->db->join('trtrbl1 tb', 'T.TRBLNO = tb.TRSBL');
+        $this->db->join('tritem ti', 'ti.TRITCD = tb.TRSITCD');
+        $this->db->group_by('T.TRBLNO');
         $this->db->limit($length, $start);
         // $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
-        $output['data'] = $this->db->get('trtrbl as t')->result();
-        // echo $this->db->last_query();
+        $output['data'] = $this->db->get('trtrbl as T')->result();
+//        echo $this->db->last_query();
         $this->filterData();
         if (!empty($search)) {
-            $this->db->like("t.TRBLDT", $search);
+            $this->db->like("T.TRBLDT", $search);
         }
-        $this->db->select('t.TRBLNO,t.TRBLDT,TRTOTQTY,t.TRNET,t.TRSPINST,T.PHVER1');
-        // $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
-        $output['recordsTotal'] = $this->db->get('trtrbl as t')->num_rows();
+        $this->db->select('T.TRBLNO,T.TRBLDT,TRTOTQTY,T.TRNET,T.TRSPINST,T.PHVER1,ta.TRNAME as NAME,ta.TRCITY as CITY');
+        $this->db->join('trac ta', 'ta.TRCODE = t.TRPRCD');
+        $this->db->join('trtrbl1 tb', 'T.TRBLNO = tb.TRSBL');
+        $this->db->join('tritem ti', 'ti.TRITCD = tb.TRSITCD');
+        $this->db->group_by('T.TRBLNO');
+        // $this->db->join("trbil1 as t1", "t1.TRBLNO1 = T.TRBLNO");
+        $output['recordsTotal'] = $this->db->get('trtrbl as T')->num_rows();
         $output['recordsFiltered'] = $output['recordsTotal'];
         if (!empty($output['data'])) {
             $output['code'] = 1;
@@ -71,18 +79,18 @@ class PurchaseModel extends CI_Model
     {
         if (isset($_POST['to_date'])) {
             $to_date = $_POST['to_date'];
-            $this->db->where('t.TRBLDT <= ', $to_date);
+            $this->db->where('T.TRBLDT <= ', $to_date);
         }
         if (isset($_POST['from_date'])) {
             $from_date = $_POST['from_date'];
-            $this->db->where('t.TRBLDT >= ', $from_date);
+            $this->db->where('T.TRBLDT >= ', $from_date);
         }
         if (isset($_POST['type'])) {
             $type = $_POST['type'];
             if ($type != null && !empty($type) && $type == '1') {
-                $this->db->where('t.PHVER1', null);
+                $this->db->where('T.PHVER1', null);
             } else {
-                $this->db->where('t.PHVER1 !=', null);
+                $this->db->where('T.PHVER1 !=', null);
             }
         }
     }
@@ -116,7 +124,7 @@ class PurchaseModel extends CI_Model
         $msg = "No Bill found to verify";
         if (isset($_POST['items']) && count($_POST['items'])) {
             $items = $_POST['items'];
-            if($this->db->trans_begin()){
+            if ($this->db->trans_begin()) {
                 foreach ($items as $item) {
                     $where = array(
                         'TRSBL' => $item['TRSBL'],
@@ -140,15 +148,13 @@ class PurchaseModel extends CI_Model
                 $this->db->where($where);
                 $this->db->update('trtrbl', $updateData);
                 $this->db->trans_complete();
-                if($this->db->trans_status()){
+                if ($this->db->trans_status()) {
                     $code = 1;
                     $msg = "Bill Verified Successfully";
-                }
-                else{
+                } else {
                     $msg = "Unable to save data";
                 }
-            }
-            else{
+            } else {
                 $msg = "Unable to save data";
             }
         }

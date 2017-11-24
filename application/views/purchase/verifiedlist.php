@@ -128,11 +128,11 @@
                     "bSortable": true
                 },
                 {
-                    "data": "TRTQTQTY",
+                    "data": "TRTOTQTY",
                     "bSortable": true
                 },
                 {
-                    "data": "CREADT",
+                    "data": "product",
                     "bSortable": true
                 },
                 {

@@ -40,7 +40,7 @@ class PurchaseController extends CI_Controller
     {
         $data['page_title'] = 'Sales Add';
         $billData['billNo'] = $billNo;
-        $this->load->view('purchase/purchase_add', $billData);
+        $this->load->view('purchase/purchase_verify', $billData);
     }
 
     public function getInTrnsBill($billNo = null)
