@@ -41,3 +41,8 @@ ALTER TABLE `branch` ADD `jurisdiction` VARCHAR(256) NULL DEFAULT NULL AFTER `te
 
 
 ALTER TABLE `branch` ADD `gstinno` VARCHAR(50) NULL DEFAULT NULL AFTER `smslast`, ADD `defaultmail` INT NULL DEFAULT NULL AFTER `gstinno`, ADD `bdaysms` TINYINT NULL DEFAULT NULL AFTER `defaultmail`, ADD `mrgsms` TINYINT NULL DEFAULT NULL AFTER `bdaysms`, ADD `bdaydiscdays` INT NULL DEFAULT NULL AFTER `mrgsms`, ADD `mrgdiscdays` INT NULL DEFAULT NULL AFTER `bdaydiscdays`, ADD `bdaydisc` DECIMAL NULL DEFAULT NULL AFTER `mrgdiscdays`, ADD `mrgdisc` DECIMAL NULL DEFAULT NULL AFTER `bdaydisc`, ADD `bdaysendbefore` INT NULL DEFAULT NULL AFTER `mrgdisc`, ADD `mrgsendbefore` INT NULL DEFAULT NULL AFTER `bdaysendbefore`;
+
+Bhavesh : Add flag for delete transit bill 26-11-17
+
+ALTER TABLE trtrbl ADD ISACTIVE TINYINT(1) DEFAULT 0 NULL;
+ALTER TABLE trtrbl1 ADD ISACTIVE TINYINT(1) DEFAULT 0 NULL;

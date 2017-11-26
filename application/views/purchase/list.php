@@ -57,7 +57,7 @@
     </div>
 </div>
 <div class="modal fade" id="save-modal">
-    <div class="modal-dialog my-modal-lg">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 TRANSFER IN TRANSIT BILL TO PURCHASE BILL
@@ -67,13 +67,23 @@
                     <h4>Intransit No. : 0</h4>
                 </div>
                 <div class="row">
-                    <label class="col-md-1 text-right"> Bill No : </label>
-                    <div class="col-md-1">
-                        <input type="text" class="form-control" name="">
+                    <label class="col-md-4 text-right"> Billing Date : </label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control datepicker" id="bldt"
+                               value="<?php echo date('d/m/Y'); ?>">
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 text-right"> Name of Party : </label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="prtynm" disabled>
+                        <input type="hidden" class="form-control" id="billno" disabled>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary saveBill">Update</button>
             </div>
         </div>
     </div>
@@ -94,6 +104,10 @@
             autoclose: true,
             format: 'yyyy-mm-dd'
         });
+        $('.datepicker').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
         setTable();
     });
     $("#from_date").on('change', function () {
@@ -105,6 +119,10 @@
     $("input[name=type]").on('change', function () {
         type = this.value;
         table.ajax.reload();
+    });
+
+    $(document).on('click', '.saveBill', function () {
+        transferToBill();
     });
 
     function setTable() {
@@ -162,7 +180,7 @@
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 // if(aData.ISACTIVE==0){
                 $('td:eq(8)', nRow).html(""
-                    + "<button class='btn btn-info' onclick='return transferToBil();'>"
+                    + "<button class='btn btn-info' onclick='return showTrnModal(\"" + aData.TRPRBL + "\", \"" + aData.NAME + "\");'>"
                     + "<i class='fa fa-sign-in'></i>"
                     + "</button>"
                     + "");
@@ -183,8 +201,34 @@
 
     }
 
-    function transferToBil() {
+    function showTrnModal(billno, party) {
+        $("#prtynm").val(party);
+        $("#billno").val(billno);
+        $("#save-modal").modal();
+    }
 
+    function transferToBill() {
+        var billNo = $("#billno").val();
+        $.ajax({
+            url: site_url + 'purchase/transferBill',
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                'billNo': billNo,
+                'TRBLDT': $("#bldt").val()
+            },
+            success: function (response) {
+                if (response.code) {
+                    bootbox.alert(response.msg, function () {
+                        table.ajax.reload();
+                    });
+                } else {
+                    bootbox.alert(response.msg);
+                }
+                $("#save-modal").modal('hide');
+            }
+
+        });
     }
 </script>
 <?php $this->load->view('include/page_footer.php'); ?>

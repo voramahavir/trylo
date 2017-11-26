@@ -50,7 +50,13 @@ class PurchaseController extends CI_Controller
         echo json_encode($billData);
     }
 
-    public function verifyBill(){
+    public function verifyBill()
+    {
         $this->PurchaseModel->verifyBill();
+    }
+
+    public function transferBill()
+    {
+        $this->PurchaseModel->transferBill();
     }
 }

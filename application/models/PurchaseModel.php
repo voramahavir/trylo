@@ -49,7 +49,7 @@ class PurchaseModel extends CI_Model
 
         $this->db->select('T.TRBLNO,T.TRPRBL,T.TRBLDT,TRTOTQTY,T.TRNET,T.TRSPINST,T.PHVER1,ta.TRNAME as NAME,ta.TRCITY as CITY,group_concat(DISTINCT ti.TRPRDGRP SEPARATOR "+") AS product');
         $this->db->join('trac ta', 'ta.TRCODE = t.TRPRCD');
-        $this->db->join('trtrbl1 tb', 'T.TRBLNO = tb.TRSBL');
+        $this->db->join('trtrbl1 tb', 'T.TRBLNO = tb.TRSBL AND tb.ISACTIVE = 0');
         $this->db->join('tritem ti', 'ti.TRITCD = tb.TRSITCD');
         $this->db->group_by('T.TRBLNO');
         $this->db->limit($length, $start);
@@ -62,7 +62,7 @@ class PurchaseModel extends CI_Model
         }
         $this->db->select('T.TRBLNO,T.TRBLDT,TRTOTQTY,T.TRNET,T.TRSPINST,T.PHVER1,ta.TRNAME as NAME,ta.TRCITY as CITY');
         $this->db->join('trac ta', 'ta.TRCODE = t.TRPRCD');
-        $this->db->join('trtrbl1 tb', 'T.TRBLNO = tb.TRSBL');
+        $this->db->join('trtrbl1 tb', 'T.TRBLNO = tb.TRSBL AND tb.ISACTIVE = 0');
         $this->db->join('tritem ti', 'ti.TRITCD = tb.TRSITCD');
         $this->db->group_by('T.TRBLNO');
         // $this->db->join("trbil1 as t1", "t1.TRBLNO1 = T.TRBLNO");
@@ -77,6 +77,7 @@ class PurchaseModel extends CI_Model
 
     public function filterData()
     {
+        $this->db->where('T.ISACTIVE', 0);
         if (isset($_POST['to_date'])) {
             $to_date = $_POST['to_date'];
             $this->db->where('T.TRBLDT <= ', $to_date);
@@ -109,6 +110,7 @@ class PurchaseModel extends CI_Model
                 'i.TRMRP1',
                 'i1.BARCODF'
             );
+            $this->db->select($select);
             $this->db->where(array('TRSBL' => $billData->TRBLNO));
             $this->db->join('tritem i', 'i.TRITCD = t.TRSITCD');
             $this->db->join('tritem1 i1', 'i.TRITCD = i1.TRITCD1 AND i1.TRSZCD = t.TRSSZ AND i1.TRCOLOR = t.TRSCLR');
@@ -160,5 +162,75 @@ class PurchaseModel extends CI_Model
         }
         $response = compact('code', 'msg');
         echo json_encode($response);
+    }
+
+    public function transferBill()
+    {
+        $code = 0;
+        $msg = "No bill found to save";
+        if (isset($_POST['billNo'])) {
+            $billNo = $_POST['billNo'];
+            $billItems = array();
+            $this->db->where(array('TRPRBL' => $billNo));
+            $this->db->limit(1);
+            $billData = $this->db->get('trtrbl')->row();
+
+            if ($billData) {
+                $select = array(
+                    't.*',
+                );
+                $this->db->select($select);
+                $TRSBL = $billData->TRBLNO;
+                $this->db->where(array('TRSBL' => $TRSBL));
+                $billItems = $this->db->get('trtrbl1 t')->result();
+                array_walk($billItems, array($this, "chngItemsData"), null);
+                unset($billData->PHVER1, $billData->ISACTIVE);
+                $billData->ENTRYDATE = date("Y-m-d H:i:s");
+                $billData->TRBLNO = $this->getCurrentBillNo();
+                array_walk($billItems, array($this, "chngItemsData"), $billData->TRBLNO);
+                $billData->TRBLDT = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['TRBLDT'])));
+                if ($this->db->trans_begin()) {
+                    $this->db->insert("trpbil", $billData);
+                    $this->db->insert_batch("trpbil1", $billItems);
+                    $this->db->where(array('TRPRBL' => $billNo));
+                    $this->db->update("trtrbl", array("ISACTIVE" => 1));
+                    $this->db->where(array('TRSBL' => $TRSBL));
+                    $this->db->update("trtrbl1", array("ISACTIVE" => 1));
+                    $this->db->trans_complete();
+                    if ($this->db->trans_status()) {
+                        $code = 1;
+                        $msg = "Bill Transferred successfully";
+                    } else {
+                        $msg = "Unable to transfer bill";
+                    }
+                }
+            }
+        }
+        $response = compact("code", "msg");
+        echo json_encode($response);
+        exit;
+    }
+
+    public function chngItemsData(&$billItems, $key, $_billNo)
+    {
+        if ($_billNo)
+            $billItems->TRSBL = $_billNo;
+        else
+            unset($billItems->PHQTY, $billItems->PHRES, $billItems->ISACTIVE);
+    }
+
+    public function getCurrentBillNo()
+    {
+        $lastBill = 0;
+        $this->db->select("TRBLNO");
+        $this->db->order_by("TRBLNO", "DESC");
+        $this->db->limit(1);
+        $data = $this->db->get("trpbil")->row();
+
+        if ($data) {
+            $lastBill = $data->TRBLNO;
+        }
+        $lastBill += 1;
+        return $lastBill;
     }
 }
