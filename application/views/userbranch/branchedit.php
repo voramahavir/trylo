@@ -80,6 +80,12 @@
                             <input type="text" class="form-control telephone2" name="telephone2">
                         </div>
                     </div>
+                    <div class="row form-group">
+                        <label class="col-md-3 text-right"> Branch Code : </label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control branch_code" name="branch_code">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="overlay">
@@ -325,7 +331,8 @@
           bdaydisc : $(".bdaydisc").val(),
           mrgdisc : $(".mrgdisc").val(),
           bdaysendbefore : $(".bdaysendbefore").val(),
-          mrgsendbefore : $(".mrgsendbefore").val()
+          mrgsendbefore: $(".mrgsendbefore").val(),
+          branch_code: $(".branch_code").val()
       };
       $.ajax({
           url: "<?php echo site_url('branch/updatedata/'); echo $id; ?>",
@@ -390,6 +397,7 @@
           $(".mrgdisc").val(data.mrgdisc);
           $(".bdaysendbefore").val(data.bdaysendbefore);
           $(".mrgsendbefore").val(data.mrgsendbefore);
+        $(".branch_code").val(data.branch_code);
           loadingStop();
     }
     function loadingStart() {

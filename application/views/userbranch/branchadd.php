@@ -81,6 +81,12 @@
                             <input type="text" class="form-control telephone2" name="telephone2">
                         </div>
                     </div>
+                    <div class="row form-group">
+                        <label class="col-md-3 text-right"> Branch Code : </label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control branch_code" name="branch_code">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="overlay">

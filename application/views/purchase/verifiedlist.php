@@ -16,11 +16,11 @@
                     <label class="col-md-1 text-left">Fr Date : </label>
                     <div class="col-md-2">
                         <input class="form-control" id="from_date" type="text"
-                               value="<?php echo date('Y-m-d', strtotime('first day of this month', time())); ?>">
+                               value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
                     </div>
                     <label class="col-md-1 text-left"> To Date : </label>
                     <div class="col-md-2">
-                        <input class="form-control" id="to_date" type="text" value="<?php echo date('Y-m-d'); ?>">
+                        <input class="form-control" id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>">
                     </div>
 
                     <div class="col-md-5 col-md-offset-1">
@@ -69,11 +69,11 @@
     $(document).ready(function () {
         $('#from_date').datepicker({
             autoclose: true,
-            format: 'yyyy-mm-dd'
+            format: 'dd/mm/yyyy'
         });
         $('#to_date').datepicker({
             autoclose: true,
-            format: 'yyyy-mm-dd'
+            format: 'dd/mm/yyyy'
         });
         setTable();
     });
@@ -147,8 +147,8 @@
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 // if(aData.ISACTIVE==0){
                 $('td:eq(9)', nRow).html(""
-                    + "<button class='btn btn-info' onclick='return verifyBill(\"" + aData.TRPRBL + "\");'>"
-                    + "<i class='fa fa-check'></i>"
+                    + "<button class='btn btn-info' onclick='return verifyBill(\"" + aData.TRBLNO + "\");'>"
+                    + "<i class='fa fa-file-text-o'></i>"
                     + "</button>"
                     + "");
                 // }else{

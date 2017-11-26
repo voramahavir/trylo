@@ -54,7 +54,7 @@ die;*/
                             <input type="text" class="form-control" disabled>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row form-group">
                         <label class="col-md-2 text-right"> Size </label>
                         <div class="col-md-3">
                             <input type="text" class="form-control" disabled>
@@ -120,10 +120,10 @@ die;*/
                         <label class="col-md-12 label-info text-center"> Last Entry Done </label>
                     </div>
                     <div class="col-md-4">
-                        <input type="checkbox" name="resetPhyVer" id="resetPhyVer" class="col-md-1">
-                        <label> ReSet Physical Verification </label>
+                        <input type="button" id="resetPhyVer" class="btn btn-info" value="Reset Physical Verification">
                     </div>
                 </div>
+                <br>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="row">
@@ -132,7 +132,7 @@ die;*/
                                 <input type="text" class="form-control item_name" disabled>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row form-group">
                             <label class="col-md-2 text-right"> Size </label>
                             <div class="col-md-3">
                                 <input type="text" class="form-control size" disabled>
@@ -154,8 +154,8 @@ die;*/
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="label-success">
-                            <div class="row">
+                        <div class="label-success" style="padding-top: 15px;">
+                            <div class="row form-group">
                                 <label class="col-md-4 text-right"> Total Qty: </label>
                                 <div class="col-md-7">
                                     <input type="text" value="" class="form-control totQty"
@@ -164,7 +164,7 @@ die;*/
                             </div>
                             <div class="row">
                                 <label class="col-md-4 text-right"> Physical Qty: </label>
-                                <div class="col-md-7">
+                                <div class="col-md-7 form-group">
                                     <input type="text" value="" class="form-control totPhyQty"
                                            disabled>
                                 </div>
@@ -213,6 +213,12 @@ die;*/
             $(".barCode").focusout(function () {
                 getIteminfo();
                 setPhyQty();
+            });
+
+            $("#resetPhyVer").click(function () {
+                $('.phqty').text(0);
+                $('.diff').text(0);
+                $('.totPhyQty').val(0);
             });
 
             function getIteminfo() {

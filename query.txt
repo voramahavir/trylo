@@ -46,3 +46,37 @@ Bhavesh : Add flag for delete transit bill 26-11-17
 
 ALTER TABLE trtrbl ADD ISACTIVE TINYINT(1) DEFAULT 0 NULL;
 ALTER TABLE trtrbl1 ADD ISACTIVE TINYINT(1) DEFAULT 0 NULL;
+
+Bhavesh : Add branch code & fin Year for purchase and stock 26-11-17
+
+ALTER TABLE branch ADD branch_code INT NULL;
+ALTER TABLE trpbil ADD branch_code INT NULL;
+ALTER TABLE trpbil1 ADD branch_code INT NULL;
+ALTER TABLE trtrbl ADD branch_code INT NULL;
+ALTER TABLE trtrbl1 ADD branch_code INT NULL;
+
+ALTER TABLE trpbil ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE trpbil1 ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE trtrbl ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE trtrbl1 ADD fin_year VARCHAR(15) NULL;
+
+Bhavesh : Add indexes to table 26-11-2017
+
+ALTER TABLE `trac` ADD INDEX(`TRCODE`);
+ALTER TABLE `tritem` ADD INDEX(`TRITCD`);
+ALTER TABLE `tritem` ADD INDEX(`TRPRDGRP`);
+ALTER TABLE `tritem1` ADD INDEX(`TRITCD1`);
+ALTER TABLE `tritem1` ADD INDEX(`BARCODF`);
+ALTER TABLE `trloyl` ADD INDEX(`MOBILEID`);
+ALTER TABLE `trpbil` ADD INDEX(`TRBLNO`);
+ALTER TABLE `trpbil` ADD INDEX(`branch_code`);
+ALTER TABLE `trpbil` ADD INDEX(`fin_year`);
+ALTER TABLE `trpbil1` ADD INDEX(`TRSBL`);
+ALTER TABLE `trpbil1` ADD INDEX(`branch_code`);
+ALTER TABLE `trpbil1` ADD INDEX(`fin_year`);
+ALTER TABLE `trprgrp` ADD INDEX(`PRDCD`);
+ALTER TABLE `trtrbl` ADD INDEX(`TRBLNO`, `ISACTIVE`);
+ALTER TABLE `trtrbl` ADD INDEX( `branch_code`, `fin_year`);
+ALTER TABLE `trtrbl1` ADD INDEX( `TRSBL`, `ISACTIVE`, `branch_code`, `fin_year`);
+ALTER TABLE `tritem1` ADD INDEX( `TRSZCD`, `TRCOLOR`);
+ALTER TABLE `trtrbl` ADD INDEX(`PHVER1`);

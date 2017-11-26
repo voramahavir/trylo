@@ -104,35 +104,29 @@ if (!function_exists('ci_breadcrumb_href')) {
 if (!function_exists('fin_year')) {
     function fin_year($options = array())
     {
+        //ret e.g 1718
+        $finYear = (date('m') > 3) ? date('y') . (date('y') + 1) : (date('y') - 1) . date('y');
         if (count($options)) {
             //ret e.g 2017-2018
             if (isset($options['full']) && isset($options['seperator'])) {
                 $seperator = $options['seperator'];
                 $finYear = (date('m') > 3) ? date('Y') . $seperator . (date('Y') + 1) : (date('Y') - 1) . $seperator . date('Y');
-            }
-            //ret e.g 2017-18
+            } //ret e.g 2017-18
             elseif (isset($options['first_full']) && isset($options['seperator'])) {
                 $seperator = $options['seperator'];
                 $finYear = (date('m') > 3) ? date('Y') . $seperator . (date('y') + 1) : (date('Y') - 1) . $seperator . date('y');
-            }
-            //ret e.g 17-18
+            } //ret e.g 17-18
             elseif (isset($options['seperator'])) {
                 $seperator = $options['seperator'];
                 $finYear = (date('m') > 3) ? date('y') . $seperator . (date('y') + 1) : (date('y') - 1) . $seperator . date('y');
-            }
-            //ret e.g 20172018
+            } //ret e.g 20172018
             elseif (isset($options['full'])) {
                 $finYear = (date('m') > 3) ? date('Y') . (date('Y') + 1) : (date('Y') - 1) . date('Y');
-            }
-            //ret e.g 201718
+            } //ret e.g 201718
             elseif (isset($options['first_full'])) {
                 $finYear = (date('m') > 3) ? date('Y') . (date('y') + 1) : (date('Y') - 1) . date('y');
             }
-        } //ret e.g 1718
-        else {
-            $finYear = (date('m') > 3) ? date('y') . (date('y') + 1) : (date('y') - 1) . date('y');
         }
-
         return $finYear;
     }
 }
@@ -142,5 +136,12 @@ if (!function_exists('getSessionData')) {
         $ci = &get_instance();
         $sessData = $ci->session->userdata('access');
         return ($key) ? $sessData[$key] : $sessData;
+    }
+}
+if (!function_exists('branchWhere')) {
+    function branchWhere($tableAlias = null)
+    {
+        $ci = &get_instance();
+        $ci->db->where(($tableAlias) ? $tableAlias . ".branch_code" : "branch_code", getSessionData("branch_code"));
     }
 }

@@ -23,11 +23,13 @@ class MainController extends CI_Controller {
 				$this->load->view('userbranch/branch', $data);
 				break;
 			case 'add':
-				$this->load->view('userbranch/branchadd', $data);
-				break;
+                $data['page_title'] = 'Add Branch';
+                $this->load->view('userbranch/branchadd', $data);
+                break;
 			case 'edit':
-				$this->load->view('userbranch/branchedit', $data);
-				break;
+                $data['page_title'] = 'Edit Branch';
+                $this->load->view('userbranch/branchedit', $data);
+                break;
 			case 'get':
 				$this->load->model('MyModel');
 				$this->MyModel->getBranch();

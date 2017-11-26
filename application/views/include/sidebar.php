@@ -19,7 +19,7 @@
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
-        <li class="<?php echo isset($page_title) && $page_title == 'Branch' ? ' active' : ''; ?>">
+          <li class="<?php echo isset($page_title) && ($page_title == 'Branch List' || $page_title == 'Add Branch' || $page_title == 'Edit Branch') ? ' active' : ''; ?>">
           <a href="<?php echo site_url('branch/list'); ?>">
             <i class="fa fa-dashboard"></i> <span>Branch</span>
           </a>
@@ -52,9 +52,15 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?php echo site_url('purchase/list'); ?>"><i class="fa fa-circle-o"></i> Purchase Bill [IN TRANSIT]</a></li>
-            <li><a href="<?php echo site_url('purchase/verifyList'); ?>"><i class="fa fa-circle-o"></i> Verify InTransit Bill</a></li>
-            <li><a href="#<?php echo site_url('Purchase/add'); ?>"><i class="fa fa-circle-o"></i> Purchase Add</a></li>
+              <li class="<?php echo isset($page_title) && $page_title == 'Purchase Intransit List' ? 'active' : ''; ?>">
+                  <a href="<?php echo site_url('purchase/list'); ?>"><i class="fa fa-circle-o"></i> Purchase Bill [IN
+                      TRANSIT]</a></li>
+              <li class="<?php echo isset($page_title) && ($page_title == 'Verify Purchase List' || $page_title == 'Verify Purchase') ? 'active' : ''; ?>">
+                  <a href="<?php echo site_url('purchase/verifyList'); ?>"><i class="fa fa-circle-o"></i> Verify
+                      InTransit Bill</a></li>
+              <li class="<?php echo isset($page_title) && $page_title == 'Sales Add' ? 'active' : ''; ?>"><a
+                          href="#<?php echo site_url('Purchase/add'); ?>"><i class="fa fa-circle-o"></i> Purchase
+                      Add</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Purchase Return</a></li>
           </ul>
         </li>

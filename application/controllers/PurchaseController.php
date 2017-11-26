@@ -21,13 +21,13 @@ class PurchaseController extends CI_Controller
 
     public function purList()
     {
-        $data['page_title'] = 'Purchase List';
+        $data['page_title'] = 'Purchase Intransit List';
         $this->load->view('purchase/list', $data);
     }
 
     public function verifyList()
     {
-        $data['page_title'] = 'Verify InTransit Bill';
+        $data['page_title'] = 'Verify Purchase List';
         $this->load->view('purchase/verifiedlist', $data);
     }
 
@@ -38,7 +38,7 @@ class PurchaseController extends CI_Controller
 
     public function verify($billNo)
     {
-        $data['page_title'] = 'Sales Add';
+        $data['page_title'] = 'Verify Purchase';
         $billData['billNo'] = $billNo;
         $this->load->view('purchase/purchase_verify', $billData);
     }

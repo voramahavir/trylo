@@ -16,11 +16,11 @@
                     <label class="col-md-1 text-left">Fr Date : </label>
                     <div class="col-md-2">
                         <input class="form-control" id="from_date" type="text"
-                               value="<?php echo date('Y-m-d', strtotime('first day of this month', time())); ?>">
+                               value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
                     </div>
                     <label class="col-md-1 text-left"> To Date : </label>
                     <div class="col-md-2">
-                        <input class="form-control" id="to_date" type="text" value="<?php echo date('Y-m-d'); ?>">
+                        <input class="form-control" id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>">
                     </div>
 
                     <div class="col-md-5 col-md-offset-1">
@@ -63,14 +63,14 @@
                 TRANSFER IN TRANSIT BILL TO PURCHASE BILL
             </div>
             <div class="modal-body">
-                <div class="col-md-12 label-danger text-center">
-                    <h4>Intransit No. : 0</h4>
+                <div class="col-md-12 label-danger text-center form-group">
+                    <h4 class="intrnno">Intransit No.
+                        : <?php echo getSessionData("branch_code") . "/" . fin_year() . "/" ?></h4>
                 </div>
-                <div class="row">
+                <div class="row form-group">
                     <label class="col-md-4 text-right"> Billing Date : </label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control datepicker" id="bldt"
-                               value="<?php echo date('d/m/Y'); ?>">
+                        <input type="text" class="form-control datepicker" id="bldt">
                     </div>
                 </div>
                 <div class="row">
@@ -95,16 +95,17 @@
 <script type="text/javascript">
     var table = '';
     var type = "1";
+    var billData = [];
     $(document).ready(function () {
         $('#from_date').datepicker({
             autoclose: true,
-            format: 'yyyy-mm-dd'
+            format: 'dd/mm/yyyy'
         });
         $('#to_date').datepicker({
             autoclose: true,
-            format: 'yyyy-mm-dd'
+            format: 'dd/mm/yyyy'
         });
-        $('.datepicker').datepicker({
+        $('#bldt').datepicker({
             autoclose: true,
             format: 'dd/mm/yyyy'
         });
@@ -154,11 +155,11 @@
                 },
                 {
                     "data": "CITY",
-                    "bSortable": false
+                    "bSortable": true
                 },
                 {
                     "data": "TRSPINST",
-                    "bSortable": false
+                    "bSortable": true
                 },
                 {
                     "data": "TRNET",
@@ -179,9 +180,11 @@
             ],
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 // if(aData.ISACTIVE==0){
+                billData[iDisplayindex] = aData;
                 $('td:eq(8)', nRow).html(""
-                    + "<button class='btn btn-info' onclick='return showTrnModal(\"" + aData.TRPRBL + "\", \"" + aData.NAME + "\");'>"
-                    + "<i class='fa fa-sign-in'></i>"
+                    /*+ "<button class='btn btn-info' onclick='return showTrnModal(\"" + aData.TRBLNO + "\", \"" + aData.NAME + "\");'>"*/
+                    + "<button class='btn btn-info' onclick='return showTrnModal(" + iDisplayindex + ");'>"
+                    + "<i class='fa fa-exchange'></i>"
                     + "</button>"
                     + "");
                 // }else{
@@ -201,9 +204,14 @@
 
     }
 
-    function showTrnModal(billno, party) {
+    function showTrnModal(index) {
+        var billno = billData[index].TRBLNO;
+        var party = billData[index].NAME;
+        var bldt = billData[index].TRBLDT;
         $("#prtynm").val(party);
         $("#billno").val(billno);
+        $('.intrnno').append(billno);
+        $('#bldt').datepicker('setDate', new Date(bldt)).datepicker('setStartDate', new Date(bldt));
         $("#save-modal").modal();
     }
 
