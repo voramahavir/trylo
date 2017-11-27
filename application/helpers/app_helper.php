@@ -139,9 +139,9 @@ if (!function_exists('getSessionData')) {
     }
 }
 if (!function_exists('branchWhere')) {
-    function branchWhere($tableAlias = null)
+    function branchWhere($tableAlias = null, $branchColName = "branch_code")
     {
         $ci = &get_instance();
-        $ci->db->where(($tableAlias) ? $tableAlias . ".branch_code" : "branch_code", getSessionData("branch_code"));
+        $ci->db->where(($tableAlias) ? $tableAlias . "." . $branchColName : $branchColName, getSessionData("branch_code"));
     }
 }

@@ -14,9 +14,7 @@ ALTER TABLE `users` ADD `branch_id` INT NOT NULL AFTER `is_active`, ADD `role_id
 
 CREATE TABLE `assign_forms` ( `assign_form_id` INT NOT NULL AUTO_INCREMENT , `user_id` INT NOT NULL , `form_id` INT NOT NULL , PRIMARY KEY (`assign_form_id`)) ENGINE = InnoDB;
 
-CREATE TRIGGER `AddedNewForm` BEFORE INSERT ON `forms` FOR EACH ROW INSERT INTO `assign_forms`(`user_id`, `form_id`) SELECT id, NEW.form_id FROM users where role_id = 1 OR role_id = 2
-
-DROP TRIGGER IF EXISTS `AddedNewForm`;CREATE TRIGGER `AddedNewForm` BEFORE INSERT ON `forms` FOR EACH ROW INSERT INTO `assign_forms`(`user_id`, `form_id`) SELECT id, NEW.form_id FROM users where role_id = 2
+CREATE TRIGGER `AddedNewForm` AFTER INSERT ON `forms` FOR EACH ROW INSERT INTO `assign_forms`(`user_id`, `form_id`) SELECT id, NEW.form_id FROM users where role_id = 2 OR role_id = 1
 
 Ajaj : for card listing
 
@@ -80,3 +78,19 @@ ALTER TABLE `trtrbl` ADD INDEX( `branch_code`, `fin_year`);
 ALTER TABLE `trtrbl1` ADD INDEX( `TRSBL`, `ISACTIVE`, `branch_code`, `fin_year`);
 ALTER TABLE `tritem1` ADD INDEX( `TRSZCD`, `TRCOLOR`);
 ALTER TABLE `trtrbl` ADD INDEX(`PHVER1`);
+
+Bhavesh : Added trigger 27-11-17
+DROP TRIGGER IF EXISTS `AddedNewUser`;CREATE TRIGGER `AddedNewUser` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `assign_forms` (`user_id`, `form_id`) SELECT NEW.user_id, form_id FROM forms WHERE NEW.user_id = 1 OR NEW.user_id = 2;
+DROP TRIGGER IF EXISTS `AddedNewPurchase`;CREATE TRIGGER `AddedNewPurchase` AFTER INSERT ON `trpbil1` FOR EACH ROW BEGIN DECLARE _cl_stock INTEGER; SELECT (ist.cl_stock + NEW.TRSQTY) INTO @_cl_stock FROM item_cur_stock ist WHERE NEW.TRSITCD = ist.itemcode AND NEW.TRSSZ = ist.size AND NEW.TRSCLR = ist.color AND NEW.branch_code = ist.branchcode; UPDATE item_cur_stock ist SET ist.cl_stock = @_cl_stock WHERE NEW.TRSITCD = ist.itemcode AND NEW.TRSSZ = ist.size AND NEW.TRSCLR = ist.color AND NEW.branch_code = ist.branchcode; END;
+DROP TRIGGER IF EXISTS `AddedNewSales`;CREATE TRIGGER `AddedNewSales` AFTER INSERT ON `trbil1` FOR EACH ROW BEGIN DECLARE _cl_stock INTEGER; SELECT (ist.cl_stock - NEW.TRQTY) INTO @_cl_stock FROM item_cur_stock ist WHERE NEW.TRITCD = ist.itemcode AND NEW.TRSZ = ist.size AND NEW.TRCLR = ist.color AND NEW.branchcode1 = ist.branchcode; UPDATE item_cur_stock ist SET ist.cl_stock = @_cl_stock WHERE NEW.TRITCD = ist.itemcode AND NEW.TRSZ = ist.size AND NEW.TRCLR = ist.color AND NEW.branchcode1 = ist.branchcode; END;
+ALTER TABLE `trslret1` ADD INDEX( `TRBLNO1`, `TRITCD`, `TRSZ`, `TRCLR`);
+ALTER TABLE `trslret` ADD INDEX( `TRBLNO`, `TRBLDT`, `TRTYPE`, `TRPRCD`);
+ALTER TABLE trslret1 ADD branch_code INT NULL;
+ALTER TABLE trslret1 ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE trslret ADD branch_code INT NULL;
+ALTER TABLE trslret ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE `trslret` ADD INDEX(`branch_code`);
+ALTER TABLE `trslret` ADD INDEX(`fin_year`);
+ALTER TABLE `trslret1` ADD INDEX(`branch_code`);
+ALTER TABLE `trslret1` ADD INDEX(`fin_year`);
+DROP TRIGGER IF EXISTS `AddedNewSalesReturn`;CREATE DEFINER=`root`@`localhost` TRIGGER `AddedNewSalesReturn` AFTER INSERT ON `trslret1` FOR EACH ROW BEGIN DECLARE _cl_stock INTEGER; SELECT (ist.cl_stock + NEW.TRQTY) INTO @_cl_stock FROM item_cur_stock ist WHERE NEW.TRITCD = ist.itemcode AND NEW.TRSZ = ist.size AND NEW.TRCLR = ist.color AND NEW.branch_code = ist.branchcode; UPDATE item_cur_stock ist SET ist.cl_stock = @_cl_stock WHERE NEW.TRITCD = ist.itemcode AND NEW.TRSZ = ist.size AND NEW.TRCLR = ist.color AND NEW.branch_code = ist.branchcode; END;

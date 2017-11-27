@@ -771,7 +771,9 @@
                         TRHCGST: cgsth,
                         TRHCGSTA: cgstha,
                         TRFBEL: belowAmt,
-                        TRFABV: aboveAmt
+                        TRFABV: aboveAmt,
+                        branch_code: "<?php echo getSessionData('branch_code') ?>",
+                        fin_year: "<?php echo fin_year() ?>"
                     };
                     $(".party").val(billItems.TRPRNM);
                     $(".ad1").val(billItems.TRPAD1);

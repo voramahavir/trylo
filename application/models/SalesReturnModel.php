@@ -56,6 +56,7 @@ class SalesReturnModel extends CI_Model
 
     public function filterData()
     {
+        branchWhere("t");
         if (isset($_POST['to_date'])) {
             $to_date = $_POST['to_date'];
             $this->db->where('t.TRBLDT <= ', $to_date);
@@ -84,6 +85,8 @@ class SalesReturnModel extends CI_Model
     {
         $lastBill = 0;
         $this->db->select("TRBLNO");
+        $this->db->where("fin_year", fin_year());
+        branchWhere();
         $this->db->order_by("TRBLNO", "DESC");
         $this->db->limit(1);
         $data = $this->db->get("trslret")->row();
@@ -109,9 +112,11 @@ class SalesReturnModel extends CI_Model
             "TRITCD" => $itemId,
             "TRCLR" => $itemClr,
             "TRSZ" => $itemSz,
+            "fin_year" => fin_year()
         );
+        branchWhere("trbil1", "branchcode1");
         $this->db->where($where);
-        $this->db->join("trbil","trbil.TRBLNO = trbil1.TRBLNO1");
+        $this->db->join("trbil", "trbil.TRBLNO = trbil1.TRBLNO1 AND trbil.branchcode = trbil1.branchcode1 AND trbil.fin_year = trbil1.fin_year1");
         $this->db->limit(1);
         $data = $this->db->get("trbil1")->row();
         if (count($data)) {
@@ -133,6 +138,8 @@ class SalesReturnModel extends CI_Model
             $itemsData = $_POST['itemsData'];
             $salesData['TRBLDT'] = date("Y-m-d", strtotime($salesData['TRBLDT']));
             $salesData['TRCRDEXP'] = (isset($salesData['TRCRDEXP']) && $salesData['TRCRDEXP']) ? date("Y-m-d", strtotime($salesData['TRCRDEXP'])) : NULL;
+            $salesData['branch_code'] = getSessionData('branch_code');
+            $salesData['fin_year'] = fin_year();
             if ($this->db->trans_begin()) {
                 $this->db->insert("trslret", $salesData);
                 $lastId = $this->db->insert_id();

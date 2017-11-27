@@ -1004,7 +1004,9 @@
                         TRHCGST: cgsth,
                         TRHCGSTA: cgstha,
                         TRFBEL: belowAmt,
-                        TRFABV: aboveAmt
+                        TRFABV: aboveAmt,
+                        branchcode1: "<?php echo getSessionData('branch_code') ?>",
+                        fin_year1: "<?php echo fin_year() ?>"
                     };
                     _itemsData.push(data);
                 });

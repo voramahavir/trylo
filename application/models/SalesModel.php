@@ -18,16 +18,20 @@ class SalesModel extends CI_Model
         if (isset($_POST['salesData']) && count($_POST['salesData']) && isset($_POST['itemsData']) && count($_POST['itemsData'])) {
             $salesData = $_POST['salesData'];
             $itemsData = $_POST['itemsData'];
-            $cardData = $_POST['cardData'];
+            $cardData = isset($_POST['cardData']) ? $_POST['cardData'] : array();
             $salesData['TRBLDT'] = date("Y-m-d", strtotime($salesData['TRBLDT']));
             $salesData['TRDOB'] = ($salesData['TRDOB']) ? date("Y-m-d", strtotime($salesData['TRDOB'])) : NULL;
             $salesData['TRMAD'] = ($salesData['TRMAD']) ? date("Y-m-d", strtotime($salesData['TRMAD'])) : NULL;
             $salesData['TRCRDEXP'] = ($salesData['TRCRDEXP']) ? date("Y-m-d", strtotime($salesData['TRCRDEXP'])) : NULL;
+            $salesData['branchcode'] = getSessionData('branch_code');
+            $salesData['fin_year'] = fin_year();
+            /*print_r(compact("salesData","itemsData"));
+            die;*/
             if ($this->db->trans_begin()) {
                 $this->db->insert("trbil", $salesData);
                 $lastId = $this->db->insert_id();
                 $this->db->insert_batch("trbil1", $itemsData);
-                if(count($cardData)){
+                if (count($cardData)) {
                     $this->db->insert("crdtran", $cardData);
                 }
                 $this->db->trans_complete();
@@ -101,6 +105,8 @@ class SalesModel extends CI_Model
     {
         $lastBill = 0;
         $this->db->select("TRBLNO");
+        $this->db->where("fin_year", fin_year());
+        branchWhere("trbil", "branchcode");
         $this->db->order_by("id", "DESC");
         $this->db->limit(1);
         $data = $this->db->get("trbil")->row();
@@ -136,10 +142,12 @@ class SalesModel extends CI_Model
             'p.TRLOW as lowamt'
         );
         $where = array(
-            'b.TRBLNO' => $billNo
+            'b.TRBLNO' => $billNo,
+            'fin_year' => fin_year()
         );
         $this->db->select($select);
         $this->db->where($where);
+        branchWhere("b", "branchcode");
         $this->db->join("trbil1 bi", "bi.TRBLNO1 = b.TRBLNO");
         $this->db->join("tritem i", "i.TRITCD = bi.TRITCD");
         $this->db->join("trprgrp as p", "i.TRPRDGRP = p.PRDCD");
@@ -172,10 +180,12 @@ class SalesModel extends CI_Model
                 'p.TRHSN as hsn',
             );
             $where = array(
-                'bi.TRBLNO1' => $billNo
+                'bi.TRBLNO1' => $billNo,
+                'bi.fin_year1' => fin_year()
             );
             $this->db->select($select);
             $this->db->where($where);
+            branchWhere("bi", "branchcode1");
             $this->db->join("tritem i", "i.TRITCD = bi.TRITCD");
             $this->db->join("trprgrp as p", "i.TRPRDGRP = p.PRDCD");
             $itemData = $this->db->get('trbil1 bi')->result();
@@ -186,6 +196,8 @@ class SalesModel extends CI_Model
 
     public function filterData()
     {
+        branchWhere("t", "branchcode");
+
         if (isset($_POST['to_date'])) {
             $to_date = $_POST['to_date'];
             $this->db->where('t.TRBLDT <= ', $to_date);
