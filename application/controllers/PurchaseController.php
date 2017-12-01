@@ -16,7 +16,8 @@ class PurchaseController extends CI_Controller
 
     public function index()
     {
-        $this->load->view('purchase');
+        $data['page_title'] = 'Purchase List';
+        $this->load->view('purchase/list', $data);
     }
 
     public function purList()
