@@ -92,10 +92,26 @@
             <!-- <li class="<?php // echo isset($page_title) && $page_title == 'Loyalty Card Setup' ? 'active' : ''; ?>"><a href="<?php // echo site_url('scheme/list'); ?>"><i class="fa fa-circle-o"></i> Loyalty Card Setup</a></li> -->
           </ul>
         </li>
-
+          <li class="treeview <?php echo (isset($page_title) && ($page_title == 'Denomination List' || $page_title == 'Add Denomination')) ? 'active' : ''; ?>">
+              <a href="#">
+                  <i class="fa fa-dashboard"></i> <span>Denomination Exchange</span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li class="<?php echo isset($page_title) && $page_title == 'Denomination List' ? 'active' : ''; ?>"><a
+                              href="<?php echo site_url('denomination'); ?>"><i class="fa fa-circle-o"></i> Denomination
+                          Entry List</a></li>
+                  <li class="<?php echo isset($page_title) && $page_title == 'Add Denomination' ? 'active' : ''; ?>"><a
+                              href="<?php echo site_url('denomination/add'); ?>"><i class="fa fa-circle-o"></i> Add
+                          Denomination Entry</a></li>
+                  <!-- <li class="<?php // echo isset($page_title) && $page_title == 'Loyalty Card Setup' ? 'active' : ''; ?>"><a href="<?php // echo site_url('scheme/list'); ?>"><i class="fa fa-circle-o"></i> Loyalty Card Setup</a></li> -->
+              </ul>
+          </li>
         <li><a href="<?php echo site_url('searchItem'); ?>"><i class="fa fa-dashboard"></i> <span>Search Item</span></a></li>
-        
-        <li class="header">REPORTS</li>
+
+          <li class="header">REPORTS</li>
 
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Stock Report</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Sales Report</span></a></li>

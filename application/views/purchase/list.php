@@ -1,7 +1,4 @@
 <?php $this->load->view('include/template/common_header') ?>
-<style type="text/css">
-
-</style>
 <link rel="stylesheet"
       href="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'); ?>">
 <!-- Main row -->
