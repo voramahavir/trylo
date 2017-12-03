@@ -17,7 +17,7 @@ class ItemModel extends CI_Model
         // echo "hello";exit();
         $msg = '';
         $code = 0;
-                $search = array('value' => '');
+        $search = array('value' => '');
         if (isset($_POST['search'])) {
             $search = $_POST['search'];
         }
@@ -36,7 +36,7 @@ class ItemModel extends CI_Model
         if (isset($_POST['draw'])) {
             $draw = $_POST['draw'];
         }
-        if(isset($_POST['order']) && count($_POST['order'])){
+        if (isset($_POST['order']) && count($_POST['order'])) {
             $column = $_POST['order'][0]['column'];
             $sorttype = $_POST['order'][0]['dir'];
             $this->db->order_by($_POST['columns'][$column]['data'], $sorttype);
@@ -49,16 +49,18 @@ class ItemModel extends CI_Model
         );
         $this->db->limit($length, $start);
         $this->filterData();
-        $this->db->select('t.TRITNM as name, t2.PRDNM as group, t.TRCUP as cup, t1.TRSZCD as size, t1.TRCOLOR as color, t.TRMRP1 as mrp, t1.BARCODF as barcode, t1.TRPACQTY as qty');
+        $this->db->select('t.TRITNM as name, t2.PRDNM as group, t.TRCUP as cup, t1.TRSZCD as size, t1.TRCOLOR as color, t.TRMRP1 as mrp, t1.BARCODF as barcode, (ist.op_stock + ist.cl_stock) as qty');
         $this->db->join("tritem1 as t1", "t1.TRITCD1 = t.TRITCD");
+        $this->db->join("item_cur_stock as ist", "ist.itemcode = t1.TRITCD1");
         $this->db->join("trprgrp as t2", "t2.PRDCD = t.TRPRDGRP");
         $output['data'] = $this->db->get('tritem as t')->result();
         $this->filterData();
-        $this->db->select('t.TRITNM as name, t2.PRDNM as group, t.TRCUP as cup, t1.TRSZCD as size, t1.TRCOLOR as color, t.TRMRP1 as mrp, t1.BARCODF as barcode, t1.TRPACQTY as qty');
+        $this->db->select('t.TRITNM as name, t2.PRDNM as group, t.TRCUP as cup, t1.TRSZCD as size, t1.TRCOLOR as color, t.TRMRP1 as mrp, t1.BARCODF as barcode, (ist.op_stock + ist.cl_stock) as qty');
         $this->db->join("tritem1 as t1", "t1.TRITCD1 = t.TRITCD");
+        $this->db->join("item_cur_stock as ist", "ist.itemcode = t1.TRITCD1");
         $this->db->join("trprgrp as t2", "t2.PRDCD = t.TRPRDGRP");
         $output['recordsTotal'] = $this->db->get('tritem as t')->num_rows();
-        $output['recordsFiltered'] =  $output['recordsTotal'];
+        $output['recordsFiltered'] = $output['recordsTotal'];
         if (!empty($output['data'])) {
             $output['code'] = 1;
         }
@@ -81,7 +83,9 @@ class ItemModel extends CI_Model
         exit();
     }
 
-    function filterData(){
+    function filterData()
+    {
+        branchWhere('ist', 'branchcode');
         $filter_type = $this->input->post('filter_type');
         if ($filter_type == "barcode") {
             $barcode = $this->input->post('barcode');

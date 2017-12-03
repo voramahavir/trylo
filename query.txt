@@ -94,3 +94,7 @@ ALTER TABLE `trslret` ADD INDEX(`fin_year`);
 ALTER TABLE `trslret1` ADD INDEX(`branch_code`);
 ALTER TABLE `trslret1` ADD INDEX(`fin_year`);
 DROP TRIGGER IF EXISTS `AddedNewSalesReturn`;CREATE DEFINER=`root`@`localhost` TRIGGER `AddedNewSalesReturn` AFTER INSERT ON `trslret1` FOR EACH ROW BEGIN DECLARE _cl_stock INTEGER; SELECT (ist.cl_stock + NEW.TRQTY) INTO @_cl_stock FROM item_cur_stock ist WHERE NEW.TRITCD = ist.itemcode AND NEW.TRSZ = ist.size AND NEW.TRCLR = ist.color AND NEW.branch_code = ist.branchcode; UPDATE item_cur_stock ist SET ist.cl_stock = @_cl_stock WHERE NEW.TRITCD = ist.itemcode AND NEW.TRSZ = ist.size AND NEW.TRCLR = ist.color AND NEW.branch_code = ist.branchcode; END;
+
+Bhavesh : Added index to stock table 04-12-17
+ALTER TABLE `item_cur_stock` ADD INDEX( `branchcode`, `itemcode`, `op_stock`, `cl_stock`);
+ALTER TABLE `item_cur_stock` ADD INDEX( `size`, `color`);
