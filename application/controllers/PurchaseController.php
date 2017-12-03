@@ -40,8 +40,8 @@ class PurchaseController extends CI_Controller
     public function verify($billNo)
     {
         $data['page_title'] = 'Verify Purchase';
-        $billData['billNo'] = $billNo;
-        $this->load->view('purchase/purchase_verify', $billData);
+        $data['billNo'] = $billNo;
+        $this->load->view('purchase/purchase_verify', $data);
     }
 
     public function getInTrnsBill($billNo = null)

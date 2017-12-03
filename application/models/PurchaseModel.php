@@ -48,7 +48,7 @@ class PurchaseModel extends CI_Model
         );
 
         $this->db->select('T.TRBLNO,T.TRPRBL,T.TRBLDT,TRTOTQTY,T.TRNET,T.TRSPINST,T.PHVER1,ta.TRNAME as NAME,ta.TRCITY as CITY,group_concat(DISTINCT ti.TRPRDGRP SEPARATOR "+") AS product');
-        $this->db->join('trac ta', 'ta.TRCODE = t.TRPRCD');
+        $this->db->join('trac ta', 'ta.TRCODE = T.TRPRCD');
         $this->db->join('trtrbl1 tb', 'T.TRBLNO = tb.TRSBL AND tb.ISACTIVE = 0', 'LEFT');
         $this->db->join('tritem ti', 'ti.TRITCD = tb.TRSITCD', 'LEFT');
         $this->db->group_by('T.TRBLNO');
@@ -61,7 +61,7 @@ class PurchaseModel extends CI_Model
             $this->db->like("T.TRBLDT", $search);
         }
         $this->db->select('T.TRBLNO,T.TRBLDT,TRTOTQTY,T.TRNET,T.TRSPINST,T.PHVER1,ta.TRNAME as NAME,ta.TRCITY as CITY');
-        $this->db->join('trac ta', 'ta.TRCODE = t.TRPRCD');
+        $this->db->join('trac ta', 'ta.TRCODE = T.TRPRCD');
         $this->db->join('trtrbl1 tb', 'T.TRBLNO = tb.TRSBL AND tb.ISACTIVE = 0', 'LEFT');
         $this->db->join('tritem ti', 'ti.TRITCD = tb.TRSITCD', 'LEFT');
         $this->db->group_by('T.TRBLNO');

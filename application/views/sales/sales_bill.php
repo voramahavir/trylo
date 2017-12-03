@@ -30,7 +30,8 @@
                                            checked="true"> Pending Payment </label>
                             <label> <input type="radio" id="payment" name="payment" value="2"> Payment Rcvd
                             </label>
-                            <label> <input type="radio" id="payment" name="payment" value="all"> All (Except Cancelled) </label>
+                            <label> <input type="radio" id="payment" name="payment" value="all"> All (Except Cancelled)
+                            </label>
                             <label> <input type="radio" id="payment" name="payment" value="3"> Cancelled
                                 Bill </label>
                         </div>
@@ -72,7 +73,7 @@
                                         <th>Total Quantity</th>
                                         <th>Bill Amount</th>
                                         <th>Rcvd Amt</th>
-                                        <th>Salesman</th>
+                                        <th class="hide">Salesman</th>
                                         <th>Discount</th>
                                         <th>Other</th>
                                         <th>Action</th>
@@ -135,13 +136,14 @@
         payment = this.value;
         table.ajax.reload();
     });
+
     function setTable() {
         table = $('#sales_bill_table').DataTable({
             "processing": true,
             "serverSide": true,
             "destroy": true,
-            "lengthChange" : false,
-            "searching" : false,
+            "lengthChange": false,
+            "searching": false,
             "columns": [
                 {
                     "bSortable": false,
@@ -177,6 +179,7 @@
                 },
                 {
                     "bSortable": false,
+                    "visible": false,
                     "data": null
                 },
                 {
@@ -185,11 +188,11 @@
                 },
                 {
                     "bSortable": false,
-                     "data": null
+                    "data": null
                 },
                 {
                     "bSortable": false,
-                     "data": null
+                    "data": null
                 }
             ],
             "ajax": {
@@ -216,12 +219,13 @@
                 $('td:eq(4)', nRow).html("");
                 $('td:eq(8)', nRow).html("");
                 $('td:eq(9)', nRow).html("");
-                $('td:eq(10)', nRow).html("");
+                /*$('td:eq(10)', nRow).html("");*/
                 var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' class='btn btn-success'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
-                $('td:eq(11)', nRow).html(printStr);
+                $('td:eq(10)', nRow).html(printStr);
             }
         });
     }
+
     setTable();
 </script>
 

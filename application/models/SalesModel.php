@@ -85,13 +85,15 @@ class SalesModel extends CI_Model
             'search' => $search
         );
 
-        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t1.TRBLAMT as bamount,(t.EXRCVD - t.EXBACK) as ramount,t.TRTYPE as type');
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type');
         $this->db->limit($length, $start);
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
+        $this->db->group_by('t.TRBLNO');
         $output['data'] = $this->db->get('trbil as t')->result();
         $this->filterData();
-        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t1.TRBLAMT as bamount,(t.EXRCVD - t.EXBACK) as ramount,t.TRTYPE as type');
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type');
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
+        $this->db->group_by('t.TRBLNO');
         $output['recordsTotal'] = $this->db->get('trbil as t')->num_rows();
         $output['recordsFiltered'] = $output['recordsTotal'];
         if (!empty($output['data'])) {
@@ -199,11 +201,11 @@ class SalesModel extends CI_Model
         branchWhere("t", "branchcode");
 
         if (isset($_POST['to_date'])) {
-            $to_date = $_POST['to_date'];
+            $to_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['to_date'])));
             $this->db->where('t.TRBLDT <= ', $to_date);
         }
         if (isset($_POST['from_date'])) {
-            $from_date = $_POST['from_date'];
+            $from_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['from_date'])));
             $this->db->where('t.TRBLDT >= ', $from_date);
         }
         if (isset($_POST['payment_mode'])) {

@@ -46,7 +46,7 @@
           </ul>
         </li>
 
-          <li class="treeview<?php echo (isset($page_title) && ($page_title == 'Purchase Intransit List' || $page_title == 'Verify Purchase List' || $page_title == 'Purchase List')) ? ' active' : ''; ?>">
+          <li class="treeview<?php echo (isset($page_title) && ($page_title == 'Purchase Intransit List' || $page_title == 'Verify Purchase List' || $page_title == 'Purchase List' || $page_title == 'Verify Purchase')) ? ' active' : ''; ?>">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Purchase</span>
             <span class="pull-right-container">
