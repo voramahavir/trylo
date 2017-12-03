@@ -17,11 +17,11 @@
                     <label class="col-md-1 text-left">Fr Date : </label>
                     <div class="col-md-2">
                         <input id="from_date" type="text"
-                               value="<?php echo date('Y-m-d', strtotime('first day of this month', time())); ?>">
+                               value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
                     </div>
                     <label class="col-md-1 text-left"> To Date : </label>
                     <div class="col-md-2">
-                        <input id="to_date" type="text" value="<?php echo date('Y-m-d'); ?>">
+                        <input id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>">
                     </div>
 
                     <div class="col-md-5 col-md-offset-1">
@@ -109,11 +109,11 @@
             //Date picker
             $('#from_date').datepicker({
                 autoclose: true,
-                format: 'yyyy-mm-dd'
+                format: 'dd/mm/yyyy'
             });
             $('#to_date').datepicker({
                 autoclose: true,
-                format: 'yyyy-mm-dd'
+                format: 'dd/mm/yyyy'
             });
         });
     }(jQuery));
