@@ -98,3 +98,16 @@ DROP TRIGGER IF EXISTS `AddedNewSalesReturn`;CREATE DEFINER=`root`@`localhost` T
 Bhavesh : Added index to stock table 04-12-17
 ALTER TABLE `item_cur_stock` ADD INDEX( `branchcode`, `itemcode`, `op_stock`, `cl_stock`);
 ALTER TABLE `item_cur_stock` ADD INDEX( `size`, `color`);
+
+Bhavesh : Added cols and index to purret 05-12-17
+
+ALTER TABLE trpret1 ADD branch_code INT NULL;
+ALTER TABLE trpret1 ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE trpret ADD branch_code INT NULL;
+ALTER TABLE trpret ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE `trpret` ADD INDEX (`branch_code`);
+ALTER TABLE `trpret` ADD INDEX (`fin_year`);
+ALTER TABLE `trpret1` ADD INDEX (`branch_code`);
+ALTER TABLE `trpret1` ADD INDEX (`fin_year`);
+ALTER TABLE `trpret` ADD INDEX (`TRBLNO`, `TRPRCD`);
+ALTER TABLE `trpret1` ADD INDEX (`TRSBL`, `TRSITCD`,`TRSSZ`,`TRSCLR`);
