@@ -19,7 +19,7 @@ class VoucherController extends CI_Controller
         $this->load->view('voucher');
     }
 
-    public function list()
+    public function vouList()
     {
         $data['page_title'] = 'Voucher List';
         $this->load->view('voucher/list', $data);
@@ -31,13 +31,13 @@ class VoucherController extends CI_Controller
         $this->VoucherModel->get();
     }
 
-    public function delete($id='')
+    public function delete($id = '')
     {
         $this->load->model('VoucherModel');
         $this->VoucherModel->deleteVoucher($id);
     }
 
-    public function recover($id='')
+    public function recover($id = '')
     {
         $this->load->model('VoucherModel');
         $this->VoucherModel->recoverVoucher($id);
