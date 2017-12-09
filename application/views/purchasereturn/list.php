@@ -111,6 +111,7 @@
                     },
                     {
                         "data": null,
+                        "visible": false,
                         "bSortable": false
                     },
                 ],

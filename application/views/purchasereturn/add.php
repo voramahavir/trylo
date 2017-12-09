@@ -296,8 +296,10 @@
         });
 
         $(document).on('click', '.remove', function () {
-            $(this).parent().parent().remove();
-            index = barCodeArray.indexOf(items.BARCODF);
+            var tr = $(this).parent().parent();
+            var _barcode = tr.find('.i_salesCode').text().trim();
+            tr.remove();
+            index = barCodeArray.indexOf(_barcode);
             if (index > -1) {
                 barCodeArray.splice(index, 1);
             }
