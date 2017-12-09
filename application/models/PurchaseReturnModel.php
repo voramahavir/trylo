@@ -36,7 +36,7 @@ class PurchaseReturnModel extends CI_Model
             "CONCAT(TRAD1, ' ', TRAD2, ' ', TRAD3, ' ', TRCITY) AS address"
         );
         $this->db->select($select);
-        $this->db->order_by("TRCODE", "ASC");
+        $this->db->order_by("TRNAME", "ASC");
         $data = $this->db->get("trac")->result();
         if (count($data)) {
             $code = 1;
