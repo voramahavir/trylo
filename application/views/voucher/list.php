@@ -13,6 +13,31 @@
               <h3 class="box-title"> Voucher Entry </h3>
             </div>
             <div class="box-body">
+                <div class="row form-group">
+                    <label class="col-md-1 text-left">Fr Date : </label>
+                    <div class="col-md-2">
+                        <input id="from_date" type="text" class="form-control"
+                               value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
+                    </div>
+                    <label class="col-md-1 text-left"> To Date : </label>
+                    <div class="col-md-2">
+                        <input id="to_date" class="form-control" type="text" value="<?php echo date('d/m/Y'); ?>">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row radio">
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="all"
+                                           checked="true"> All </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="1"> Cash Rcpt </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="2"> Cash Pmnt </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="3"> Bank Withdraw
+                            </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="4"> Bank Deposited
+                            </label>
+                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="5"> Journal
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="dataTables_wrapper">
                   <div class="row form-group">
                     <div class="col-md-12">
@@ -90,8 +115,26 @@
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
     <script type="text/javascript">
       var table = {};
+      var payment_mode = 'all';
       $(document).ready(function(){
-
+        $('#from_date').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        $('#to_date').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+        $("#from_date").on('change', function () {
+            table.ajax.reload();
+        });
+        $("#to_date").on('change', function () {
+            table.ajax.reload();
+        });
+        $("input[name=payment_mode]").on('change', function () {
+            payment_mode = this.value;
+            table.ajax.reload();
+        });
         $(document).on('click', '.addvoucher', function () {
             window.location = "<?php echo site_url('voucher/add'); ?>";
         });
@@ -104,8 +147,13 @@
           "autoWidth": false,
           "pageLength": 10,
           "ajax": {
-            "url": "<?php echo site_url('voucher/get'); ?>",
-            "type": "POST"
+              "url": "<?php echo site_url('voucher/get'); ?>",
+              "type": "POST",
+              data: function (d) {
+                  d.to_date = $('#to_date').val();
+                  d.from_date = $('#from_date').val();
+                  d.payment_mode = payment_mode;
+              }
           },
           "columns": [
               { 
