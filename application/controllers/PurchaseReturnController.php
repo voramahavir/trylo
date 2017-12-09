@@ -31,4 +31,14 @@ class PurchaseReturnController extends CI_Controller
     {
         $this->PurchaseReturnModel->getParties();
     }
+
+    public function create()
+    {
+        $this->PurchaseReturnModel->purchaseRetAdd();
+    }
+
+    public function getData()
+    {
+        $this->PurchaseReturnModel->getData();
+    }
 }
