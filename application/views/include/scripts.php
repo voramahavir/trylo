@@ -40,9 +40,12 @@
 <script type="text/javascript">
     var base_url = "<?php echo base_url(); ?>";
     var site_url = "<?php echo site_url(); ?>/";
-    $("input").keyup(function () {
-        var val = $(this).val();
-        $(this).val(val.toUpperCase());
+    $("input[type=text]").keyup(function (el) {
+        if (el) {
+            var val = $(el.target).val();
+            if (val)
+                $(this).val(val.toUpperCase());
+        }
     });
 </script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

@@ -25,7 +25,7 @@
                 </a>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-hover dataTable" id="table_purchase_return">
+                        <table class="table table-bordered table-hover dataTable" id="purchase_return">
                             <thead>
                             <tr>
                                 <th>D/N No</th>
@@ -52,4 +52,92 @@
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 <script type="text/javascript">
+    var table = '';
+    var billData = [];
+    $(document).ready(function () {
+        setTable();
+        $("#from_date").on('change', function () {
+            table.ajax.reload();
+        });
+        $("#to_date").on('change', function () {
+            table.ajax.reload();
+        });
+
+        function setTable() {
+            table = $('#purchase_return').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "paging": true,
+                "ajax": {
+                    "url": "<?php echo site_url('purchasereturn/getData'); ?>",
+                    "type": "POST",
+                    data: function (d) {
+                        d.to_date = $('#to_date').val();
+                        d.from_date = $('#from_date').val();
+                    }
+                },
+                "columns": [
+                    {
+                        "data": "TRBLNO",
+                        "bSortable": true
+                    },
+                    {
+                        "data": "TRBLDT",
+                        "bSortable": true
+                    },
+                    {
+                        "data": "NAME",
+                        "bSortable": true
+                    },
+                    {
+                        "data": "CITY",
+                        "bSortable": true
+                    },
+                    {
+                        "data": "TRORBY",
+                        "bSortable": true
+                    },
+                    {
+                        "data": "TRNET",
+                        "bSortable": true
+                    },
+                    {
+                        "data": "TRTOTQTY",
+                        "bSortable": true
+                    },
+                    {
+                        "data": "product",
+                        "bSortable": true
+                    },
+                    {
+                        "data": null,
+                        "bSortable": false
+                    },
+                ],
+                "rowCallback": function (nRow, aData, iDisplayindex) {
+                    // if(aData.ISACTIVE==0){
+                    billData[iDisplayindex] = aData;
+                    $('td:eq(8)', nRow).html(""
+                        /*+ "<button class='btn btn-info' onclick='return showTrnModal(\"" + aData.TRBLNO + "\", \"" + aData.NAME + "\");'>"*/
+                        /*+ "<button class='btn btn-info' onclick='return showTrnModal(" + iDisplayindex + ");'>"
+                        + "<i class='fa fa-exchange'></i>"
+                        + "</button>"*/
+                        + "");
+                    // }else{
+                    //     $(nRow).addClass('danger');
+                    //     $('td:eq(8)',nRow).html(""
+                    //         +"<button class='btn btn-info' disabled onclick='return EditTheRow("+aData.CRDNO+");'>"
+                    //         +"<i class='fa fa-edit'></i>"
+                    //         +"</button>"
+                    //         +"<button class='btn btn-success' onclick='return RecoverTheRow("+aData.CRDNO+");'>"
+                    //         +"<i class='fa fa-check'></i>"
+                    //         +"</button>"
+                    //     +"");
+                    // }
+                },
+            });
+            $('.dataTables_filter input').attr("placeholder", "Search");
+
+        }
+    });
 </script>

@@ -114,3 +114,7 @@ ALTER TABLE `trpret1` ADD INDEX (`TRSBL`, `TRSITCD`,`TRSSZ`,`TRSCLR`);
 
 Ajaj: Added cols for voucher 09-12-17
 ALTER TABLE `trvou` ADD `IS_ACTIVE` TINYINT NOT NULL DEFAULT '1' AFTER `DEM11A`;
+
+Bhavesh : Added trigger for purchase Return 09-12-2017
+
+DROP TRIGGER IF EXISTS `AddedNewPurchaseReturn`;CREATE TRIGGER `AddedNewPurchaseReturn`AFTER INSERTON `trpret1`FOR EACH ROWBEGIN DECLARE _cl_stock INTEGER;SELECT (ist.cl_stock - NEW.TRSQTY)INTO @_cl_stockFROM item_cur_stock istWHERENEW.TRSITCD = ist.itemcode AND NEW.TRSSZ = ist.size AND NEW.TRSCLR = ist.color AND NEW.branch_code = ist.branchcode;UPDATE item_cur_stock istSET ist.cl_stock = @_cl_stockWHERENEW.TRSITCD = ist.itemcode AND NEW.TRSSZ = ist.size AND NEW.TRSCLR = ist.color AND NEW.branch_code = ist.branchcode;END;
