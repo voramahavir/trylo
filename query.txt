@@ -111,3 +111,6 @@ ALTER TABLE `trpret1` ADD INDEX (`branch_code`);
 ALTER TABLE `trpret1` ADD INDEX (`fin_year`);
 ALTER TABLE `trpret` ADD INDEX (`TRBLNO`, `TRPRCD`);
 ALTER TABLE `trpret1` ADD INDEX (`TRSBL`, `TRSITCD`,`TRSSZ`,`TRSCLR`);
+
+Ajaj: Added cols for voucher 09-12-17
+ALTER TABLE `trvou` ADD `IS_ACTIVE` TINYINT NOT NULL DEFAULT '1' AFTER `DEM11A`;

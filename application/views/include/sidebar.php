@@ -125,7 +125,8 @@
             </li>
             <li><a href="<?php echo site_url('searchItem'); ?>"><i class="fa fa-dashboard"></i> <span>Search Item</span></a>
             </li>
-
+            <li><a href="<?php echo site_url('voucher/list'); ?>"><i class="fa fa-dashboard"></i> <span>Voucher Entry</span></a>
+            </li>
             <li class="header">REPORTS</li>
 
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Stock Report</span></a></li>
