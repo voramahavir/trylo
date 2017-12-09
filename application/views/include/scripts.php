@@ -40,7 +40,7 @@
 <script type="text/javascript">
     var base_url = "<?php echo base_url(); ?>";
     var site_url = "<?php echo site_url(); ?>/";
-    $("input[type=text]").keyup(function (el) {
+    $("input[type=text], textarea").keyup(function (el) {
         if (el) {
             var val = $(el.target).val();
             if (val)

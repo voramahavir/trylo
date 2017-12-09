@@ -33,7 +33,8 @@ class PurchaseReturnModel extends CI_Model
         $select = array(
             "TRCODE",
             "TRNAME",
-            "CONCAT(TRAD1, ' ', TRAD2, ' ', TRAD3, ' ', TRCITY) AS address"
+            "CONCAT(TRAD1, ' ', TRAD2, ' ', TRAD3, ' ', TRCITY) AS address",
+            "TRACGRP"
         );
         $this->db->select($select);
         $this->db->order_by("TRNAME", "ASC");
