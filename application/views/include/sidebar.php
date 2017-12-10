@@ -125,7 +125,8 @@
             </li>
             <li><a href="<?php echo site_url('searchItem'); ?>"><i class="fa fa-dashboard"></i> <span>Search Item</span></a>
             </li>
-            <li><a href="<?php echo site_url('voucher/list'); ?>"><i class="fa fa-dashboard"></i>
+            <li class="<?php echo isset($page_title) && ($page_title == 'Voucher List' || $page_title == 'Add Voucher') ? 'active' : ''; ?>">
+                <a href="<?php echo site_url('voucher/list'); ?>"><i class="fa fa-dashboard"></i>
                     <span>Voucher Entry</span></a>
             </li>
             <li><a href="<?php echo site_url('dndmobile/list'); ?>"><i class="fa fa-dashboard"></i>

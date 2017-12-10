@@ -95,4 +95,40 @@ class VoucherModel extends CI_Model {
             }
         }
     }
+
+    public function getCurrentBillNo()
+    {
+        $lastBill = 0;
+        $this->db->select("VOUNO");
+        $this->db->where("fin_year", fin_year());
+        branchWhere();
+        $this->db->order_by("VOUNO", "DESC");
+        $this->db->limit(1);
+        $data = $this->db->get("trvou")->row();
+
+        if ($data) {
+            $lastBill = $data->VOUNO;
+        }
+        $lastBill++;
+        return $lastBill;
+    }
+
+    public function addVoucher()
+    {
+        $voucherData = $_POST;
+        $code = 0;
+        $msg = "No data found to save";
+        if ($voucherData) {
+            $voucherData['VOUDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $voucherData['VOUDT'])));
+            $voucherData['CHQDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $voucherData['CHQDT'])));
+            if ($this->db->insert('trvou', $voucherData)) {
+                $code = 1;
+                $msg = "Data saved successfully";
+            }
+        }
+        $response = compact("code", "msg");
+        echo json_encode($response);
+        exit;
+    }
+
 }

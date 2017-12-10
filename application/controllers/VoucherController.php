@@ -16,7 +16,8 @@ class VoucherController extends CI_Controller
 
     public function index()
     {
-        $this->load->view('voucher');
+        $data['page_title'] = 'Voucher List';
+        $this->load->view('voucher/list', $data);
     }
 
     public function vouList()
@@ -41,5 +42,19 @@ class VoucherController extends CI_Controller
     {
         $this->load->model('VoucherModel');
         $this->VoucherModel->recoverVoucher($id);
+    }
+
+    public function add()
+    {
+        $this->load->model('VoucherModel');
+        $data['page_title'] = 'Add Voucher';
+        $data['currentBill'] = $this->VoucherModel->getCurrentBillNo();
+        $this->load->view('voucher/add', $data);
+    }
+
+    public function create()
+    {
+        $this->load->model('VoucherModel');
+        $this->VoucherModel->addVoucher();
     }
 }
