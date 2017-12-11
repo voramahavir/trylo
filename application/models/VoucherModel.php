@@ -131,4 +131,36 @@ class VoucherModel extends CI_Model {
         exit;
     }
 
+    public function getVoucher($id)
+    {
+        $where = array(
+            'VOUNO' => $id,
+            'IS_ACTIVE' => 1,
+            'branch_code' => getSessionData('branch_code')
+        );
+        $this->db->where($where);
+        $this->db->limit(1);
+        $voucherData = $this->db->get('trvou')->row_array();
+        return $voucherData;
+    }
+
+    public function updateVoucher()
+    {
+        $voucherData = $_POST;
+        $code = 0;
+        $msg = "No data found to save";
+        if ($voucherData) {
+            $voucherData['VOUDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $voucherData['VOUDT'])));
+            $voucherData['CHQDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $voucherData['CHQDT'])));
+            $this->db->where('VOUNO', $voucherData['VOUNO']);
+            if ($this->db->update('trvou', $voucherData)) {
+                $code = 1;
+                $msg = "Data updated successfully";
+            }
+        }
+        $response = compact("code", "msg");
+        echo json_encode($response);
+        exit;
+    }
+
 }

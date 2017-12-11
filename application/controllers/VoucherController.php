@@ -57,4 +57,19 @@ class VoucherController extends CI_Controller
         $this->load->model('VoucherModel');
         $this->VoucherModel->addVoucher();
     }
+
+    public function edit($id)
+    {
+        $this->load->model('VoucherModel');
+        $voucherData = $this->VoucherModel->getVoucher($id);
+        $data['page_title'] = 'Edit Voucher';
+        $data['voucherData'] = $voucherData;
+        $this->load->view('voucher/edit', $data);
+    }
+
+    public function update()
+    {
+        $this->load->model('VoucherModel');
+        $this->VoucherModel->updateVoucher();
+    }
 }

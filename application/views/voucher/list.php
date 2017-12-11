@@ -165,7 +165,7 @@
                     "bSortable": true
                 },
                 {
-                    "data": "VOUDT",
+                    "data": null,
                     "bSortable": true
                 },
                 {
@@ -195,6 +195,8 @@
             ],
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 branchid = 1;
+                var VOUDT = new Date(aData.VOUDT);
+                $('td:eq(1)', nRow).html(VOUDT.toString('dd/MM/yyyy'));
                 if (aData.VOUTYP == 1) {
                     $('td:eq(2)', nRow).html("CR");
                 } else if (aData.VOUTYP == 2) {
