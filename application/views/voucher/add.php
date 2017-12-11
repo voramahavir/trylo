@@ -205,8 +205,7 @@
                 </form>
             </div>
             <div class="box-footer">
-                <a href="<?php echo site_url('voucher/list'); ?>" class="btn btn-default"
-                   data-dismiss="modal">Cancel</a>
+                <a href="<?php echo site_url('voucher/list'); ?>" class="btn btn-default">Cancel</a>
                 <button type="button" class="btn btn-primary saveVoucher pull-right">Save</button>
             </div>
         </div>

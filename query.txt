@@ -131,3 +131,7 @@ ALTER TABLE trvou ADD fin_year VARCHAR(15) NULL;
 ALTER TABLE `trvou` ADD INDEX (`branch_code`);
 ALTER TABLE `trvou` ADD INDEX (`fin_year`);
 ALTER TABLE `trvou` ADD `DEM12` INT NOT NULL AFTER `fin_year`, ADD `DEM12A` INT NOT NULL AFTER `DEM12`;
+
+Bhavesh : Added for is_active 11-12-2017
+
+ALTER TABLE `trdndmob` ADD `is_active` TINYINT(1) NOT NULL DEFAULT '1' AFTER `MOBILENO`;

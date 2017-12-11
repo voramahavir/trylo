@@ -15,11 +15,14 @@ class DndMobileController extends CI_Controller
 
     public function index()
     {
-        $this->load->view("dnd", $data);
+        $data['page_title'] = "DND Mobile List";
+        $this->load->view('dnd/list', $data);
     }
 
-    public function list(){
-		$this->load->view('dnd/list');
+    public function dndList()
+    {
+        $data['page_title'] = "DND Mobile Entry";
+        $this->load->view('dnd/list', $data);
 	}
 
 	public function add() {
