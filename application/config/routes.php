@@ -91,5 +91,5 @@ $route['customerfeedback/(:any)/'] = 'CustomerFeedbackController/$1';
 $route['customerfeedback/(:any)/(:any)'] = 'CustomerFeedbackController/$1/$2';
 $route['luckydraw/(:any)/'] = 'LuckydrawFeedbackController/$1';
 $route['luckydraw/(:any)/(:any)'] = 'LuckydrawFeedbackController/$1/$2';
-$route['dndmobile/(:any)/'] = 'DndMobileController/$1';
+$route['dndmobile/(:any)'] = 'DndMobileController/$1';
 $route['dndmobile/(:any)/(:any)'] = 'DndMobileController/$1/$2';
