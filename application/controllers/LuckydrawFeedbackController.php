@@ -28,7 +28,7 @@ class LuckydrawFeedbackController extends CI_Controller
 
     public function get()
     {
-
+        $this->LuckydrawFeedbackModel->getData();
     }
 
     public function add()
@@ -41,5 +41,28 @@ class LuckydrawFeedbackController extends CI_Controller
     public function create()
     {
         $this->LuckydrawFeedbackModel->addDraw();
+    }
+
+    public function edit($id)
+    {
+        $luckyDrawData = $this->LuckydrawFeedbackModel->getLuckyDraw($id);
+        $data['page_title'] = 'Edit Lucky Draw';
+        $data['luckyDrawData'] = $luckyDrawData;
+        $this->load->view('luckydraw/edit', $data);
+    }
+
+    public function update()
+    {
+        $this->LuckydrawFeedbackModel->updateLuckyDraw();
+    }
+
+    public function delete($id = '')
+    {
+        $this->LuckydrawFeedbackModel->deleteLuckydraw($id);
+    }
+
+    public function recover($id = '')
+    {
+        $this->LuckydrawFeedbackModel->recoverLuckydraw($id);
     }
 }

@@ -135,3 +135,7 @@ ALTER TABLE `trvou` ADD `DEM12` INT NOT NULL AFTER `fin_year`, ADD `DEM12A` INT 
 Bhavesh : Added for is_active 11-12-2017
 
 ALTER TABLE `trdndmob` ADD `is_active` TINYINT(1) NOT NULL DEFAULT '1' AFTER `MOBILENO`;
+
+Bhavesh : Added for is_active 12-12-2017
+
+ALTER TABLE `fdbkfr` ADD `IS_ACTIVE` TINYINT(1) NOT NULL DEFAULT '1';
