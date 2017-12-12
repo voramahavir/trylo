@@ -133,9 +133,13 @@
                 <a href="<?php echo site_url('dndmobile/list'); ?>"><i class="fa fa-dashboard"></i>
                     <span>DND Mobile Number Entry</span></a>
             </li>
-            <li class="<?php echo isset($page_title) && ($page_title == 'Lucky Draw List' || $page_title == 'Add Lucky Draw') ? 'active' : ''; ?>">
+            <li class="<?php echo isset($page_title) && ($page_title == 'Lucky Draw List' || $page_title == 'Add Lucky Draw' || $page_title == 'Edit Lucky Draw') ? 'active' : ''; ?>">
                 <a href="<?php echo site_url('luckydraw/list'); ?>"><i class="fa fa-dashboard"></i>
                     <span>LuckyDraw Feedback Form</span></a>
+            </li>
+            <li class="<?php echo isset($page_title) && ($page_title == 'Customer Experience List' || $page_title == 'Add Customer Experience' || $page_title == 'Edit Customer Experience') ? 'active' : ''; ?>">
+                <a href="<?php echo site_url('customerfeedback/list'); ?>"><i class="fa fa-dashboard"></i>
+                    <span>Cust. Experience Feedback Form</span></a>
             </li>
             <li class="header">REPORTS</li>
 

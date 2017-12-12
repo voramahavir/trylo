@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"> Daily Lucky Draw </h3>
+                <h3 class="box-title"> Customer Experience Entry </h3>
             </div>
             <div class="box-body">
                 <div class="row form-group">
@@ -23,20 +23,23 @@
                 <div class="dataTables_wrapper">
                     <div class="row form-group">
                         <div class="col-md-12">
-                            <a href="<?php echo site_url('luckydraw/add') ?>" class="btn btn-info">
+                            <a href="<?php echo site_url('customerfeedback/add') ?>" class="btn btn-info">
                                 <span class="glyphicon glyphicon-plus"></span> Add
                             </a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-bordered table-hover dataTable" id="table_luckydraw">
+                            <table class="table table-bordered table-hover dataTable" id="table_customerfeedback">
                                 <thead>
                                 <tr>
                                     <th>Vou.No.</th>
                                     <th>Date</th>
                                     <th>Name of Party</th>
+                                    <th>City</th>
                                     <th>Mobile No.</th>
+                                    <th>Bill No.</th>
+                                    <th>Bill Date.</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -51,7 +54,7 @@
     </div>
 </div>
 <!-- DeleteModal -->
-<div class="modal fade modal-3d-flip-horizontal" id="deleteLuckydrawModal" aria-hidden="true"
+<div class="modal fade modal-3d-flip-horizontal" id="deleteCustomerfeedbackModal" aria-hidden="true"
      aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -59,19 +62,19 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Are you sure you want to delete the Lucky Draw Feedback ? </h4>
+                <h4 class="modal-title">Are you sure you want to delete the Customer Experience Feedback ? </h4>
                 <input type="hidden" name="id" value="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger deleteLuckydraw">Delete</button>
+                <button type="button" class="btn btn-danger deleteCustomerfeedback">Delete</button>
             </div>
         </div>
     </div>
 </div>
 <!-- End DeleteModal -->
 <!-- RecoverModal -->
-<div class="modal fade modal-3d-flip-horizontal" id="recoverLuckydrawModal" aria-hidden="true"
+<div class="modal fade modal-3d-flip-horizontal" id="recoverCustomerfeedbackModal" aria-hidden="true"
      aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -79,12 +82,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Are you sure you want to recover the Lucky Draw Feedback ?</h4>
+                <h4 class="modal-title">Are you sure you want to recover the Customer Experience Feedback ?</h4>
                 <input type="hidden" name="id" value="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success recoverLuckydraw">Recover</button>
+                <button type="button" class="btn btn-success recoverCustomerfeedback">Recover</button>
             </div>
         </div>
     </div>
@@ -112,7 +115,7 @@
             table.ajax.reload();
         });
 
-        table = $('#table_luckydraw').DataTable({
+        table = $('#table_customerfeedback').DataTable({
             "paging": true,
             "lengthChange": true,
             "searching": true,
@@ -121,7 +124,7 @@
             "autoWidth": false,
             "pageLength": 10,
             "ajax": {
-                "url": "<?php echo site_url('luckydraw/get'); ?>",
+                "url": "<?php echo site_url('customerfeedback/get'); ?>",
                 "type": "POST",
                 data: function (d) {
                     d.to_date = $('#to_date').val();
@@ -136,10 +139,20 @@
                     "data": null,
                     "bSortable": true
                 }, {
-                    "data": "CUSNAME",
+                    "data": "NAME",
+                    "bSortable": true
+                }, {
+                    "data": "CITY",
                     "bSortable": true
                 }, {
                     "data": "MOBILENO",
+                    "bSortable": true
+                }, {
+                    "data": "BILLNO",
+                    "bSortable": true
+                },
+                {
+                    "data": null,
                     "bSortable": true
                 },
                 {
@@ -150,8 +163,10 @@
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 var VOUDT = new Date(aData.VOUDT);
                 $('td:eq(1)', nRow).html(VOUDT.toString('dd/MM/yyyy'));
+                var BILLDATE = new Date(aData.BILLDATE);
+                $('td:eq(6)', nRow).html(BILLDATE.toString('dd/MM/yyyy'));
                 if (aData.IS_ACTIVE == 1) {
-                    $('td:eq(4)', nRow).html(""
+                    $('td:eq(7)', nRow).html(""
                         + "<button class='btn btn-info' onclick='return EditTheRow(" + iDisplayindex + "," + aData.VOUNO + ");'>"
                         + "<i class='fa fa-edit'></i>"
                         + "</button>"
@@ -163,7 +178,7 @@
 
                 } else {
                     $(nRow).addClass('danger');
-                    $('td:eq(4)', nRow).html(""
+                    $('td:eq(7)', nRow).html(""
                         + "<button class='btn btn-info' disabled onclick='return EditTheRow(" + iDisplayindex + "," + aData.VOUNO + ");'>"
                         + "<i class='fa fa-edit'></i>"
                         + "</button>"
@@ -175,49 +190,49 @@
             },
         });
 
-        $(".deleteLuckydraw").on("click", function () {
-            $(".deleteLuckydraw").prop("disabled", true);
+        $(".deleteCustomerfeedback").on("click", function () {
+            $(".deleteCustomerfeedback").prop("disabled", true);
             var id = -1;
-            id = $("#deleteLuckydrawModal").find("[name=id]").val();
-            $.post("<?php echo site_url('luckydraw/delete/'); ?>" + id, {})
+            id = $("#deleteCustomerfeedbackModal").find("[name=id]").val();
+            $.post("<?php echo site_url('customerfeedback/delete/'); ?>" + id, {})
                 .done(function (result) {
                     result = JSON.parse(result);
                     if (result.code == 1) {
                         table.ajax.reload();
                     }
-                    $("#deleteLuckydrawModal").modal("hide");
+                    $("#deleteCustomerfeedbackModal").modal("hide");
                 });
-            $(".deleteLuckydraw").prop("disabled", false);
+            $(".deleteCustomerfeedback").prop("disabled", false);
         });
 
-        $(".recoverLuckydraw").on("click", function () {
-            $(".recoverLuckydraw").prop("disabled", true);
+        $(".recoverCustomerfeedback").on("click", function () {
+            $(".recoverCustomerfeedback").prop("disabled", true);
             var id = -1;
-            id = $("#recoverLuckydrawModal").find("[name=id]").val();
-            $.post("<?php echo site_url('luckydraw/recover/'); ?>" + id, {})
+            id = $("#recoverCustomerfeedbackModal").find("[name=id]").val();
+            $.post("<?php echo site_url('customerfeedback/recover/'); ?>" + id, {})
                 .done(function (result) {
                     result = JSON.parse(result);
                     if (result.code == 1) {
                         table.ajax.reload();
                     }
-                    $("#recoverLuckydrawModal").modal("hide");
+                    $("#recoverCustomerfeedbackModal").modal("hide");
                 });
-            $(".recoverLuckydraw").prop("disabled", false);
+            $(".recoverCustomerfeedback").prop("disabled", false);
         });
 
     });
 
     function DeleteTheRow(index, id) {
-        $("#deleteLuckydrawModal").modal("show");
-        $("#deleteLuckydrawModal").find("[name=id]").attr("value", id);
+        $("#deleteCustomerfeedbackModal").modal("show");
+        $("#deleteCustomerfeedbackModal").find("[name=id]").attr("value", id);
     }
 
     function RecoverTheRow(index, id) {
-        $("#recoverLuckydrawModal").modal("show");
-        $("#recoverLuckydrawModal").find("[name=id]").attr("value", id);
+        $("#recoverCustomerfeedbackModal").modal("show");
+        $("#recoverCustomerfeedbackModal").find("[name=id]").attr("value", id);
     }
 
     function EditTheRow(index, id) {
-        window.location.href = "<?php echo site_url('luckydraw/edit/'); ?>" + id;
+        window.location.href = "<?php echo site_url('customerfeedback/edit/'); ?>" + id;
     }
 </script>

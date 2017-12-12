@@ -71,9 +71,6 @@ class LuckydrawFeedbackModel extends CI_Model
             $sorttype = $_POST['order'][0]['dir'];
             $this->db->order_by($_POST['columns'][$column]['data'], $sorttype);
         }
-        if (!empty($search)) {
-            $this->db->like("t.TRBLDT", $search);
-        }
         $this->filterData();
         $output = array("code" => 0,
             'draw' => $draw,
