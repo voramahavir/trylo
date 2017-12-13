@@ -81,6 +81,7 @@ $route['purchase/(:any)'] = 'PurchaseController/$1';
 $route['purchase/(:any)/(:any)'] = 'PurchaseController/$1/$2';
 $route['denomination'] = 'DenominationController';
 $route['denomination/(:any)'] = 'DenominationController/$1';
+$route['denomination/(:any)/(:any)'] = 'DenominationController/$1/$2';
 $route['purchasereturn'] = 'PurchaseReturnController';
 $route['purchasereturn/(:any)'] = 'PurchaseReturnController/$1';
 $route['voucher'] = 'VoucherController';

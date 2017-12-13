@@ -141,3 +141,7 @@ Bhavesh : Added for is_active 12-12-2017
 ALTER TABLE `fdbkfr` ADD `IS_ACTIVE` TINYINT(1) NOT NULL DEFAULT '1';
 
 ALTER TABLE `custexp` ADD `IS_ACTIVE` TINYINT(1) NOT NULL DEFAULT '1';
+
+Bhavesh : Added for is_active 13-12-2017
+
+ALTER TABLE `kdeno` ADD `IS_ACTIVE` TINYINT(1) NOT NULL DEFAULT '1';
