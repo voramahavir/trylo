@@ -175,7 +175,7 @@
                 </form>
             </div>
             <div class="box-footer">
-                <a href="<?php echo site_url('luckydraw/list'); ?>" class="btn btn-default">Cancel</a>
+                <a href="<?php echo site_url('customerfeedback/list'); ?>" class="btn btn-default">Cancel</a>
                 <button type="button" class="btn btn-primary saveCustFeedback pull-right">Save</button>
             </div>
         </div>

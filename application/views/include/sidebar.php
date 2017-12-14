@@ -114,7 +114,7 @@
                 <a href="<?php echo site_url('voucher/list'); ?>"><i class="fa fa-dashboard"></i>
                     <span>Voucher Entry</span></a>
             </li>
-            <li class="<?php echo isset($page_title) && ($page_title == 'DND Mobile List') ? 'active' : ''; ?>">
+            <li class="<?php echo isset($page_title) && ($page_title == 'DND Mobile Entry') ? 'active' : ''; ?>">
                 <a href="<?php echo site_url('dndmobile/list'); ?>"><i class="fa fa-dashboard"></i>
                     <span>DND Mobile Number Entry</span></a>
             </li>
