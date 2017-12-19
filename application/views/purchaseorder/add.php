@@ -150,7 +150,7 @@
                 <div class="box-footer">
                     <a href="<?php echo site_url('purchaseorder'); ?>" class="btn btn-default"
                        data-dismiss="modal">Cancel</a>
-                    <button type="button" class="btn btn-primary saveRet pull-right">Save</button>
+                    <button type="button" class="btn btn-primary pull-right">Save</button>
                 </div>
             </div>
         </div>
@@ -331,11 +331,11 @@
             });
 
             $('.saveItems').click(function () {
-                saveItems();
+                // saveItems();
             });
 
             $('.saveRet').click(function () {
-                saveReturn();
+                // saveReturn();
             });
 
             $('#selectItem').click(function () {
