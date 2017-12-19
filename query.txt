@@ -145,3 +145,16 @@ ALTER TABLE `custexp` ADD `IS_ACTIVE` TINYINT(1) NOT NULL DEFAULT '1';
 Bhavesh : Added for is_active 13-12-2017
 
 ALTER TABLE `kdeno` ADD `IS_ACTIVE` TINYINT(1) NOT NULL DEFAULT '1';
+
+Bhavesh : Added cols in trpord & trpord1 18-12-2017
+
+ALTER TABLE `trpord` ADD `IS_ACTIVE` TINYINT(1) NOT NULL DEFAULT '1';
+ALTER TABLE trpord ADD branch_code INT NULL;
+ALTER TABLE trpord ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE trpord1 ADD branch_code INT NULL;
+ALTER TABLE trpord1 ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE `trpord` ADD INDEX (`branch_code`);
+ALTER TABLE `trpord` ADD INDEX (`fin_year`);
+ALTER TABLE `trpord` ADD INDEX (`IS_ACTIVE`);
+ALTER TABLE `trpord1` ADD INDEX (`branch_code`);
+ALTER TABLE `trpord1` ADD INDEX (`fin_year`);

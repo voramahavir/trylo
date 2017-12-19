@@ -221,3 +221,4 @@
         window.location.href = "<?php echo site_url('luckydraw/edit/'); ?>" + id;
     }
 </script>
+<?php $this->load->view('include/page_footer.php'); ?>

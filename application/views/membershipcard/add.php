@@ -403,3 +403,4 @@
         });
     }(jQuery));
 </script>
+<?php $this->load->view('include/page_footer.php'); ?>

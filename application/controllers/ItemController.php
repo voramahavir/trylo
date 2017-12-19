@@ -30,4 +30,11 @@ class ItemController extends CI_Controller {
 		$this->load->model('ItemModel');
 		$this->ItemModel->getDropDownData();
 	}
+
+    public function getItemByPrdGrp($prdGrp = '')
+    {
+        $this->load->model('ItemModel');
+        $prdGrp = ($prdGrp) ? $prdGrp : $_POST['prdGrp'];
+        $this->ItemModel->getItemByPrdGrp($prdGrp);
+    }
 }

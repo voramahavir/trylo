@@ -52,7 +52,7 @@
                 </ul>
             </li>
 
-            <li class="treeview<?php echo (isset($page_title) && ($page_title == 'Purchase Intransit List' || $page_title == 'Verify Purchase List' || $page_title == 'Verify Purchase' || $page_title == 'Purchase Return List' || $page_title == 'Purchase Return Add')) ? ' active' : ''; ?>">
+            <li class="treeview<?php echo (isset($page_title) && ($page_title == 'Purchase Intransit List' || $page_title == 'Verify Purchase List' || $page_title == 'Verify Purchase' || $page_title == 'Purchase Return List' || $page_title == 'Purchase Return Add' || $page_title == 'Purchase Order List')) ? ' active' : ''; ?>">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Purchase</span>
                     <span class="pull-right-container">
@@ -70,6 +70,9 @@
                     <li class="<?php echo isset($page_title) && ($page_title == 'Purchase Return List' || $page_title == 'Purchase Return Add') ? 'active' : ''; ?>">
                         <a href="<?php echo site_url('purchasereturn'); ?>"><i class="fa fa-circle-o"></i> Purchase
                             Return</a></li>
+                    <li class="<?php echo isset($page_title) && ($page_title == 'Purchase Order List' || $page_title == 'Purchase Order Add') ? 'active' : ''; ?>">
+                        <a href="<?php echo site_url('purchaseorder'); ?>"><i class="fa fa-circle-o"></i> Purchase
+                            Order</a></li>
                 </ul>
             </li>
 

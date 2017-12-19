@@ -133,4 +133,31 @@ class ItemModel extends CI_Model
             }
         }
     }
+
+    function getItemByPrdGrp($prdGrp)
+    {
+        $code = 0;
+        $msg = "No data found";
+        $select = array(
+            'i.TRITCD',
+            'i.TRITNM',
+            'GROUP_CONCAT(DISTINCT i1.TRCOLOR) as colors',
+            'GROUP_CONCAT(DISTINCT i1.TRSZCD) as sizes',
+            'GROUP_CONCAT(DISTINCT CONCAT(i1.TRSZCD, "," ,i1.TRCOLOR) SEPARATOR "|") as szclr',
+        );
+        $where = array('i.TRPRDGRP' => $prdGrp);
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->join('tritem1 i1', 'i1.TRITCD1 = i.TRITCD');
+        $this->db->group_by('i.TRITCD');
+        $this->db->order_by('i.TRITNM');
+        $data = $this->db->get('tritem i')->result();
+        if (count($data)) {
+            $code = 1;
+            $msg = "Data fetched successfully";
+        }
+        $response = compact("code", "msg", "data");
+        echo json_encode($response);
+        exit;
+    }
 }

@@ -227,3 +227,4 @@
         window.location.href = "<?php echo site_url('denomination/edit/'); ?>" + id;
     }
 </script>
+<?php $this->load->view('include/page_footer.php'); ?>
