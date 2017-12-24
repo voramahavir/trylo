@@ -158,3 +158,18 @@ ALTER TABLE `trpord` ADD INDEX (`fin_year`);
 ALTER TABLE `trpord` ADD INDEX (`IS_ACTIVE`);
 ALTER TABLE `trpord1` ADD INDEX (`branch_code`);
 ALTER TABLE `trpord1` ADD INDEX (`fin_year`);
+
+Bhavesh : Added cols in trphst & trphst1 24-12-2017
+
+ALTER TABLE `trphst` ADD `IS_ACTIVE` TINYINT(1) NOT NULL DEFAULT '1';
+ALTER TABLE trphst ADD branch_code INT NULL;
+ALTER TABLE trphst ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE trphst1 ADD branch_code INT NULL;
+ALTER TABLE trphst1 ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE `trphst` ADD INDEX (`TRBLNO`);
+ALTER TABLE `trphst` ADD INDEX (`TRBLDT`);
+ALTER TABLE `trphst` ADD INDEX (`branch_code`);
+ALTER TABLE `trphst` ADD INDEX (`fin_year`);
+ALTER TABLE `trphst` ADD INDEX (`IS_ACTIVE`);
+ALTER TABLE `trphst1` ADD INDEX (`branch_code`);
+ALTER TABLE `trphst1` ADD INDEX (`fin_year`);

@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"> Purchase Order Entry</h3>
+                <h3 class="box-title"> Physical Stock Entry</h3>
             </div>
             <div class="box-body">
                 <div class="row form-group">
@@ -20,22 +20,17 @@
                         <input class="form-control" id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>">
                     </div>
                 </div>
-                <a href="<?php echo site_url('purchaseorder/add'); ?>" class="btn btn-info">
+                <a href="<?php echo site_url('stock/add'); ?>" class="btn btn-info">
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </a>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-hover dataTable" id="table_purchase">
+                        <table class="table table-bordered table-hover dataTable" id="table_stock">
                             <thead>
                             <tr>
-                                <th>Bill No</th>
+                                <th>No</th>
                                 <th>Date</th>
-                                <th>Name of Party</th>
-                                <th>City</th>
-                                <th>Sp.Instru.</th>
-                                <th>Amount Rs.</th>
                                 <th>Total Qty.</th>
-                                <th>Product</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -49,7 +44,7 @@
     </div>
 </div>
 <!-- DeleteModal -->
-<div class="modal fade modal-3d-flip-horizontal" id="deletePurchaseOrderModal" aria-hidden="true"
+<div class="modal fade modal-3d-flip-horizontal" id="deleteStockModal" aria-hidden="true"
      aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -57,19 +52,19 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Are you sure you want to delete the Purchase Order ? </h4>
+                <h4 class="modal-title">Are you sure you want to delete the Stock Entry ? </h4>
                 <input type="hidden" name="id" value="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger deletePurchaseOrder">Delete</button>
+                <button type="button" class="btn btn-danger deleteStock">Delete</button>
             </div>
         </div>
     </div>
 </div>
 <!-- End DeleteModal -->
 <!-- RecoverModal -->
-<div class="modal fade modal-3d-flip-horizontal" id="recoverPurchaseOrderModal" aria-hidden="true"
+<div class="modal fade modal-3d-flip-horizontal" id="recoverStockModal" aria-hidden="true"
      aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -77,12 +72,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Are you sure you want to recover the Purchase Order ?</h4>
+                <h4 class="modal-title">Are you sure you want to recover the Stock Entry ?</h4>
                 <input type="hidden" name="id" value="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success recoverPurchaseOrder">Recover</button>
+                <button type="button" class="btn btn-success recoverStock">Recover</button>
             </div>
         </div>
     </div>
@@ -94,8 +89,6 @@
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 <script type="text/javascript">
     var table = '';
-    var type = "1";
-    var billData = [];
     $(document).ready(function () {
         $('#from_date').datepicker({
             autoclose: true,
@@ -125,48 +118,47 @@
     $(document).on('click', '.saveBill', function () {
         transferToBill();
     });
-    $(".deletePurchaseOrder").on("click", function () {
-        $(".deletePurchaseOrder").prop("disabled", true);
+    $(".deleteStock").on("click", function () {
+        $(".deleteStock").prop("disabled", true);
         var id = -1;
-        id = $("#deletePurchaseOrderModal").find("[name=id]").val();
-        $.post("<?php echo site_url('luckydraw/delete/'); ?>" + id, {})
+        id = $("#deleteStockModal").find("[name=id]").val();
+        $.post("<?php echo site_url('stock/delete/'); ?>" + id, {})
             .done(function (result) {
                 result = JSON.parse(result);
                 if (result.code == 1) {
                     table.ajax.reload();
                 }
-                $("#deletePurchaseOrderModal").modal("hide");
+                $("#deleteStockModal").modal("hide");
             });
-        $(".deletePurchaseOrder").prop("disabled", false);
+        $(".deleteStock").prop("disabled", false);
     });
 
-    $(".recoverPurchaseOrder").on("click", function () {
-        $(".recoverPurchaseOrder").prop("disabled", true);
+    $(".recoverStock").on("click", function () {
+        $(".recoverStock").prop("disabled", true);
         var id = -1;
-        id = $("#recoverPurchaseOrderModal").find("[name=id]").val();
-        $.post("<?php echo site_url('luckydraw/recover/'); ?>" + id, {})
+        id = $("#recoverStockModal").find("[name=id]").val();
+        $.post("<?php echo site_url('stock/recover/'); ?>" + id, {})
             .done(function (result) {
                 result = JSON.parse(result);
                 if (result.code == 1) {
                     table.ajax.reload();
                 }
-                $("#recoverPurchaseOrderModal").modal("hide");
+                $("#recoverStockModal").modal("hide");
             });
-        $(".recoverPurchaseOrder").prop("disabled", false);
+        $(".recoverStock").prop("disabled", false);
     });
 
     function setTable() {
-        table = $('#table_purchase').DataTable({
+        table = $('#table_stock').DataTable({
             "processing": true,
             "serverSide": true,
             "paging": true,
             "ajax": {
-                "url": "<?php echo site_url('purchaseorder/getData'); ?>",
+                "url": "<?php echo site_url('stock/getData'); ?>",
                 "type": "POST",
                 data: function (d) {
                     d.to_date = $('#to_date').val();
                     d.from_date = $('#from_date').val();
-                    d.type = type;
                 }
             },
             "columns": [
@@ -179,39 +171,19 @@
                     "bSortable": true
                 },
                 {
-                    "data": "NAME",
-                    "bSortable": true
-                },
-                {
-                    "data": "CITY",
-                    "bSortable": true
-                },
-                {
-                    "data": "TRSPINST",
-                    "bSortable": true
-                },
-                {
-                    "data": "TRNET",
-                    "bSortable": true
-                },
-                {
                     "data": "TRTOTQTY",
-                    "bSortable": true
-                },
-                {
-                    "data": "product",
                     "bSortable": true
                 },
                 {
                     "data": null,
                     "bSortable": false
-                },
+                }
             ],
             "rowCallback": function (nRow, aData, iDisplayindex) {
-                // if(aData.ISACTIVE==0){
-                billData[iDisplayindex] = aData;
+                var TRBLDT = new Date(aData.TRBLDT);
+                $('td:eq(1)', nRow).html(TRBLDT.toString('dd/MM/yyyy'));
                 if (aData.IS_ACTIVE == 1) {
-                    $('td:eq(8)', nRow).html(""
+                    $('td:eq(3)', nRow).html(""
                         + "<button class='btn btn-info hide' onclick='return EditTheRow(" + iDisplayindex + "," + aData.TRBLNO + ");'>"
                         + "<i class='fa fa-edit'></i>"
                         + "</button>"
@@ -223,7 +195,7 @@
 
                 } else {
                     $(nRow).addClass('danger');
-                    $('td:eq(8)', nRow).html(""
+                    $('td:eq(3)', nRow).html(""
                         + "<button class='btn btn-info hide' disabled onclick='return EditTheRow(" + iDisplayindex + "," + aData.TRBLNO + ");'>"
                         + "<i class='fa fa-edit'></i>"
                         + "</button>"
@@ -239,13 +211,13 @@
     }
 
     function DeleteTheRow(index, id) {
-        $("#deletePurchaseOrderModal").modal("show");
-        $("#deletePurchaseOrderModal").find("[name=id]").attr("value", id);
+        $("#deleteStockModal").modal("show");
+        $("#deleteStockModal").find("[name=id]").attr("value", id);
     }
 
     function RecoverTheRow(index, id) {
-        $("#recoverPurchaseOrderModal").modal("show");
-        $("#recoverPurchaseOrderModal").find("[name=id]").attr("value", id);
+        $("#recoverStockModal").modal("show");
+        $("#recoverStockModal").find("[name=id]").attr("value", id);
     }
 </script>
 <?php $this->load->view('include/page_footer.php'); ?>

@@ -52,7 +52,7 @@
                 </ul>
             </li>
 
-            <li class="treeview<?php echo (isset($page_title) && ($page_title == 'Purchase Intransit List' || $page_title == 'Verify Purchase List' || $page_title == 'Verify Purchase' || $page_title == 'Purchase Return List' || $page_title == 'Purchase Return Add' || $page_title == 'Purchase Order List')) ? ' active' : ''; ?>">
+            <li class="treeview<?php echo (isset($page_title) && ($page_title == 'Purchase Intransit List' || $page_title == 'Verify Purchase List' || $page_title == 'Verify Purchase' || $page_title == 'Purchase Return List' || $page_title == 'Purchase Return Add' || $page_title == 'Purchase Order List' || $page_title == 'Purchase Order Add')) ? ' active' : ''; ?>">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Purchase</span>
                     <span class="pull-right-container">
@@ -76,14 +76,17 @@
                 </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview<?php echo (isset($page_title) && ($page_title == 'Stock List' || $page_title == 'Stock Add')) ? ' active' : ''; ?>">
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Physical Stock Entry</span>
+                    <i class="fa fa-dashboard"></i> <span>Physical Stock</span>
                     <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                 </a>
                 <ul class="treeview-menu">
+                    <li class="<?php echo isset($page_title) && $page_title == 'Stock List' ? 'active' : ''; ?>"><a
+                                href="<?php echo site_url('stock'); ?>"><i class="fa fa-circle-o"></i> Physical Stock
+                            Entry</a></li>
                     <li class="<?php echo isset($page_title) && $page_title == 'Stock Add' ? 'active' : ''; ?>"><a
                                 href="<?php echo site_url('stock/add'); ?>"><i class="fa fa-circle-o"></i> Add</a></li>
                 </ul>

@@ -804,22 +804,6 @@
                             window.location.href = site_url + "salesreturn/salesreturnList";
                         });
                         $("#save-modal").modal('hide');
-                        /*bootbox.confirm({
-                            message: "Do you want to print the bill now?",
-                            buttons: {
-                                confirm: {
-                                    label: 'Yes',
-                                    className: 'btn-success'
-                                },
-                                cancel: {
-                                    label: 'No',
-                                    className: 'btn-danger'
-                                }
-                            },
-                            callback: function (result) {
-                                window.location.href = site_url + "salesPrint/" + <?php //echo $currentBill; ?>;
-                            }
-                        });*/
                     }
                 });
             }

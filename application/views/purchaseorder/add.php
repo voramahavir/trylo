@@ -80,10 +80,11 @@
                                     <th class="col-md-2">Name of Item</th>
                                     <th class="col-md-1">Color</th>
                                     <th class="col-md-1">Size</th>
-                                    <th class="col-md-2">Qnty</th>
+                                    <th class="col-md-1">Qnty</th>
                                     <th class="col-md-1">Rate Rs.</th>
                                     <th class="col-md-2">Amount Rs.</th>
-                                    <th class="col-md-3">Desc.</th>
+                                    <th class="col-md-2">Barcode</th>
+                                    <th class="col-md-2">Desc.</th>
                                 </tr>
                                 </thead>
                                 <tbody class="itemList"></tbody>
@@ -148,9 +149,8 @@
                     <i class="fa fa-refresh fa-spin"></i>
                 </div>
                 <div class="box-footer">
-                    <a href="<?php echo site_url('purchaseorder'); ?>" class="btn btn-default"
-                       data-dismiss="modal">Cancel</a>
-                    <button type="button" class="btn btn-primary pull-right">Save</button>
+                    <a href="<?php echo site_url('purchaseorder'); ?>" class="btn btn-default">Cancel</a>
+                    <button type="button" class="btn btn-primary pull-right savePO">Save</button>
                 </div>
             </div>
         </div>
@@ -200,8 +200,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-default closeGrp pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary saveItems">Save</button>
                 </div>
             </div>
         </div>
@@ -234,8 +234,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-default pull-left closeItem" data-dismiss="modal">Close
+                    </button>
+                    <button type="button" class="btn btn-primary saveItemList" data-dismiss="modal">Save</button>
                 </div>
             </div>
         </div>
@@ -279,6 +280,7 @@
         $(document).ready(function () {
             var items, gTotalAmt = 0, grsTotAmt = 0, totQty = 0;
             var partyData = [], barCodeArray = [], selItemsArray = [], itemsData = [], sizesData = [];
+            var finalItems = {}, saveItemsArray = [];
             var clrSeq = 0, itemSeq = 0, currItemSeq;
             loadingStop();
             loadParties();
@@ -301,6 +303,8 @@
                 $('#thead-detail').html(theadHtml);
                 $('#tbody-detail').html("");
                 $('#prdGrp').val("");
+                $('#selectItem').prop('disabled', false);
+                $('#prdGrp').prop('disabled', false);
             });
 
             $("#TRPRCD").change(function () {
@@ -331,15 +335,35 @@
             });
 
             $('.saveItems').click(function () {
-                // saveItems();
-            });
-
-            $('.saveRet').click(function () {
-                // saveReturn();
+                saveItems();
+                $('#selectItem').prop('disabled', false);
+                $('#prdGrp').prop('disabled', false);
+                $('#prdGrp').val("");
+                selItemsArray = [];
+                clrSeq = itemSeq = currItemSeq = 0;
+                $('#tbody-detail').html("");
             });
 
             $('#selectItem').click(function () {
                 setSizes();
+                $(this).prop('disabled', true);
+                $('#prdGrp').prop('disabled', true);
+            });
+
+            $('.closeItem').click(function () {
+                selItemsArray = [];
+            });
+
+            $('.closeGrp').click(function () {
+                selItemsArray = [];
+            });
+
+            $('.savePO').click(function () {
+                savePO();
+            });
+
+            $('.saveItemList').click(function () {
+                saveItemList();
             });
 
             $(document).on('change', '.itemSel', function () {
@@ -350,14 +374,28 @@
                     selItemsArray[currItemSeq] = [];
                     $(this).parent().parent().find('.itemSeq').text(itemSeq);
                     var colors = $(this).parent().parent().attr('data-colors');
+                    var sizes = $(this).parent().parent().attr('data-sizes');
+                    var barcodes = $(this).parent().parent().attr('data-barcodes');
+                    var rate = $(this).parent().parent().attr('data-rate');
                     var itemId = $(this).parent().parent().attr('class');
-                    // console.log('par', $(this).parent());
                     var itemName = $(this).parent().parent().find('.itemName').text();
                     if (colors) {
                         colors = colors.split(',');
+                        barcodes = barcodes.split('|');
                         var tbodyColorList = "";
+
                         $.each(colors, function (index, value) {
-                            tbodyColorList += "<tr data-item-name='" + itemName + "' data-item-id='" + itemId + "' data-color='" + value + "'>";
+                            var barcode = "";
+                            $.map(barcodes, function (v, k) {
+                                var _v = v.split(',');
+                                if (_v[1] == value) {
+                                    if (barcode)
+                                        barcode += "|" + v;
+                                    else
+                                        barcode = v;
+                                }
+                            });
+                            tbodyColorList += "<tr data-item-name='" + itemName + "' data-item-id='" + itemId + "' data-color='" + value + "' data-sizes='" + sizes + "' data-rate='" + rate + "' data-barcode='" + barcode + "'>";
                             tbodyColorList += "<td class='col-md-6'>";
                             tbodyColorList += value;
                             tbodyColorList += "</td>";
@@ -375,7 +413,6 @@
                             keyboard: false
                         });
                     }
-                    // console.log("selItemsArray i", selItemsArray);
                 }
                 else {
                     var _itemSeq = $(this).parent().parent().find('.itemSeq').text();
@@ -390,24 +427,62 @@
                     $(this).parent().parent().find('.clrSeq').text(clrSeq);
                     var itemName = $(this).parent().parent().attr('data-item-name');
                     var color = $(this).parent().parent().attr('data-color');
+                    var sizes = $(this).parent().parent().attr('data-sizes');
+                    var barcodes = $(this).parent().parent().attr('data-barcode');
+                    var rate = $(this).parent().parent().attr('data-rate');
                     var itemId = $(this).parent().parent().attr('data-item-id');
                     var selItem = {
                         name: itemName,
                         color: color,
-                        itemId: itemId
+                        itemId: itemId,
+                        sizes: sizes,
+                        barcodes: barcodes,
+                        rate: rate
                     };
-                    /*if(selItemsArray[_clrSeq] == undefined){
-                        selItemsArray[_clrSeq] = []
-                    }*/
                     selItemsArray[currItemSeq][clrSeq] = selItem;
-                    // selItemsArray[currItemSeq][_clrSeq] = selItemsArray[_clrSeq];
-
                 }
                 else {
                     var _clrSeq = $(this).parent().parent().find('.clrSeq').text();
                     delete selItemsArray[currItemSeq][_clrSeq];
                     $(this).parent().parent().find('.clrSeq').text(0);
                 }
+            });
+
+            $(document).on('change', ".qty", function () {
+                var parent = $(this).parent().parent();
+                var rateEl = parent.find('.rate');
+                var amtEl = parent.find('.amt');
+                var rate = parseFloat(rateEl.val());
+                var qtyEl = parent.find('.qty');
+                var barcode = $(this).parent().attr('data-barcode');
+                var totQty = 0;
+
+                $.map(qtyEl, function (v, k) {
+                    totQty = parseInt(totQty) + parseInt(v.value);
+                });
+                var amt = parseFloat(totQty * rate);
+                parent.find('.totqty').val(totQty);
+                amtEl.val(amt);
+                finalItems[barcode].qty = $(this).val();
+                finalItems[barcode].rate = rate;
+                finalItems[barcode].amount = parseFloat($(this).val() * rate);
+            });
+
+            $(document).on('change', ".rate", function () {
+                var parent = $(this).parent().parent();
+                var amtEl = parent.find('.amt');
+                var rate = parseFloat($(this).val());
+                var totQty = parent.find('.totqty').val();
+                var amt = parseFloat(totQty * rate);
+                var qtyEl = parent.find('.qty');
+                $.map(qtyEl, function (v, k) {
+                    var barcode = $(v).parent().attr('data-barcode');
+                    if (barcode) {
+                        finalItems[barcode].rate = rate;
+                        finalItems[barcode].amount = parseFloat(finalItems[barcode].qty * rate);
+                    }
+                });
+                amtEl.val(amt);
             });
 
             function loadingStart() {
@@ -458,158 +533,90 @@
             }
 
             function total_amt() {
-                var qty, amount, total, _gTotalAmt = 0, gTotalQty = 0;
-
-                $.each($('.itemBarCode'), function () {
-                    qty = parseInt($(this).find('.qty').val());
-                    amount = qty * parseFloat($(this).find('.nt_amt').text());
-                    total = amount;
-                    _gTotalAmt += total;
-                    gTotalQty += qty;
-                    $(this).find('.ntt_amt').text(amount);
-                    $(this).find('.t_amt').text(total);
+                var qty = 0, rate = 0, amt = 0, totQty = 0, finalQty = 0, finalAmt = 0;
+                var qtyEl, rateEl, amtEl, totQtyEl;
+                $.each($('#tbody-detail tr'), function () {
+                    qtyEl = $(this).find('.qty');
+                    qty = parseInt(qtyEl.val());
+                    rateEl = $(this).find('.rate');
+                    rate = parseFloat(rateEl.val());
+                    totQtyEl = $(this).find('.totqty');
+                    totQty = parseInt(totQtyEl.val());
+                    amt = parseFloat(totQty * rate);
+                    totQty = parseInt(totQty) + parseInt(qty);
+                    totQtyEl.val(totQty);
+                    amtEl = $(this).find('.amt');
+                    amtEl.val(amt);
+                    finalQty = parseInt(totQty) + parseInt(finalQty);
+                    finalAmt = parseInt(amt) + parseInt(finalAmt);
                 });
-                $('.t_qty').val(gTotalQty);
-                $('.n_amt').val(_gTotalAmt);
-                var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val())).toFixed(2);
-                var rndOff = parseFloat(Math.round(netAmt) - parseFloat(netAmt)).toFixed(2);
-                netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
-                $('.net_amount').val(netAmt);
-                $('.rndOff').val(rndOff);
-            }
-
-            function addNewItem() {
-                var barCode = $('.barCode').val().trim();
-                if (barCode && items && barCodeArray.indexOf(items.BARCODF) !== -1) {
-                    $('tr.' + items.BARCODF).find('.qty').val(parseInt($('tr.' + items.BARCODF).find('.qty').val()) + 1);
-                    total_amt();
-                } else if (items && barCode) {
-                    html = '<tr class="itemBarCode ' + items.BARCODF + '">';
-                    html += '<td class="hide"> <label class="it_cd">' + items.TRITCD1 + ' </label> </td> ';
-                    html += '<td class="hide"> <label class="it_exrt">' + items.TRPURT + ' </label> </td> ';
-                    html += '<td> <label class="it_nm">' + items.TRITNM + ' </label> </td> ';
-                    html += '<td> <label class="it_clr">' + items.TRCOLOR + ' </label> </td> ';
-                    html += '<td> <label class="it_sz">' + items.TRSZCD + ' </label> </td> ';
-                    html += '<td> <input type="number" class="form-control qty" min=1 value=1 /> </td> ';
-                    html += '<td> <label class="nt_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
-                    html += '<td> <label class="ntt_amt">' + 1 * parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
-                    html += '<td> <label class="i_salesCode">' + items.BARCODF + ' </label> </td> ';
-                    html += '<td> <a class="btn btn-danger remove"> <i class="fa fa-trash-o"> </i> </a> </td> ';
-                    html += '</tr> ';
-                    if ($(".items tr:first").length) {
-                        $(".items tr:first").before(html);
-                    } else {
-                        $(".items").append(html);
-                    }
-                    barCodeArray.push(items.BARCODF);
-                    total_amt();
-                }
-                clear();
-                $('.barCode').focus();
-            }
-
-            function clear() {
-
             }
 
             function saveItems() {
-                var qty, amount, total, _gTotalAmt = 0, rate = 0, gTotalQty = 0, itemsList = "", it_nm, it_clr, it_sz;
-                var _itemdata = {}, it_cd, it_exrt;
-                itemsData = [];
-                $.each($('.itemBarCode'), function () {
-                    qty = parseInt($(this).find('.qty').val());
-                    it_nm = $(this).find('.it_nm').text();
-                    it_clr = $(this).find('.it_clr').text();
-                    it_sz = $(this).find('.it_sz').text();
-                    it_cd = $(this).find('.it_cd').text();
-                    it_exrt = $(this).find('.it_exrt').text();
-                    amount = parseFloat($(this).find('.ntt_amt').text()).toFixed(2);
-                    rate = parseFloat($(this).find('.nt_amt').text()).toFixed(2);
-                    _gTotalAmt = parseFloat(_gTotalAmt) + parseFloat(amount);
-                    gTotalQty += qty;
+                var itemListHtml = "";
+                var totQty = 0;
+                var totAmt = 0;
+                $.map(finalItems, function (value, key) {
+                    if (parseInt(value.qty) > 0) {
+                        totQty = parseInt(totQty) + parseInt(value.qty);
+                        totAmt = parseInt(totAmt) + parseInt(value.amount);
+                        itemListHtml += "<tr>";
+                        itemListHtml += "<td class='hide'>";
+                        itemListHtml += "<input type='hidden' value='" + value.itemId + "' />";
+                        itemListHtml += "</td>";
+                        itemListHtml += "<td>";
+                        itemListHtml += value.name;
+                        itemListHtml += "</td>";
+                        itemListHtml += "<td>";
+                        itemListHtml += value.color;
+                        itemListHtml += "</td>";
+                        itemListHtml += "<td>";
+                        itemListHtml += value.size;
+                        itemListHtml += "</td>";
+                        itemListHtml += "<td>";
+                        itemListHtml += value.qty;
+                        itemListHtml += "</td>";
+                        itemListHtml += "<td>";
+                        itemListHtml += value.rate;
+                        itemListHtml += "</td>";
+                        itemListHtml += "<td>";
+                        itemListHtml += value.amount;
+                        itemListHtml += "</td>";
+                        itemListHtml += "<td>";
+                        itemListHtml += value.barcode;
+                        itemListHtml += "</td>";
+                        itemListHtml += "<td>";
+                        itemListHtml += "</td>";
+                        itemListHtml += "</tr>";
 
-                    _itemdata = {
-                        'TRSBL': $('#TRBLNO').val(),
-                        'TRSSZ': it_sz,
-                        'TRSCLR': it_clr,
-                        'TRSQTY': qty,
-                        'TRSRAT': rate,
-                        'TRSAMT': amount,
-                        'TRSITCD': it_cd,
-                        'TREXRT': it_exrt,
-                        'branch_code': "<?php echo getSessionData('branch_code'); ?>",
-                        'fin_year': "<?php echo fin_year(); ?>"
-                    };
-
-                    itemsData.push(_itemdata);
-
-                    itemsList += '<tr class="">';
-                    itemsList += '<td> ' + it_nm + '</td> ';
-                    itemsList += '<td> ' + it_clr + '</td> ';
-                    itemsList += '<td> ' + it_sz + '</td> ';
-                    itemsList += '<td> ' + qty + ' </td> ';
-                    itemsList += '<td> ' + rate + '</td> ';
-                    itemsList += '<td> ' + amount + '</td> ';
-                    itemsList += '<td> </td> ';
-                    itemsList += '</tr> ';
-                });
-                grsTotAmt = _gTotalAmt;
-                totQty = gTotalQty;
-                $(".itemList").html(itemsList);
-                $('#TRTOTQTY').val(totQty);
-                $('#TRGROSS').val(grsTotAmt);
-                $('#TRNET').val(grsTotAmt);
-                $('#TROTHAM').trigger('change');
-                $("#grp-modal").modal('hide');
-            }
-
-            function saveReturn() {
-                var purchaseData = {
-                    'TRBLNO': $('#TRBLNO').val(),
-                    'TRPRCD': $('#TRPRCD').val(),
-                    'TRBLDT': $('#TRBLDT').val(),
-                    'TRDOCTH': $('#TRDOCTH').val(),
-                    'TRGRPPNO': $('#TRGRPPNO').val(),
-                    'TRGRPPDT': $('#TRGRPPDT').val(),
-                    'TRGROSS': $('#TRGROSS').val(),
-                    'TROTHDS': $('#TROTHDS').val(),
-                    'TROTHAM': $('#TROTHAM').val(),
-                    'TRRNDOF': $('#TRRNDOF').val(),
-                    'TRNET': $('#TRNET').val(),
-                    'TRTOTQTY': $('#TRTOTQTY').val()
-                };
-                var data = {
-                    'purchaseData': purchaseData,
-                    'itemsData': itemsData
-                };
-
-                $.ajax({
-                    url: site_url + 'purchaseorder/create',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: data,
-                    success: function (response) {
-                        if (response.code) {
-                            bootbox.alert(response.msg, function () {
-                                window.location.href = site_url + 'purchaseorder';
-                            });
-                        }
-                        else {
-                            bootbox.alert(response.msg);
-                        }
+                        var _saveItem = {
+                            TRSBL: $('#TRBLNO').val(),
+                            TRSITCD: value.itemId,
+                            TRSSZ: value.size,
+                            TRSCLR: value.color,
+                            TRSQTY: value.qty,
+                            TRSRAT: value.rate,
+                            TRSAMT: value.amount,
+                            branch_code: "<?php echo getSessionData('branch_code');?>",
+                            fin_year: "<?php echo fin_year();?>"
+                        };
+                        saveItemsArray.push(_saveItem);
                     }
                 });
+                $('.itemList').html(itemListHtml);
+                $('#TRTOTQTY').val(totQty);
+                $('#TRNET').val(totAmt);
+                $('#TRGROSS').val(totAmt);
             }
 
             function setSizes() {
                 loadingStart();
                 var prdGrp = $('#prdGrp').val();
                 if (prdGrp !== "") {
-                    var theadDetailSt = "<th>PRODUCT NAME</th><th class='text-danger'>COLOR</th>";
+                    var theadDetailSt = "<th class='col-md-2'>PRODUCT NAME</th><th class='col-md-1 text-danger'>COLOR</th>";
 
-                    var theadDetailEnd = "<th class='label-danger'>Total Qty</th><th class='label-danger'>Rate Rs.</th><th class='label-danger'>Amount Rs.</th>";
+                    var theadDetailEnd = "<th class='label-danger col-md-1'>Total Qty</th><th class='col-md-1 label-danger'>Rate Rs.</th><th class='col-md-1 label-danger'>Amount Rs.</th>";
                     var theadDetailSizes = "";
-                    var tbodyDetailSizes = "";
                     var sizes = sizesData[prdGrp];
                     if (sizes) {
                         $.each(sizes, function (index, value) {
@@ -628,7 +635,7 @@
                                 var data = response.data;
                                 var tbodyItemList = "";
                                 $.each(data, function (index, value) {
-                                    tbodyItemList += "<tr class='" + value.TRITCD + "' data-sizes = '" + value.sizes + "' data-colors = '" + value.colors + "'>";
+                                    tbodyItemList += "<tr class='" + value.TRITCD + "' data-sizes = '" + value.sizes + "' data-colors = '" + value.colors + "' data-rate = '" + value.rate + "' data-barcodes = '" + value.barcodes + "'>";
                                     tbodyItemList += "<td class='col-md-10 itemName'>";
                                     tbodyItemList += value.TRITNM;
                                     tbodyItemList += "</td>";
@@ -650,6 +657,105 @@
                         }
                     });
                 }
+            }
+
+            function saveItemList() {
+                var _selItemsArray = $.map(selItemsArray, function (value, key) {
+                    return value;
+                });
+                _selItemsArray = _selItemsArray.filter(function (val) {
+                    return !!(val);
+                });
+                var tbodyDetail = "";
+                var prdGrp = $('#prdGrp').val();
+                var sizes = sizesData[prdGrp];
+                $.each(_selItemsArray, function (index, value) {
+                    var barcodes = value.barcodes.split('|');
+                    tbodyDetail += "<tr>";
+                    tbodyDetail += "<td class='hide'>";
+                    tbodyDetail += value.itemId;
+                    tbodyDetail += "</td>";
+                    tbodyDetail += "<td class='col-md-2'>";
+                    tbodyDetail += value.name;
+                    tbodyDetail += "</td>";
+                    tbodyDetail += "<td class='col-md-1'>";
+                    tbodyDetail += value.color;
+                    tbodyDetail += "</td>";
+                    $.map(sizes, function (val, key) {
+                        var _sizes = value.sizes.split(',');
+                        var barcode = "";
+                        $.each(barcodes, function (_i, _v) {
+                            var _barcode = _v.split(',');
+                            if (_barcode[0] == val) {
+                                barcode = _barcode[2];
+                            }
+                        });
+                        var validSize = _sizes.indexOf(val) < 0 ? 'readonly' : '';
+                        tbodyDetail += "<td class='" + val + "' data-barcode='" + barcode + "'>";
+                        tbodyDetail += "<input type='number' class='qty form-control' value='0' " + validSize + ">";
+                        tbodyDetail += "</td>";
+                        finalItems[barcode] = {
+                            itemId: value.itemId,
+                            name: value.name,
+                            color: value.color,
+                            size: val,
+                            qty: 0,
+                            rate: value.rate,
+                            amount: 0,
+                            barcode: barcode,
+                            prdGrp: $('#prdGrp').val()
+                        };
+                        /* tbodyDetail += "<td class='" + val + "'>";
+                         tbodyDetail += "<input type='number' class='qty form-control' value='0' " + validSize + ">";
+                         tbodyDetail += "</td>";*/
+                    });
+                    tbodyDetail += "<td class='col-md-1'>";
+                    tbodyDetail += "<input type='number' class='totqty form-control' value='0' readonly>";
+                    tbodyDetail += "</td>";
+                    tbodyDetail += "<td class='col-md-1'>";
+                    tbodyDetail += "<input type='number' class='rate form-control' value='" + value.rate + "'>";
+                    tbodyDetail += "</td>";
+                    tbodyDetail += "<td class='col-md-1'>";
+                    tbodyDetail += "<input type='number' class='amt form-control' value='0' readonly>";
+                    tbodyDetail += "</td>";
+                    tbodyDetail += "</tr>";
+                });
+                $('#tbody-detail').html(tbodyDetail);
+            }
+
+            function savePO() {
+                var poData = {
+                    TRBLNO: $('#TRBLNO').val(),
+                    TRBLDT: $('#TRBLDT').val(),
+                    TRPRCD: $('#TRPRCD').val(),
+                    TRGROSS: $('#TRGROSS').val(),
+                    TROTHDS: $('#TROTHDS').val(),
+                    TROTHAM: $('#TROTHAM').val(),
+                    TRRNDOF: $('#TRRNDOF').val(),
+                    TRNET: $('#TRNET').val(),
+                    TRTOTQTY: $('#TRTOTQTY').val(),
+                    TRSPINST: $('#TRSPINST').val()
+                };
+                var data = {
+                    poData: poData,
+                    itemData: saveItemsArray
+                };
+                $.ajax({
+                    url: site_url + 'purchaseorder/create',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: data,
+                    success: function (response) {
+                        if (response.code) {
+                            bootbox.alert(response.msg, function () {
+                                window.location.href = site_url + 'purchaseorder';
+                            });
+                        }
+                        else {
+                            bootbox.alert(response.msg);
+                        }
+                    }
+                });
             }
         });
     </script>

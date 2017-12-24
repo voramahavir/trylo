@@ -42,4 +42,24 @@ class PurchaseOrderController extends CI_Controller
         $data['currentBill'] = $currentBill;
         $this->load->view('purchaseorder/add', $data);
     }
+
+    public function create()
+    {
+        $this->PurchaseOrderModel->purchaseOrderAdd();
+    }
+
+    public function update()
+    {
+        $this->PurchaseOrderModel->updatePurchaseOrder();
+    }
+
+    public function delete($id = '')
+    {
+        $this->PurchaseOrderModel->deletePurchaseOrder($id);
+    }
+
+    public function recover($id = '')
+    {
+        $this->PurchaseOrderModel->recoverPurchaseOrder($id);
+    }
 }

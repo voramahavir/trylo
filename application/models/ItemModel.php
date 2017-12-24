@@ -141,8 +141,10 @@ class ItemModel extends CI_Model
         $select = array(
             'i.TRITCD',
             'i.TRITNM',
+            'i.TRPURT as rate',
             'GROUP_CONCAT(DISTINCT i1.TRCOLOR) as colors',
             'GROUP_CONCAT(DISTINCT i1.TRSZCD) as sizes',
+            'GROUP_CONCAT(DISTINCT CONCAT(i1.TRSZCD, "," ,i1.TRCOLOR, "," ,i1.BARCODF) SEPARATOR "|") as barcodes',
             'GROUP_CONCAT(DISTINCT CONCAT(i1.TRSZCD, "," ,i1.TRCOLOR) SEPARATOR "|") as szclr',
         );
         $where = array('i.TRPRDGRP' => $prdGrp);
