@@ -129,7 +129,7 @@
         $(".deletePurchaseOrder").prop("disabled", true);
         var id = -1;
         id = $("#deletePurchaseOrderModal").find("[name=id]").val();
-        $.post("<?php echo site_url('luckydraw/delete/'); ?>" + id, {})
+        $.post("<?php echo site_url('purchaseorder/delete/'); ?>" + id, {})
             .done(function (result) {
                 result = JSON.parse(result);
                 if (result.code == 1) {
@@ -144,7 +144,7 @@
         $(".recoverPurchaseOrder").prop("disabled", true);
         var id = -1;
         id = $("#recoverPurchaseOrderModal").find("[name=id]").val();
-        $.post("<?php echo site_url('luckydraw/recover/'); ?>" + id, {})
+        $.post("<?php echo site_url('purchaseorder/recover/'); ?>" + id, {})
             .done(function (result) {
                 result = JSON.parse(result);
                 if (result.code == 1) {
