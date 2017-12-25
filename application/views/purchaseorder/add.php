@@ -291,10 +291,15 @@
             });
 
             $("#btnDetail").click(function () {
-                $("#grp-modal").modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
+                if ($('#TRPRCD').val()) {
+                    $("#grp-modal").modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                }
+                else {
+                    bootbox.alert("Please select Party Name");
+                }
 
             });
 
@@ -346,8 +351,6 @@
 
             $('#selectItem').click(function () {
                 setSizes();
-                $(this).prop('disabled', true);
-                $('#prdGrp').prop('disabled', true);
             });
 
             $('.closeItem').click(function () {
@@ -610,9 +613,11 @@
             }
 
             function setSizes() {
-                loadingStart();
                 var prdGrp = $('#prdGrp').val();
                 if (prdGrp !== "") {
+                    loadingStart();
+                    $('#selectItem').prop('disabled', true);
+                    $('#prdGrp').prop('disabled', true);
                     var theadDetailSt = "<th class='col-md-2'>PRODUCT NAME</th><th class='col-md-1 text-danger'>COLOR</th>";
 
                     var theadDetailEnd = "<th class='label-danger col-md-1'>Total Qty</th><th class='col-md-1 label-danger'>Rate Rs.</th><th class='col-md-1 label-danger'>Amount Rs.</th>";
@@ -656,6 +661,11 @@
                             loadingStop();
                         }
                     });
+                }
+                else {
+                    bootbox.alert("Please select Group");
+                    $('#selectItem').prop('disabled', false);
+                    $('#prdGrp').prop('disabled', false);
                 }
             }
 
