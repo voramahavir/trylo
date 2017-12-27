@@ -17,7 +17,7 @@ class LoginModel extends CI_Model {
 			$output = array('code' => 0, 'message' => "Password missing");
 		} else {
 			$this->db->select('user_id, user_name, branch.*');
-			$this->db->join("branch", "branch.branch_id = users.branch_id");
+            $this->db->join("branch", "branch.branch_id = users.branch_id", "LEFT");
 			$data['password'] = md5($data['password']);
 			$data['users.is_active'] = 1;
 			$res = $this->db->get_where('users', $data)->result_array();

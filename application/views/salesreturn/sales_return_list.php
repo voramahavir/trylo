@@ -16,12 +16,12 @@
                 <div class="row form-group">
                     <label class="col-md-1 text-left">Fr Date : </label>
                     <div class="col-md-2">
-                        <input id="from_date" type="text"
-                               value="<?php echo date('Y-m-d', strtotime('first day of this month', time())); ?>">
+                        <input id="from_date" type="text" class="form-control"
+                               value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
                     </div>
                     <label class="col-md-1 text-left"> To Date : </label>
                     <div class="col-md-2">
-                        <input id="to_date" type="text" value="<?php echo date('Y-m-d'); ?>">
+                        <input id="to_date" type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>">
                     </div>
 
                     <div class="col-md-5 col-md-offset-1">
@@ -35,9 +35,9 @@
                         </div>
                     </div>
                 </div>
-              <!--   <button type="button" class="btn btn-default" id="search">
-                    <span class="glyphicon glyphicon-search"></span> Search
-                </button> -->
+                <!--   <button type="button" class="btn btn-default" id="search">
+                      <span class="glyphicon glyphicon-search"></span> Search
+                  </button> -->
                 <a href="<?php echo site_url('salesreturn/add'); ?>" class="btn btn-info">
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </a>
@@ -95,11 +95,11 @@
             //Date picker
             $('#from_date').datepicker({
                 autoclose: true,
-                format: 'yyyy-mm-dd'
+                format: 'dd/mm/yyyy'
             });
             $('#to_date').datepicker({
                 autoclose: true,
-                format: 'yyyy-mm-dd'
+                format: 'dd/mm/yyyy'
             });
         });
     }(jQuery));
@@ -122,8 +122,8 @@
             "processing": true,
             "serverSide": true,
             "destroy": true,
-            "lengthChange" : false,
-            "searching" : false,
+            "lengthChange": false,
+            "searching": false,
             "columns": [
                 {
                     "bSortable": false,
@@ -152,7 +152,7 @@
                 {
                     "bSortable": false,
                     "data": 'bamount'
-                },                {
+                }, {
                     "bSortable": false,
                     "data": null
                 },
@@ -165,7 +165,7 @@
                 url: "<?= site_url('SalesReturnController/getSalesReturns') ?>",
                 pages: 2, // number of pages to cache
                 method: 'POST',
-                data: function(d){
+                data: function (d) {
                     d.to_date = $('#to_date').val();
                     d.from_date = $('#from_date').val();
                     d.cn_type = cn_type;
@@ -182,7 +182,7 @@
                     $('td:eq(2)', nRow).html("PAYTM");
                 }
                 $('td:eq(7)', nRow).html("");
-                if(aData.CANBL == "T"){
+                if (aData.CANBL == "T") {
                     $('td:eq(8)', nRow).html("Cancelled");
                 } else if (aData.TRREF == "Y") {
                     $('td:eq(8)', nRow).html("Refunded");

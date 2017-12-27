@@ -61,4 +61,9 @@ class SalesController extends CI_Controller
         $mobileNo = ($mobileNo) ? $mobileNo : $_POST['mobileNo'];
         $this->SalesModel->getCardByMobile($mobileNo);
     }
+
+    public function edit($billNo)
+    {
+
+    }
 }

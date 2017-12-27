@@ -15,7 +15,7 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title"> USER : <?php echo getSessionData('user_name') . ' / ' . date('d/m/Y / H:i'); ?> /
-                    New Entry</h3>
+                    Edit :</h3>
                 <button type="button" id="searchItem" class="btn btn-info pull-right"><i class="fa fa-search"></i>
                     Search Item
                 </button>

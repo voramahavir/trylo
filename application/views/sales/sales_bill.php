@@ -17,11 +17,12 @@
                     <label class="col-md-1 text-left">Fr Date : </label>
                     <div class="col-md-2">
                         <input id="from_date" type="text"
-                               value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
+                               value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>"
+                               class="form-control">
                     </div>
                     <label class="col-md-1 text-left"> To Date : </label>
                     <div class="col-md-2">
-                        <input id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>">
+                        <input id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>" class="form-control">
                     </div>
 
                     <div class="col-md-5 col-md-offset-1">

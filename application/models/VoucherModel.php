@@ -56,6 +56,8 @@ class VoucherModel extends CI_Model {
     {
         $code = 0;
         $response = "";
+        branchWhere();
+        $this->db->where('fin_year', fin_year());
         $this->db->where('VOUNO', $id)->set(array(
             'IS_ACTIVE' => 0
         ))->update("trvou");
@@ -69,6 +71,8 @@ class VoucherModel extends CI_Model {
     {
         $code = 0;
         $response = "";
+        branchWhere();
+        $this->db->where('fin_year', fin_year());
         $this->db->where('VOUNO', $id)->set(array(
             'IS_ACTIVE' => 1
         ))->update("trvou");
@@ -80,6 +84,7 @@ class VoucherModel extends CI_Model {
 
     public function filterData()
     {
+        branchWhere();
         if (isset($_POST['to_date'])) {
             $to_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['to_date'])));
             $this->db->where('T1.VOUDT <= ', $to_date);
@@ -121,6 +126,8 @@ class VoucherModel extends CI_Model {
         if ($voucherData) {
             $voucherData['VOUDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $voucherData['VOUDT'])));
             $voucherData['CHQDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $voucherData['CHQDT'])));
+            $voucherData['branch_code'] = getSessionData('branch_code');
+            $voucherData['fin_year'] = fin_year();
             if ($this->db->insert('trvou', $voucherData)) {
                 $code = 1;
                 $msg = "Data saved successfully";
@@ -152,6 +159,8 @@ class VoucherModel extends CI_Model {
         if ($voucherData) {
             $voucherData['VOUDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $voucherData['VOUDT'])));
             $voucherData['CHQDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $voucherData['CHQDT'])));
+            $voucherData['branch_code'] = getSessionData('branch_code');
+            $voucherData['fin_year'] = fin_year();
             $this->db->where('VOUNO', $voucherData['VOUNO']);
             if ($this->db->update('trvou', $voucherData)) {
                 $code = 1;

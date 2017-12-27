@@ -149,7 +149,7 @@
               },
           ],
           "rowCallback":function(nRow,aData,iDisplayindex){
-                if(aData.ISACTIVE==0){
+              if (aData.ISACTIVE == 1) {
                     $('td:eq(8)',nRow).html(""
                         +"<button class='btn btn-info' onclick='return EditTheRow("+aData.CRDNO+");'>"
                         +"<i class='fa fa-edit'></i>"

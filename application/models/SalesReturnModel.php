@@ -58,11 +58,11 @@ class SalesReturnModel extends CI_Model
     {
         branchWhere("t");
         if (isset($_POST['to_date'])) {
-            $to_date = $_POST['to_date'];
+            $to_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['to_date'])));
             $this->db->where('t.TRBLDT <= ', $to_date);
         }
         if (isset($_POST['from_date'])) {
-            $from_date = $_POST['from_date'];
+            $from_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['from_date'])));
             $this->db->where('t.TRBLDT >= ', $from_date);
         }
         if (isset($_POST['cn_type'])) {

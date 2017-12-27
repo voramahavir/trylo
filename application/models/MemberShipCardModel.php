@@ -43,12 +43,14 @@ class MemberShipCardModel extends CI_Model
             'search' => $search
         );
         $this->db->limit($length, $start);
+        branchWhere();
         if (!empty($search)) {
             $this->db->like("NAME", $search)->or_like("MOBILENO", $search)->or_like("CARDNO", $search);
         }
         $this->db->select("CRDNO,CONCAT(PREFIX, ' ', CARDNO) AS CARDHOLDERNO,CONCAT(PREFIX1, ' ', CARDNO1) AS REFCARDHOLDERNO,NAME,CITY,PHONENO,MOBILENO,BILLNO,CREADT,ISACTIVE");
         $output['data'] = $this->db->get('maincrd')->result();
         // $this->db->limit($length,$start);
+        branchWhere();
         if (!empty($search)) {
             $this->db->like("NAME", $search)->or_like("MOBILENO", $search)->or_like("CARDNO", $search);
         }
@@ -106,6 +108,7 @@ class MemberShipCardModel extends CI_Model
             $data['MDATE'] = ($data['MDATE']) ? date("Y-m-d", strtotime($data['MDATE'])) : NULL;
             $data['BILLDT'] = ($data['BILLDT']) ? date("Y-m-d", strtotime($data['BILLDT'])) : NULL;
             $data['CRDNO'] = $crdNo;
+            $data["branch_code"] = getSessionData('branch_code');
             $succ = $this->db->insert('maincrd', $data);
             if ($succ) {
                 $code = 1;
@@ -150,6 +153,7 @@ class MemberShipCardModel extends CI_Model
             $where = array(
                 'CARDNO' => $cardNo
             );
+            branchWhere();
             $this->db->select($select);
             $this->db->where($where);
             $this->db->group_by('CARDNO');

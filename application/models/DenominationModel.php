@@ -13,6 +13,8 @@ class DenominationModel extends CI_Model
     {
         $lastBill = 0;
         $this->db->select("VOUNO");
+        branchWhere();
+        $this->db->where('fin_year', fin_year());
         $this->db->order_by("VOUNO", "DESC");
         $this->db->limit(1);
         $data = $this->db->get("kdeno")->row();
@@ -31,6 +33,8 @@ class DenominationModel extends CI_Model
         $denominationData = $_POST;
         if ($denominationData) {
             $denominationData['VOUDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $denominationData['VOUDT'])));
+            $denominationData['branch_code'] = getSessionData('branch_code');
+            $denominationData['fin_year'] = fin_year();
             if ($this->db->insert('kdeno', $denominationData)) {
                 $code = 1;
                 $msg = "Data saved successfully";
@@ -96,6 +100,7 @@ class DenominationModel extends CI_Model
 
     public function filterData()
     {
+        branchWhere();
         if (isset($_POST['to_date'])) {
             $to_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['to_date'])));
             $this->db->where('VOUDT <= ', $to_date);
@@ -113,6 +118,10 @@ class DenominationModel extends CI_Model
         $denominationData = $_POST;
         if ($denominationData) {
             $denominationData['VOUDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $denominationData['VOUDT'])));
+            $denominationData['branch_code'] = getSessionData('branch_code');
+            $denominationData['fin_year'] = fin_year();
+            branchWhere();
+            $this->db->where('fin_year', fin_year());
             $this->db->where("VOUNO", $denominationData['VOUNO']);
             if ($this->db->update('kdeno', $denominationData)) {
                 $code = 1;
@@ -128,8 +137,10 @@ class DenominationModel extends CI_Model
     {
         $where = array(
             'VOUNO' => $id,
-            'IS_ACTIVE' => 1
+            'IS_ACTIVE' => 1,
+            'fin_year' => fin_year()
         );
+        branchWhere();
         $this->db->where($where);
         $this->db->limit(1);
         $denominationData = $this->db->get('kdeno')->row_array();
@@ -140,6 +151,8 @@ class DenominationModel extends CI_Model
     {
         $code = 0;
         $response = "";
+        branchWhere();
+        $this->db->where('fin_year', fin_year());
         $this->db->where('VOUNO', $id)->set(array(
             'IS_ACTIVE' => 0
         ))->update("kdeno");
@@ -153,6 +166,8 @@ class DenominationModel extends CI_Model
     {
         $code = 0;
         $response = "";
+        branchWhere();
+        $this->db->where('fin_year', fin_year());
         $this->db->where('VOUNO', $id)->set(array(
             'IS_ACTIVE' => 1
         ))->update("kdeno");

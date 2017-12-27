@@ -4,23 +4,23 @@
 </style>
 <link rel="stylesheet"
       href="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'); ?>">
-      <!-- Main row -->
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box">
+<!-- Main row -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title"> Branch Add </h3>
+                <h3 class="box-title"> Branch Add </h3>
             </div>
             <div class="box-body">
                 <div class="col-md-6">
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Branch Name : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control branch_name" name="branch_name">
+                            <input type="text" class="form-control branch_name" name="branch_name" id="branch_name">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label class="col-md-3 text-right"> Address  : </label>
+                        <label class="col-md-3 text-right"> Address : </label>
                         <div class="col-md-6">
                             <input type="text" class="form-control address1" name="address1">
                         </div>
@@ -84,7 +84,7 @@
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Branch Code : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control branch_code" name="branch_code">
+                            <input type="text" class="form-control branch_code" name="branch_code" id="branch_code">
                         </div>
                     </div>
                 </div>
@@ -92,12 +92,12 @@
             <div class="overlay">
                 <i class="fa fa-refresh fa-spin"></i>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
             <div class="box-body">
                 <div class="col-md-6">
                     <div class="row form-group">
@@ -120,7 +120,7 @@
                         <label class="col-md-3"> On Purchase Of Card Holder </label>
                     </div>
                     <div class="row form-group">
-                        <label class="col-md-5 text-right"> Re-deem Per Point  : </label>
+                        <label class="col-md-5 text-right"> Re-deem Per Point : </label>
                         <div class="col-md-4">
                             <input type="text" class="form-control redperpoints" name="redperpoints">
                         </div>
@@ -156,12 +156,12 @@
             <div class="overlay">
                 <i class="fa fa-refresh fa-spin"></i>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
             <div class="box-body">
                 <div class="col-md-6">
                     <div class="row form-group">
@@ -180,8 +180,8 @@
                         <label class="col-md-5 text-right"> Type Of Exp. Petty Cash A/C : </label>
                         <div class="col-md-4">
                             <select class="form-control pettycashtype">
-                              <option value="1">Hello</option>
-                              <option value="2">Hello</option>
+                                <option value="1">CASH</option>
+                                <option value="145">PETTY CASH FOR EXPENSE</option>
                             </select>
                         </div>
                     </div>
@@ -210,20 +210,20 @@
             <div class="overlay">
                 <i class="fa fa-refresh fa-spin"></i>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
             <div class="box-body">
                 <div class="col-md-5">
                     <div class="row form-group">
                         <label class="col-md-8 text-right"> Want To Send Card Holder Birthday SMS ? (Y/N) : </label>
                         <div class="col-md-4">
                             <select class="form-control bdaysms">
-                              <option value="1">Yes</option>
-                              <option value="2">No</option>
+                                <option value="1">Yes</option>
+                                <option value="2">No</option>
                             </select>
                         </div>
                     </div>
@@ -248,11 +248,12 @@
                 </div>
                 <div class="col-md-7">
                     <div class="row form-group">
-                        <label class="col-md-8 text-right"> Want To Send Card Holder Marriage Anniversary SMS ? (Y/N) : </label>
+                        <label class="col-md-8 text-right"> Want To Send Card Holder Marriage Anniversary SMS ? (Y/N)
+                            : </label>
                         <div class="col-md-4">
                             <select class="form-control mrgsms">
-                              <option value="1">Yes</option>
-                              <option value="2">No</option>
+                                <option value="1">Yes</option>
+                                <option value="2">No</option>
                             </select>
                         </div>
                     </div>
@@ -279,14 +280,17 @@
             <div class="overlay">
                 <i class="fa fa-refresh fa-spin"></i>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-primary save">Save</a>
-        </div>
-      </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <button class="btn btn-primary save">Save</button>
+    </div>
+    <div class="col-md-6">
+        <a href="<?php echo site_url('branch/list') ?>" class="btn btn-default pull-right">Cancel</a>
+    </div>
+</div>
 <?php $this->load->view('include/template/common_footer'); ?>
 <!-- Bootstrap-notify -->
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
@@ -299,65 +303,79 @@
     function loadingStop() {
         $('.overlay').hide();
     }
-    $(document).ready(function(){
+
+    $(document).ready(function () {
         loadingStop();
-        $(".save").click(function(){
-            addBranch();
+        $(".save").click(function () {
+            if ($(".branch_name").val() == "") {
+                bootbox.alert("Please Enter Branch name");
+            }
+            else if ($(".branch_code").val() == "") {
+                bootbox.alert("Please Enter Branch Code");
+            }
+            else if ($(".prefix").val() == "") {
+                bootbox.alert("Please Enter Branch Prefix");
+            }
+            else {
+                addBranch();
+            }
         });
     });
+
     function addBranch() {
-      loadingStart();
-      var data = {
-          branch_name : $(".branch_name").val(),
-          address1 : $(".address1").val(),
-          address2 : $(".address2").val(),
-          address3 : $(".address3").val(),
-          city : $(".city").val(),
-          district : $(".district").val(),
-          state : $(".state").val(),
-          telephone1 : $(".telephone1").val(),
-          telephone2 : $(".telephone2").val(),
-          jurisdiction : $(".jurisdiction").val(),
-          prefix : $(".prefix").val(),
-          chnoofpoints : $(".chnoofpoints").val(),
-          refnoofpoints : $(".refnoofpoints").val(),
-          chrs : $(".chrs").val(),
-          refrs : $(".refrs").val(),
-          redaftminpoints : $(".redaftminpoints").val(),
-          redperpoints : $(".redperpoints").val(),
-          redvaluers : $(".redvaluers").val(),
-          roundofflimit : $(".roundofflimit").val(),
-          mobileno : $(".mobileno").val(),
-          pettycashtype : $(".pettycashtype").val(),
-          smscode : $(".smscode").val(),
-          smslast : $(".smslast").val(),
-          gstinno : $(".gstinno").val(),
-          defaultmail : $(".defaultmail").val(),
-          bdaysms : $(".bdaysms").val(),
-          mrgsms : $(".mrgsms").val(),
-          bdaydiscdays : $(".bdaydiscdays").val(),
-          mrgdiscdays : $(".mrgdiscdays").val(),
-          bdaydisc : $(".bdaydisc").val(),
-          mrgdisc : $(".mrgdisc").val(),
-          bdaysendbefore : $(".bdaysendbefore").val(),
-          mrgsendbefore : $(".mrgsendbefore").val()
-      };
-      $.ajax({
-          url: "<?php echo site_url('branch/adddata'); ?>",
-          dataType: 'json',
-          type: "POST",
-          data : data,
-          success: function (response) {
-            loadingStop();
-            if(response.code == 1){
-                bootbox.alert("Branch added successfully.", function () {
-                    window.location = "<?php echo site_url('branch/list'); ?>";
-                });
-            }else{
-              bootbox.alert("Error in adding branch,Try again.");
+        loadingStart();
+        var data = {
+            branch_name: $(".branch_name").val(),
+            address1: $(".address1").val(),
+            address2: $(".address2").val(),
+            address3: $(".address3").val(),
+            city: $(".city").val(),
+            district: $(".district").val(),
+            state: $(".state").val(),
+            telephone1: $(".telephone1").val(),
+            telephone2: $(".telephone2").val(),
+            jurisdiction: $(".jurisdiction").val(),
+            prefix: $(".prefix").val(),
+            chnoofpoints: $(".chnoofpoints").val(),
+            refnoofpoints: $(".refnoofpoints").val(),
+            chrs: $(".chrs").val(),
+            refrs: $(".refrs").val(),
+            redaftminpoints: $(".redaftminpoints").val(),
+            redperpoints: $(".redperpoints").val(),
+            redvaluers: $(".redvaluers").val(),
+            roundofflimit: $(".roundofflimit").val(),
+            mobileno: $(".mobileno").val(),
+            pettycashtype: $(".pettycashtype").val(),
+            smscode: $(".smscode").val(),
+            smslast: $(".smslast").val(),
+            gstinno: $(".gstinno").val(),
+            defaultmail: $(".defaultmail").val(),
+            bdaysms: $(".bdaysms").val(),
+            mrgsms: $(".mrgsms").val(),
+            bdaydiscdays: $(".bdaydiscdays").val(),
+            mrgdiscdays: $(".mrgdiscdays").val(),
+            bdaydisc: $(".bdaydisc").val(),
+            mrgdisc: $(".mrgdisc").val(),
+            bdaysendbefore: $(".bdaysendbefore").val(),
+            mrgsendbefore: $(".mrgsendbefore").val(),
+            branch_code: $(".branch_code").val()
+        };
+        $.ajax({
+            url: "<?php echo site_url('branch/adddata'); ?>",
+            dataType: 'json',
+            type: "POST",
+            data: data,
+            success: function (response) {
+                loadingStop();
+                if (response.code == 1) {
+                    bootbox.alert("Branch added successfully.", function () {
+                        window.location = "<?php echo site_url('branch/list'); ?>";
+                    });
+                } else {
+                    bootbox.alert("Error in adding branch,Try again.");
+                }
             }
-          }
-      });
+        });
     }
 </script>
 <?php $this->load->view('include/page_footer.php'); ?>

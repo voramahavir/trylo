@@ -87,12 +87,12 @@ class SalesModel extends CI_Model
 
         $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type');
         $this->db->limit($length, $start);
-        $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
+        $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
         $this->db->group_by('t.TRBLNO');
         $output['data'] = $this->db->get('trbil as t')->result();
         $this->filterData();
         $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type');
-        $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO");
+        $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
         $this->db->group_by('t.TRBLNO');
         $output['recordsTotal'] = $this->db->get('trbil as t')->num_rows();
         $output['recordsFiltered'] = $output['recordsTotal'];
@@ -263,5 +263,14 @@ class SalesModel extends CI_Model
         $response = compact("code", "msg", "data");
         echo json_encode($response);
         exit;
+    }
+
+    public function getSalesBill($billNo)
+    {
+        $select = array(
+            't.TRBLNO',
+            't.TRBLDT',
+            't.TRPRNM'
+        );
     }
 }

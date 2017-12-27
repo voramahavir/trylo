@@ -173,3 +173,18 @@ ALTER TABLE `trphst` ADD INDEX (`fin_year`);
 ALTER TABLE `trphst` ADD INDEX (`IS_ACTIVE`);
 ALTER TABLE `trphst1` ADD INDEX (`branch_code`);
 ALTER TABLE `trphst1` ADD INDEX (`fin_year`);
+
+Bhavesh : 27-12-2017
+
+ALTER TABLE `users` CHANGE `branch_id` `branch_id` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `users` CHANGE `is_active` `is_active` TINYINT(4) NOT NULL DEFAULT '1';
+ALTER TABLE maincrd ADD branch_code INT NULL;
+ALTER TABLE `maincrd` ADD INDEX (`branch_code`);
+ALTER TABLE trloyl ADD branch_code INT NULL;
+ALTER TABLE `trloyl` ADD INDEX (`branch_code`);
+ALTER TABLE `trloyl` CHANGE `ISACTIVE` `ISACTIVE` TINYINT(4) NOT NULL DEFAULT '1';
+ALTER TABLE `maincrd` CHANGE `ISACTIVE` `ISACTIVE` TINYINT(4) NOT NULL DEFAULT '1';
+ALTER TABLE kdeno ADD branch_code INT NULL;
+ALTER TABLE `kdeno` ADD INDEX (`branch_code`);
+ALTER TABLE kdeno ADD fin_year VARCHAR(15) NULL;
+ALTER TABLE `kdeno` ADD INDEX (`fin_year`);

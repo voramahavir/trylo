@@ -38,23 +38,25 @@ class LoyaltyCardModel extends CI_Model
             'search' => $search
         );
         if (isset($_POST['to_date'])) {
-            $to_date = $_POST['to_date'];
-            $this->db->where('LOENDT', $to_date);
+            $to_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['to_date'])));
+            $this->db->where('LOENDT <= ', $to_date);
         }
         if (isset($_POST['from_date'])) {
-            $from_date = $_POST['from_date'];
-            $this->db->where('LOSTDT', $from_date);
+            $from_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['from_date'])));
+            $this->db->where('LOSTDT >= ', $from_date);
         }
+        branchWhere();
         $this->db->limit($length, $start);
         $this->db->select("MOBILEID,LONAME,LODOB,LOMAR,LOTYPE,LOVAL,LOSTDT,LOENDT,LODISCPR,ISACTIVE");
         $output['data'] = $this->db->get('trloyl')->result();
+        branchWhere();
         if (isset($_POST['to_date'])) {
-            $to_date = $_POST['to_date'];
-            $this->db->where('LOENDT', $to_date);
+            $to_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['to_date'])));
+            $this->db->where('LOENDT <= ', $to_date);
         }
         if (isset($_POST['from_date'])) {
-            $from_date = $_POST['from_date'];
-            $this->db->where('LOSTDT', $from_date);
+            $from_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['from_date'])));
+            $this->db->where('LOSTDT >= ', $from_date);
         }
         $output['recordsTotal'] = $this->db->get('trloyl')->num_rows();
         $output['recordsFiltered'] = $output['recordsTotal'];
@@ -69,8 +71,9 @@ class LoyaltyCardModel extends CI_Model
     {
         $code = 0;
         $response = "";
+        branchWhere();
         $this->db->where('MOBILEID', $id)->set(array(
-            'ISACTIVE' => 1
+            'ISACTIVE' => 0
         ))->update("trloyl");
         $code = 1;
         $response = "Card deleted successfully.";
@@ -82,8 +85,9 @@ class LoyaltyCardModel extends CI_Model
     {
         $code = 0;
         $response = "";
+        branchWhere();
         $this->db->where('MOBILEID', $id)->set(array(
-            'ISACTIVE' => 0
+            'ISACTIVE' => 1
         ))->update("trloyl");
         $code = 1;
         $response = "Card recover successfully.";
@@ -102,6 +106,7 @@ class LoyaltyCardModel extends CI_Model
             $data['LOSTDT'] = ($data['LOSTDT']) ? date('Y-m-d', strtotime($data['LOSTDT'])) : NULL;
             $data['LOENDT'] = ($data['LOENDT']) ? date('Y-m-d', strtotime($data['LOENDT'])) : NULL;
             $data["NOENTRY"] = 1;
+            $data["branch_code"] = getSessionData('branch_code');
             $data["ENTRYDATE"] = date('Y-m-d H:i:s');
             $succ = $this->db->insert("trloyl", $data);
             if ($succ) {

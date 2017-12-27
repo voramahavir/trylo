@@ -25,7 +25,7 @@
                     <i class="fa fa-dashboard"></i> <span>Branch</span>
                 </a>
             </li>
-            <li class="<?php echo isset($page_title) && $page_title == 'Users' ? ' active' : ''; ?>">
+            <li class="<?php echo isset($page_title) && ($page_title == 'User List' || $page_title == 'Add User') ? ' active' : ''; ?>">
                 <a href="<?php echo site_url('users/list'); ?>">
                     <i class="fa fa-users"></i> <span>Users</span>
                 </a>
