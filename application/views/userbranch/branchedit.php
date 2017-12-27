@@ -297,7 +297,18 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".save").click(function () {
-            updateBranch();
+            if ($(".branch_name").val() == "") {
+                bootbox.alert("Please Enter Branch name");
+            }
+            else if ($(".branch_code").val() == "") {
+                bootbox.alert("Please Enter Branch Code");
+            }
+            else if ($(".prefix").val() == "") {
+                bootbox.alert("Please Enter Branch Prefix");
+            }
+            else {
+                updateBranch();
+            }
         });
     });
 
