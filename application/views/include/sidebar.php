@@ -20,11 +20,13 @@
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
-            <li class="<?php echo isset($page_title) && ($page_title == 'Branch List' || $page_title == 'Add Branch' || $page_title == 'Edit Branch') ? ' active' : ''; ?>">
-                <a href="<?php echo site_url('branch/list'); ?>">
-                    <i class="fa fa-dashboard"></i> <span>Branch</span>
-                </a>
-            </li>
+            <?php if (getSessionData('role_id') == 1) { ?>
+                <li class="<?php echo isset($page_title) && ($page_title == 'Branch List' || $page_title == 'Add Branch' || $page_title == 'Edit Branch') ? ' active' : ''; ?>">
+                    <a href="<?php echo site_url('branch/list'); ?>">
+                        <i class="fa fa-dashboard"></i> <span>Branch</span>
+                    </a>
+                </li>
+            <?php } ?>
             <li class="<?php echo isset($page_title) && ($page_title == 'User List' || $page_title == 'Add User') ? ' active' : ''; ?>">
                 <a href="<?php echo site_url('users/list'); ?>">
                     <i class="fa fa-users"></i> <span>Users</span>

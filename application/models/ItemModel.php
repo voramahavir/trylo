@@ -86,7 +86,7 @@ class ItemModel extends CI_Model
 
     function filterData()
     {
-//        branchWhere('ist', 'branchcode');
+        branchWhere('ist', 'branchcode');
         $filter_type = $this->input->post('filter_type');
         if ($filter_type == "barcode") {
             $barcode = $this->input->post('barcode');

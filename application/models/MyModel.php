@@ -133,21 +133,28 @@ class MyModel extends CI_Model
 
     public function addBranch()
     {
-        $salesData = $_POST;
-        if ($this->db->trans_begin()) {
-            $this->db->insert("branch", $salesData);
-            $lastId = $this->db->insert_id();
-            $this->db->trans_complete();
-            if ($this->db->trans_status()) {
-                $code = 1;
-                $msg = "Data saved successfully";
-            } else {
-                $code = 0;
-                $msg = "Unable to save data";
-            }
+        $code = 0;
+        $msg = "Unable to save data";
+        $branchData = $_POST['branchData'];
+        $userData = $_POST['userData'];
+        if (!$this->validBranchCode($branchData['branch_code'])) {
+            $msg = "Branch Code must be unique. Please enter different Branch Code";
+        } elseif (!$this->validUserName($userData['user_name'])) {
+            $msg = "Username must be unique. Please Enter different Username";
         } else {
-            $code = 0;
-            $msg = "Unable to save data";
+            if ($this->db->trans_begin()) {
+                $this->db->insert("branch", $branchData);
+                $lastId = $this->db->insert_id();
+                $userData['branch_id'] = $lastId;
+                $userData['password'] = md5($userData['password']);
+                $userData['role_id'] = 2;
+                $this->db->insert("users", $userData);
+                $this->db->trans_complete();
+                if ($this->db->trans_status()) {
+                    $code = 1;
+                    $msg = "Branch added successfully";
+                }
+            }
         }
         $response = compact("code", "msg");
         echo json_encode($response);
@@ -199,16 +206,23 @@ class MyModel extends CI_Model
     public function updateBranch($id = '')
     {
         $code = 0;
-        $response = "";
-        $data = [];
-        if (!empty($id)) {
-            $this->db->where('branch_id', $id)->set($_POST)->update('branch');
-            $data = $this->db->get('branch')->first_row();
-            $code = 1;
+        $msg = "Unable to save data";
+        $branchData = $_POST;
+        if (!$this->validBranchCode($branchData['branch_code'], $id)) {
+            $msg = "Branch Code must be unique. Please enter different Branch Code";
         } else {
-            $response = "Branch id is missing.";
+            if ($this->db->trans_begin()) {
+                $this->db->where('branch_id', $id);
+                $this->db->update("branch", $branchData);
+                $this->db->trans_complete();
+                if ($this->db->trans_status()) {
+                    $code = 1;
+                    $msg = "Branch Updated successfully";
+                }
+            }
         }
-        echo json_encode(array("code" => $code, "response" => $response, "data" => $data));
+        $response = compact("code", "msg");
+        echo json_encode($response);
         exit();
     }
 
@@ -254,17 +268,51 @@ class MyModel extends CI_Model
         $code = 0;
         $msg = "Unable to add user";
         $userData = $_POST;
-        if ($userData) {
-            $userData['password'] = md5($userData['password']);
-            $userData['role_id'] = isset($userData['role_id']) ? $userData['role_id'] : 3;
-            if ($this->db->insert('users', $userData)) {
-                $code = 1;
-                $msg = "User Added Successfully";
+        if (!$this->validUserName($userData['user_name'])) {
+            $msg = "Username must be unique. Please Enter different Username";
+        } else {
+            if ($userData) {
+                $userData['password'] = md5($userData['password']);
+                $userData['role_id'] = isset($userData['role_id']) ? $userData['role_id'] : 3;
+                if ($this->db->insert('users', $userData)) {
+                    $code = 1;
+                    $msg = "User Added Successfully";
+                }
             }
         }
         $response = compact("code", "msg");
         echo json_encode($response);
         exit;
+    }
+
+    public function validBranchCode($code, $id = 0)
+    {
+        $where = array(
+            'branch_code' => $code
+        );
+        if ($id) {
+            $where['branch_id != '] = $id;
+        }
+        $this->db->select('branch_code');
+        $this->db->where($where);
+        $this->db->limit(1);
+        $data = $this->db->get('branch')->row();
+        return ($data) ? false : true;
+    }
+
+    public function validUserName($userName, $id = 0)
+    {
+        $where = array(
+            'user_name' => $userName
+        );
+        if ($id) {
+            $where['user_id != '] = $id;
+        }
+        $this->db->select('user_name');
+        $this->db->where($where);
+        $this->db->limit(1);
+        $data = $this->db->get('users')->row();
+        return ($data) ? false : true;
     }
 
 }

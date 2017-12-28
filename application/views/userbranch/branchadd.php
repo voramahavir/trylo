@@ -284,6 +284,36 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title"> User Details </h3>
+            </div>
+            <div class="box-body">
+                <div class="col-md-6">
+                    <div class="row form-group">
+                        <label class="col-md-3 text-right"> User Name : </label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control user_name" name="user_name" id="user_name">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row form-group">
+                        <label class="col-md-3 text-right"> Password : </label>
+                        <div class="col-md-6">
+                            <input type="password" class="form-control password" name="password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-6">
         <button class="btn btn-primary save">Save</button>
     </div>
@@ -315,6 +345,10 @@
             }
             else if ($(".prefix").val() == "") {
                 bootbox.alert("Please Enter Branch Prefix");
+            } else if ($(".user_name").val() == "") {
+                bootbox.alert("Please Enter User Name");
+            } else if ($(".password").val() == "") {
+                bootbox.alert("Please Enter Password");
             }
             else {
                 addBranch();
@@ -324,7 +358,7 @@
 
     function addBranch() {
         loadingStart();
-        var data = {
+        var branchData = {
             branch_name: $(".branch_name").val(),
             address1: $(".address1").val(),
             address2: $(".address2").val(),
@@ -360,6 +394,14 @@
             mrgsendbefore: $(".mrgsendbefore").val(),
             branch_code: $(".branch_code").val()
         };
+        var userData = {
+            user_name: $(".user_name").val(),
+            password: $(".password").val()
+        };
+        var data = {
+            branchData: branchData,
+            userData: userData
+        };
         $.ajax({
             url: "<?php echo site_url('branch/adddata'); ?>",
             dataType: 'json',
@@ -368,11 +410,11 @@
             success: function (response) {
                 loadingStop();
                 if (response.code == 1) {
-                    bootbox.alert("Branch added successfully.", function () {
+                    bootbox.alert(response.msg, function () {
                         window.location = "<?php echo site_url('branch/list'); ?>";
                     });
                 } else {
-                    bootbox.alert("Error in adding branch,Try again.");
+                    bootbox.alert(response.msg);
                 }
             }
         });

@@ -188,3 +188,9 @@ ALTER TABLE kdeno ADD branch_code INT NULL;
 ALTER TABLE `kdeno` ADD INDEX (`branch_code`);
 ALTER TABLE kdeno ADD fin_year VARCHAR(15) NULL;
 ALTER TABLE `kdeno` ADD INDEX (`fin_year`);
+
+Bhavesh : 28-12-2017
+
+CREATE TRIGGER `AddedNewBranch` AFTER INSERT ON `branch` FOR EACH ROW INSERT INTO item_cur_stock (`branchcode`, `itemcode`, `size`, `color`, `op_stock`, `cl_stock`, `min_stock`, `max_stock`) SELECT DISTINCT NEW.branch_code, `itemcode`, `size`, `color`, 0, 0, 0, 0 FROM item_cur_stock;
+ALTER TABLE `branch` ADD INDEX(`branch_code`);
+DROP TRIGGER IF EXISTS `AddedNewUser`;CREATE TRIGGER `AddedNewUser` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `assign_forms` (`user_id`, `form_id`) SELECT NEW.user_id, form_id FROM forms WHERE NEW.role_id = 1 OR NEW.role_id = 2;

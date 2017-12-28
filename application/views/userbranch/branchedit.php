@@ -358,11 +358,11 @@
             success: function (response) {
                 loadingStop();
                 if (response.code == 1) {
-                    bootbox.alert("Branch updated successfully.", function () {
+                    bootbox.alert(response.msg, function () {
                         window.location = "<?php echo site_url('branch/list'); ?>";
                     });
                 } else {
-                    bootbox.alert("Error in updating branch,Try again.");
+                    bootbox.alert(response.msg);
                 }
             }
         });

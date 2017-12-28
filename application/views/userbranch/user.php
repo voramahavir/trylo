@@ -152,7 +152,12 @@
             },
         });
         $(".save").click(function () {
-            addUser();
+            if ($("#branch_id").val() == "") {
+                bootbox.alert("Please Select Branch name");
+            }
+            else {
+                addUser();
+            }
         });
     });
 
@@ -210,10 +215,14 @@
             type: 'POST',
             data: data,
             success: function (response) {
-                bootbox.alert(response.msg, function () {
-                    $('#modal-default').modal('hide');
-                });
-                table.ajax.reload();
+                if (response.code == 1) {
+                    bootbox.alert(response.msg, function () {
+                        $('#modal-default').modal('hide');
+                        table.ajax.reload();
+                    });
+                } else {
+                    bootbox.alert(response.msg);
+                }
             }
         });
     }
