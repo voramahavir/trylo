@@ -15,9 +15,12 @@
                 <div class="dataTables_wrapper">
                     <div class="row form-group">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                            <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                                 <span class="glyphicon glyphicon-plus"></span> Add New User
+                             </button>-->
+                            <a class="btn btn-info" href="<?php echo site_url('users/add'); ?>">
                                 <span class="glyphicon glyphicon-plus"></span> Add New User
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <div class="row">

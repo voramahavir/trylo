@@ -268,15 +268,35 @@ class MyModel extends CI_Model
         $code = 0;
         $msg = "Unable to add user";
         $userData = $_POST;
-        if (!$this->validUserName($userData['user_name'])) {
-            $msg = "Username must be unique. Please Enter different Username";
-        } else {
-            if ($userData) {
+        $rolesData = array();
+        if (isset($userData['roles'])) {
+            $rolesData = $userData['roles'];
+            unset($userData['roles']);
+        }
+        if ($userData) {
+            if (!$this->validUserName($userData['user_name'])) {
+                $msg = "Username must be unique. Please Enter different Username";
+            } else {
                 $userData['password'] = md5($userData['password']);
                 $userData['role_id'] = isset($userData['role_id']) ? $userData['role_id'] : 3;
-                if ($this->db->insert('users', $userData)) {
-                    $code = 1;
-                    $msg = "User Added Successfully";
+                if ($this->db->trans_begin()) {
+                    $this->db->insert('users', $userData);
+                    $last_id = $this->db->insert_id();
+                    if (count($rolesData)) {
+                        $forms = array();
+                        foreach ($rolesData as $form_id) {
+                            $forms[] = array(
+                                'user_id' => $last_id,
+                                'form_id' => $form_id
+                            );
+                        }
+                        $this->db->insert_batch('assign_forms', $forms);
+                    }
+                    $this->db->trans_complete();
+                    if ($this->db->trans_status()) {
+                        $code = 1;
+                        $msg = "User Added Successfully";
+                    }
                 }
             }
         }
