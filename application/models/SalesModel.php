@@ -267,10 +267,34 @@ class SalesModel extends CI_Model
 
     public function getSalesBill($billNo)
     {
-        $select = array(
-            't.TRBLNO',
-            't.TRBLDT',
-            't.TRPRNM'
+        $where = array(
+            't.TRBLNO' => $billNo,
+            't.branchcode' => getSessionData('branch_code'),
+            't.fin_year' => fin_year()
         );
+        $this->db->where($where);
+        $this->db->limit(1);
+        $billData = $this->db->get('trbil')->row();
+
+        $where = array(
+            't1.TRBLNO1' => $billNo,
+            't1.branchcode1' => getSessionData('branch_code'),
+            't1.fin_year1' => fin_year()
+        );
+        $select = array(
+            't1.*',
+            'i.TRITNM',
+            'i1.BARCODF'
+        );
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->join('trbil t', 't.TRBLNO = t1.TRBLNO1 AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1');
+        $this->db->join('tritem i', 'i.TRITCD = t1.TRITCD');
+        $this->db->join('tritem1 i1', 'i1.TRITCD = t1.TRITCD AND i1.TRSZCD = t1.TRSZ AND i1.TRCOLOR = t1.TRCLR');
+        $itemsData = $this->db->get('trbil1')->result();
+
+        $data = compact("billData", "itemsData");
+        echo json_encode($data);
+        exit;
     }
 }

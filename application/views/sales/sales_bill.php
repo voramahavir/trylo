@@ -221,7 +221,7 @@
                 $('td:eq(8)', nRow).html("");
                 $('td:eq(9)', nRow).html("");
                 /*$('td:eq(10)', nRow).html("");*/
-                var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' class='btn btn-success'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
+                var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' target='_blank' class='btn btn-success'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
                 $('td:eq(10)', nRow).html(printStr);
             }
         });
