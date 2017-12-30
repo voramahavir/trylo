@@ -1481,7 +1481,7 @@ die;*/
 
     <TABLE cellpadding=0 cellspacing=0 class="t0">
         <TR>
-            <TD colspan=4 class="tr0 td0"><P class="p0 ft0">Duplicate Copy</P></TD>
+            <TD colspan=4 class="tr0 td0"><P class="p0 ft0">Original Copy</P></TD>
             <TD class="tr0 td1"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr0 td2"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr0 td3"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1511,8 +1511,8 @@ die;*/
             <TD class="tr1 td21"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr1 td22"><P class="p1 ft1">&nbsp;</P></TD>
             <TD colspan=10 class="tr1 td23">
-                <P class="p3 ft3">GDHAM
-                    <NOBR>17-18</NOBR>
+                <P class="p3 ft3"><?php echo getSessionData('prefix'); ?>
+                    <NOBR><?php echo fin_year(array('seperator' => '-')); ?></NOBR>
                 </P>
             </TD>
             <TD class="tr1 td24"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1535,8 +1535,9 @@ die;*/
             <TD class="tr2 td20"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr2 td21"><P class="p1 ft1">&nbsp;</P></TD>
             <TD colspan=13 class="tr2 td35">
-                <P class="p4 ft4">GANDHIDHAM Phone:02752 243507
-                    <NOBR>E-Mail:</NOBR>
+                <P class="p4 ft4"><?php echo getSessionData('branch_name'); ?>
+                    Phone: <?php echo getSessionData('telephone1'); ?>
+                    <NOBR>E-Mail: <?php echo getSessionData('defaultmail'); ?></NOBR>
                 </P>
             </TD>
             <TD class="tr2 td26"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1557,7 +1558,7 @@ die;*/
             <TD class="tr3 td38"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td39"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td1"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=10 class="tr3 td40"><P class="p5 ft0">GST NO : 24ALDPP2571P1ZP</P></TD>
+            <TD colspan=10 class="tr3 td40"><P class="p5 ft0">GST NO : <?php echo getSessionData('gstinno'); ?></P></TD>
             <TD class="tr3 td9"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td10"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr3 td7"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1574,9 +1575,8 @@ die;*/
         </TR>
         <TR>
             <TD colspan=2 class="tr4 td41"><P class="p6 ft4">Name:</P></TD>
-            <TD colspan=2 class="tr4 td42"><P class="p6 ft5"><?php echo $billData->party; ?></P></TD>
-            <TD class="tr4 td1"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD class="tr4 td43"><P class="p1 ft1">&nbsp;</P></TD>
+            <TD colspan=4 class="tr4 td42" style="border-right: #000000 1px solid;"><P
+                        class=" p6 ft5 "><?php echo $billData->party; ?></P></TD>
             <TD colspan=3 class="tr4 td44"><P class="p7 ft4">Mobile:</P></TD>
             <TD colspan=3 class="tr4 td45"><P class="p8 ft5"><?php echo $billData->phoneno; ?></P></TD>
             <TD class="tr4 td46"><P class="p1 ft1">&nbsp;</P></TD>
@@ -1585,7 +1585,8 @@ die;*/
             <TD colspan=2 class="tr4 td12"><P class="p1 ft6">No.:</P></TD>
             <TD class="tr4 td47"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr4 td11"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=5 class="tr4 td48"><P class="p9 ft0"><?php echo $billData->billno; ?></P></TD>
+            <TD colspan=5 class="tr4 td48"><P class="p9 ft0"
+                                              style="margin-left: -6px;"><?php echo $billData->billno; ?></P></TD>
             <TD colspan=2 class="tr4 td49"><P class="p6 ft4">Date:</P></TD>
             <TD colspan=2 class="tr4 td50"><P class="p10 ft7"><?php echo date("d/m/Y", strtotime($billData->billdate));
                     ?></P></TD>

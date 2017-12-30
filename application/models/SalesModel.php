@@ -125,7 +125,7 @@ class SalesModel extends CI_Model
         $select = array(
             'b.TRPRNM as party',
             'b.TRPH1 as phoneno',
-            'CONCAT(b.CRDPREF,"/","' . $billNo . '") as billno',
+            'CONCAT(b.CRDPREF,"/",b.fin_year,"/",' . $billNo . ') as billno',
             'b.TRBLDT as billdate',
             'b.TRTOTQTY as totqty',
             'b.TRGROS as grsamt',
@@ -134,13 +134,13 @@ class SalesModel extends CI_Model
             'b.TRCRAMT as custamt',
             'b.TRNET as netamt',
             'b.TRRND as rndoff',
-            'SUM(bi.TRFBEL) as netblamt',
-            'SUM(bi.TRDS2) as totdis',
-            'SUM(bi.TRFABV) as netabamt',
-            'SUM(bi.TRLSGSTA) as sgstlamt',
-            'SUM(bi.TRLCGSTA) as cgstlamt',
-            'SUM(bi.TRHSGSTA) as sgsthamt',
-            'SUM(bi.TRHCGSTA) as cgsthamt',
+            'FORMAT(SUM(bi.TRFBEL), 2) as netblamt',
+            'FORMAT(SUM(bi.TRDS2), 2) as totdis',
+            'FORMAT(SUM(bi.TRFABV), 2) as netabamt',
+            'FORMAT(SUM(bi.TRLSGSTA), 2) as sgstlamt',
+            'FORMAT(SUM(bi.TRLCGSTA), 2) as cgstlamt',
+            'FORMAT(SUM(bi.TRHSGSTA), 2) as sgsthamt',
+            'FORMAT(SUM(bi.TRHCGSTA), 2) as cgsthamt',
             'p.TRLOW as lowamt'
         );
         $where = array(
