@@ -9,7 +9,7 @@
                      alt="User Image">
             </div>
             <div class="pull-left info">
-                <p> USER NAME </p>
+                <p> <?php echo getSessionData('user_name'); ?> </p>
                 <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
         </div>

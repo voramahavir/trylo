@@ -60,6 +60,7 @@ $route['users/(:any)'] = 'MainController/users/$1';
 $route['salesAdd'] = 'SalesController/add';
 $route['salesBill'] = 'SalesController/salesBill';
 $route['sales/(:any)'] = 'SalesController/$1';
+$route['sales/(:any)/(:any)'] = 'SalesController/$1/$2';
 $route['stock'] = 'StockController';
 $route['stock/(:any)'] = 'StockController/$1';
 $route['stock/(:any)/(:any)'] = 'StockController/$1/$2';
