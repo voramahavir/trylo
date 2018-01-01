@@ -157,17 +157,17 @@
                                 <div class="row">
                                     <label class="col-md-1 text-right"> Bill No : </label>
                                     <div class="col-md-1">
-                                        <input type="text" class="form-control" name="TRBLNO"
-                                               value="<?php echo $currentBill; ?>" readonly>
+                                        <input type="text" class="form-control" name="TRBLNO" id="TRBLNO"
+                                               value="<?php echo $billNo; ?>" readonly>
                                     </div>
                                     <label class="col-md-1 text-right"> Date : </label>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" name="TRBLDT"
+                                        <input type="text" class="form-control" name="TRBLDT" id="TRBLDT"
                                                value="<?php echo date('d-m-Y'); ?>" readonly>
                                     </div>
                                     <label class="col-md-1 text-right"> Type : </label>
                                     <div class="col-md-2">
-                                        <select class="form-control trtype" name="TRTYPE">
+                                        <select class="form-control trtype" name="TRTYPE" id="TRTYPE">
                                             <option value="1"> Cash</option>
                                             <option value="2"> Debit</option>
                                             <option value="3"> Cr.Card-DebitCard</option>
@@ -185,7 +185,7 @@
                                     </div>
                                     <label class="col-md-1 text-right"> No : </label>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control crdnum" name="CRDNUM">
+                                        <input type="text" class="form-control crdnum" name="CRDNUM" id="CRDNUM">
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +199,7 @@
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Party </label>
                                             <div class="col-md-3">
-                                                <select class="form-control" name="TRSALUT">
+                                                <select class="form-control" name="TRSALUT" id="TRSALUT">
                                                     <option value="Mr."> Mr.</option>
                                                     <option value="Miss"> Miss</option>
                                                     <option value="Mrs."> Mrs.</option>
@@ -207,25 +207,29 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-7">
-                                                <input type="text" class="form-control party" name="TRPRNM" value="">
+                                                <input type="text" class="form-control party" name="TRPRNM" id="TRPRNM"
+                                                       value="">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Address </label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control address ad1" name="TRPAD1"/>
+                                                <input type="text" class="form-control address ad1" name="TRPAD1"
+                                                       id="TRPAD1"/>
                                             </div>
                                             <div class="col-md-10 col-md-offset-2">
-                                                <input type="text" class="form-control address ad2" name="TRPAD2"/>
+                                                <input type="text" class="form-control address ad2" name="TRPAD2"
+                                                       id="TRPAD2"/>
                                             </div>
                                             <div class="col-md-10 col-md-offset-2">
-                                                <input type="text" class="form-control address ad3" name="TRPAD3"/>
+                                                <input type="text" class="form-control address ad3" name="TRPAD3"
+                                                       id="TRPAD3"/>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> City </label>
                                             <div class="col-md-10">
-                                                <input type="text" name="TRCITY" class="form-control city">
+                                                <input type="text" name="TRCITY" id="TRCITY" class="form-control city">
                                             </div>
                                         </div>
                                     </div>
@@ -233,48 +237,52 @@
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Phone-1 </label>
                                             <div class="col-md-3">
-                                                <input type="number" min="10" max="10" name="TRPH1"
+                                                <input type="number" min="10" max="10" name="TRPH1" id="TRPH1"
                                                        class="form-control ph1">
                                             </div>
                                             <label class="col-md-1 text-right"> D.O.B </label>
                                             <div class="col-md-3">
-                                                <input type="text" name="TRDOB" class="form-control datepicker dob">
+                                                <input type="text" name="TRDOB" id="TRDOB"
+                                                       class="form-control datepicker dob">
                                             </div>
 
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Phone-2 </label>
                                             <div class="col-md-3">
-                                                <input type="number" min="10" max="10" name="TRPH2"
+                                                <input type="number" min="10" max="10" name="TRPH2" id="TRPH2"
                                                        class="form-control ph2">
                                             </div>
                                             <label class="col-md-1 text-right"> M.A.D. </label>
                                             <div class="col-md-3">
-                                                <input type="text" name="TRMAD" class="form-control datepicker mad">
+                                                <input type="text" name="TRMAD" id="TRMAD"
+                                                       class="form-control datepicker mad">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Email </label>
                                             <div class="col-md-5">
-                                                <input type="email" name="TREMAIL" class="form-control email">
+                                                <input type="email" name="TREMAIL" id="TREMAIL"
+                                                       class="form-control email">
                                             </div>
                                         </div>
                                         <div class="row crcrd">
                                             <label class="col-md-2 text-right"> Card No. </label>
                                             <div class="col-md-5">
-                                                <input type="text" name="TRCRDNO" class="form-control">
+                                                <input type="text" name="TRCRDNO" id="TRCRDNO" class="form-control">
                                             </div>
                                         </div>
                                         <div class="row crcrd">
                                             <label class="col-md-2 text-right"> Exp.Dt </label>
                                             <div class="col-md-5">
-                                                <input type="text" name="TRCRDEXP" class="form-control datepicker">
+                                                <input type="text" name="TRCRDEXP" id="TRCRDEXP"
+                                                       class="form-control datepicker">
                                             </div>
                                         </div>
                                         <div class="row crcrd">
                                             <label class="col-md-2 text-right"> Card Holder </label>
                                             <div class="col-md-5">
-                                                <input type="text" name="TRCRDHOLD" class="form-control">
+                                                <input type="text" name="TRCRDHOLD" id="TRCRDHOLD" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -290,19 +298,20 @@
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Gross </label>
                                             <div class="col-md-10">
-                                                <input type="text" name="TRGROS" class="form-control gross" readonly>
+                                                <input type="text" name="TRGROS" id="TRGROS" class="form-control gross"
+                                                       readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Other </label>
                                             <div class="col-md-10">
-                                                <input type="text" name="TROTH1" class="form-control">
+                                                <input type="text" name="TROTH1" id="TROTH1" class="form-control">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Other Amt </label>
                                             <div class="col-md-10">
-                                                <input type="number" value="0" name="TROTH2"
+                                                <input type="number" value="0" name="TROTH2" id="TROTH2"
                                                        class="form-control oth_amt">
                                             </div>
                                         </div>
@@ -311,31 +320,31 @@
                                         <div class="row">
                                             <label class="col-md-3 text-right"> C/N-1 NO. </label>
                                             <div class="col-md-9">
-                                                <input type="text" name="TRCN1" class="form-control">
+                                                <input type="text" name="TRCN1" id="TRCN1" class="form-control">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-3 text-right"> Amount </label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="TRCN1AM">
+                                                <input type="text" class="form-control" name="TRCN1AM" id="TRCN1AM">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-3 text-right"> C/N-2 NO. </label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="TRCN2">
+                                                <input type="text" class="form-control" name="TRCN2" id="TRCN2">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-3 text-right"> Amount </label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="TRCN2AM">
+                                                <input type="text" class="form-control" name="TRCN2AM" id="TRCN2AM">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-3 text-right"> Rnd Off </label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control rndOff" name="TRRND">
+                                                <input type="text" class="form-control rndOff" name="TRRND" id="TRRND">
                                             </div>
                                         </div>
                                     </div>
@@ -364,7 +373,8 @@
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Nett Amount Rs. </label>
                                             <div class="col-md-10">
-                                                <input type="text" name="TRNET" class="form-control net_amount"
+                                                <input type="text" name="TRNET" id="TRNET"
+                                                       class="form-control net_amount"
                                                        readonly>
                                             </div>
                                         </div>
@@ -373,7 +383,8 @@
                                         <div class="row">
                                             <label class="col-md-3 text-right"> Total Qty </label>
                                             <div class="col-md-9">
-                                                <input type="text" name="TRTOTQTY" class="form-control m_t_qty"
+                                                <input type="text" name="TRTOTQTY" id="TRTOTQTY"
+                                                       class="form-control m_t_qty"
                                                        readonly>
                                             </div>
                                         </div>
@@ -393,7 +404,8 @@
                                             <label class="col-md-1 text-right dr_amount"> 2000 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC2000" class="form-control dr_note"
+                                                <input type="text" name="RC2000" id="RC2000"
+                                                       class="form-control dr_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -405,7 +417,7 @@
                                             <label class="col-md-1 text-right dr_amount"> 500 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC500" class="form-control dr_note"
+                                                <input type="text" name="RC500" id="RC500" class="form-control dr_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -417,7 +429,7 @@
                                             <label class="col-md-1 text-right dr_amount"> 200 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC200" class="form-control dr_note"
+                                                <input type="text" name="RC200" id="RC200" class="form-control dr_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -429,7 +441,7 @@
                                             <label class="col-md-1 text-right dr_amount"> 100 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC100" class="form-control dr_note"
+                                                <input type="text" name="RC100" id="RC100" class="form-control dr_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -441,7 +453,7 @@
                                             <label class="col-md-1 text-right dr_amount"> 50 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC50" class="form-control dr_note"
+                                                <input type="text" name="RC50" id="RC50" class="form-control dr_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -453,7 +465,7 @@
                                             <label class="col-md-1 text-right dr_amount"> 20 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC20" class="form-control dr_note"
+                                                <input type="text" name="RC20" id="RC20" class="form-control dr_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -465,7 +477,7 @@
                                             <label class="col-md-1 text-right dr_amount"> 10 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC10" class="form-control dr_note"
+                                                <input type="text" name="RC10" id="RC10" class="form-control dr_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -477,7 +489,7 @@
                                             <label class="col-md-1 text-right dr_amount"> 5 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="RC5" class="form-control dr_note"
+                                                <input type="text" name="RC5" id="RC5" class="form-control dr_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -489,7 +501,7 @@
                                             <label class="col-md-5 text-right"> MISC. </label>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" name="RCMIS"
+                                                <input type="text" name="RCMIS" id="RCMIS"
                                                        class="form-control dr_misc dr_value"
                                                        value="0">
                                             </div>
@@ -497,7 +509,8 @@
                                         <div class="row">
                                             <label class="col-md-6 text-right"> Rcvd AMt. </label>
                                             <div class="col-md-5">
-                                                <input type="text" name="EXRCVD" class="form-control dr_total"
+                                                <input type="text" name="EXRCVD" id="EXRCVD"
+                                                       class="form-control dr_total"
                                                        value="0"
                                                        readonly>
                                             </div>
@@ -509,7 +522,8 @@
                                             <label class="col-md-1 text-right dre_amount"> 2000 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD2000" class="form-control dre_note"
+                                                <input type="text" name="PD2000" id="PD2000"
+                                                       class="form-control dre_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -522,7 +536,7 @@
                                             <label class="col-md-1 text-right dre_amount"> 500 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD500" class="form-control dre_note"
+                                                <input type="text" name="PD500" id="PD500" class="form-control dre_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -535,7 +549,7 @@
                                             <label class="col-md-1 text-right dre_amount"> 200 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD200" class="form-control dre_note"
+                                                <input type="text" name="PD200" id="PD200" class="form-control dre_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -548,7 +562,7 @@
                                             <label class="col-md-1 text-right dre_amount"> 100 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD100" class="form-control dre_note"
+                                                <input type="text" name="PD100" id="PD100" class="form-control dre_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -561,7 +575,7 @@
                                             <label class="col-md-1 text-right dre_amount"> 50 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD50" class="form-control dre_note"
+                                                <input type="text" name="PD50" id="PD50" class="form-control dre_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -574,7 +588,7 @@
                                             <label class="col-md-1 text-right dre_amount"> 20 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD20" class="form-control dre_note"
+                                                <input type="text" name="PD20" id="PD20" class="form-control dre_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -587,7 +601,7 @@
                                             <label class="col-md-1 text-right dre_amount"> 10 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD10" class="form-control dre_note"
+                                                <input type="text" name="PD10" id="PD10" class="form-control dre_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -600,7 +614,7 @@
                                             <label class="col-md-1 text-right dre_amount"> 5 </label>
                                             <span class="col-md-1 text-right">X</span>
                                             <div class="col-md-3">
-                                                <input type="text" name="PD5" class="form-control dre_note"
+                                                <input type="text" name="PD5" id="PD5" class="form-control dre_note"
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
@@ -613,7 +627,7 @@
                                             <label class="col-md-5 text-right dr_amount"> MISC. </label>
                                             <span class="col-md-1">'=</span>
                                             <div class="col-md-5">
-                                                <input type="text" name="PDMIS"
+                                                <input type="text" name="PDMIS" id="PDMIS"
                                                        class="form-control dre_misc dre_value"
                                                        value="0">
                                             </div>
@@ -621,7 +635,8 @@
                                         <div class="row">
                                             <label class="col-md-6 text-right"> Return to </label>
                                             <div class="col-md-5">
-                                                <input type="text" name="EXBACK" class="form-control dre_total"
+                                                <input type="text" name="EXBACK" id="EXBACK"
+                                                       class="form-control dre_total"
                                                        value="0" readonly>
                                             </div>
                                         </div>
@@ -636,7 +651,8 @@
                                         <div class="row">
                                             <label class="col-md-4 text-right"> Nett Amt Rcvd </label>
                                             <div class="col-md-8">
-                                                <input type="text" name="TRCRAMT" class="form-control nett_amt_rcvd"
+                                                <input type="text" name="TRCRAMT" id="TRCRAMT"
+                                                       class="form-control nett_amt_rcvd"
                                                        value="0" readonly>
                                             </div>
                                         </div>
@@ -751,6 +767,7 @@
             $(document).on('click', '.saveBill', function () {
                 saveBill();
             });
+
             $(document).on('change', '.trtype', function () {
                 showTypeDetails();
             });
@@ -761,7 +778,58 @@
                     url: site_url + 'sales/getBillData/' + billNo,
                     dataType: 'JSON',
                     success: function (response) {
-                        console.log(response);
+                        var billData = response.billData;
+                        var itemsData = response.itemsData;
+                        var TRBLDT = new Date(billData.TRBLDT);
+                        $('#TRBLDT').val(TRBLDT.toString('d/M/yyyy'));
+                        $('#TRTYPE').val(billData.TRTYPE);
+                        $('#CRDNUM').val(billData.CRDNUM);
+                        $('#TRSALUT').val(billData.TRSALUT);
+                        $('#TRPRNM').val(billData.TRPRNM);
+                        $('#TRPAD1').val(billData.TRPAD1);
+                        $('#TRPAD2').val(billData.TRPAD2);
+                        $('#TRPAD3').val(billData.TRPAD3);
+                        $('#TRCITY').val(billData.TRCITY);
+                        $('#TRPH1').val(billData.TRPH1);
+                        $('#TRPH2').val(billData.TRPH2);
+                        $('#TREMAIL').val(billData.TREMAIL);
+                        $('#TRGROS').val(billData.TRGROS);
+                        $('#TROTH1').val(billData.TROTH1);
+                        $('#TROTH2').val(billData.TROTH2);
+                        $('#TRRND').val(billData.TRRND);
+                        $('#TRNET').val(billData.TRNET);
+                        $('#TRCRDNO').val(billData.TRCRDNO);
+                        $('#TRCRDHOLD').val(billData.TRCRDHOLD);
+                        $('#TRCRAMT').val(billData.TRCRAMT);
+                        $('#TRTOTQTY').val(billData.TRTOTQTY);
+                        $('#EXRCVD').val(billData.EXRCVD);
+                        $('#EXBACK').val(billData.EXBACK);
+                        $('#PD2000').val(billData.PD2000);
+                        $('#PD500').val(billData.PD500);
+                        $('#PD200').val(billData.PD200);
+                        $('#PD100').val(billData.PD100);
+                        $('#PD50').val(billData.PD50);
+                        $('#PD20').val(billData.PD20);
+                        $('#PD10').val(billData.PD10);
+                        $('#PD5').val(billData.PD5);
+                        $('#PDMIS').val(billData.PDMIS);
+                        $('#RC2000').val(billData.RC2000);
+                        $('#RC500').val(billData.RC500);
+                        $('#RC200').val(billData.RC200);
+                        $('#RC100').val(billData.RC100);
+                        $('#RC50').val(billData.RC50);
+                        $('#RC20').val(billData.RC20);
+                        $('#RC10').val(billData.RC10);
+                        $('#RC5').val(billData.RC5);
+                        $('#RCMIS').val(billData.RCMIS);
+                        $('#TRCN1').val(billData.TRCN1);
+                        $('#TRCN1AM').val(billData.TRCN1AM);
+                        $('#TRCN2').val(billData.TRCN2);
+                        $('#TRCN2AM').val(billData.TRCN2AM);
+                        var TRDOB = (billData.TRDOB) ? new Date(billData.TRDOB).toString('d/M/yyyy') : '';
+                        var TRMAD = (billData.TRMAD) ? new Date(billData.TRMAD).toString('d/M/yyyy') : '';
+                        $('#TRDOB').val(TRDOB);
+                        $('#TRMAD').val(TRMAD);
                     }
                 })
             }
@@ -995,7 +1063,7 @@
                     gTotalAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat(belowAmt) + parseFloat(aboveAmt) + parseFloat(sgstla) + parseFloat(cgstla) + parseFloat(sgstha) + parseFloat(cgstha)).toFixed(2);
 
                     var data = {
-                        TRBLNO1: "<?php echo $currentBill; ?>",// BillNo
+                        TRBLNO1: "<?php echo $billNo; ?>",// BillNo
                         TRITCD: itcd,//Item Id
                         TRSZ: col.eq(3).text().trim(),//Size
                         TRCLR: col.eq(2).text().trim(),//Color
@@ -1053,7 +1121,7 @@
                                 }
                             },
                             callback: function (result) {
-                                window.location.href = site_url + "salesPrint/" + <?php echo $currentBill; ?>;
+                                window.location.href = site_url + "salesPrint/" + <?php echo $billNo; ?>;
                             }
                         });
                     }
@@ -1164,7 +1232,7 @@
                 var currBillPoint = parseFloat((_pointAmt * crdHolPoint) / crdHolVal).toFixed(2);
                 if (currBillPoint) {
                     cardData = {
-                        BILLNO: "<?php echo $currentBill; ?>",// BillNo
+                        BILLNO: "<?php echo $billNo; ?>",// BillNo
                         BILLDT: "<?php echo date('Y-m-d'); ?>",
                         FINYEAR: "<?php echo fin_year(array("full" => true));?>",
                         BILLVALUE: $('.net_amount').val(),

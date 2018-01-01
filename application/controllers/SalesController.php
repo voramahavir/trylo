@@ -66,7 +66,7 @@ class SalesController extends CI_Controller
     {
         $data['page_title'] = "Edit Sales";
         $data['billNo'] = $billNo;
-        $this->load->view("sales/sales_data", $data);
+        $this->load->view("sales/sales_edit", $data);
     }
 
     public function getBillData($billNo)

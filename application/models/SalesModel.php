@@ -274,7 +274,7 @@ class SalesModel extends CI_Model
         );
         $this->db->where($where);
         $this->db->limit(1);
-        $billData = $this->db->get('trbil')->row();
+        $billData = $this->db->get('trbil t')->row();
 
         $where = array(
             't1.TRBLNO1' => $billNo,
@@ -290,8 +290,8 @@ class SalesModel extends CI_Model
         $this->db->where($where);
         $this->db->join('trbil t', 't.TRBLNO = t1.TRBLNO1 AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1');
         $this->db->join('tritem i', 'i.TRITCD = t1.TRITCD');
-        $this->db->join('tritem1 i1', 'i1.TRITCD = t1.TRITCD AND i1.TRSZCD = t1.TRSZ AND i1.TRCOLOR = t1.TRCLR');
-        $itemsData = $this->db->get('trbil1')->result();
+        $this->db->join('tritem1 i1', 'i1.TRITCD1 = t1.TRITCD AND i1.TRSZCD = t1.TRSZ AND i1.TRCOLOR = t1.TRCLR');
+        $itemsData = $this->db->get('trbil1 t1')->result();
 
         $data = compact("billData", "itemsData");
         echo json_encode($data);
