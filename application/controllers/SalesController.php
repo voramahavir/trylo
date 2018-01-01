@@ -64,6 +64,13 @@ class SalesController extends CI_Controller
 
     public function edit($billNo)
     {
+        $data['page_title'] = "Edit Sales";
+        $data['billNo'] = $billNo;
+        $this->load->view("sales/sales_data", $data);
+    }
 
+    public function getBillData($billNo)
+    {
+        $this->SalesModel->getSalesBill($billNo);
     }
 }

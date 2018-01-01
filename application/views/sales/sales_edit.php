@@ -669,6 +669,7 @@
                 format: 'dd/mm/yyyy'
             });
             showTypeDetails();
+            getSalesData();
             loadingStop();
             var items, itemsData, gTotalAmt = 0;
             var barCodeArray = [], itemsArray = [], cardData = {};
@@ -753,6 +754,17 @@
             $(document).on('change', '.trtype', function () {
                 showTypeDetails();
             });
+
+            function getSalesData() {
+                var billNo = "<?php echo $billNo ?>";
+                $.ajax({
+                    url: site_url + 'sales/getBillData/' + billNo,
+                    dataType: 'JSON',
+                    success: function (response) {
+                        console.log(response);
+                    }
+                })
+            }
 
             function getIteminfo() {
                 var barCode = $(".barCode").val().trim();
