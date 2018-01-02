@@ -20,9 +20,11 @@
                         <input class="form-control" id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>">
                     </div>
                 </div>
-                <a href="<?php echo site_url('purchaseorder/add'); ?>" class="btn btn-info">
-                    <span class="glyphicon glyphicon-plus"></span> Add
-                </a>
+                <div class="form-group">
+                    <a href="<?php echo site_url('purchaseorder/add'); ?>" class="btn btn-info">
+                        <span class="glyphicon glyphicon-plus"></span> Add
+                    </a>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-bordered table-hover dataTable" id="table_purchase">
@@ -175,7 +177,7 @@
                     "bSortable": true
                 },
                 {
-                    "data": "TRBLDT",
+                    "data": null,
                     "bSortable": true
                 },
                 {
@@ -210,6 +212,8 @@
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 // if(aData.ISACTIVE==0){
                 billData[iDisplayindex] = aData;
+                var TRBLDT = new Date(aData.TRBLDT);
+                $('td:eq(1)', nRow).html(TRBLDT.toString('d/M/yyyy'));
                 if (aData.IS_ACTIVE == 1) {
                     $('td:eq(8)', nRow).html(""
                         + "<button class='btn btn-info hide' onclick='return EditTheRow(" + iDisplayindex + "," + aData.TRBLNO + ");'>"

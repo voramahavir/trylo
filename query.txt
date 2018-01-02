@@ -194,3 +194,9 @@ Bhavesh : 28-12-2017
 CREATE TRIGGER `AddedNewBranch` AFTER INSERT ON `branch` FOR EACH ROW INSERT INTO item_cur_stock (`branchcode`, `itemcode`, `size`, `color`, `op_stock`, `cl_stock`, `min_stock`, `max_stock`) SELECT DISTINCT NEW.branch_code, `itemcode`, `size`, `color`, 0, 0, 0, 0 FROM item_cur_stock;
 ALTER TABLE `branch` ADD INDEX(`branch_code`);
 DROP TRIGGER IF EXISTS `AddedNewUser`;CREATE TRIGGER `AddedNewUser` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `assign_forms` (`user_id`, `form_id`) SELECT NEW.user_id, form_id FROM forms WHERE NEW.role_id = 1 OR NEW.role_id = 2;
+
+Bhavesh : 02-01-2018
+
+CREATE TRIGGER `DeleteSales` AFTER DELETE ON `trbil1` FOR EACH ROW BEGIN DECLARE _cl_stock INTEGER; SELECT (ist.cl_stock + OLD.TRQTY) INTO @_cl_stock FROM item_cur_stock ist WHERE OLD.TRITCD = ist.itemcode AND OLD.TRSZ = ist.size AND OLD.TRCLR = ist.color AND OLD.branchcode1 = ist.branchcode; UPDATE item_cur_stock ist SET ist.cl_stock = @_cl_stock WHERE OLD.TRITCD = ist.itemcode AND OLD.TRSZ = ist.size AND OLD.TRCLR = ist.color AND OLD.branchcode1 = ist.branchcode; END;
+ALTER TABLE crdtran ADD branch_code INT NULL;
+ALTER TABLE `crdtran` ADD INDEX( `BILLNO`, `FINYEAR`, `branch_code`);

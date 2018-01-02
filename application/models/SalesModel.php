@@ -19,10 +19,10 @@ class SalesModel extends CI_Model
             $salesData = $_POST['salesData'];
             $itemsData = $_POST['itemsData'];
             $cardData = isset($_POST['cardData']) ? $_POST['cardData'] : array();
-            $salesData['TRBLDT'] = date("Y-m-d", strtotime($salesData['TRBLDT']));
-            $salesData['TRDOB'] = ($salesData['TRDOB']) ? date("Y-m-d", strtotime($salesData['TRDOB'])) : NULL;
-            $salesData['TRMAD'] = ($salesData['TRMAD']) ? date("Y-m-d", strtotime($salesData['TRMAD'])) : NULL;
-            $salesData['TRCRDEXP'] = ($salesData['TRCRDEXP']) ? date("Y-m-d", strtotime($salesData['TRCRDEXP'])) : NULL;
+            $salesData['TRBLDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $salesData['TRBLDT'])));
+            $salesData['TRDOB'] = ($salesData['TRDOB']) ? date("Y-m-d", strtotime(str_replace("/", "-", $salesData['TRDOB']))) : NULL;
+            $salesData['TRMAD'] = ($salesData['TRMAD']) ? date("Y-m-d", strtotime(str_replace("/", "-", $salesData['TRMAD']))) : NULL;
+            $salesData['TRCRDEXP'] = ($salesData['TRCRDEXP']) ? date("Y-m-d", strtotime(str_replace("/", "-", $salesData['TRCRDEXP']))) : NULL;
             $salesData['branchcode'] = getSessionData('branch_code');
             $salesData['fin_year'] = fin_year();
             /*print_r(compact("salesData","itemsData"));
@@ -267,6 +267,9 @@ class SalesModel extends CI_Model
 
     public function getSalesBill($billNo)
     {
+        $code = 0;
+        $msg = "Unable to get Data";
+        $data = array();
         $where = array(
             't.TRBLNO' => $billNo,
             't.branchcode' => getSessionData('branch_code'),
@@ -275,26 +278,94 @@ class SalesModel extends CI_Model
         $this->db->where($where);
         $this->db->limit(1);
         $billData = $this->db->get('trbil t')->row();
+        if (count($billData)) {
+            $where = array(
+                't1.TRBLNO1' => $billNo,
+                't1.branchcode1' => getSessionData('branch_code'),
+                't1.fin_year1' => fin_year()
+            );
+            $select = array(
+                't1.*',
+                'i.TRITNM',
+                'i1.*',
+                'p.*'
+            );
+            $this->db->select($select);
+            $this->db->where($where);
+            $this->db->join('trbil t', 't.TRBLNO = t1.TRBLNO1 AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1');
+            $this->db->join('tritem i', 'i.TRITCD = t1.TRITCD');
+            $this->db->join("trprgrp as p", "i.TRPRDGRP = p.PRDCD");
+            $this->db->join('tritem1 i1', 'i1.TRITCD1 = t1.TRITCD AND i1.TRSZCD = t1.TRSZ AND i1.TRCOLOR = t1.TRCLR');
+            $itemsData = $this->db->get('trbil1 t1')->result();
+            $code = 1;
+            $msg = "Data fetched successfully";
+            $data = compact("billData", "itemsData");
+        }
+        $response = compact("code", "msg", "data");
+        echo json_encode($response);
+        exit;
+    }
 
-        $where = array(
-            't1.TRBLNO1' => $billNo,
-            't1.branchcode1' => getSessionData('branch_code'),
-            't1.fin_year1' => fin_year()
-        );
-        $select = array(
-            't1.*',
-            'i.TRITNM',
-            'i1.BARCODF'
-        );
-        $this->db->select($select);
-        $this->db->where($where);
-        $this->db->join('trbil t', 't.TRBLNO = t1.TRBLNO1 AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1');
-        $this->db->join('tritem i', 'i.TRITCD = t1.TRITCD');
-        $this->db->join('tritem1 i1', 'i1.TRITCD1 = t1.TRITCD AND i1.TRSZCD = t1.TRSZ AND i1.TRCOLOR = t1.TRCLR');
-        $itemsData = $this->db->get('trbil1 t1')->result();
-
-        $data = compact("billData", "itemsData");
-        echo json_encode($data);
+    public function salesUpdate()
+    {
+        $code = 0;
+        $msg = "Unable to save data";
+        $lastId = 0;
+        if (isset($_POST['salesData']) && count($_POST['salesData']) && isset($_POST['itemsData']) && count($_POST['itemsData'])) {
+            $salesData = $_POST['salesData'];
+            $itemsData = $_POST['itemsData'];
+            $cardData = isset($_POST['cardData']) ? $_POST['cardData'] : array();
+            $salesData['TRBLDT'] = date("Y-m-d", strtotime(str_replace("/", "-", $salesData['TRBLDT'])));
+            $salesData['TRDOB'] = ($salesData['TRDOB']) ? date("Y-m-d", strtotime(str_replace("/", "-", $salesData['TRDOB']))) : NULL;
+            $salesData['TRMAD'] = ($salesData['TRMAD']) ? date("Y-m-d", strtotime(str_replace("/", "-", $salesData['TRMAD']))) : NULL;
+            $salesData['TRCRDEXP'] = ($salesData['TRCRDEXP']) ? date("Y-m-d", strtotime(str_replace("/", "-", $salesData['TRCRDEXP']))) : NULL;
+            $salesData['branchcode'] = getSessionData('branch_code');
+            $salesData['fin_year'] = fin_year();
+            /*print_r(compact("salesData","itemsData"));
+            die;*/
+            if ($this->db->trans_begin()) {
+                $where = array(
+                    'TRBLNO' => $salesData['TRBLNO'],
+                    'branchcode' => getSessionData('branch_code'),
+                    'fin_year' => fin_year()
+                );
+                $this->db->where($where);
+                $this->db->update("trbil", $salesData);
+                $where = array(
+                    'TRBLNO1' => $salesData['TRBLNO'],
+                    'branchcode1' => getSessionData('branch_code'),
+                    'fin_year1' => fin_year()
+                );
+                $this->db->where($where);
+                $this->db->delete("trbil1");
+                $this->db->insert_batch("trbil1", $itemsData);
+                if (count($cardData)) {
+                    $where = array(
+                        'BILLNO' => $salesData['TRBLNO'],
+                        'branch_code' => getSessionData('branch_code'),
+                        'FINYEAR' => fin_year()
+                    );
+                    $this->db->where($where);
+                    $this->db->update("crdtran", $cardData);
+                }
+                $this->db->trans_complete();
+                if ($this->db->trans_status()) {
+                    $code = 1;
+                    $msg = "Data updated successfully";
+                } else {
+                    $code = 0;
+                    $msg = "Unable to save data";
+                }
+            } else {
+                $code = 0;
+                $msg = "Unable to save data";
+            }
+        } else {
+            $msg = "No data found to save";
+        }
+//        $response = compact("code", "msg", "lastId");
+        $response = compact("code", "msg");
+        echo json_encode($response);
         exit;
     }
 }

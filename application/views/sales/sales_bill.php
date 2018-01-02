@@ -66,18 +66,18 @@
                                        role="grid">
                                     <thead>
                                     <tr role="row">
-                                        <th>Bill No.</th>
-                                        <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Name of Party</th>
-                                        <th>Repeat</th>
-                                        <th>Total Quantity</th>
-                                        <th>Bill Amount</th>
-                                        <th>Rcvd Amt</th>
-                                        <th class="hide">Salesman</th>
-                                        <th>Discount</th>
-                                        <th>Other</th>
-                                        <th>Action</th>
+                                        <th class="col-md-1">Bill No.</th>
+                                        <th class="col-md-1">Date</th>
+                                        <th class="col-md-1">Type</th>
+                                        <th class="col-md-2">Name of Party</th>
+                                        <th class="col-md-1">Repeat</th>
+                                        <th class="col-md-1">Total Quantity</th>
+                                        <th class="col-md-1">Bill Amount</th>
+                                        <th class="col-md-1">Rcvd Amt</th>
+                                        <th class="col-md-1" class="hide">Salesman</th>
+                                        <th class="col-md-1">Discount</th>
+                                        <th class="col-md-1">Other</th>
+                                        <th class="col-md-1">Action</th>
 
                                     </tr>
                                     </thead>
@@ -142,8 +142,6 @@
         table = $('#sales_bill_table').DataTable({
             "processing": true,
             "serverSide": true,
-            "destroy": true,
-            "lengthChange": false,
             "searching": false,
             "columns": [
                 {
@@ -222,7 +220,8 @@
                 $('td:eq(9)', nRow).html("");
                 /*$('td:eq(10)', nRow).html("");*/
                 var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' target='_blank' class='btn btn-success'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
-                $('td:eq(10)', nRow).html(printStr);
+                var editStr = "<a href='" + site_url + "sales/edit/" + aData.billno + "' class='btn btn-info'><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></a>";
+                $('td:eq(10)', nRow).html(printStr + editStr);
             }
         });
     }

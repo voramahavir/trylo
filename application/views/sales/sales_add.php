@@ -140,7 +140,8 @@
 
 <div class="row">
     <div class="col-md-12">
-        <a class="btn btn-primary save">Save</a>
+        <a class="btn btn-primary save pull-right">Save</a>
+        <a class="btn btn-default" href="<?php echo site_url('salesBill'); ?>">Cancel</a>
     </div>
 </div>
 
@@ -735,7 +736,7 @@
             $(".sales_code").focusout(function () {
                 addNewItem();
             });
-            $('.crdnum').focusout(function () {
+            $('.crdnum').change(function () {
                 getDetailsByCard();
             });
 
@@ -874,7 +875,7 @@
                 total_amt();
             });
 
-            $(document).on('focusout', ".ph1", function () {
+            $(document).on('change', ".ph1", function () {
                 getCardDetailsByMobile();
             });
 
@@ -1041,7 +1042,7 @@
                                 }
                             },
                             callback: function (result) {
-                                window.location.href = site_url + "salesPrint/" + <?php echo $currentBill; ?>;
+                                window.location.href = (result) ? site_url + "salesPrint/" + <?php echo $currentBill; ?> : site_url + "salesBill";
                             }
                         });
                     }
@@ -1159,7 +1160,8 @@
                         PREFIX1: "<?php echo getSessionData('prefix'); ?>",
                         CARDNO1: $('.crdnum').val(),
                         CREDITCRD1: currBillPoint,
-                        APVALUE: $('.n_amt').val()
+                        APVALUE: $('.n_amt').val(),
+                        branch_code: "<?php echo getSessionData('branch_code');?>"
                     };
                 }
                 totalPoints = parseFloat(totalPoints) + parseFloat(currBillPoint);

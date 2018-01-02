@@ -140,7 +140,8 @@
 
 <div class="row">
     <div class="col-md-12">
-        <a class="btn btn-primary save">Save</a>
+        <a class="btn btn-primary save pull-right">Save</a>
+        <a class="btn btn-default" href="<?php echo site_url('salesBill'); ?>">Cancel</a>
     </div>
 </div>
 
@@ -752,7 +753,8 @@
             $(".sales_code").focusout(function () {
                 addNewItem();
             });
-            $('.crdnum').focusout(function () {
+
+            $('.crdnum').change(function () {
                 getDetailsByCard();
             });
 
@@ -772,66 +774,127 @@
                 showTypeDetails();
             });
 
+            $(document).on('change', ".qty", function () {
+                total_amt();
+            });
+
+            $(document).on('change', ".d_per", function () {
+                total_amt();
+            });
+
+            $(document).on('change', ".ph1", function () {
+                getCardDetailsByMobile();
+            });
+
+            $('#searchItem').click(function () {
+                window.open(site_url + "searchItem", "popupWindow", "width=1200, height=600, scrollbars=yes");
+            });
+
             function getSalesData() {
                 var billNo = "<?php echo $billNo ?>";
                 $.ajax({
                     url: site_url + 'sales/getBillData/' + billNo,
                     dataType: 'JSON',
                     success: function (response) {
-                        var billData = response.billData;
-                        var itemsData = response.itemsData;
-                        var TRBLDT = new Date(billData.TRBLDT);
-                        $('#TRBLDT').val(TRBLDT.toString('d/M/yyyy'));
-                        $('#TRTYPE').val(billData.TRTYPE);
-                        $('#CRDNUM').val(billData.CRDNUM);
-                        $('#TRSALUT').val(billData.TRSALUT);
-                        $('#TRPRNM').val(billData.TRPRNM);
-                        $('#TRPAD1').val(billData.TRPAD1);
-                        $('#TRPAD2').val(billData.TRPAD2);
-                        $('#TRPAD3').val(billData.TRPAD3);
-                        $('#TRCITY').val(billData.TRCITY);
-                        $('#TRPH1').val(billData.TRPH1);
-                        $('#TRPH2').val(billData.TRPH2);
-                        $('#TREMAIL').val(billData.TREMAIL);
-                        $('#TRGROS').val(billData.TRGROS);
-                        $('#TROTH1').val(billData.TROTH1);
-                        $('#TROTH2').val(billData.TROTH2);
-                        $('#TRRND').val(billData.TRRND);
-                        $('#TRNET').val(billData.TRNET);
-                        $('#TRCRDNO').val(billData.TRCRDNO);
-                        $('#TRCRDHOLD').val(billData.TRCRDHOLD);
-                        $('#TRCRAMT').val(billData.TRCRAMT);
-                        $('#TRTOTQTY').val(billData.TRTOTQTY);
-                        $('#EXRCVD').val(billData.EXRCVD);
-                        $('#EXBACK').val(billData.EXBACK);
-                        $('#PD2000').val(billData.PD2000);
-                        $('#PD500').val(billData.PD500);
-                        $('#PD200').val(billData.PD200);
-                        $('#PD100').val(billData.PD100);
-                        $('#PD50').val(billData.PD50);
-                        $('#PD20').val(billData.PD20);
-                        $('#PD10').val(billData.PD10);
-                        $('#PD5').val(billData.PD5);
-                        $('#PDMIS').val(billData.PDMIS);
-                        $('#RC2000').val(billData.RC2000);
-                        $('#RC500').val(billData.RC500);
-                        $('#RC200').val(billData.RC200);
-                        $('#RC100').val(billData.RC100);
-                        $('#RC50').val(billData.RC50);
-                        $('#RC20').val(billData.RC20);
-                        $('#RC10').val(billData.RC10);
-                        $('#RC5').val(billData.RC5);
-                        $('#RCMIS').val(billData.RCMIS);
-                        $('#TRCN1').val(billData.TRCN1);
-                        $('#TRCN1AM').val(billData.TRCN1AM);
-                        $('#TRCN2').val(billData.TRCN2);
-                        $('#TRCN2AM').val(billData.TRCN2AM);
-                        var TRDOB = (billData.TRDOB) ? new Date(billData.TRDOB).toString('d/M/yyyy') : '';
-                        var TRMAD = (billData.TRMAD) ? new Date(billData.TRMAD).toString('d/M/yyyy') : '';
-                        $('#TRDOB').val(TRDOB);
-                        $('#TRMAD').val(TRMAD);
+                        if (response.code) {
+                            response = response.data;
+                            setSalesData(response.billData);
+                            setSalesItemData(response.itemsData);
+                        }
+                        else {
+                            bootbox.alert(response.msg, function () {
+                                window.location.href = site_url + 'salesBill';
+                            });
+                        }
                     }
-                })
+                });
+            }
+
+            function setSalesData(billData) {
+
+                var TRBLDT = new Date(billData.TRBLDT);
+                $('#TRBLDT').val(TRBLDT.toString('d/M/yyyy'));
+                $('#TRTYPE').val(billData.TRTYPE);
+                $('#CRDNUM').val(billData.CRDNUM);
+                $('#TRSALUT').val(billData.TRSALUT);
+                $('#TRPRNM').val(billData.TRPRNM);
+                $('#TRPAD1').val(billData.TRPAD1);
+                $('#TRPAD2').val(billData.TRPAD2);
+                $('#TRPAD3').val(billData.TRPAD3);
+                $('#TRCITY').val(billData.TRCITY);
+                $('#TRPH1').val(billData.TRPH1);
+                $('#TRPH2').val(billData.TRPH2);
+                $('#TREMAIL').val(billData.TREMAIL);
+                $('#TRGROS').val(billData.TRGROS);
+                $('#TROTH1').val(billData.TROTH1);
+                $('#TROTH2').val(billData.TROTH2);
+                $('#TRRND').val(billData.TRRND);
+                $('#TRNET').val(billData.TRNET);
+                $('#TRCRDNO').val(billData.TRCRDNO);
+                $('#TRCRDHOLD').val(billData.TRCRDHOLD);
+                $('#TRCRAMT').val(billData.TRCRAMT);
+                $('#TRTOTQTY').val(billData.TRTOTQTY);
+                $('#EXRCVD').val(billData.EXRCVD);
+                $('#EXBACK').val(billData.EXBACK);
+                $('#PD2000').val(billData.PD2000);
+                $('#PD500').val(billData.PD500);
+                $('#PD200').val(billData.PD200);
+                $('#PD100').val(billData.PD100);
+                $('#PD50').val(billData.PD50);
+                $('#PD20').val(billData.PD20);
+                $('#PD10').val(billData.PD10);
+                $('#PD5').val(billData.PD5);
+                $('#PDMIS').val(billData.PDMIS);
+                $('#RC2000').val(billData.RC2000);
+                $('#RC500').val(billData.RC500);
+                $('#RC200').val(billData.RC200);
+                $('#RC100').val(billData.RC100);
+                $('#RC50').val(billData.RC50);
+                $('#RC20').val(billData.RC20);
+                $('#RC10').val(billData.RC10);
+                $('#RC5').val(billData.RC5);
+                $('#RCMIS').val(billData.RCMIS);
+                $('#TRCN1').val(billData.TRCN1);
+                $('#TRCN1AM').val(billData.TRCN1AM);
+                $('#TRCN2').val(billData.TRCN2);
+                $('#TRCN2AM').val(billData.TRCN2AM);
+                var TRDOB = (billData.TRDOB) ? new Date(billData.TRDOB).toString('d/M/yyyy') : '';
+                var TRMAD = (billData.TRMAD) ? new Date(billData.TRMAD).toString('d/M/yyyy') : '';
+                $('#TRDOB').val(TRDOB);
+                $('#TRMAD').val(TRMAD);
+            }
+
+            function setSalesItemData(itemsData) {
+                var html = "";
+                $.map(itemsData, function (items, key) {
+                    itemsArray[items.TRITCD1] = items;
+                    html += '<tr class="itemBarCode ' + items.BARCODF + '">';
+                    html += '<td class="hide"> ' + items.TRITCD1 + '</td> ';
+                    html += '<td> ' + items.TRITNM + '</td> ';
+                    html += '<td> ' + items.TRCLR + '</td> ';
+                    html += '<td> ' + items.TRSZ + '</td> ';
+                    html += '<td> <input type="number" class="form-control qty" min=1 value="' + items.TRQTY + '" /> </td> ';
+                    html += '<td> <label class="nt_amt">' + parseFloat(items.TRRATE).toFixed(2) + '</label> </td> ';
+                    html += '<td> <label class="ntt_amt">' + 1 * parseFloat(items.TRRATE).toFixed(2) + '</label> </td> ';
+                    html += '<td> <input type="number" class="form-control d_per" min=0 value="' + items.TRDS1 + '" /> </td> ';
+                    html += '<td> <label class="d_amt">' + parseFloat(items.TRDS2).toFixed(2) + '</label> </td> ';
+                    html += '<td> <label class="t_amt">' + parseFloat(items.TRRATE).toFixed(2) + '</label> </td> ';
+                    html += '<td> <label class="i_salesCode">' + items.BARCODF + ' </label> </td> ';
+                    html += '<td> ' + $('.sales_code').val() + ' </td> ';
+                    html += '<td> <a class="btn btn-danger remove"> <i class="fa fa-trash-o"> </i> </a> </td> ';
+                    html += '</tr> ';
+                    barCodeArray.push(items.BARCODF);
+                });
+                $(".items").append(html);
+                $(".dr_note").trigger('change');
+                $(".dre_note").trigger('change');
+                $(".dr_misc").trigger('change');
+                $(".oth_amt").trigger('change');
+                $(".dre_misc").trigger('change');
+                $(".crdnum").trigger('change');
+                showTypeDetails();
+                getCardDetailsByMobile();
+                total_amt();
             }
 
             function getIteminfo() {
@@ -945,22 +1008,6 @@
                         break;
                 }
             }
-
-            $(document).on('change', ".qty", function () {
-                total_amt();
-            });
-
-            $(document).on('change', ".d_per", function () {
-                total_amt();
-            });
-
-            $(document).on('focusout', ".ph1", function () {
-                getCardDetailsByMobile();
-            });
-
-            $('#searchItem').click(function () {
-                window.open(site_url + "searchItem", "popupWindow", "width=1200, height=600, scrollbars=yes");
-            });
 
             function dis_per(p, f) {
                 return ((p - f) * 100 / p).toFixed(2);
@@ -1097,7 +1144,7 @@
                 var salesData = $("#salesBill").serializeObject();
 
                 $.ajax({
-                    url: site_url + "salesCreate",
+                    url: site_url + "sales/update",
                     dataType: 'json',
                     type: "POST",
                     data: {
@@ -1121,7 +1168,7 @@
                                 }
                             },
                             callback: function (result) {
-                                window.location.href = site_url + "salesPrint/" + <?php echo $billNo; ?>;
+                                window.location.href = (result) ? site_url + "salesPrint/" + <?php echo $billNo; ?> : site_url + "salesBill";
                             }
                         });
                     }
@@ -1239,7 +1286,8 @@
                         PREFIX1: "<?php echo getSessionData('prefix'); ?>",
                         CARDNO1: $('.crdnum').val(),
                         CREDITCRD1: currBillPoint,
-                        APVALUE: $('.n_amt').val()
+                        APVALUE: $('.n_amt').val(),
+                        branch_code: "<?php echo getSessionData('branch_code');?>"
                     };
                 }
                 totalPoints = parseFloat(totalPoints) + parseFloat(currBillPoint);

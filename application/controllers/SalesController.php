@@ -73,4 +73,10 @@ class SalesController extends CI_Controller
     {
         $this->SalesModel->getSalesBill($billNo);
     }
+
+    public function update()
+    {
+        $this->SalesModel->salesUpdate();
+    }
+
 }

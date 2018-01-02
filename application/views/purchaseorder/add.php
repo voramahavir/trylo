@@ -658,6 +658,12 @@
                                     keyboard: false
                                 });
                             }
+                            else {
+                                $('#selectItem').prop('disabled', false);
+                                $('#prdGrp').prop('disabled', false);
+                                $('#prdGrp').val("");
+                                bootbox.alert(response.msg);
+                            }
                             loadingStop();
                         }
                     });

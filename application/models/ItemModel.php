@@ -138,7 +138,7 @@ class ItemModel extends CI_Model
     function getItemByPrdGrp($prdGrp)
     {
         $code = 0;
-        $msg = "No data found";
+        $msg = "No data found. Please Select different group";
         $select = array(
             'i.TRITCD',
             'i.TRITNM',
