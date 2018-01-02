@@ -150,7 +150,7 @@
                 },
                 {
                     "bSortable": false,
-                    "data": "date"
+                    "data": null
                 },
                 {
                     "bSortable": false,
@@ -215,6 +215,8 @@
                 } else if (aData.type == 4) {
                     $('td:eq(2)', nRow).html("PAYTM");
                 }
+                var date = new Date(aData.date);
+                $('td:eq(1)', nRow).html(date.toString('d/M/yyyy'));
                 $('td:eq(4)', nRow).html("");
                 $('td:eq(8)', nRow).html("");
                 $('td:eq(9)', nRow).html("");

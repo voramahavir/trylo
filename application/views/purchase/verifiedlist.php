@@ -108,7 +108,7 @@
                     "bSortable": true
                 },
                 {
-                    "data": "TRBLDT",
+                    "data": null,
                     "bSortable": true
                 },
                 {
@@ -146,6 +146,8 @@
             ],
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 // if(aData.ISACTIVE==0){
+                var TRBLDT = new Date(aData.TRBLDT);
+                $('td:eq(1)', nRow).html(TRBLDT.toString('d/M/yyyy'));
                 $('td:eq(9)', nRow).html(""
                     + "<button class='btn btn-info' onclick='return verifyBill(\"" + aData.TRBLNO + "\");'>"
                     + "<i class='fa fa-file-text-o'></i>"

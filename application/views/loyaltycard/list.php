@@ -189,6 +189,14 @@
               },
           ],
           "rowCallback":function(nRow,aData,iDisplayindex){
+              var LODOB = new Date(aData.LODOB);
+              $('td:eq(2)', nRow).html(LODOB.toString('d/M/yyyy'));
+              var LOMAR = new Date(aData.LOMAR);
+              $('td:eq(3)', nRow).html(LOMAR.toString('d/M/yyyy'));
+              var LOSTDT = new Date(aData.LOSTDT);
+              $('td:eq(6)', nRow).html(LOSTDT.toString('d/M/yyyy'));
+              var LOENDT = new Date(aData.LOENDT);
+              $('td:eq(7)', nRow).html(LOENDT.toString('d/M/yyyy'));
               if (aData.ISACTIVE == 1) {
                     $('td:eq(9)',nRow).html(""
                         +"<button class='btn btn-info' onclick='return EditTheRow("+aData.MOBILEID+");'>"
