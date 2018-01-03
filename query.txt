@@ -195,8 +195,12 @@ CREATE TRIGGER `AddedNewBranch` AFTER INSERT ON `branch` FOR EACH ROW INSERT INT
 ALTER TABLE `branch` ADD INDEX(`branch_code`);
 DROP TRIGGER IF EXISTS `AddedNewUser`;CREATE TRIGGER `AddedNewUser` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO `assign_forms` (`user_id`, `form_id`) SELECT NEW.user_id, form_id FROM forms WHERE NEW.role_id = 1 OR NEW.role_id = 2;
 
-Bhavesh : 02-01-2018
+Bhavesh : 02-01-2018 Trigger for update sales bill
 
 CREATE TRIGGER `DeleteSales` AFTER DELETE ON `trbil1` FOR EACH ROW BEGIN DECLARE _cl_stock INTEGER; SELECT (ist.cl_stock + OLD.TRQTY) INTO @_cl_stock FROM item_cur_stock ist WHERE OLD.TRITCD = ist.itemcode AND OLD.TRSZ = ist.size AND OLD.TRCLR = ist.color AND OLD.branchcode1 = ist.branchcode; UPDATE item_cur_stock ist SET ist.cl_stock = @_cl_stock WHERE OLD.TRITCD = ist.itemcode AND OLD.TRSZ = ist.size AND OLD.TRCLR = ist.color AND OLD.branchcode1 = ist.branchcode; END;
 ALTER TABLE crdtran ADD branch_code INT NULL;
 ALTER TABLE `crdtran` ADD INDEX( `BILLNO`, `FINYEAR`, `branch_code`);
+
+Bhavesh : 04-01-2018 Trigger for sales bill delete
+
+DROP TRIGGER IF EXISTS `DeleteBill`;CREATE TRIGGER `DeleteBill` AFTER DELETE ON `trbil` FOR EACH ROW DELETE FROM trbil1 WHERE trbil1.TRBLNO1 = OLD.TRBLNO AND trbil1.branchcode1 = OLD.branchcode AND trbil1.fin_year1 = OLD.fin_year

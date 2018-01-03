@@ -79,4 +79,9 @@ class SalesController extends CI_Controller
         $this->SalesModel->salesUpdate();
     }
 
+    public function delete($id)
+    {
+        $this->SalesModel->salesDelete($id);
+    }
+
 }

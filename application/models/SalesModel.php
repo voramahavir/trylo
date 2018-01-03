@@ -368,4 +368,16 @@ class SalesModel extends CI_Model
         echo json_encode($response);
         exit;
     }
+
+    public function salesDelete($id)
+    {
+        branchWhere("trbil", "branchcode");
+        $this->db->where('TRBLNO', $id)->set(array(
+            'fin_year' => fin_year()
+        ))->delete("trbil");
+        $code = 1;
+        $response = "Sales Bill deleted successfully.";
+        echo json_encode(array("code" => $code, "response" => $response));
+        exit();
+    }
 }

@@ -96,7 +96,24 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade modal-3d-flip-horizontal" id="deleteSalesModal" aria-hidden="true"
+     aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Are you sure you want to delete this Sales Bill ? </h4>
+                <input type="hidden" name="id" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger deleteSales">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php $this->load->view('include/template/common_footer'); ?>
 
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
@@ -116,6 +133,20 @@
             $('#to_date').datepicker({
                 autoclose: true,
                 format: 'dd/mm/yyyy'
+            });
+            $(".deleteSales").on("click", function () {
+                $(".deleteSales").prop("disabled", true);
+                var id = -1;
+                id = $("#deleteSalesModal").find("[name=id]").val();
+                $.post("<?php echo site_url('sales/delete/'); ?>" + id, {})
+                    .done(function (result) {
+                        result = JSON.parse(result);
+                        if (result.code == 1) {
+                            table.ajax.reload();
+                        }
+                        $("#deleteSalesModal").modal("hide");
+                    });
+                $(".deleteSales").prop("disabled", false);
             });
         });
     }(jQuery));
@@ -223,9 +254,17 @@
                 /*$('td:eq(10)', nRow).html("");*/
                 var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' target='_blank' class='btn btn-success'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
                 var editStr = "<a href='" + site_url + "sales/edit/" + aData.billno + "' class='btn btn-info'><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></a>";
-                $('td:eq(10)', nRow).html(printStr + editStr);
+                var deleteStr = "<button class='btn btn-danger' onclick='return DeleteTheRow(" + aData.billno + ");'>"
+                    + "<i class='fa fa-trash-o'></i>"
+                    + "</button>";
+                $('td:eq(10)', nRow).html(printStr + editStr + deleteStr);
             }
         });
+    }
+
+    function DeleteTheRow(id) {
+        $("#deleteSalesModal").modal("show");
+        $("#deleteSalesModal").find("[name=id]").attr("value", id);
     }
 
     setTable();
