@@ -204,3 +204,7 @@ ALTER TABLE `crdtran` ADD INDEX( `BILLNO`, `FINYEAR`, `branch_code`);
 Bhavesh : 04-01-2018 Trigger for sales bill delete
 
 DROP TRIGGER IF EXISTS `DeleteBill`;CREATE TRIGGER `DeleteBill` AFTER DELETE ON `trbil` FOR EACH ROW DELETE FROM trbil1 WHERE trbil1.TRBLNO1 = OLD.TRBLNO AND trbil1.branchcode1 = OLD.branchcode AND trbil1.fin_year1 = OLD.fin_year
+
+Bhavesh : 06-01-2018 Trigger for cancel sales bill
+
+CREATE TRIGGER `CancelBill` AFTER UPDATE ON `trbil` FOR EACH ROW UPDATE item_cur_stock ics JOIN trbil1 t1 ON t1.TRITCD = ics.itemcode AND t1.TRCLR = ics.color AND t1.TRSZ = ics.size AND t1.branchcode1 = ics.branchcode JOIN trbil t ON t.TRBLNO = t1.TRBLNO1 AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1 SET cl_stock = cl_stock + TRQTY WHERE t.TRBLNO=OLD.TRBLNO AND t.branchcode=OLD.branchcode AND NEW.CANBL='T'

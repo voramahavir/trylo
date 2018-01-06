@@ -85,13 +85,13 @@ class SalesModel extends CI_Model
             'search' => $search
         );
 
-        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type');
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type,t.CANBL');
         $this->db->limit($length, $start);
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
         $this->db->group_by('t.TRBLNO');
         $output['data'] = $this->db->get('trbil as t')->result();
         $this->filterData();
-        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type');
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type,t.CANBL');
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
         $this->db->group_by('t.TRBLNO');
         $output['recordsTotal'] = $this->db->get('trbil as t')->num_rows();
@@ -217,16 +217,19 @@ class SalesModel extends CI_Model
 
         if (isset($_POST['payment'])) {
             $payment = $_POST['payment'];
+            $where = array(
+                't.CANBL' => null
+            );
             if ($payment != null || $payment != "") {
-                if ($payment == 'all') {
-                    $this->db->where('t.CANBL IS NULL', NULL, FALSE);
-                } elseif ($payment == 1) {
-                    $this->db->where('t.TRTYPE', '2');
-                    $this->db->where('t.CANBL IS NOT NULL', NULL, FALSE);
+                if ($payment == 1) {
+                    $where['t.TRCRAMT'] = 0;
+                } elseif ($payment == 2) {
+                    $where['t.TRCRAMT > '] = 0;
                 } elseif ($payment == 3) {
-                    $this->db->where('t.CANBL IS NOT NULL', NULL, FALSE);
+                    $where['t.CANBL'] = 'T';
                 }
             }
+            $this->db->where($where);
         }
     }
 
@@ -372,11 +375,27 @@ class SalesModel extends CI_Model
     public function salesDelete($id)
     {
         branchWhere("trbil", "branchcode");
-        $this->db->where('TRBLNO', $id)->set(array(
-            'fin_year' => fin_year()
+        $this->db->where(array(
+            'fin_year' => fin_year(),
+            'TRBLNO' => $id
         ))->delete("trbil");
         $code = 1;
         $response = "Sales Bill deleted successfully.";
+        echo json_encode(array("code" => $code, "response" => $response));
+        exit();
+    }
+
+    public function salesCancel($id)
+    {
+        branchWhere("trbil", "branchcode");
+        $this->db->where(array(
+            'fin_year' => fin_year(),
+            'TRBLNO' => $id
+        ))->set(array(
+            'CANBL' => 'T'
+        ))->update("trbil");
+        $code = 1;
+        $response = "Sales Bill cancelled successfully.";
         echo json_encode(array("code" => $code, "response" => $response));
         exit();
     }

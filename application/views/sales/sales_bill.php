@@ -114,6 +114,24 @@
         </div>
     </div>
 </div>
+<div class="modal fade modal-3d-flip-horizontal" id="cancelSalesModal" aria-hidden="true"
+     aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Are you sure you want to cancel this Sales Bill ? </h4>
+                <input type="hidden" name="id" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger cancelSales">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php $this->load->view('include/template/common_footer'); ?>
 
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
@@ -147,6 +165,20 @@
                         $("#deleteSalesModal").modal("hide");
                     });
                 $(".deleteSales").prop("disabled", false);
+            });
+            $(".cancelSales").on("click", function () {
+                $(".cancelSales").prop("disabled", true);
+                var id = -1;
+                id = $("#cancelSalesModal").find("[name=id]").val();
+                $.post("<?php echo site_url('sales/cancel/'); ?>" + id, {})
+                    .done(function (result) {
+                        result = JSON.parse(result);
+                        if (result.code == 1) {
+                            table.ajax.reload();
+                        }
+                        $("#cancelSalesModal").modal("hide");
+                    });
+                $(".cancelSales").prop("disabled", false);
             });
         });
     }(jQuery));
@@ -257,7 +289,14 @@
                 var deleteStr = "<button class='btn btn-danger' onclick='return DeleteTheRow(" + aData.billno + ");'>"
                     + "<i class='fa fa-trash-o'></i>"
                     + "</button>";
-                $('td:eq(10)', nRow).html(printStr + editStr + deleteStr);
+                var cancelStr = "<button class='btn btn-danger' onclick='return CancelTheRow(" + aData.billno + ");'>"
+                    + "<i class='fa fa-times'></i>"
+                    + "</button>";
+                if (aData.CANBL == 'T') {
+                    $('td:eq(10)', nRow).html(printStr);
+                } else {
+                    $('td:eq(10)', nRow).html(printStr + editStr + deleteStr + cancelStr);
+                }
             }
         });
     }
@@ -265,6 +304,11 @@
     function DeleteTheRow(id) {
         $("#deleteSalesModal").modal("show");
         $("#deleteSalesModal").find("[name=id]").attr("value", id);
+    }
+
+    function CancelTheRow(id) {
+        $("#cancelSalesModal").modal("show");
+        $("#cancelSalesModal").find("[name=id]").attr("value", id);
     }
 
     setTable();
