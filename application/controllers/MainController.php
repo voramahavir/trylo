@@ -71,7 +71,7 @@ class MainController extends CI_Controller
         }
     }
 
-    public function users($view)
+    public function users($view, $id = '')
     {
         $data['page_title'] = 'User List';
         switch ($view) {
@@ -93,6 +93,27 @@ class MainController extends CI_Controller
             case 'create':
                 $this->load->model('MyModel');
                 $this->MyModel->addUser();
+                break;
+            case 'edit':
+                $data['page_title'] = 'Edit User';
+                $data['id'] = $id;
+                $this->load->view('userbranch/user_edit', $data);
+                break;
+            case 'getUser':
+                $this->load->model('MyModel');
+                $this->MyModel->getUser($id);
+                break;
+            case 'update':
+                $this->load->model('MyModel');
+                $this->MyModel->updateUser();
+                break;
+            case 'delete':
+                $this->load->model('MyModel');
+                $this->MyModel->deleteUser($id);
+                break;
+            case 'recover':
+                $this->load->model('MyModel');
+                $this->MyModel->recoverUser($id);
                 break;
             default:
                 break;

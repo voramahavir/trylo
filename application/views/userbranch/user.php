@@ -43,57 +43,64 @@
         </div>
     </div>
 </div>
-<div class="modal" id="modal-default">
-    <div class="modal-dialog my-modal-lg">
+<!-- DeleteModal -->
+<div class="modal fade modal-3d-flip-horizontal" id="deleteUserModal" aria-hidden="true"
+     aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Add New User</h4>
-            </div>
-            <div class="modal-body">
-                <form id="addUser">
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            <input type="text" name="user_name" placeholder="User Name" class="form-control" value="">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            <input type="password" name="password" placeholder="Password" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            <select name="branch_id" id="branch_id" class="form-control">
-                                <option value="">Select Branch</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-12" id="roles_div" name="roles_div">
-                        </div>
-                    </div>
-                </form>
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Are you sure you want to delete the User ? </h4>
+                <input type="hidden" name="id" value="">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary save">Save</button>
+                <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger deleteUser">Delete</button>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
+<!-- End DeleteModal -->
+<!-- RecoverModal -->
+<div class="modal fade modal-3d-flip-horizontal" id="recoverUserModal" aria-hidden="true"
+     aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Are you sure you want to recover the User ?</h4>
+                <input type="hidden" name="id" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default margin-0" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success recoverUser">Recover</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End RecoverModal -->
 <?php $this->load->view('include/template/common_footer'); ?>
 <!-- Bootstrap-notify -->
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 <script type="text/javascript">
     var table = "";
+
+    function DeleteTheRow(id) {
+        $("#deleteUserModal").modal("show");
+        $("#deleteUserModal").find("[name=id]").attr("value", id);
+    }
+
+    function RecoverTheRow(id) {
+        $("#recoverUserModal").modal("show");
+        $("#recoverUserModal").find("[name=id]").attr("value", id);
+    }
+
     $(document).ready(function () {
-        getForms();
-        getBranches();
         table = $('#table_branch').DataTable({
             "paging": true,
             "lengthChange": true,
@@ -102,14 +109,15 @@
             "responsive": true,
             "autoWidth": false,
             "pageLength": 10,
+            "order": [1, "asc"],
             "ajax": {
                 "url": "<?php echo site_url('users/get'); ?>",
                 "type": "POST"
             },
             "columns": [
                 {
-                    "data": "user_id",
-                    "bSortable": true
+                    "data": null,
+                    "bSortable": false
                 },
                 {
                     "data": "user_name",
@@ -122,20 +130,26 @@
             ],
             "rowCallback": function (nRow, aData, iDisplayindex) {
                 userid = <?php echo getSessionData('user_id'); ?>;
+                var pageInfo = table.page.info();
+                var page = pageInfo.page;
+                var length = pageInfo.length;
+                var index = (page * length + (iDisplayindex + 1));
+                $('td:eq(0)', nRow).html(index).addClass('col-md-1');
+
                 if (aData.is_active == 1) {
                     if (aData.user_id == userid) {
                         $('td:eq(2)', nRow).html(""
-                            + "<button class='btn btn-info' onclick='return EditTheRow(" + iDisplayindex + "," + aData.user_id + ");'>"
+                            + "<a class='btn btn-info' href='" + site_url + 'users/edit/' + aData.user_id + "'>"
                             + "<i class='fa fa-edit'></i>"
-                            + "</button>"
+                            + "</a>"
                             + "");
                     }
                     else {
                         $('td:eq(2)', nRow).html(""
-                            + "<button class='btn btn-info' onclick='return EditTheRow(" + iDisplayindex + "," + aData.user_id + ");'>"
+                            + "<a class='btn btn-info' href='" + site_url + 'users/edit/' + aData.user_id + "'>"
                             + "<i class='fa fa-edit'></i>"
-                            + "</button>"
-                            + "<button class='btn btn-danger' onclick='return DeleteTheRow(" + iDisplayindex + "," + aData.user_id + ");'>"
+                            + "</a>"
+                            + "<button class='btn btn-danger' onclick='return DeleteTheRow(" + aData.user_id + ");'>"
                             + "<i class='fa fa-trash-o'></i>"
                             + "</button>"
                             + "");
@@ -144,90 +158,46 @@
                 } else {
                     $(nRow).addClass('danger');
                     $('td:eq(2)', nRow).html(""
-                        + "<button class='btn btn-info' disabled onclick='return EditTheRow(" + iDisplayindex + "," + aData.user_id + ");'>"
+                        + "<button class='btn btn-info' disabled>"
                         + "<i class='fa fa-edit'></i>"
                         + "</button>"
-                        + "<button class='btn btn-success' onclick='return RecoverTheRow(" + iDisplayindex + "," + aData.user_id + ");'>"
+                        + "<button class='btn btn-success' onclick='return RecoverTheRow(" + aData.user_id + ");'>"
                         + "<i class='fa fa-check'></i>"
                         + "</button>"
                         + "");
                 }
             },
         });
-        $(".save").click(function () {
-            if ($("#branch_id").val() == "") {
-                bootbox.alert("Please Select Branch name");
-            }
-            else {
-                addUser();
-            }
-        });
-    });
-
-    function getForms() {
-        $.ajax({
-            url: "<?php echo site_url('users/forms'); ?>",
-            dataType: 'json',
-            type: "GET",
-            success: function (response) {
-                if (response.length > 0) {
-                    var mainDiv = document.getElementById('roles_div');
-                    var html = "";
-                    /*for (var i = 0; i < response.length; i++) {
-                        var div = document.createElement('div');
-                        div.className = "col-md-3";
-                        var checkbox = document.createElement('input');
-                        checkbox.type = "checkbox";
-                        checkbox.name = "roles[]";
-                        checkbox.value = response[i].form_id;
-                        checkbox.id = "roles" + response[i].form_id;
-                        div.appendChild(checkbox);
-                        var newlabel = document.createElement("Label");
-                        newlabel.setAttribute("for",checkbox.id);
-                        newlabel.innerHTML = response[i].form_name;
-                        div.appendChild(newlabel);
-                        mainDiv.appendChild(div);
-                    }*/
-                }
-            }
-        });
-    }
-
-    function getBranches() {
-        $.ajax({
-            url: site_url + 'branch/getAll',
-            dataType: 'JSON',
-            success: function (response) {
-                if (response.code) {
-                    var html = '<option value="">Select Branch</option>';
-                    var data = response.data;
-                    $.each(data, function (index, value) {
-                        html += '<option value="' + value.branch_id + '">' + value.branch_name + '</option>';
-                    });
-                    $("#branch_id").html(html);
-                }
-            }
-        });
-    }
-
-    function addUser() {
-        var data = $("#addUser").serializeObject();
-        $.ajax({
-            url: site_url + 'users/create',
-            dataType: 'JSON',
-            type: 'POST',
-            data: data,
-            success: function (response) {
-                if (response.code == 1) {
-                    bootbox.alert(response.msg, function () {
-                        $('#modal-default').modal('hide');
+        $(".deleteUser").on("click", function () {
+            $(".deleteUser").prop("disabled", true);
+            var id = -1;
+            id = $("#deleteUserModal").find("[name=id]").val();
+            $.post("<?php echo site_url('users/delete/'); ?>" + id, {})
+                .done(function (result) {
+                    result = JSON.parse(result);
+                    if (result.code == 1) {
                         table.ajax.reload();
-                    });
-                } else {
-                    bootbox.alert(response.msg);
-                }
-            }
+                    }
+                    $("#deleteUserModal").modal("hide");
+                });
+            $(".deleteUser").prop("disabled", false);
         });
-    }
+
+        $(".recoverUser").on("click", function () {
+            $(".recoverUser").prop("disabled", true);
+            var id = -1;
+            id = $("#recoverUserModal").find("[name=id]").val();
+            $.post("<?php echo site_url('users/recover/'); ?>" + id, {})
+                .done(function (result) {
+                    result = JSON.parse(result);
+                    if (result.code == 1) {
+                        table.ajax.reload();
+                    }
+                    $("#recoverUserModal").modal("hide");
+                });
+            $(".recoverUser").prop("disabled", false);
+        });
+
+    });
 </script>
 <?php $this->load->view('include/page_footer.php'); ?>
