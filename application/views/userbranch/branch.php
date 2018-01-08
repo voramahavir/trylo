@@ -119,7 +119,7 @@
                 },
             ],
             "rowCallback": function (nRow, aData, iDisplayindex) {
-                branchid = <?php echo getSessionData('branch_id'); ?>;
+                branchid = <?php echo getSessionData('branch_id') ? getSessionData('branch_id') : 0; ?>;
                 if (aData.is_active == 1) {
                     if (aData.branch_id == branchid) {
                         $('td:eq(2)', nRow).html(""
