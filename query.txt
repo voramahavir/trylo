@@ -208,3 +208,8 @@ DROP TRIGGER IF EXISTS `DeleteBill`;CREATE TRIGGER `DeleteBill` AFTER DELETE ON 
 Bhavesh : 06-01-2018 Trigger for cancel sales bill
 
 CREATE TRIGGER `CancelBill` AFTER UPDATE ON `trbil` FOR EACH ROW UPDATE item_cur_stock ics JOIN trbil1 t1 ON t1.TRITCD = ics.itemcode AND t1.TRCLR = ics.color AND t1.TRSZ = ics.size AND t1.branchcode1 = ics.branchcode JOIN trbil t ON t.TRBLNO = t1.TRBLNO1 AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1 SET cl_stock = cl_stock + TRQTY WHERE t.TRBLNO=OLD.TRBLNO AND t.branchcode=OLD.branchcode AND NEW.CANBL='T'
+
+Bhavesh : 08-01-2018
+
+ALTER TABLE `forms` ADD `view_mode` INT NULL DEFAULT NULL AFTER `role_id`;
+ALTER TABLE `main_forms` ADD `view_mode` INT NOT NULL COMMENT '1. Reports 2. Transaction' AFTER `icon`;

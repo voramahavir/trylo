@@ -22,4 +22,10 @@ class LoginController extends CI_Controller {
 	public function logout() {
 		logout();
 	}
+
+    public function setViewMode()
+    {
+        $this->load->model('LoginModel');
+        $this->LoginModel->setViewMode();
+    }
 }

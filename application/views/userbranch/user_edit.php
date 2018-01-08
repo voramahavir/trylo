@@ -53,7 +53,7 @@
                                             <th class="text-center">
                                                 <input type="checkbox" id="selectAll">
                                             </th>
-                                            <th class="text-center">
+                                            <th>
                                                 Form Name
                                             </th>
                                         </tr>
@@ -147,7 +147,7 @@
                                 html += "<input type='checkbox' value='" + value.form_id + "' name='roles[]' class='chkForm'>";
                             }
                             html += "</td>";
-                            html += "<td class='text-center'>";
+                            html += "<td>";
                             html += value.form_name;
                             html += "</td>";
                             html += "</tr>";

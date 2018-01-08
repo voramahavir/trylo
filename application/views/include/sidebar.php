@@ -21,43 +21,46 @@
                 foreach ($forms_data as $main_form => $form_data) {
                     $html = "";
                     if (!isset($form_data['forms'][0])) {
-                        $_form_data = $form_data['forms'];
-                        $cls = isset($page_title) && in_array($page_title, explode(',', $_form_data['active_tabs'])) ? 'active' : '';
-                        $redirect_url = site_url($_form_data['redirect_url']);
-                        $icon = $_form_data['icon'];
-                        $form_name = $_form_data['form_name'];
-                        $html .= "<li class='{$cls}'>";
-                        $html .= "<a href='{$redirect_url}'>";
-                        $html .= "<i class='{$icon}'></i> <span>{$form_name}</span>";
-                        $html .= "</a>";
-                        $html .= "</li>";
-                    } else {
-                        $_form_data = $form_data['forms'];
-                        $main_active_tabs = $form_data['main_active_tabs'];
-                        $main_cls = isset($page_title) && in_array($page_title, explode(',', $main_active_tabs)) ? 'active' : '';
-                        $main_icon = $form_data['main_icon'];
-//                        $icon = $_form_data['icon'];
-                        $html .= "<li class='treeview {$main_cls}'>";
-                        $html .= "<a href='#'>";
-                        $html .= "<i class='{$main_icon}'></i> <span>{$main_form}</span>";
-                        $html .= "<span class='pull-right-container'>";
-                        $html .= "<i class='fa fa-angle-left pull-right'></i>";
-                        $html .= "</span>";
-                        $html .= "</a>";
-                        $html .= "<ul class='treeview-menu'>";
-                        foreach ($_form_data as $data) {
-                            $cls = isset($page_title) && in_array($page_title, explode(',', $data['active_tabs'])) ? 'active' : '';
-                            $redirect_url = site_url($data['redirect_url']);
-                            $icon = $data['icon'];
-                            $form_name = $data['form_name'];
+                        if ($form_data['view_mode'] == getSessionData('view_mode')) {
+                            $_form_data = $form_data['forms'];
+                            $cls = isset($page_title) && in_array($page_title, explode(',', $_form_data['active_tabs'])) ? 'active' : '';
+                            $redirect_url = site_url($_form_data['redirect_url']);
+                            $icon = $_form_data['icon'];
+                            $form_name = $_form_data['form_name'];
                             $html .= "<li class='{$cls}'>";
                             $html .= "<a href='{$redirect_url}'>";
-                            $html .= "<i class='{$icon}'></i> {$form_name}";
+                            $html .= "<i class='{$icon}'></i> <span>{$form_name}</span>";
                             $html .= "</a>";
                             $html .= "</li>";
                         }
-                        $html .= "</ul>";
-                        $html .= "</li>";
+                    } else {
+                        if ($form_data['view_mode'] == getSessionData('view_mode')) {
+                            $_form_data = $form_data['forms'];
+                            $main_active_tabs = $form_data['main_active_tabs'];
+                            $main_cls = isset($page_title) && in_array($page_title, explode(',', $main_active_tabs)) ? 'active' : '';
+                            $main_icon = $form_data['main_icon'];//                        $icon = $_form_data['icon'];
+                            $html .= "<li class='treeview {$main_cls}'>";
+                            $html .= "<a href='#'>";
+                            $html .= "<i class='{$main_icon}'></i> <span>{$main_form}</span>";
+                            $html .= "<span class='pull-right-container'>";
+                            $html .= "<i class='fa fa-angle-left pull-right'></i>";
+                            $html .= "</span>";
+                            $html .= "</a>";
+                            $html .= "<ul class='treeview-menu'>";
+                            foreach ($_form_data as $data) {
+                                $cls = isset($page_title) && in_array($page_title, explode(',', $data['active_tabs'])) ? 'active' : '';
+                                $redirect_url = site_url($data['redirect_url']);
+                                $icon = $data['icon'];
+                                $form_name = $data['form_name'];
+                                $html .= "<li class='{$cls}'>";
+                                $html .= "<a href='{$redirect_url}'>";
+                                $html .= "<i class='{$icon}'></i> {$form_name}";
+                                $html .= "</a>";
+                                $html .= "</li>";
+                            }
+                            $html .= "</ul>";
+                            $html .= "</li>";
+                        }
 //                        print_r($_form_data);
                     }
                     echo $html;

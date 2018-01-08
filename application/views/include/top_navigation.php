@@ -15,10 +15,19 @@
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
-            <?php if (getSessionData('role_id') == 1) { ?>
-                <div class="col-md-2 col-md-offset-9" style="padding-top: 8px;">
+            <?php if (getSessionData('role_id') == 1 && getSessionData('view_mode') == 2) { ?>
+                <div class="col-md-2" style="padding-top: 8px;">
                     <select name="" id="sessBranch" class="form-control">
                         <option value="">Select Branch</option>
+                    </select>
+                </div>
+            <?php } ?>
+
+            <?php if (getSessionData('role_id') == 1 || getSessionData('role_id') == 2) { ?>
+                <div class="col-md-2" style="padding-top: 8px;">
+                    <select name="" id="viewMode" class="form-control">
+                        <option value="1">Reports</option>
+                        <option value="2">Transactions</option>
                     </select>
                 </div>
             <?php } ?>

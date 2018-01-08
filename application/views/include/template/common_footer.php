@@ -1,4 +1,4 @@
-<?php if (!getSessionData('branch_id')) { ?>
+<?php if (!getSessionData('branch_id') && getSessionData('view_mode') == 2) { ?>
     <div class="modal fade" id="branch-modal">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
@@ -100,6 +100,25 @@ $this->load->view('include/scripts.php'); ?>
                 else {
                     bootbox.alert("Please select Branch");
                     sessBranch.val("<?php echo getSessionData('branch_id'); ?>");
+                }
+            });
+        }
+        var viewMode = $('#viewMode');
+        if (viewMode.length) {
+            viewMode.val("<?php echo getSessionData('view_mode'); ?>");
+            viewMode.on('change', function () {
+                var view_mode = $(this).val();
+                if (view_mode) {
+                    $.ajax({
+                        url: site_url + 'LoginController/setViewMode',
+                        dataType: 'JSON',
+                        type: 'POST',
+                        data: {view_mode: view_mode},
+                        success: function (result) {
+                            var redirect_url = result.redirect_url;
+                            window.location.href = site_url + redirect_url;
+                        }
+                    });
                 }
             });
         }

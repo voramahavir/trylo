@@ -18,7 +18,8 @@ if (!function_exists('access')) {
     function access()
     {
         $ci = &get_instance();
-        return (null !== $ci->session->userdata('access')) && is_array($ci->session->userdata('access')) && count($ci->session->userdata('access')) > 0;
+        $access = $ci->session->userdata('access');
+        return (null !== $access) && is_array($access) && isset($access['view_mode']) && count($access) > 0;
     }
 }
 
@@ -141,7 +142,9 @@ if (!function_exists('getSessionData')) {
 if (!function_exists('branchWhere')) {
     function branchWhere($tableAlias = null, $branchColName = "branch_code")
     {
-        $ci = &get_instance();
-        $ci->db->where(($tableAlias) ? $tableAlias . "." . $branchColName : $branchColName, getSessionData("branch_code"));
+        if (getSessionData("branch_code")) {
+            $ci = &get_instance();
+            $ci->db->where(($tableAlias) ? $tableAlias . "." . $branchColName : $branchColName, getSessionData("branch_code"));
+        }
     }
 }

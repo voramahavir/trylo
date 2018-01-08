@@ -34,6 +34,8 @@ class LoginModel extends CI_Model
                           f.icon,
                           \'","redirect_url":\', \'"\',
                           f.redirect_url,
+                          \'","view_mode":\', \'"\',
+                          ifnull(mf.view_mode,f.view_mode),
                           \'","active_tabs":\', \'"\',
                           f.active_tab, \'"}\')), \']\') AS form_data');
             $this->db->join("branch", "branch.branch_id = users.branch_id", "LEFT");
@@ -61,6 +63,7 @@ class LoginModel extends CI_Model
                             $this->form_data[$array->main_form_name] = array(
                                 'main_active_tabs' => $array->main_active_tabs,
                                 'main_icon' => $array->main_icon,
+                                'view_mode' => $array->view_mode,
                                 'forms' => array(
                                     array(
                                         'form_name' => $array->form_name,
@@ -75,8 +78,8 @@ class LoginModel extends CI_Model
                         array_push($this->form_data, array(
                             'main_active_tabs' => $array->main_active_tabs,
                             'main_icon' => $array->main_icon,
+                            'view_mode' => $array->view_mode,
                             'forms' => array(
-
                                 'form_name' => $array->form_name,
                                 'active_tabs' => $array->active_tabs,
                                 'icon' => $array->icon,
@@ -86,12 +89,33 @@ class LoginModel extends CI_Model
                     }
                 }, $_form_data);
                 $_SESSION['access']['form_data'] = $this->form_data;
-                $output = array('code' => 1, 'message' => "Login Successfully");
+                $output = array('code' => 1, 'message' => "Login Successfully", 'data' => getSessionData('role_id'));
             } else {
                 $output = array('code' => 0, 'message' => "Invalid Credentials");
             }
         }
         echo json_encode($output);
+        exit;
+    }
+
+    public function setViewMode()
+    {
+        $viewMode = $_POST['view_mode'];
+        $form_data = getSessionData('form_data');
+        $redirect_url = "";
+        foreach ($form_data as $data) {
+            if ($data['view_mode'] == $viewMode) {
+                if (isset($data['forms'][0])) {
+                    $redirect_url = $data['forms'][0]['redirect_url'];
+                } else {
+                    $redirect_url = $data['forms']['redirect_url'];
+                }
+                break;
+            }
+        }
+        $_SESSION['access']['view_mode'] = $viewMode;
+        $_SESSION['access']['redirect_url'] = $redirect_url;
+        echo json_encode(array('redirect_url' => $redirect_url));
         exit;
     }
 }

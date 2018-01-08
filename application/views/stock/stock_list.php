@@ -23,20 +23,22 @@
                 <a href="<?php echo site_url('stock/add'); ?>" class="btn btn-info">
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </a>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-hover dataTable" id="table_stock">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Date</th>
-                                <th>Total Qty.</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-hover dataTable" id="table_stock">
+                                <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Date</th>
+                                    <th>Total Qty.</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

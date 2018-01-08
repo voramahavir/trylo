@@ -133,7 +133,8 @@ class MyModel extends CI_Model
     public function getForms()
     {
         $role_id = getSessionData('role_id');
-        $where = "FIND_IN_SET('" . $role_id . "', role_id)";
+//        $where = "FIND_IN_SET('" . $role_id . "', role_id)";
+        $where = array('view_mode != ' => 1);
         $this->db->where($where);
         $data = $this->db->get('forms')->result();
         echo json_encode($data);

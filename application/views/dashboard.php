@@ -3,12 +3,6 @@
 /*echo "<pre>";
 
 print_r(getSessionData('form_data'));
-print_r(getSessionData('form_data')[0]['forms']);
-echo "is_array".is_array(getSessionData('form_data')[0]['forms']);
-echo "isset".isset(getSessionData('form_data')[0]['forms'][0]);
-print_r(getSessionData('form_data')['Master']['forms']);
-echo is_array(getSessionData('form_data')['Master']['forms']);
-echo isset(getSessionData('form_data')['Master']['forms'][0]);
 die;*/
 ?>
     <!-- Small boxes (Stat box) -->
