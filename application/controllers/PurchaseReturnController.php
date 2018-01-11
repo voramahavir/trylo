@@ -16,12 +16,14 @@ class PurchaseReturnController extends CI_Controller
     public function index()
     {
         $data['page_title'] = 'Purchase Return List';
+        checkRight($data['page_title']);
         $this->load->view('purchasereturn/list', $data);
     }
 
     public function add()
     {
         $data['page_title'] = 'Purchase Return Add';
+        checkRight($data['page_title']);
         $currentBill = $this->PurchaseReturnModel->getCurrentBillNo();
         $data['currentBill'] = $currentBill;
         $this->load->view('purchasereturn/add', $data);

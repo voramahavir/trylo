@@ -16,12 +16,17 @@ class SalesController extends CI_Controller
 
     public function index()
     {
-        $this->load->view('sales');
+        $data['page_title'] = 'Sales Add';
+        checkRight($data['page_title']);
+        $currentBill = $this->SalesModel->getCurrentBillNo();
+        $data['currentBill'] = $currentBill;
+        $this->load->view('sales/sales_add', $data);
     }
 
     public function add()
     {
         $data['page_title'] = 'Sales Add';
+        checkRight($data['page_title']);
         $currentBill = $this->SalesModel->getCurrentBillNo();
         $data['currentBill'] = $currentBill;
         $this->load->view('sales/sales_add', $data);
@@ -36,6 +41,7 @@ class SalesController extends CI_Controller
     public function salesBill()
     {
         $data['page_title'] = 'Sales Bill';
+        checkRight($data['page_title']);
         $this->load->view('sales/sales_bill', $data);
     }
 
@@ -65,6 +71,7 @@ class SalesController extends CI_Controller
     public function edit($billNo)
     {
         $data['page_title'] = "Edit Sales";
+        checkRight($data['page_title']);
         $data['billNo'] = $billNo;
         $this->load->view("sales/sales_edit", $data);
     }

@@ -17,12 +17,14 @@ class PurchaseController extends CI_Controller
     public function index()
     {
         $data['page_title'] = 'Purchase Intransit List';
+        checkRight($data['page_title']);
         $this->load->view('purchase/list', $data);
     }
 
     public function verifyList()
     {
         $data['page_title'] = 'Verify Purchase List';
+        checkRight($data['page_title']);
         $this->load->view('purchase/verifiedlist', $data);
     }
 
@@ -35,6 +37,7 @@ class PurchaseController extends CI_Controller
     {
         $data['page_title'] = 'Verify Purchase';
         $data['billNo'] = $billNo;
+        checkRight($data['page_title']);
         $this->load->view('purchase/purchase_verify', $data);
     }
 

@@ -17,12 +17,14 @@ class LuckydrawFeedbackController extends CI_Controller
     public function index()
     {
         $data['page_title'] = 'Lucky Draw List';
+        checkRight($data['page_title']);
         $this->load->view('luckydraw/list', $data);
     }
 
     public function luckyDrawList()
     {
         $data['page_title'] = 'Lucky Draw List';
+        checkRight($data['page_title']);
         $this->load->view('luckydraw/list', $data);
     }
 
@@ -34,6 +36,7 @@ class LuckydrawFeedbackController extends CI_Controller
     public function add()
     {
         $data['page_title'] = 'Add Lucky Draw';
+        checkRight($data['page_title']);
         $data['currentBill'] = $this->LuckydrawFeedbackModel->getCurrentBillNo();
         $this->load->view('luckydraw/add', $data);
     }
@@ -47,6 +50,7 @@ class LuckydrawFeedbackController extends CI_Controller
     {
         $luckyDrawData = $this->LuckydrawFeedbackModel->getLuckyDraw($id);
         $data['page_title'] = 'Edit Lucky Draw';
+        checkRight($data['page_title']);
         $data['luckyDrawData'] = $luckyDrawData;
         $this->load->view('luckydraw/edit', $data);
     }

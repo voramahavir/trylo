@@ -50,7 +50,9 @@ class LoginModel extends CI_Model
                 $this->session->set_userdata(array('access' => $res));
                 $_form_data = json_decode(getSessionData('form_data'));
                 $this->form_data = array();
+                $this->active_tabs = array();
                 array_map(function ($array) {
+                    $this->active_tabs[$array->view_mode][] = $array->active_tabs;
                     if ($array->main_form_name) {
                         if (isset($this->form_data[$array->main_form_name])) {
                             array_push($this->form_data[$array->main_form_name]['forms'], array(
@@ -89,6 +91,8 @@ class LoginModel extends CI_Model
                     }
                 }, $_form_data);
                 $_SESSION['access']['form_data'] = $this->form_data;
+//                $this->active_tabs = implode(',', $this->active_tabs);
+                $_SESSION['access']['active_tabs'] = $this->active_tabs;
                 $output = array('code' => 1, 'message' => "Login Successfully", 'data' => getSessionData('role_id'));
             } else {
                 $output = array('code' => 0, 'message' => "Invalid Credentials");

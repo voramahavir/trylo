@@ -15,6 +15,7 @@ class MainController extends CI_Controller
     public function index()
     {
         $data['page_title'] = 'Dashboard';
+        checkRight($data['page_title']);
         $this->load->view('dashboard', $data);
     }
 
@@ -24,14 +25,17 @@ class MainController extends CI_Controller
         $data['id'] = $id;
         switch ($view) {
             case 'list':
+                checkRight($data['page_title']);
                 $this->load->view('userbranch/branch', $data);
                 break;
             case 'add':
                 $data['page_title'] = 'Add Branch';
+                checkRight($data['page_title']);
                 $this->load->view('userbranch/branchadd', $data);
                 break;
             case 'edit':
                 $data['page_title'] = 'Edit Branch';
+                checkRight($data['page_title']);
                 $this->load->view('userbranch/branchedit', $data);
                 break;
             case 'get':
@@ -76,6 +80,7 @@ class MainController extends CI_Controller
         $data['page_title'] = 'User List';
         switch ($view) {
             case 'list':
+                checkRight($data['page_title']);
                 $this->load->view('userbranch/user', $data);
                 break;
             case 'get':
@@ -88,6 +93,7 @@ class MainController extends CI_Controller
                 break;
             case 'add':
                 $data['page_title'] = 'Add User';
+                checkRight($data['page_title']);
                 $this->load->view('userbranch/user_add', $data);
                 break;
             case 'create':
@@ -96,6 +102,7 @@ class MainController extends CI_Controller
                 break;
             case 'edit':
                 $data['page_title'] = 'Edit User';
+                checkRight($data['page_title']);
                 $data['id'] = $id;
                 $this->load->view('userbranch/user_edit', $data);
                 break;

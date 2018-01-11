@@ -17,6 +17,7 @@ class StockController extends CI_Controller
     public function index()
     {
         $data['page_title'] = 'Stock List';
+        checkRight($data['page_title']);
         $this->load->view('stock/stock_list', $data);
     }
 
@@ -28,6 +29,7 @@ class StockController extends CI_Controller
     public function add()
     {
         $data['page_title'] = 'Stock Add';
+        checkRight($data['page_title']);
         $currentBill = $this->StockModel->getCurrentBillNo();
         $data['currentBill'] = $currentBill;
         $this->load->view('stock/stock_add', $data);

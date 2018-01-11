@@ -16,12 +16,14 @@ class DenominationController extends CI_Controller
     public function index()
     {
         $data['page_title'] = 'Denomination List';
+        checkRight($data['page_title']);
         $this->load->view("denomination/list", $data);
     }
 
     public function add()
     {
         $data['page_title'] = 'Add Denomination';
+        checkRight($data['page_title']);
         $data['currentBill'] = $this->DenominationModel->getCurrentBillNo();
         $this->load->view("denomination/add", $data);
     }
@@ -40,6 +42,7 @@ class DenominationController extends CI_Controller
     {
         $denominationData = $this->DenominationModel->getDenomination($id);
         $data['page_title'] = 'Edit Denomination';
+        checkRight($data['page_title']);
         $data['denominationData'] = $denominationData;
         $this->load->view('denomination/edit', $data);
     }

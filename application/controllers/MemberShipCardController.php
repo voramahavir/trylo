@@ -14,13 +14,15 @@ class MemberShipCardController extends CI_Controller
 
     public function index()
     {
-        $data['page_title'] = 'Dashboard';
-        $this->load->view('dashboard', $data);
+        $data['page_title'] = 'Membership Card Registration';
+        checkRight($data['page_title']);
+        $this->load->view('membershipcard/list', $data);
     }
 
     public function cardList()
     {
         $data['page_title'] = 'Membership Card Registration';
+        checkRight($data['page_title']);
         $this->load->view('membershipcard/list', $data);
     }
 
@@ -45,6 +47,7 @@ class MemberShipCardController extends CI_Controller
     public function add()
     {
         $data['page_title'] = 'Add Membership Card';
+        checkRight($data['page_title']);
         $this->load->view('membershipcard/add', $data);
     }
 

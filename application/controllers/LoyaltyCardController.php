@@ -14,13 +14,15 @@ class LoyaltyCardController extends CI_Controller
 
     public function index()
     {
-        $data['page_title'] = 'Dashboard';
-        $this->load->view('dashboard', $data);
+        $data['page_title'] = 'Loyalty Card Issue Entry';
+        checkRight($data['page_title']);
+        $this->load->view('loyaltycard/list', $data);
     }
 
     public function cardList()
     {
         $data['page_title'] = 'Loyalty Card Issue Entry';
+        checkRight($data['page_title']);
         $this->load->view('loyaltycard/list', $data);
     }
 
@@ -45,6 +47,7 @@ class LoyaltyCardController extends CI_Controller
     public function add()
     {
         $data['page_title'] = 'Add Loyalty Card';
+        checkRight($data['page_title']);
         $this->load->view('loyaltycard/add', $data);
     }
 
@@ -64,12 +67,14 @@ class LoyaltyCardController extends CI_Controller
     public function schemeList()
     {
         $data['page_title'] = 'Loyalty Card Setup';
+        checkRight($data['page_title']);
         $this->load->view('loyaltycard/scheme_list', $data);
     }
 
     public function schemeAdd()
     {
         $data['page_title'] = 'Add Loyalty Card Scheme';
+        checkRight($data['page_title']);
         $this->load->view('loyaltycard/scheme_add', $data);
     }
 

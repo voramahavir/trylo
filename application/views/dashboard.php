@@ -3,6 +3,7 @@
 /*echo "<pre>";
 
 print_r(getSessionData('form_data'));
+print_r(getSessionData('active_tabs'));
 die;*/
 ?>
     <!-- Small boxes (Stat box) -->

@@ -17,6 +17,7 @@ class PurchaseOrderController extends CI_Controller
     public function index()
     {
         $data['page_title'] = 'Purchase Order List';
+        checkRight($data['page_title']);
         $this->load->view('purchaseorder/list', $data);
     }
 
@@ -38,6 +39,7 @@ class PurchaseOrderController extends CI_Controller
     public function add()
     {
         $data['page_title'] = 'Purchase Order Add';
+        checkRight($data['page_title']);
         $currentBill = $this->PurchaseOrderModel->getCurrentBillNo();
         $data['currentBill'] = $currentBill;
         $this->load->view('purchaseorder/add', $data);

@@ -17,12 +17,14 @@ class CustomerFeedbackController extends CI_Controller
     public function index()
     {
         $data['page_title'] = 'Customer Experience List';
+        checkRight($data['page_title']);
         $this->load->view('custfeedback/list', $data);
     }
 
     public function custFeedbackList()
     {
         $data['page_title'] = 'Customer Experience List';
+        checkRight($data['page_title']);
         $this->load->view('custfeedback/list', $data);
     }
 
@@ -34,6 +36,7 @@ class CustomerFeedbackController extends CI_Controller
     public function add()
     {
         $data['page_title'] = 'Add Customer Experience';
+        checkRight($data['page_title']);
         $data['currentBill'] = $this->CustomerFeedbackModel->getCurrentBillNo();
         $this->load->view('custfeedback/add', $data);
     }
@@ -47,6 +50,7 @@ class CustomerFeedbackController extends CI_Controller
     {
         $custFeedbackData = $this->CustomerFeedbackModel->getCustFeedback($id);
         $data['page_title'] = 'Edit Customer Experience';
+        checkRight($data['page_title']);
         $data['custFeedbackData'] = $custFeedbackData;
         $this->load->view('custfeedback/edit', $data);
     }

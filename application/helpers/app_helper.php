@@ -148,3 +148,14 @@ if (!function_exists('branchWhere')) {
         }
     }
 }
+if (!function_exists('checkRight')) {
+    function checkRight($pageTitle)
+    {
+        $active_tabs = getSessionData("active_tabs");
+        $view_mode = getSessionData('view_mode');
+        $rights = implode(',', $active_tabs[$view_mode]);
+        if (!in_array($pageTitle, explode(',', $rights))) {
+            redirect(getSessionData("redirect_url"));
+        }
+    }
+}
