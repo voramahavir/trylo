@@ -153,7 +153,7 @@ class MemberShipCardModel extends CI_Model
             $where = array(
                 'CARDNO' => $cardNo
             );
-            branchWhere();
+            branchWhere('maincrd');
             $this->db->select($select);
             $this->db->where($where);
             $this->db->group_by('CARDNO');

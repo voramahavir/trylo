@@ -742,7 +742,7 @@
 
             $(document).on('click', '.remove', function () {
                 $(this).parent().parent().remove();
-                index = barCodeArray.indexOf(items.BARCODF);
+                index = barCodeArray.indexOf((items.BARCODF).replace("/", "-"));
                 if (index > -1) {
                     barCodeArray.splice(index, 1);
                 }
@@ -790,14 +790,14 @@
 
             function addNewItem() {
                 var barCode = $('.barCode').val().trim();
-                if (barCode && items && barCodeArray.indexOf(items.BARCODF) !== -1) {
+                if (barCode && items && barCodeArray.indexOf((items.BARCODF).replace("/", "-")) !== -1) {
                     if ($('.sales_code').val()) {
-                        $('tr.' + items.BARCODF).find('.i_salesCode').text($('.sales_code').val());
+                        $('tr.' + (items.BARCODF).replace("/", "-")).find('.i_salesCode').text($('.sales_code').val());
                     }
-                    $('tr.' + items.BARCODF).find('.qty').val(parseInt($('tr.' + items.BARCODF).find('.qty').val()) + 1);
+                    $('tr.' + (items.BARCODF).replace("/", "-")).find('.qty').val(parseInt($('tr.' + (items.BARCODF).replace("/", "-")).find('.qty').val()) + 1);
                     total_amt();
                 } else if (items && barCode) {
-                    html = '<tr class="itemBarCode ' + items.BARCODF + '">';
+                    html = '<tr class="itemBarCode ' + (items.BARCODF).replace("/", "-") + '">';
                     html += '<td class="hide"> ' + items.TRITCD1 + '</td> ';
                     html += '<td> ' + items.TRITNM + '</td> ';
                     html += '<td> ' + items.TRCOLOR + '</td> ';
@@ -808,7 +808,7 @@
                     html += '<td> <input type="number" class="form-control d_per" min=0 value="0.00" /> </td> ';
                     html += '<td> <label class="d_amt">' + ((0).toFixed(2)) + '</label> </td> ';
                     html += '<td> <label class="t_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
-                    html += '<td> <label class="i_salesCode">' + items.BARCODF + ' </label> </td> ';
+                    html += '<td> <label class="i_salesCode">' + (items.BARCODF) + ' </label> </td> ';
                     html += '<td> ' + $('.sales_code').val() + ' </td> ';
                     html += '<td> <a class="btn btn-danger remove"> <i class="fa fa-trash-o"> </i> </a> </td> ';
                     html += '</tr> ';
@@ -817,7 +817,7 @@
                     } else {
                         $(".items").append(html);
                     }
-                    barCodeArray.push(items.BARCODF);
+                    barCodeArray.push((items.BARCODF).replace("/", "-"));
                     total_amt();
                 }
                 clear();
@@ -1143,14 +1143,16 @@
             function setCurrPoints(totalPoints) {
 
                 var _pointAmt = 0;
-                var crdHolPoint = "<?php echo getSessionData('chnoofpoints'); ?>";
-                var crdHolVal = "<?php echo getSessionData('chrs'); ?>";
+                var crdHolPoint = parseFloat("<?php echo getSessionData('chnoofpoints'); ?>");
+                var crdHolVal = parseFloat("<?php echo getSessionData('chrs'); ?>");
                 for (var i = 0; i < itemsData.length; i++) {
-                    if (!parseFloat(itemsData[i].TRDS1)) {
+                    var TRDS1 = parseFloat(itemsData[i].TRDS1);
+                    if (!TRDS1) {
                         _pointAmt += parseFloat(itemsData[i].TRBLAMT);
                     }
                 }
                 var currBillPoint = parseFloat((_pointAmt * crdHolPoint) / crdHolVal).toFixed(2);
+
                 if (currBillPoint) {
                     cardData = {
                         BILLNO: "<?php echo $currentBill; ?>",// BillNo
