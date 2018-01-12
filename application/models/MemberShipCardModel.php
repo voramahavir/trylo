@@ -148,12 +148,13 @@ class MemberShipCardModel extends CI_Model
                 'PSCHCALL',
                 'PSCHSMS',
                 'PSCHMAIL',
-                '(ifnull(sum(CREDITCRD1),0) - ifnull(sum(DBREDPN),0)) AS totalPoints'
+                '(ifnull(sum(CREDITCRD1),0) - (ifnull(sum(DBREDPN),0) + ifnull(sum(DBTPNT1),0))) AS totalPoints'
             );
             $where = array(
                 'CARDNO' => $cardNo
             );
             branchWhere('maincrd');
+            finYearWhere('crdtran', 'FINYEAR', array("full" => true));
             $this->db->select($select);
             $this->db->where($where);
             $this->db->group_by('CARDNO');

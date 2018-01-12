@@ -159,3 +159,12 @@ if (!function_exists('checkRight')) {
         }
     }
 }
+if (!function_exists('finYearWhere')) {
+    function finYearWhere($tableAlias = null, $finYearColName = "fin_year", $options = array())
+    {
+        if (fin_year($options)) {
+            $ci = &get_instance();
+            $ci->db->where(($tableAlias) ? $tableAlias . "." . $finYearColName : $finYearColName, fin_year($options));
+        }
+    }
+}

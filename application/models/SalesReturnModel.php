@@ -69,7 +69,7 @@ class SalesReturnModel extends CI_Model
             $cn_type = $_POST['cn_type'];
             if ($cn_type != null && $cn_type != 'all') {
                 if ($cn_type == "1") {
-                    $this->db->where('t.TRREF', 'N');
+                    $this->db->where('t.TRREF', NULL);
                     $this->db->where('t.CANBL IS NULL', NULL, FALSE);
                 } elseif ($cn_type == "2") {
                     $this->db->where('t.TRREF', 'Y');
@@ -167,12 +167,28 @@ class SalesReturnModel extends CI_Model
 
     public function getSalesRetByCN($billNo)
     {
-        $select = array();
+        $code = 0;
+        $msg = "Incorrect CN no. Please Enter correct CN no.";
+        $select = array(
+            "TRNET",
+            "TRREF"
+        );
         $where = array(
             "TRBLNO" => $billNo
         );
+        branchWhere();
+        finYearWhere();
         $this->db->select($select);
         $this->db->where($where);
+        $this->db->limit(1);
+        $data = $this->db->get("trslret")->row();
+        if ($data) {
+            $code = 1;
+            $msg = "CN fetched successfully";
+        }
+        $response = compact("code", "msg", "data");
+        echo json_encode($response);
+        exit;
     }
 }
 

@@ -44,4 +44,9 @@ class SalesReturnController extends CI_Controller
     {
         $this->SalesReturnModel->salesRetAdd();
     }
+
+    public function getSalesRetByCN($billNo)
+    {
+        $this->SalesReturnModel->getSalesRetByCN($billNo);
+    }
 }

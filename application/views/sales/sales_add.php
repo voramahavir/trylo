@@ -312,25 +312,29 @@
                                         <div class="row">
                                             <label class="col-md-3 text-right"> C/N-1 NO. </label>
                                             <div class="col-md-9">
-                                                <input type="text" name="TRCN1" class="form-control">
+                                                <input type="text" name="TRCN1" class="form-control" id="TRCN1"
+                                                       value="0">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-3 text-right"> Amount </label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="TRCN1AM">
+                                                <input type="text" class="form-control" name="TRCN1AM" id="TRCN1AM"
+                                                       value="0">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-3 text-right"> C/N-2 NO. </label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="TRCN2">
+                                                <input type="text" class="form-control" name="TRCN2" id="TRCN2"
+                                                       value="0">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-3 text-right"> Amount </label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="TRCN2AM">
+                                                <input type="text" class="form-control" name="TRCN2AM" id="TRCN2AM"
+                                                       value="0">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -754,6 +758,12 @@
             $(document).on('change', '.trtype', function () {
                 showTypeDetails();
             });
+            $(document).on('change', '#TRCN1', function () {
+                getSalesRetByCN($(this), $('#TRCN1AM'));
+            });
+            $(document).on('change', '#TRCN2', function () {
+                getSalesRetByCN($(this), $('#TRCN2AM'));
+            });
 
             function getIteminfo() {
                 var barCode = $(".barCode").val().trim();
@@ -1171,6 +1181,42 @@
                 $('.totBalPoint').val(totalPoints);
             }
 
+            function getSalesRetByCN(cnNo, el) {
+                if (cnNo.val() > 0) {
+                    if ($('#TRCN1').val() == $('#TRCN2').val()) {
+                        bootbox.alert("This CN is already selected");
+                        cnNo.val(0);
+                        cnNo.focus();
+                        el.val(0);
+                    }
+                    else {
+                        var _cnNo = cnNo.val();
+                        loadingStart();
+                        $.ajax({
+                            url: site_url + 'salesreturn/getSalesRetByCN/' + _cnNo,
+                            dataType: 'JSON',
+                            success: function (response) {
+                                if (response.code) {
+                                    var data = response.data;
+                                    if (data.TRREF == 'Y') {
+                                        bootbox.alert("This CN is already refunded. Please Check");
+                                    }
+                                    else {
+                                        el.val(data.TRNET);
+                                    }
+                                }
+                                else {
+                                    bootbox.alert(response.msg);
+                                    cnNo.val(0);
+                                    cnNo.focus();
+                                    el.val(0);
+                                }
+                                loadingStop();
+                            }
+                        });
+                    }
+                }
+            }
         });
 
     }(jQuery));
