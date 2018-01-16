@@ -1510,8 +1510,8 @@ die;*/
             <TD class="tr1 td20"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr1 td21"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr1 td22"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=10 class="tr1 td23">
-                <P class="p3 ft3"><?php echo getSessionData('prefix'); ?>
+            <TD colspan=13 class="tr1 td23">
+                <P class="p3 ft3"><?php echo getSessionData('branch_name'); ?>
                     <NOBR><?php echo fin_year(array('seperator' => '-')); ?></NOBR>
                 </P>
             </TD>
@@ -1535,7 +1535,7 @@ die;*/
             <TD class="tr2 td20"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr2 td21"><P class="p1 ft1">&nbsp;</P></TD>
             <TD colspan=13 class="tr2 td35">
-                <P class="p4 ft4"><?php echo getSessionData('branch_name'); ?>
+                <P class="p4 ft4"><?php echo getSessionData('address1'); ?>
                     Phone: <?php echo getSessionData('telephone1'); ?>
                     <NOBR>E-Mail: <?php echo getSessionData('defaultmail'); ?></NOBR>
                 </P>

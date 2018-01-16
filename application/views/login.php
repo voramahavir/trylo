@@ -150,11 +150,11 @@
                 $('.submit').click();
             }
         });
-        if (sessionStorage.getItem("branchDatas")) {
-            sessionStorage.removeItem("branchDatas");
+        if (localStorage.getItem("branchDatas")) {
+            localStorage.removeItem("branchDatas");
         }
-        if (sessionStorage.getItem("branches")) {
-            sessionStorage.removeItem("branches");
+        if (localStorage.getItem("branches")) {
+            localStorage.removeItem("branches");
         }
         $('.reports').click(function () {
             setViewMode(1);

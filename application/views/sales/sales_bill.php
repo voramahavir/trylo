@@ -10,85 +10,98 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"> Sales Bill Entry</h3>
-            </div>
-            <div class="box-body">
-                <div class="row form-group">
-                    <label class="col-md-1 text-left">Fr Date : </label>
-                    <div class="col-md-2">
+                <div class="col-md-2">
+                    <h2 class="box-title page-title text-primary"> Sales Bill Entry</h2>
+                </div>
+                <div class="col-md-10">
+                    <label class="col-md-2">From Date : </label>
+                    <div class="col-md-3">
                         <input id="from_date" type="text"
                                value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>"
                                class="form-control">
                     </div>
-                    <label class="col-md-1 text-left"> To Date : </label>
-                    <div class="col-md-2">
+                    <label class="col-md-2"> To Date : </label>
+                    <div class="col-md-3">
                         <input id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>" class="form-control">
                     </div>
-
-                    <div class="col-md-5 col-md-offset-1">
-                        <div class="row radio">
-                            <label> <input type="radio" id="payment" name="payment" value="1"
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        <div class="col-md-12 label-primary radio no-margin">
+                            <label> <input type="radio" class="radio-inline" id="payment" name="payment" value="1"
                                            checked="true"> Pending Payment </label>
-                            <label> <input type="radio" id="payment" name="payment" value="2"> Payment Rcvd
+                            <label> <input type="radio" class="radio-inline" id="payment" name="payment" value="2">
+                                Payment Rcvd
                             </label>
-                            <label> <input type="radio" id="payment" name="payment" value="all"> All (Except Cancelled)
+                            <label> <input type="radio" class="radio-inline" id="payment" name="payment" value="all">
+                                All (Except Cancelled)
                             </label>
-                            <label> <input type="radio" id="payment" name="payment" value="3"> Cancelled
+                            <label> <input type="radio" class="radio-inline" id="payment" name="payment" value="3">
+                                Cancelled
                                 Bill </label>
                         </div>
-                        <div class="row radio">
-                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="all"
+                        <div class="col-md-12 label-success radio no-margin">
+                            <label> <input type="radio" class="radio-inline" id="payment_mode" name="payment_mode"
+                                           value="all"
                                            checked="true"> All </label>
-                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="1"> Cash </label>
-                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="2"> Debit </label>
-                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="3"> Cr/Dr Card
+                            <label> <input type="radio" class="radio-inline" id="payment_mode" name="payment_mode"
+                                           value="1"> Cash </label>
+                            <label> <input type="radio" class="radio-inline" id="payment_mode" name="payment_mode"
+                                           value="2"> Debit </label>
+                            <label> <input type="radio" class="radio-inline" id="payment_mode" name="payment_mode"
+                                           value="3"> Cr/Dr Card
                             </label>
-                            <label> <input type="radio" id="payment_mode" name="payment_mode" value="4"> Mobile Payment
+                            <label> <input type="radio" class="radio-inline" id="payment_mode" name="payment_mode"
+                                           value="4"> Mobile Payment
                             </label>
                         </div>
+                    </div>
+                    <div class="col-md-6 no-padding">
+                        <a href="<?php echo site_url('salesAdd'); ?>" class="btn btn-info">
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </a>
                     </div>
                 </div>
                 <!-- <button type="button" class="btn btn-default" id="search" visible='false'>
                     <span class="glyphicon glyphicon-search"></span> Search
                 </button> -->
-                <a href="<?php echo site_url('salesAdd'); ?>" class="btn btn-info">
-                    <span class="glyphicon glyphicon-plus"></span> Add
-                </a>
+
                 <div class="box-body">
-                    <div id="sales_bill wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                        <div class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col-sm-6"></div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="sales_bill_table" class="table table-bordered table-hover dataTable"
+                                   role="grid">
+                                <thead>
+                                <tr role="row">
+                                    <th class="col-md-1 text-center">Bill No.</th>
+                                    <th class="col-md-1 text-center">Date</th>
+                                    <th class="col-md-1 text-center">Type</th>
+                                    <th class="col-md-1 text-center">Name of Party</th>
+                                    <th class="col-md-1 text-center">Repeat</th>
+                                    <th class="col-md-1 text-center">Total Quantity</th>
+                                    <th class="col-md-1 text-center">Bill Amount</th>
+                                    <th class="col-md-1 text-center">Rcvd Amt</th>
+                                    <th class="col-md-1 text-center">Discount</th>
+                                    <th class="col-md-1 text-center">Other</th>
+                                    <th class="col-md-2 text-center">Action</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+
+                            </table>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table id="sales_bill_table" class="table table-bordered table-hover dataTable"
-                                       role="grid">
-                                    <thead>
-                                    <tr role="row">
-                                        <th class="col-md-1">Bill No.</th>
-                                        <th class="col-md-1">Date</th>
-                                        <th class="col-md-1">Type</th>
-                                        <th class="col-md-2">Name of Party</th>
-                                        <th class="col-md-1">Repeat</th>
-                                        <th class="col-md-1">Total Quantity</th>
-                                        <th class="col-md-1">Bill Amount</th>
-                                        <th class="col-md-1">Rcvd Amt</th>
-                                        <th class="col-md-1" class="hide">Salesman</th>
-                                        <th class="col-md-1">Discount</th>
-                                        <th class="col-md-1">Other</th>
-                                        <th class="col-md-1">Action</th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-
                     </div>
+                    <!--<div id="sales_bill wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6"></div>
+                        </div>
+
+                    </div>-->
                 </div>
 
             </div>
@@ -206,55 +219,62 @@
             "processing": true,
             "serverSide": true,
             "searching": false,
+            "autoWidth": false,
             "columns": [
                 {
                     "bSortable": false,
-                    "data": "billno"
+                    "data": "billno",
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": null
+                    "data": null,
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": "type"
+                    "data": "type",
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": "name"
+                    "data": "name",
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": null
+                    "data": null,
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": 'qty'
+                    "data": 'qty',
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": 'bamount'
+                    "data": 'bamount',
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": 'ramount'
+                    "data": 'ramount',
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "visible": false,
-                    "data": null
+                    "data": null,
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": null
+                    "data": null,
+                    "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": null
-                },
-                {
-                    "bSortable": false,
-                    "data": null
+                    "data": null,
+                    "className": "col-md-2 action-container"
                 }
             ],
             "ajax": {
@@ -284,12 +304,12 @@
                 $('td:eq(8)', nRow).html("");
                 $('td:eq(9)', nRow).html("");
                 /*$('td:eq(10)', nRow).html("");*/
-                var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' target='_blank' class='btn btn-success'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
-                var editStr = "<a href='" + site_url + "sales/edit/" + aData.billno + "' class='btn btn-info'><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></a>";
-                var deleteStr = "<button class='btn btn-danger' onclick='return DeleteTheRow(" + aData.billno + ");'>"
+                var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' target='_blank' class='btn btn-success btn-action'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
+                var editStr = "<a href='" + site_url + "sales/edit/" + aData.billno + "' class='btn btn-info btn-action'><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></a>";
+                var deleteStr = "<button class='btn btn-danger btn-action' onclick='return DeleteTheRow(" + aData.billno + ");'>"
                     + "<i class='fa fa-trash-o'></i>"
                     + "</button>";
-                var cancelStr = "<button class='btn btn-danger' onclick='return CancelTheRow(" + aData.billno + ");'>"
+                var cancelStr = "<button class='btn btn-danger btn-action' onclick='return CancelTheRow(" + aData.billno + ");'>"
                     + "<i class='fa fa-times'></i>"
                     + "</button>";
                 if (aData.CANBL == 'T') {

@@ -154,7 +154,7 @@
                 <form role="form" id="salesBill">
                     <div class="col-md-12">
                         <div class="box box-success">
-                            <div class="box-body">
+                            <div class="box-body no-pad-left no-pad-right">
                                 <div class="row">
                                     <label class="col-md-1 text-right"> Bill No : </label>
                                     <div class="col-md-1">
@@ -162,11 +162,11 @@
                                                value="<?php echo $currentBill; ?>" readonly>
                                     </div>
                                     <label class="col-md-1 text-right"> Date : </label>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1 no-padding">
                                         <input type="text" class="form-control" name="TRBLDT"
                                                value="<?php echo date('d-m-Y'); ?>" readonly>
                                     </div>
-                                    <label class="col-md-1 text-right"> Type : </label>
+                                    <label class="col-md-1 text-right no-padding"> Type : </label>
                                     <div class="col-md-2">
                                         <select class="form-control trtype" name="TRTYPE">
                                             <option value="1"> Cash</option>
@@ -175,14 +175,10 @@
                                             <option value="4"> Mobile Payment</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <label class="col-md-1 text-right"> Prefix : </label>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1 no-padding">
                                         <input type="text" class="form-control" name="CRDPREF"
                                                value="<?php echo getSessionData('prefix'); ?>" readonly>
-                                    </div>
-                                    <div class="col-md-2">
                                     </div>
                                     <label class="col-md-1 text-right"> No : </label>
                                     <div class="col-md-2">
@@ -296,13 +292,11 @@
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Other </label>
-                                            <div class="col-md-10">
+                                            <div class="col-md-4">
                                                 <input type="text" name="TROTH1" class="form-control">
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-2 text-right"> Other Amt </label>
-                                            <div class="col-md-10">
+                                            <label class="col-md-1 text-right"> Amt </label>
+                                            <div class="col-md-5">
                                                 <input type="number" value="0" name="TROTH2"
                                                        class="form-control oth_amt">
                                             </div>
@@ -311,28 +305,26 @@
                                     <div class="col-md-5">
                                         <div class="row">
                                             <label class="col-md-3 text-right"> C/N-1 NO. </label>
-                                            <div class="col-md-9">
+                                            <div class="col-md-3">
                                                 <input type="text" name="TRCN1" class="form-control" id="TRCN1"
                                                        value="0">
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-3 text-right"> Amount </label>
-                                            <div class="col-md-9">
+                                            <label class="col-md-2 text-right"> Amount </label>
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control" name="TRCN1AM" id="TRCN1AM"
                                                        value="0">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-3 text-right"> C/N-2 NO. </label>
-                                            <div class="col-md-9">
+                                            <div class="col-md-3">
                                                 <input type="text" class="form-control" name="TRCN2" id="TRCN2"
                                                        value="0">
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-md-3 text-right"> Amount </label>
-                                            <div class="col-md-9">
+                                            <!--</div>
+                                            <div class="row">-->
+                                            <label class="col-md-2 text-right"> Amount </label>
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control" name="TRCN2AM" id="TRCN2AM"
                                                        value="0">
                                             </div>
@@ -367,7 +359,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="row">
-                                            <label class="col-md-2 text-right"> Nett Amount Rs. </label>
+                                            <label class="col-md-2 text-right text-danger"> Nett Amount Rs. </label>
                                             <div class="col-md-10">
                                                 <input type="text" name="TRNET" class="form-control net_amount"
                                                        readonly>
@@ -376,7 +368,7 @@
                                     </div>
                                     <div class="col-md-5">
                                         <div class="row">
-                                            <label class="col-md-3 text-right"> Total Qty </label>
+                                            <label class="col-md-3 text-right text-primary"> Total Qty </label>
                                             <div class="col-md-9">
                                                 <input type="text" name="TRTOTQTY" class="form-control m_t_qty"
                                                        readonly>
@@ -1037,24 +1029,37 @@
                         "cardData": cardData
                     },
                     success: function (response) {
-                        bootbox.alert(response.msg);
                         $("#save-modal").modal('hide');
-                        bootbox.confirm({
-                            message: "Do you want to print the bill now?",
-                            buttons: {
-                                confirm: {
-                                    label: 'Yes',
-                                    className: 'btn-success'
+                        if (response.code) {
+                            var box = bootbox.confirm({
+                                message: "<h3>Do you want to print the bill now?</h3>",
+                                buttons: {
+                                    confirm: {
+                                        label: 'Yes',
+                                        className: 'btn-success'
+                                    },
+                                    cancel: {
+                                        label: 'No',
+                                        className: 'btn-danger pull-left'
+                                    }
                                 },
-                                cancel: {
-                                    label: 'No',
-                                    className: 'btn-danger'
+                                callback: function (result) {
+                                    if (result) {
+                                        window.open(site_url + "salesPrint/" + <?php echo $currentBill; ?>);
+                                        window.location.reload();
+                                    }
+                                    else {
+                                        window.location.href = site_url + "salesBill";
+                                    }
+                                    //window.location.href = (result) ? site_url + "salesPrint/" + <?php //echo $currentBill; ?>// : site_url + "salesBill";
                                 }
-                            },
-                            callback: function (result) {
-                                window.location.href = (result) ? site_url + "salesPrint/" + <?php echo $currentBill; ?> : site_url + "salesBill";
-                            }
-                        });
+                            });
+                            var dialog = box.find('.modal-dialog');
+                            box.css('display', 'block');
+                            dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
+                        } else {
+                            bootbox.alert(response.msg);
+                        }
                     }
                 });
             }

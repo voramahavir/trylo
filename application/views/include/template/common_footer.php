@@ -47,8 +47,8 @@ $this->load->view('include/scripts.php'); ?>
                             branchDatas[value.branch_id] = value;
                         });
                         $("#branchId").html(html);
-                        sessionStorage.setItem("branches", html);
-                        sessionStorage.setItem("branchDatas", JSON.stringify(branchDatas));
+                        localStorage.setItem("branches", html);
+                        localStorage.setItem("branchDatas", JSON.stringify(branchDatas));
                     }
                 }
             });
@@ -78,12 +78,12 @@ $this->load->view('include/scripts.php'); ?>
         }
         var sessBranch = $('#sessBranch');
         if (sessBranch.length) {
-            sessBranch.html(sessionStorage.getItem("branches"));
+            sessBranch.html(localStorage.getItem("branches"));
             sessBranch.val("<?php echo getSessionData('branch_id'); ?>");
             sessBranch.on('change', function () {
                 var branch_id = $(this).val();
                 if (branch_id) {
-                    var branchDatas = JSON.parse(sessionStorage.getItem("branchDatas"));
+                    var branchDatas = JSON.parse(localStorage.getItem("branchDatas"));
                     var branchData = branchDatas[branch_id];
                     $.ajax({
                         url: site_url + 'branch/saveBranch',

@@ -1,3 +1,25 @@
 .my-modal-lg {
     width: 85%;
 }
+
+.page-title {
+    font-weight: 700;
+    font-size: 20px !important;
+}
+
+.action-container {
+    padding-left: 4px !important;
+    padding-right: 0 !important;
+}
+
+.btn-action {
+    margin-right: 3px;
+}
+
+.no-pad-right {
+    padding-right: 0 !important;
+}
+
+.no-pad-left {
+    padding-left: 0 !important;
+}
