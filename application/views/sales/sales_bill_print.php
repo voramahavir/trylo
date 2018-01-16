@@ -1585,7 +1585,7 @@ die;*/
             <TD colspan=2 class="tr4 td12"><P class="p1 ft6">No.:</P></TD>
             <TD class="tr4 td47"><P class="p1 ft1">&nbsp;</P></TD>
             <TD class="tr4 td11"><P class="p1 ft1">&nbsp;</P></TD>
-            <TD colspan=5 class="tr4 td48"><P class="p9 ft0"
+            <TD colspan=6 class="tr4 td48"><P class="p9 ft0"
                                               style="margin-left: -6px;"><?php echo $billData->billno; ?></P></TD>
             <TD colspan=2 class="tr4 td49"><P class="p6 ft4">Date:</P></TD>
             <TD colspan=2 class="tr4 td50"><P class="p10 ft7"><?php echo date("d/m/Y", strtotime($billData->billdate));

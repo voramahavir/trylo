@@ -1164,7 +1164,8 @@
                                     }
                                 },
                                 callback: function (result) {
-                                    window.open(site_url + "salesPrint/" + <?php echo $billNo; ?>);
+                                    if (result)
+                                        window.open(site_url + "salesPrint/" + <?php echo $billNo; ?>);
                                     window.location.href = site_url + "salesBill";
                                     //window.location.href = (result) ? site_url + "salesPrint/" + <?php //echo $currentBill; ?>// : site_url + "salesBill";
                                 }
