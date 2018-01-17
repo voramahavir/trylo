@@ -399,4 +399,24 @@ class SalesModel extends CI_Model
         echo json_encode(array("code" => $code, "response" => $response));
         exit();
     }
+
+    public function getCardTypes()
+    {
+        $code = 0;
+        $msg = "No data found";
+        $select = array(
+            "CARDTYNO",
+            "CARDTYPE"
+        );
+        $this->db->select($select);
+        $this->db->order_by("CARDTYPE", "ASC");
+        $data = $this->db->get("trcrdty")->result();
+        if (count($data)) {
+            $code = 1;
+            $msg = "Data fetched successfully";
+        }
+        $response = compact("code", "msg", "data");
+        echo json_encode($response);
+        exit;
+    }
 }

@@ -96,4 +96,10 @@ class SalesController extends CI_Controller
         $this->SalesModel->salesCancel($id);
     }
 
+
+    public function getCardTypes()
+    {
+        $this->SalesModel->getCardTypes();
+    }
+
 }

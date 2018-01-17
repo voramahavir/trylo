@@ -166,7 +166,7 @@
                                         <input type="text" class="form-control" name="TRBLDT" id="TRBLDT"
                                                value="<?php echo date('d-m-Y'); ?>" readonly>
                                     </div>
-                                    <label class="col-md-1 text-rxight"> Type : </label>
+                                    <label class="col-md-1 text-right"> Type : </label>
                                     <div class="col-md-2">
                                         <select class="form-control trtype" name="TRTYPE" id="TRTYPE">
                                             <option value="1"> Cash</option>
@@ -193,9 +193,17 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-4">
+                                        <div class="row drcrd">
+                                            <label class="col-md-2 text-right">Party:</label>
+                                            <div class="col-md-10">
+                                                <select name="TRPRCD" id="TRPRCD" class="form-control">
+                                                    <option value="">Select Party</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Party </label>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 no-pad-right">
                                                 <select class="form-control" name="TRSALUT" id="TRSALUT">
                                                     <option value="Mr."> Mr.</option>
                                                     <option value="Miss"> Miss</option>
@@ -280,6 +288,26 @@
                                             <label class="col-md-2 text-right"> Card Holder </label>
                                             <div class="col-md-5">
                                                 <input type="text" name="TRCRDHOLD" id="TRCRDHOLD" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row mobpay">
+                                            <label class="col-md-2 text-right"> Card Type. </label>
+                                            <div class="col-md-5">
+                                                <select name="TRPMCTY" id="TRPMCTY" class="form-control">
+                                                    <option value="">Select Card Type</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mobpay">
+                                            <label class="col-md-2 text-right"> Mobile No </label>
+                                            <div class="col-md-5">
+                                                <input type="text" name="TRPMMOB" id="TRPMMOB" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="row mobpay">
+                                            <label class="col-md-2 text-right"> Name </label>
+                                            <div class="col-md-5">
+                                                <input type="text" name="TRPMNAM" id="TRPMNAM" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -754,6 +782,11 @@
                 getDetailsByCard();
             });
 
+            $('#TRPMCTY').change(function () {
+                $('#TRPMMOB').val($('#TRPH1').val());
+                $('#TRPMNAM').val($('#TRPRNM').val());
+            });
+
             $(document).on('click', '.remove', function () {
                 $(this).parent().parent().remove();
                 index = barCodeArray.indexOf(items.BARCODF);
@@ -811,6 +844,7 @@
                 var TRBLDT = new Date(billData.TRBLDT);
                 $('#TRBLDT').val(TRBLDT.toString('d/M/yyyy'));
                 $('#TRTYPE').val(billData.TRTYPE);
+                $('#TRPRCD').val(billData.TRPRCD);
                 $('#CRDNUM').val(billData.CRDNUM);
                 $('#TRSALUT').val(billData.TRSALUT);
                 $('#TRPRNM').val(billData.TRPRNM);
@@ -854,10 +888,15 @@
                 $('#TRCN1AM').val(billData.TRCN1AM);
                 $('#TRCN2').val(billData.TRCN2);
                 $('#TRCN2AM').val(billData.TRCN2AM);
+                $('#TRPMCTY').val(billData.TRPMCTY);
+                $('#TRPMMOB').val(billData.TRPMMOB);
+                $('#TRPMNAM').val(billData.TRPMNAM);
                 var TRDOB = (billData.TRDOB) ? new Date(billData.TRDOB).toString('d/M/yyyy') : '';
                 var TRMAD = (billData.TRMAD) ? new Date(billData.TRMAD).toString('d/M/yyyy') : '';
+                var TRCRDEXP = (billData.TRCRDEXP) ? new Date(billData.TRCRDEXP).toString('d/M/yyyy') : '';
                 $('#TRDOB').val(TRDOB);
                 $('#TRMAD').val(TRMAD);
+                $('#TRCRDEXP').val(TRCRDEXP);
             }
 
             function setSalesItemData(itemsData) {
@@ -888,6 +927,7 @@
                 $(".oth_amt").trigger('change');
                 $(".dre_misc").trigger('change');
                 $(".crdnum").trigger('change');
+                $("#TRPMCTY").trigger('change');
                 showTypeDetails();
                 getCardDetailsByMobile();
                 total_amt();
@@ -992,15 +1032,25 @@
                 switch (parseInt(type)) {
                     case 1:
                         $(".crcrd").hide();
+                        $(".drcrd").hide();
+                        $(".mobpay").hide();
                         break;
                     case 2:
+                        loadParties();
                         $(".crcrd").hide();
+                        $(".drcrd").show();
+                        $(".mobpay").hide();
                         break;
                     case 3:
                         $(".crcrd").show();
+                        $(".drcrd").hide();
+                        $(".mobpay").hide();
                         break;
                     case 4:
+                        loadCardTypes();
                         $(".crcrd").hide();
+                        $(".drcrd").hide();
+                        $(".mobpay").show();
                         break;
                 }
             }
@@ -1052,10 +1102,10 @@
                 $('.nett_amt_rcvd').val(parseFloat($('.dr_total').val()) - parseFloat($('.dre_total').val()));
                 var ret_cus = parseFloat($('.dr_total').val()) - parseFloat($('.net_amount').val()) - parseFloat($('.dre_total').val());
                 if (ret_cus > 0) {
-                    $('.ret_cus_div').show();
+                    // $('.ret_cus_div').show();
                     $('.ret_cus').text(ret_cus);
                 } else {
-                    $('.ret_cus_div').hide();
+                    // $('.ret_cus_div').hide();
                 }
                 var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val())).toFixed(2);
                 var rndOff = parseFloat(Math.round(netAmt) - parseFloat(netAmt)).toFixed(2);
@@ -1137,8 +1187,12 @@
             }
 
             function saveBill() {
+                if ($('.trtype').val() == "2" && $('#TRPRCD').val() == "") {
+                    bootbox.alert("Please select party");
+                    $('#TRPRCD').focus();
+                    return;
+                }
                 var salesData = $("#salesBill").serializeObject();
-
                 $.ajax({
                     url: site_url + "sales/update",
                     dataType: 'json',
@@ -1300,6 +1354,41 @@
                 $('.totBalPoint').val(totalPoints);
             }
 
+            function loadParties() {
+                $.ajax({
+                    url: site_url + 'purchaseorder/getParties',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function (response) {
+                        var html = '<option value="">Select Party</option>';
+                        if (response.code) {
+                            var data = response.data;
+                            $.each(data, function (index, value) {
+                                html += '<option value="' + value.TRCODE + '">' + value.TRNAME + '</option>';
+                            });
+                        }
+                        $("#TRPRCD").html(html);
+                    }
+                })
+            }
+
+            function loadCardTypes() {
+                $.ajax({
+                    url: site_url + 'sales/getCardTypes',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function (response) {
+                        var html = '<option value="">Select Card Type</option>';
+                        if (response.code) {
+                            var data = response.data;
+                            $.each(data, function (index, value) {
+                                html += '<option value="' + value.CARDTYNO + '">' + value.CARDTYPE + '</option>';
+                            });
+                        }
+                        $("#TRPMCTY").html(html);
+                    }
+                })
+            }
         });
 
     }(jQuery));
