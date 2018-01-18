@@ -301,6 +301,10 @@
                 var date = new Date(aData.date);
                 $('td:eq(1)', nRow).html(date.toString('d/M/yyyy'));
                 $('td:eq(4)', nRow).html("");
+                var repeatCount = aData.repeatCount;
+                if (repeatCount) {
+                    $('td:eq(4)', nRow).html("Y(" + repeatCount + ")");
+                }
                 $('td:eq(8)', nRow).html("");
                 $('td:eq(9)', nRow).html("");
                 /*$('td:eq(10)', nRow).html("");*/

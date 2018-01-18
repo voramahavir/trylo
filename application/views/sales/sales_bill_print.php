@@ -11,6 +11,12 @@ die;*/
     <META http-equiv="X-UA-Compatible" content="IE=8">
     <TITLE>Sales Bill Print</TITLE>
     <STYLE type="text/css">
+        @media print {
+            @page {
+                size: A5;
+                margin: 0 !important;
+            }
+        }
 
         body {
             margin-top: 0px;

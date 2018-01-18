@@ -667,17 +667,18 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="row ret_cus_div">
-                                            <label class="col-md-4 text-right"> RETURN TO CUSTOMER </label>
-                                            <div class="col-md-8">
+                                        <div class="row ret_cus_div label-info text-center" style="margin-top: 15%">
+                                            <h2> RETURN TO CUSTOMER </h2>
+                                            <!--<div class="col-md-8">
                                                 <input type="text" class="form-control ret_cus" value="0" readonly>
-                                            </div>
+                                            </div>-->
+                                            <label class="ret_cus h2">0.00</label>
                                         </div>
-                                        <div class="row">
+                                        <div class="row label-danger" style="margin-top: 10%; padding: 3% 0;">
+                                            <!--<h2> RETURN TO CUSTOMER </h2>-->
                                             <label class="col-md-4 text-right"> Nett Amt Rcvd </label>
                                             <div class="col-md-8">
-                                                <input type="text" name="TRCRAMT" id="TRCRAMT"
-                                                       class="form-control nett_amt_rcvd"
+                                                <input type="text" name="TRCRAMT" id="TRCRAMT" class="form-control nett_amt_rcvd"
                                                        value="0" readonly>
                                             </div>
                                         </div>
@@ -1101,12 +1102,13 @@
             function nett_amt_rcvd() {
                 $('.nett_amt_rcvd').val(parseFloat($('.dr_total').val()) - parseFloat($('.dre_total').val()));
                 var ret_cus = parseFloat($('.dr_total').val()) - parseFloat($('.net_amount').val()) - parseFloat($('.dre_total').val());
-                if (ret_cus > 0) {
+                $('.ret_cus').text(ret_cus);
+                /*if (ret_cus > 0) {
                     // $('.ret_cus_div').show();
                     $('.ret_cus').text(ret_cus);
                 } else {
                     // $('.ret_cus_div').hide();
-                }
+                }*/
                 var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val())).toFixed(2);
                 var rndOff = parseFloat(Math.round(netAmt) - parseFloat(netAmt)).toFixed(2);
                 netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
