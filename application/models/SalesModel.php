@@ -420,4 +420,39 @@ class SalesModel extends CI_Model
         echo json_encode($response);
         exit;
     }
+
+    public function getSearchedBills()
+    {
+        $type = isset($_POST['type']) ? $_POST['type'] : 1;
+        $searchCol = "TRPRNM";
+        if ($type != 1) {
+            $searchCol = "TRPH1";
+        }
+        $select = array(
+            "TRBLNO",
+            "TRBLDT",
+            "TRPRNM",
+            "TRPH1",
+            "TRNET",
+            "CREDITCRD1",
+            "group_concat(concat(ti.TRITNM, ',', t1.TRSZ, ',', t1.TRCLR, ',', t1.TRQTY, ',', t1.TRRATE, ',', t1.TRDS2, ',', TRNETRT) SEPARATOR'|') AS itemData",
+        );
+
+        $this->db->select($select);
+        $this->db->join("trbil1 t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
+        $this->db->join("tritem ti", "ti.TRITCD = t1.TRITCD");
+        $this->db->join("crdtran c", "c.BILLNO = t.TRBLNO", "LEFT");
+        branchWhere("t", "branchcode");
+        if (isset($_POST['search']) && isset($_POST['search']['value'])) {
+            $search = $_POST['search']['value'];
+            $this->db->like($searchCol, $search);
+        }
+        $this->db->group_by("TRBLNO");
+        $data = $this->db->get("trbil t")->result();
+        $draw = $_POST['draw'];
+        $recordsFiltered = $recordsTotal = count($data);
+        $response = compact("draw", "data", "recordsFiltered", "recordsTotal");
+        echo json_encode($response);
+        exit;
+    }
 }

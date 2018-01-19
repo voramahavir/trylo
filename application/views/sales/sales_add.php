@@ -1,13 +1,8 @@
 <?php $this->load->view('include/template/common_header'); ?>
 <style type="text/css">
-    /* Important part */
-    /*.modal-dialog{
-        overflow-y: initial !important
+    .search-bill-header {
+        padding-bottom: 0;
     }
-    .modal-body{
-        height: 450px;
-        overflow-y: auto;
-    }*/
 </style>
 <!-- Main row -->
 <div class="row">
@@ -246,7 +241,12 @@
                                             <div class="col-md-3">
                                                 <input type="text" name="TRDOB" class="form-control datepicker dob">
                                             </div>
-
+                                            <div class="col-md-3">
+                                                <button type="button" class="btn btn-primary search-bill"><i
+                                                            class="fa fa-search"></i>
+                                                    Search Party Bill
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Phone-2 </label>
@@ -684,13 +684,78 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="bilsearch-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header search-bill-header">
+                <div class="row">
+                    <div class="col-md-12 radio">
+                        <label> <input type="radio" class="radio-inline" id="type" name="type" value="1"
+                                       checked> Party Name Wise </label>
+                        <label> <input type="radio" class="radio-inline" id="type" name="type" value="2">
+                            Mobile No Wise
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="search_bill_table" class="table table-bordered table-hover dataTable"
+                               role="grid">
+                            <thead>
+                            <tr role="row">
+                                <th class="col-md-1 text-center">Bill No.</th>
+                                <th class="col-md-1 text-center">Date</th>
+                                <th class="col-md-2 text-center">Name of Party</th>
+                                <th class="col-md-1 text-center">Mobile No</th>
+                                <th class="col-md-1 text-center">Amt Rs.</th>
+                                <th class="col-md-1 text-center">PntEarn</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="search_bill_item_table" class="table table-bordered table-hover dataTable"
+                               role="grid">
+                            <thead>
+                            <tr role="row">
+                                <th class="col-md-2 text-center">Item Name</th>
+                                <th class="col-md-1 text-center">Size</th>
+                                <th class="col-md-1 text-center">Color</th>
+                                <th class="col-md-1 text-center">Qty</th>
+                                <th class="col-md-1 text-center">Rate Rs.</th>
+                                <th class="col-md-1 text-center">Disc.Rs.</th>
+                                <th class="col-md-1 text-center">Amount Rs.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- /.modal -->
 
 <?php $this->load->view('include/template/common_footer'); ?>
-
+<script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
+<script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 <script type="text/javascript">
+    var search_bill_table = "", type = 1;
     (function ($) {
         $(document).ready(function () {
+
             $('body').addClass("sidebar-collapse");
             $('.datepicker').datepicker({
                 autoclose: true,
@@ -1307,8 +1372,120 @@
                     }
                 })
             }
-        });
 
+            $('#bilsearch-modal').on('shown.bs.modal', function () {
+                search_bill_table.columns.adjust().draw();
+                loadingStop();
+            });
+            $('.search-bill').click(function () {
+                setSearchTable();
+
+                $('#bilsearch-modal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            });
+
+            $('#search_bill_table tbody').on('click', 'tr', function () {
+                var data = search_bill_table.row(this).data();
+                var itemData = data.itemData;
+                var html = "";
+                if (itemData) {
+                    itemData = itemData.split("|");
+                    $.each(itemData, function (index, val) {
+                        val = val.split(',');
+                        if (val) {
+                            html += "<tr>";
+                            html += "<td class=\"col-md-2 text-center\">";
+                            html += val[0];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[1];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[2];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[3];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[4];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[5];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[6];
+                            html += "</td>";
+                            html += "</tr>";
+                        }
+                    });
+                }
+                $("#search_bill_item_table tbody").html(html);
+            });
+
+            function setSearchTable() {
+                loadingStart();
+                search_bill_table = $('#search_bill_table').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "searching": true,
+                    "paging": false,
+                    "autoWidth": false,
+                    "ordering": false,
+                    "info": false,
+                    "scrollY": "200px",
+                    "scrollCollapse": true,
+                    "columns": [
+                        {
+                            "bSortable": false,
+                            "data": "TRBLNO",
+                            "className": "col-md-1 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": null,
+                            "className": "col-md-1 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": "TRPRNM",
+                            "className": "col-md-2 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": "TRPH1",
+                            "className": "col-md-1 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": "TRNET",
+                            "className": "col-md-1 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": 'CREDITCRD1',
+                            "className": "col-md-1 text-center"
+                        }
+                    ],
+                    "ajax": {
+                        url: "<?= site_url('sales/getSearchedBills') ?>",
+                        method: 'POST',
+                        data: function (d) {
+                            d.type = type;
+                        }
+                    },
+                    "rowCallback": function (nRow, aData, iDisplayindex) {
+                        var date = new Date(aData.TRBLDT);
+                        $('td:eq(1)', nRow).html(date.toString('d/M/yyyy'));
+                    }
+                });
+            }
+
+            $("input[name=type]").on('change', function () {
+                type = this.value;
+            });
+        });
     }(jQuery));
 
 </script>
