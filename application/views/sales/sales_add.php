@@ -1302,7 +1302,7 @@
                         branch_code: "<?php echo getSessionData('branch_code');?>"
                     };
                 }
-                totalPoints = parseFloat(totalPoints) + parseFloat(currBillPoint);
+                totalPoints = parseFloat(parseFloat(totalPoints) + parseFloat(currBillPoint)).toFixed(2);
                 $('.currBillPoint').val(currBillPoint);
                 $('.totBalPoint').val(totalPoints);
             }
@@ -1521,7 +1521,7 @@
             });
             $('#search_bill_table').find('tbody').on('dblclick', 'tr', function () {
                 var data = search_bill_table.row(this).data();
-                $('#CRDNUM').val(data.CRDNUM);
+                $('.crdnum').val(data.CRDNUM);
                 $('#TRSALUT').val(data.TRSALUT);
                 $('#TRPRNM').val(data.TRPRNM);
                 $('.ad1').val(data.TRPAD1);
@@ -1535,7 +1535,7 @@
                 $('.dob').val(TRDOB);
                 var TRMAD = data.TRMAD ? new Date(data.TRMAD).toString("dd/mm/yyyy") : null;
                 $('.mad').val(TRMAD);
-                $('#CRDNUM').trigger('change');
+                $('.crdnum').trigger('change');
                 $('#TRPH1').trigger('change');
                 $('#bilsearch-modal').modal('hide');
                 $('.searchtypeval').val("");
