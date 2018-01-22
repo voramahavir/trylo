@@ -28,7 +28,7 @@
             </div>
             <div class="box-body">
                 <div class="row form-group">
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div class="col-md-12 label-primary radio no-margin">
                             <label> <input type="radio" class="radio-inline" id="payment" name="payment" value="1"
                                            checked="true"> Pending Payment </label>
@@ -58,7 +58,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-md-6 no-padding">
+                    <div class="col-md-5 no-padding">
                         <a href="<?php echo site_url('salesAdd'); ?>" class="btn btn-info">
                             <span class="glyphicon glyphicon-plus"></span> Add
                         </a>

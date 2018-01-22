@@ -429,11 +429,7 @@ class SalesModel extends CI_Model
             $searchCol = "TRPH1";
         }
         $select = array(
-            "TRBLNO",
-            "TRBLDT",
-            "TRPRNM",
-            "TRPH1",
-            "TRNET",
+            "t.*",
             "CREDITCRD1",
             "group_concat(concat(ti.TRITNM, ',', t1.TRSZ, ',', t1.TRCLR, ',', t1.TRQTY, ',', t1.TRRATE, ',', t1.TRDS2, ',', TRNETRT) SEPARATOR'|') AS itemData",
         );

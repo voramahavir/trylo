@@ -13,8 +13,8 @@ die;*/
     <STYLE type="text/css">
         @media print {
             @page {
-                size: A5;
-                margin: 0 !important;
+                size: auto;   /* auto is the initial value */
+                margin: 0mm;  /* this affects the margin in the printer settings */
             }
         }
 

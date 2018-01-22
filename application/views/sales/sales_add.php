@@ -698,6 +698,13 @@
                         </label>
                     </div>
                 </div>
+                <div class="row form-group">
+                    <label class="col-md-2 searchtype"> Party Name: </label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control searchtypeval"
+                               value="">
+                    </div>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -1374,11 +1381,16 @@
             }
 
             $('#bilsearch-modal').on('shown.bs.modal', function () {
-                search_bill_table.columns.adjust().draw();
+                search_bill_table.columns.adjust();
                 loadingStop();
             });
             $('.search-bill').click(function () {
-                setSearchTable();
+                if (search_bill_table) {
+                    search_bill_table.ajax.reload();
+                }
+                else {
+                    setSearchTable();
+                }
 
                 $('#bilsearch-modal').modal({
                     backdrop: 'static',
@@ -1386,8 +1398,15 @@
                 });
             });
 
-            $('#search_bill_table tbody').on('click', 'tr', function () {
+            $('#search_bill_table').find('tbody').on('click', 'tr', function () {
                 var data = search_bill_table.row(this).data();
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    search_bill_table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
                 var itemData = data.itemData;
                 var html = "";
                 if (itemData) {
@@ -1421,7 +1440,7 @@
                         }
                     });
                 }
-                $("#search_bill_item_table tbody").html(html);
+                $("#search_bill_item_table").find("tbody").html(html);
             });
 
             function setSearchTable() {
@@ -1436,6 +1455,13 @@
                     "info": false,
                     "scrollY": "200px",
                     "scrollCollapse": true,
+                    "dom": "" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                    "language": {
+                        search: "Party Name: ",
+                        searchPlaceholder: "Party Name"
+                    },
                     "columns": [
                         {
                             "bSortable": false,
@@ -1484,6 +1510,39 @@
 
             $("input[name=type]").on('change', function () {
                 type = this.value;
+                var typetext = "Party Name:";
+                if (type == 2) {
+                    typetext = "Mobile No:";
+                }
+                $('.searchtype').text(typetext);
+            });
+            $('.searchtypeval').on('keyup', function () {
+                search_bill_table.search(this.value).draw();
+            });
+            $('#search_bill_table').find('tbody').on('dblclick', 'tr', function () {
+                var data = search_bill_table.row(this).data();
+                $('#CRDNUM').val(data.CRDNUM);
+                $('#TRSALUT').val(data.TRSALUT);
+                $('#TRPRNM').val(data.TRPRNM);
+                $('.ad1').val(data.TRPAD1);
+                $('.ad2').val(data.TRPAD2);
+                $('.ad3').val(data.TRPAD3);
+                $('.city').val(data.TRCITY);
+                $('#TRPH1').val(data.TRPH1);
+                $('.ph2').val(data.TRPH2);
+                $('.email').val(data.TREMAIL);
+                var TRDOB = data.TRDOB ? new Date(data.TRDOB).toString("dd/mm/yyyy") : null;
+                $('.dob').val(TRDOB);
+                var TRMAD = data.TRMAD ? new Date(data.TRMAD).toString("dd/mm/yyyy") : null;
+                $('.mad').val(TRMAD);
+                $('#CRDNUM').trigger('change');
+                $('#TRPH1').trigger('change');
+                $('#bilsearch-modal').modal('hide');
+                $('.searchtypeval').val("");
+                type = 1;
+                search_bill_table.destroy();
+                search_bill_table = null;
+                $("#search_bill_item_table").find("tbody").html("");
             });
         });
     }(jQuery));
