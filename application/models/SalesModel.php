@@ -142,7 +142,15 @@ class SalesModel extends CI_Model
             'FORMAT(SUM(bi.TRLCGSTA), 2) as cgstlamt',
             'FORMAT(SUM(bi.TRHSGSTA), 2) as sgsthamt',
             'FORMAT(SUM(bi.TRHCGSTA), 2) as cgsthamt',
-            'p.TRLOW as lowamt'
+            'p.TRLOW as lowamt',
+            'b.CRDPREF',
+            'b.CRDNUM',
+            'b.CRREDPN',
+            'b.CRREDAM',
+            'b.TRTYPE',
+            'b.TRPMMOB',
+            'b.TRPMNAM',
+            'm.CARDTYPE',
         );
         $where = array(
             'b.TRBLNO' => $billNo,
@@ -154,6 +162,7 @@ class SalesModel extends CI_Model
         $this->db->join("trbil1 bi", "bi.TRBLNO1 = b.TRBLNO");
         $this->db->join("tritem i", "i.TRITCD = bi.TRITCD");
         $this->db->join("trprgrp as p", "i.TRPRDGRP = p.PRDCD");
+        $this->db->join("trcrdty as m", "m.CARDTYNO = b.TRPMCTY", "LEFT");
         $this->db->group_by("b.TRBLNO");
         $this->db->limit(1);
         $billData = $this->db->get('trbil b')->row();
