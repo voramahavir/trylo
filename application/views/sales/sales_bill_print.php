@@ -424,30 +424,26 @@ die;*/
                     Exp.date: <?php echo date("d/m/Y", strtotime($billData->TRCRDEXP)); ?>
                     CardHolder : <?php echo $billData->TRCRDHOLD; ?>
                     <br>
-                    Membership Card No. :<?php echo $billData->CRDPREF . '-' . $billData->CRDNUM; ?>
+                    <?php if ($billData->CRDNUM) { ?>
+                        Membership Card No. :<?php echo $billData->CRDPREF . '-' . $billData->CRDNUM; ?>
+                    <?php } ?>
                 </td>
-                <td colspan="2" class="text-bold fs-12 no-border-top no-border-left text-right">
-                    AUTHORIZED SIGN.
-                </td>
-            <?php } else {
-                echo "<td colspan='11' class='no-border-top'>&nbsp;</td>";
-            } ?>
-        </tr>
-        <tr>
-            <?php if ($billData->TRTYPE == "4") { ?>
+            <?php } else if ($billData->TRTYPE == "4") { ?>
                 <td colspan="9" class="text-bold fs-12 no-border-top no-border-right">
                     <?php echo $billData->CARDTYPE; ?>
                     Name: <?php echo $billData->TRPMNAM; ?>
                     Mob : <?php echo $billData->TRPMMOB; ?>
                     <br>
-                    Membership Card No. :<?php echo $billData->CRDPREF . '-' . $billData->CRDNUM; ?>
-                </td>
-                <td colspan="2" class="text-bold fs-12 no-border-top no-border-left text-right">
-                    AUTHORIZED SIGN.
+                    <?php if ($billData->CRDNUM) { ?>
+                        Membership Card No. :<?php echo $billData->CRDPREF . '-' . $billData->CRDNUM; ?>
+                    <?php } ?>
                 </td>
             <?php } else {
-                echo "<td colspan='11' class='no-border-top'>&nbsp;</td>";
+                echo "<td colspan='9' class='no-border-top no-border-right'>&nbsp;</td>";
             } ?>
+            <td colspan="2" class="text-bold fs-12 no-border-top no-border-left text-right">
+                AUTHORIZED SIGN.
+            </td>
         </tr>
     </table>
 </div>
