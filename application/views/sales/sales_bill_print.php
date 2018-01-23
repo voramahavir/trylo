@@ -418,6 +418,22 @@ die;*/
             </td>
         </tr>
         <tr>
+            <?php if ($billData->TRTYPE == "3") { ?>
+                <td colspan="9" class="text-bold fs-12 no-border-top no-border-right">
+                    Card No.: <?php echo $billData->TRCRDNO; ?>
+                    Exp.date: <?php echo date("d/m/Y", strtotime($billData->TRCRDEXP)); ?>
+                    CardHolder : <?php echo $billData->TRCRDHOLD; ?>
+                    <br>
+                    Membership Card No. :<?php echo $billData->CRDPREF . '-' . $billData->CRDNUM; ?>
+                </td>
+                <td colspan="2" class="text-bold fs-12 no-border-top no-border-left text-right">
+                    AUTHORIZED SIGN.
+                </td>
+            <?php } else {
+                echo "<td colspan='11' class='no-border-top'>&nbsp;</td>";
+            } ?>
+        </tr>
+        <tr>
             <?php if ($billData->TRTYPE == "4") { ?>
                 <td colspan="9" class="text-bold fs-12 no-border-top no-border-right">
                     <?php echo $billData->CARDTYPE; ?>
