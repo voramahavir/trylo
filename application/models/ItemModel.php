@@ -119,18 +119,21 @@ class ItemModel extends CI_Model
             } else {
                 $freeze = null;
             }
-            if ($freeze != null && $color != 'all') {
+            if ($freeze != null && $freeze != 'all') {
                 if ($freeze == "yes") {
                     $this->db->where('t.TRFRZIT', 'Y');
                 } elseif ($freeze == "no") {
                     $this->db->where('t.TRFRZIT', 'N');
                 }
-            } elseif ($color != null && $color != 'all') {
+            }
+            if ($color != null && $color != 'all') {
                 $this->db->where('t1.TRCOLOR', $color);
-            } elseif ($size != null && $size != 'all') {
+            }
+            if ($size != null && $size != 'all') {
                 $this->db->where('t1.TRSZCD', $size);
-            } elseif ($group != null && $group != 'all') {
-                $this->db->where('t2.PRDNM', $group);
+            }
+            if ($group != null && $group != 'all') {
+                $this->db->where('t.TRPRDGRP', $group);
             }
         }
     }

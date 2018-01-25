@@ -1,13 +1,8 @@
 <?php $this->load->view('include/template/common_header'); ?>
 <style type="text/css">
-    /* Important part */
-    /*.modal-dialog{
-        overflow-y: initial !important
+    .search-bill-header {
+        padding-bottom: 0;
     }
-    .modal-body{
-        height: 450px;
-        overflow-y: auto;
-    }*/
 </style>
 <!-- Main row -->
 <div class="row">
@@ -250,7 +245,12 @@
                                                 <input type="text" name="TRDOB" id="TRDOB"
                                                        class="form-control datepicker dob">
                                             </div>
-
+                                            <div class="col-md-3">
+                                                <button type="button" class="btn btn-primary search-bill"><i
+                                                            class="fa fa-search"></i>
+                                                    Search Party Bill
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Phone-2 </label>
@@ -338,6 +338,12 @@
                                                        class="form-control oth_amt">
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Rnd Off </label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control rndOff" name="TRRND">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="row">
@@ -366,12 +372,6 @@
                                                        value="0">
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <label class="col-md-3 text-right"> Rnd Off </label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control rndOff" name="TRRND">
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="row">
@@ -393,23 +393,24 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row label-default" style="padding: 15px 0;">
                                     <div class="col-md-4">
                                         <div class="row">
-                                            <label class="col-md-2 text-right text-danger"> Nett Amount Rs. </label>
-                                            <div class="col-md-10">
+                                            <label class="col-md-5 text-right text-danger lblamt"> Nett Amount
+                                                Rs. </label>
+                                            <div class="col-md-5">
                                                 <input type="text" name="TRNET" id="TRNET"
-                                                       class="form-control net_amount"
+                                                       class="form-control net_amount text-bold text-right"
                                                        readonly>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="row">
-                                            <label class="col-md-3 text-right text-primary"> Total Qty </label>
-                                            <div class="col-md-9">
+                                            <label class="col-md-3 text-right text-primary lblamt"> Total Qty </label>
+                                            <div class="col-md-5">
                                                 <input type="text" name="TRTOTQTY" id="TRTOTQTY"
-                                                       class="form-control m_t_qty"
+                                                       class="form-control m_t_qty text-bold text-right"
                                                        readonly>
                                             </div>
                                         </div>
@@ -668,19 +669,22 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="row ret_cus_div label-info text-center" style="margin-top: 15%">
-                                            <h2> RETURN TO CUSTOMER </h2>
+                                            <h2 class="text-bold"> RETURN TO CUSTOMER </h2>
                                             <!--<div class="col-md-8">
                                                 <input type="text" class="form-control ret_cus" value="0" readonly>
                                             </div>-->
-                                            <label class="ret_cus h2">0.00</label>
+                                            <label class="ret_cus h2 text-bold">0.00</label>
                                         </div>
-                                        <div class="row label-danger" style="margin-top: 10%; padding: 3% 0;">
-                                            <!--<h2> RETURN TO CUSTOMER </h2>-->
-                                            <label class="col-md-4 text-right"> Nett Amt Rcvd </label>
-                                            <div class="col-md-8">
-                                                <input type="text" name="TRCRAMT" id="TRCRAMT" class="form-control nett_amt_rcvd"
-                                                       value="0" readonly>
-                                            </div>
+                                        <div class="row label-danger text-center"
+                                             style="margin-top: 10%;">
+                                            <h3 class="text-bold"> Nett Amt Rcvd </h3>
+                                            <!--<label class="col-md-4 text-right"> Nett Amt Rcvd </label>-->
+                                            <!--<div class="col-md-8">-->
+                                            <label class="nett_amt_rcvd_label h3 text-bold">0.00</label>
+                                            <input type="hidden" name="TRCRAMT" id="TRCRAMT"
+                                                   class="form-control nett_amt_rcvd text-bold"
+                                                   value="0" readonly>
+                                            <!--</div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -698,11 +702,82 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="bilsearch-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header search-bill-header">
+                <div class="row">
+                    <div class="col-md-12 radio">
+                        <label> <input type="radio" class="radio-inline" id="type" name="type" value="1"
+                                       checked> Party Name Wise </label>
+                        <label> <input type="radio" class="radio-inline" id="type" name="type" value="2">
+                            Mobile No Wise
+                        </label>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-2 searchtype"> Party Name: </label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control searchtypeval"
+                               value="">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="search_bill_table" class="table table-bordered table-hover dataTable"
+                               role="grid">
+                            <thead>
+                            <tr role="row">
+                                <th class="col-md-1 text-center">Bill No.</th>
+                                <th class="col-md-1 text-center">Date</th>
+                                <th class="col-md-2 text-center">Name of Party</th>
+                                <th class="col-md-1 text-center">Mobile No</th>
+                                <th class="col-md-1 text-center">Amt Rs.</th>
+                                <th class="col-md-1 text-center">PntEarn</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="search_bill_item_table" class="table table-bordered table-hover dataTable"
+                               role="grid">
+                            <thead>
+                            <tr role="row">
+                                <th class="col-md-2 text-center">Item Name</th>
+                                <th class="col-md-1 text-center">Size</th>
+                                <th class="col-md-1 text-center">Color</th>
+                                <th class="col-md-1 text-center">Qty</th>
+                                <th class="col-md-1 text-center">Rate Rs.</th>
+                                <th class="col-md-1 text-center">Disc.Rs.</th>
+                                <th class="col-md-1 text-center">Amount Rs.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- /.modal -->
 
 <?php $this->load->view('include/template/common_footer'); ?>
-
+<script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
+<script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 <script type="text/javascript">
+    var search_bill_table = "", type = 1;
     (function ($) {
         $(document).ready(function () {
             $('body').addClass("sidebar-collapse");
@@ -722,6 +797,7 @@
                     gTotalAmt = 0;
                     itemsData = setItemsData();
                     total_amt();
+                    nett_amt_rcvd();
                 } else {
                     alert("Required to add items");
                 }
@@ -1101,8 +1177,9 @@
 
             function nett_amt_rcvd() {
                 $('.nett_amt_rcvd').val(parseFloat($('.dr_total').val()) - parseFloat($('.dre_total').val()));
-                var ret_cus = parseFloat($('.dr_total').val()) - parseFloat($('.net_amount').val()) - parseFloat($('.dre_total').val());
-                $('.ret_cus').text(ret_cus);
+                $('.nett_amt_rcvd_label').text($('.nett_amt_rcvd').val());
+
+
                 /*if (ret_cus > 0) {
                     // $('.ret_cus_div').show();
                     $('.ret_cus').text(ret_cus);
@@ -1114,6 +1191,8 @@
                 netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
                 $('.net_amount').val(netAmt);
                 $('.rndOff').val(rndOff);
+                var ret_cus = parseFloat($('.dr_total').val()) - parseFloat($('#TRNET').val()) - parseFloat($('.dre_total').val());
+                $('.ret_cus').text(ret_cus);
 //                $('.net_amount').val(parseFloat($('.gross').val()) + parseFloat($('.oth_amt').val()));
             }
 
@@ -1270,6 +1349,8 @@
                             else {
                                 bootbox.alert(response.msg, function () {
                                     $('.crdnum').val('');
+                                    $('.currBillPoint').val("");
+                                    $('.totBalPoint').val("");
                                 });
                             }
                             setCurrPoints(data.totalPoints);
@@ -1351,7 +1432,8 @@
                         branch_code: "<?php echo getSessionData('branch_code');?>"
                     };
                 }
-                totalPoints = parseFloat(totalPoints) + parseFloat(currBillPoint);
+                totalPoints = parseFloat(parseFloat(totalPoints) + parseFloat(currBillPoint)).toFixed(2);
+                totalPoints = isNaN(totalPoints) ? 0 : totalPoints;
                 $('.currBillPoint').val(currBillPoint);
                 $('.totBalPoint').val(totalPoints);
             }
@@ -1391,6 +1473,171 @@
                     }
                 })
             }
+
+            $('#bilsearch-modal').on('shown.bs.modal', function () {
+                search_bill_table.columns.adjust();
+                loadingStop();
+            });
+            $('.search-bill').click(function () {
+                if (search_bill_table) {
+                    search_bill_table.ajax.reload();
+                }
+                else {
+                    setSearchTable();
+                }
+
+                $('#bilsearch-modal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            });
+
+            $('#search_bill_table').find('tbody').on('click', 'tr', function () {
+                var data = search_bill_table.row(this).data();
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    search_bill_table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+                var itemData = data.itemData;
+                var html = "";
+                if (itemData) {
+                    itemData = itemData.split("|");
+                    $.each(itemData, function (index, val) {
+                        val = val.split(',');
+                        if (val) {
+                            html += "<tr>";
+                            html += "<td class=\"col-md-2 text-center\">";
+                            html += val[0];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[1];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[2];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[3];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[4];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[5];
+                            html += "</td>";
+                            html += "<td class=\"col-md-1 text-center\">";
+                            html += val[6];
+                            html += "</td>";
+                            html += "</tr>";
+                        }
+                    });
+                }
+                $("#search_bill_item_table").find("tbody").html(html);
+            });
+
+            function setSearchTable() {
+                loadingStart();
+                search_bill_table = $('#search_bill_table').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "searching": true,
+                    "paging": false,
+                    "autoWidth": false,
+                    "ordering": false,
+                    "info": false,
+                    "scrollY": "200px",
+                    "scrollCollapse": true,
+                    "dom": "" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                    "language": {
+                        search: "Party Name: ",
+                        searchPlaceholder: "Party Name"
+                    },
+                    "columns": [
+                        {
+                            "bSortable": false,
+                            "data": "TRBLNO",
+                            "className": "col-md-1 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": null,
+                            "className": "col-md-1 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": "TRPRNM",
+                            "className": "col-md-2 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": "TRPH1",
+                            "className": "col-md-1 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": "TRNET",
+                            "className": "col-md-1 text-center"
+                        },
+                        {
+                            "bSortable": false,
+                            "data": 'CREDITCRD1',
+                            "className": "col-md-1 text-center"
+                        }
+                    ],
+                    "ajax": {
+                        url: "<?= site_url('sales/getSearchedBills') ?>",
+                        method: 'POST',
+                        data: function (d) {
+                            d.type = type;
+                        }
+                    },
+                    "rowCallback": function (nRow, aData, iDisplayindex) {
+                        var date = new Date(aData.TRBLDT);
+                        $('td:eq(1)', nRow).html(date.toString('d/M/yyyy'));
+                    }
+                });
+            }
+
+            $("input[name=type]").on('change', function () {
+                type = this.value;
+                var typetext = "Party Name:";
+                if (type == 2) {
+                    typetext = "Mobile No:";
+                }
+                $('.searchtype').text(typetext);
+            });
+            $('.searchtypeval').on('keyup', function () {
+                search_bill_table.search(this.value).draw();
+            });
+            $('#search_bill_table').find('tbody').on('dblclick', 'tr', function () {
+                var data = search_bill_table.row(this).data();
+                $('.crdnum').val(data.CRDNUM);
+                $('#TRSALUT').val(data.TRSALUT);
+                $('#TRPRNM').val(data.TRPRNM);
+                $('.ad1').val(data.TRPAD1);
+                $('.ad2').val(data.TRPAD2);
+                $('.ad3').val(data.TRPAD3);
+                $('.city').val(data.TRCITY);
+                $('#TRPH1').val(data.TRPH1);
+                $('.ph2').val(data.TRPH2);
+                $('.email').val(data.TREMAIL);
+                var TRDOB = data.TRDOB ? new Date(data.TRDOB).toString("dd/mm/yyyy") : null;
+                $('.dob').val(TRDOB);
+                var TRMAD = data.TRMAD ? new Date(data.TRMAD).toString("dd/mm/yyyy") : null;
+                $('.mad').val(TRMAD);
+                $('.crdnum').trigger('change');
+                $('#TRPH1').trigger('change');
+                $('#bilsearch-modal').modal('hide');
+                $('.searchtypeval').val("");
+                type = 1;
+                search_bill_table.destroy();
+                search_bill_table = null;
+                $("#search_bill_item_table").find("tbody").html("");
+            });
         });
 
     }(jQuery));

@@ -60,7 +60,7 @@ die;*/
 
             /*#spec { display: block; page-break-aftee: always; border-bottom:5px red solid; }*/
             @page {
-                size: auto;   /* auto is the initial value */
+                size: A3;   /* auto is the initial value */
                 margin: 0mm;  /* this affects the margin in the printer settings */
             }
 

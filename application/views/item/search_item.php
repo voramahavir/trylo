@@ -219,7 +219,8 @@
             $("#colorinput").hide();
         }else if (color=="selected"){
             $("#colorinput").show();
-        } 
+            color = $('#colorlist').val();
+        }
     });
     $("#search").click(function(){
         table.ajax.reload();

@@ -330,6 +330,12 @@
                                                        class="form-control oth_amt">
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <label class="col-md-2 text-right"> Rnd Off </label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control rndOff" name="TRRND">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="row">
@@ -358,12 +364,6 @@
                                                        value="0">
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <label class="col-md-3 text-right"> Rnd Off </label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control rndOff" name="TRRND">
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="row">
@@ -385,21 +385,24 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row label-default" style="padding: 15px 0;">
                                     <div class="col-md-4">
                                         <div class="row">
-                                            <label class="col-md-2 text-right text-danger"> Nett Amount Rs. </label>
-                                            <div class="col-md-10">
-                                                <input type="text" name="TRNET" class="form-control net_amount"
+                                            <label class="col-md-5 text-right text-danger lblamt"> Nett Amount
+                                                Rs. </label>
+                                            <div class="col-md-5">
+                                                <input type="text" name="TRNET"
+                                                       class="form-control net_amount text-bold text-right"
                                                        readonly>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="row">
-                                            <label class="col-md-3 text-right text-primary"> Total Qty </label>
-                                            <div class="col-md-9">
-                                                <input type="text" name="TRTOTQTY" class="form-control m_t_qty"
+                                            <label class="col-md-3 text-right text-primary lblamt"> Total Qty </label>
+                                            <div class="col-md-5">
+                                                <input type="text" name="TRTOTQTY"
+                                                       class="form-control m_t_qty text-bold text-right"
                                                        readonly>
                                             </div>
                                         </div>
@@ -654,19 +657,22 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="row ret_cus_div label-info text-center" style="margin-top: 15%">
-                                            <h2> RETURN TO CUSTOMER </h2>
+                                            <h2 class="text-bold"> RETURN TO CUSTOMER </h2>
                                             <!--<div class="col-md-8">
                                                 <input type="text" class="form-control ret_cus" value="0" readonly>
                                             </div>-->
-                                            <label class="ret_cus h2">0.00</label>
+                                            <label class="ret_cus h2 text-bold">0.00</label>
                                         </div>
-                                        <div class="row label-danger" style="margin-top: 10%; padding: 3% 0;">
-                                            <!--<h2> RETURN TO CUSTOMER </h2>-->
-                                            <label class="col-md-4 text-right"> Nett Amt Rcvd </label>
-                                            <div class="col-md-8">
-                                                <input type="text" name="TRCRAMT" class="form-control nett_amt_rcvd"
-                                                       value="0" readonly>
-                                            </div>
+                                        <div class="row label-danger text-center"
+                                             style="margin-top: 10%;">
+                                            <h3 class="text-bold"> Nett Amt Rcvd </h3>
+                                            <!--<label class="col-md-4 text-right"> Nett Amt Rcvd </label>-->
+                                            <!--<div class="col-md-8">-->
+                                            <label class="nett_amt_rcvd_label h3 text-bold">0.00</label>
+                                            <input type="hidden" name="TRCRAMT"
+                                                   class="form-control nett_amt_rcvd text-bold"
+                                                   value="0" readonly>
+                                            <!--</div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -1049,6 +1055,8 @@
 
             function nett_amt_rcvd() {
                 $('.nett_amt_rcvd').val(parseFloat($('.dr_total').val()) - parseFloat($('.dre_total').val()));
+                //console.log("netamtrcd", $('.nett_amt_rcvd').val());
+                $('.nett_amt_rcvd_label').text($('.nett_amt_rcvd').val());
                 var ret_cus = parseFloat($('.dr_total').val()) - parseFloat($('.net_amount').val()) - parseFloat($('.dre_total').val());
                 $('.ret_cus').text(ret_cus);
                 /*if (ret_cus > 0) {
@@ -1219,6 +1227,8 @@
                             else {
                                 bootbox.alert(response.msg, function () {
                                     $('.crdnum').val('');
+                                    $('.currBillPoint').val("");
+                                    $('.totBalPoint').val("");
                                 });
                             }
                             setCurrPoints(data.totalPoints);
@@ -1303,6 +1313,7 @@
                     };
                 }
                 totalPoints = parseFloat(parseFloat(totalPoints) + parseFloat(currBillPoint)).toFixed(2);
+                totalPoints = isNaN(totalPoints) ? 0 : totalPoints;
                 $('.currBillPoint').val(currBillPoint);
                 $('.totBalPoint').val(totalPoints);
             }

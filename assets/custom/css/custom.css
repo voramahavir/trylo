@@ -35,3 +35,8 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
 .radio label {
     padding-right: 10px;
 }
+
+.lblamt {
+    margin-top: 5px;
+    font-size: 16px;
+}
