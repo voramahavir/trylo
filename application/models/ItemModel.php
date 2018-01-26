@@ -71,10 +71,15 @@ class ItemModel extends CI_Model
 
     function getDropDownData()
     {
-        $size = $this->db->select('SZCD as size')->get('trsize')->result();
+        $size = $this->db
+            ->select('SZCD as size, PRDGRP as group')
+            ->join("trprgrp", "trprgrp.PRDCD = trsize.PRDGRP")
+            ->order_by("SZCD")
+            ->get('trsize')
+            ->result();
         $group = $this->db->select('PRDNM as name,PRDCD as code')->get('trprgrp')->result();
         // $color = $this->db->distinct('TRCOLOR as color')->get('tritem1')->result();
-        $query = $this->db->query('select distinct TRCOLOR as color from tritem1');
+        $query = $this->db->query('select distinct TRCOLOR as color from tritem1 order by color');
         $color = $query->result_array();
         $output = new stdClass();
         $output->size = $size;

@@ -1191,7 +1191,7 @@
                 netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
                 $('.net_amount').val(netAmt);
                 $('.rndOff').val(rndOff);
-                var ret_cus = parseFloat($('.dr_total').val()) - parseFloat($('#TRNET').val()) - parseFloat($('.dre_total').val());
+                var ret_cus = parseFloat($('.dr_total').val()) > 0 ? parseFloat($('.dr_total').val()) - parseFloat($('#TRNET').val()) - parseFloat($('.dre_total').val()) : 0.00;
                 $('.ret_cus').text(ret_cus);
 //                $('.net_amount').val(parseFloat($('.gross').val()) + parseFloat($('.oth_amt').val()));
             }

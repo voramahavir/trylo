@@ -153,6 +153,8 @@ class SalesModel extends CI_Model
             'b.TRCRDNO',
             'b.TRCRDEXP',
             'b.TRCRDHOLD',
+            'b.TROTH1',
+            'b.TROTH2',
             'm.CARDTYPE',
         );
         $where = array(

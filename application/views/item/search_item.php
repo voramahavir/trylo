@@ -13,109 +13,115 @@
                 <h3 class="box-title"> Search Item</h3>
             </div>
             <div class="box-body">
-                <div class="row form-group">
-                    <div class="col-md-5">
+                <div class="row form-group col-md-12">
+                    <div class="col-md-4 no-pad-right">
                         <div class="row radio">
-                            <label class="col-md-offset-1"> <input type="radio" name="filter_type" value="name" checked="true"> By Name </label>
-                            <label class="col-md-offset-1"> <input type="radio" name="filter_type" value="barcode"> By Barcode </label>
-                            <label class="col-md-offset-1"> <input type="radio" name="filter_type" value="advance"> Advance Search </label>
+                            <label class=""> <input type="radio" name="filter_type" value="name"
+                                                    checked="true"> By Name </label>
+                            <label class=""> <input type="radio" name="filter_type" value="barcode"> By
+                                Barcode </label>
+                            <label class=""> <input type="radio" name="filter_type" value="advance">
+                                Advance Search </label>
                         </div>
                     </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-6" id="byname">
-                        <label class="col-md-3 text-left" style="margin-left: 8px">Item Name :</label>
-                        <div class="col-md-5">
+                    <div class="col-md-6 no-pad-right" id="byname">
+                        <label class="col-md-3 text-left" style="margin-top: 1%">Item Name :</label>
+                        <div class="col-md-9">
                             <input name="item_name" type="text" value="" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6" id="bybarcode">
-                        <label class="col-md-3 text-left" style="margin-left: 8px">Barcode :</label>
-                        <div class="col-md-5">
+                        <label class="col-md-3 text-left" style="margin-top: 1%">Barcode :</label>
+                        <div class="col-md-9">
                             <input name="barcode" type="text" class="form-control">
                         </div>
                     </div>
+                    <button id="search" type="button" class="btn btn-success" style="margin-left: 20px;">
+                        <span class="glyphicon glyphicon-search"></span> Search
+                    </button>
                 </div>
-                <div id="advanced_search">
+                <div id="advanced_search" class="col-md-12">
                     <div class="row form-group">
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                             <div class="row radio">
-                                <label class="col-md-offset-1"> <input type="radio" name="group_type" value="all" checked="true">All</label>
-                                <label class="col-md-offset-1"> <input type="radio" name="group_type" value="selected">Selected Group</label>
+                                <label class=""> <input type="radio" name="group_type" value="all"
+                                                        checked="true">All</label>
+                                <label class=""> <input type="radio" name="group_type" value="selected">Selected
+                                    Group</label>
                             </div>
                         </div>
-                        <div class="col-md-7" id="groupinput">
-                            <label class="col-md-3 text-left">Product Group :</label>
-                            <div class="col-md-5">
-                                  <select class="form-control" id="grouplist">
-                                        <option></option>
-                                  </select>
+                        <div class="col-md-5 no-padding" id="groupinput">
+                            <label class="col-md-4 no-padding" style="margin-top: 2%;">Product Group :</label>
+                            <div class="col-md-8 no-pad-left">
+                                <select class="form-control" id="grouplist">
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="row radio">
-                                <label class="col-md-offset-1"> <input type="radio" name="freeze" value="no" checked="true">NotFreezed</label>
-                                <label class="col-md-offset-1"> <input type="radio" name="freeze" value="yes">Freezed Item</label>
-                                <label class="col-md-offset-1"> <input type="radio" name="freeze" value="all">All</label>
+                                <label class=""> <input type="radio" name="freeze" value="no"
+                                                        checked="true">NotFreezed</label>
+                                <label class=""> <input type="radio" name="freeze" value="yes">Freezed
+                                    Item</label>
+                                <label class=""> <input type="radio" name="freeze"
+                                                        value="all">All</label>
 
                             </div>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                             <div class="row radio">
-                                <label class="col-md-offset-1"> <input type="radio" name="color" value="all" checked="true">All</label>
-                                <label class="col-md-offset-1"> <input type="radio" name="color" value="selected">Selected Color</label>
+                                <label class=""> <input type="radio" name="color" value="all"
+                                                        checked="true">All</label>
+                                <label class=""> <input type="radio" name="color" value="selected">Selected
+                                    Color</label>
                             </div>
                         </div>
-                        <div class="col-md-7" id="colorinput">
-                            <label class="col-md-3 text-left">Color :</label>
-                            <div class="col-md-5">
-                                  <select class="form-control" id="colorlist">
-                                        <option></option>
-                                  </select>
+                        <div class="col-md-3 no-padding" id="colorinput">
+                            <label class="col-md-3 no-padding" style="margin-top: 2%;">Color :</label>
+                            <div class="col-md-8 no-pad-left">
+                                <select class="form-control" id="colorlist">
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-5">
+                        <div class="col-md-2 no-pad-right">
                             <div class="row radio">
-                                <label class="col-md-offset-1"> <input type="radio" name="size" value="all" checked="true">All</label>
-                                <label class="col-md-offset-1"> <input type="radio" name="size" value="selected">Selected Size</label>
+                                <label class=""> <input type="radio" name="size" value="all"
+                                                        checked="true">All</label>
+                                <label class=""> <input type="radio" name="size" value="selected">Selected
+                                    Size</label>
                             </div>
                         </div>
-                        <div class="col-md-7" id="sizeinput">
-                            <label class="col-md-3 text-left">Size :</label>
-                            <div class="col-md-5">
-                                  <select class="form-control" id="sizelist">
-                                        <option></option>
-                                  </select>
+                        <div class="col-md-3 no-pad-right" id="sizeinput">
+                            <label class="col-md-3 no-padding" style="margin-top: 2%;">Size :</label>
+                            <div class="col-md-9 no-padding">
+                                <select class="form-control" id="sizelist">
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button id="search" type="button" class="btn btn-default" style="margin-left: 20px;">
-                    <span class="glyphicon glyphicon-search"></span> Search
-                </button>
                 <div class="box-body">
                     <div id="sales_bill" class="dataTables_wrapper form-inline dt-bootstrap">
                         <table id="item_table" class="table table-bordered table-hover dataTable" role="grid">
                             <thead>
-                                <tr role="row">
-                                    <th data-field="group">Group</th>
-                                    <th data-field="name">Item Name</th>
-                                    <th data-field="cup">Cup</th>
-                                    <th data-field="size">Size</th>
-                                    <th data-field="color">Color</th>
-                                    <th data-field="mrp">MRP</th>
-                                    <th data-field="barcode">BarCode</th>
-                                    <th data-field="qty">StockQty</th>
-                                </tr>
+                            <tr role="row">
+                                <th data-field="group">Group</th>
+                                <th data-field="name">Item Name</th>
+                                <th data-field="cup">Cup</th>
+                                <th data-field="size">Size</th>
+                                <th data-field="color">Color</th>
+                                <th data-field="mrp">MRP</th>
+                                <th data-field="barcode">BarCode</th>
+                                <th data-field="qty">StockQty</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -136,6 +142,7 @@
 
 <script type="text/javascript">
     var items = [];
+    var itemGrpdata = {};
     var filter_type = "name";
     var color = "all";
     var size = "all";
@@ -162,8 +169,8 @@
             $('.fixed-table-loading').remove();
             setDropDownData();
             params = {
-                filter_type:"name",
-                name : "-1"
+                filter_type: "name",
+                name: "-1"
             };
             setItemsTable();
         });
@@ -171,15 +178,15 @@
 
     $("input[name=filter_type]").change(function () {
         filter_type = this.value;
-        if(filter_type == "name"){
+        if (filter_type == "name") {
             $("#byname").show();
             $("#bybarcode").hide();
             $("#advanced_search").hide();
-        }else if (filter_type=="barcode"){
+        } else if (filter_type == "barcode") {
             $("#byname").hide();
             $("#bybarcode").show();
             $("#advanced_search").hide();
-        } else if (filter_type == "advance"){
+        } else if (filter_type == "advance") {
             $("#byname").hide();
             $("#bybarcode").hide();
             $("#advanced_search").show();
@@ -188,52 +195,58 @@
             $("#sizeinput").hide();
         }
     });
-    $('#sizelist').on('change', function() {
+    $('#sizelist').on('change', function () {
         size = this.value;
     });
-    $('#grouplist').on('change', function() {
+    $('#grouplist').on('change', function () {
         group = this.value;
+        var sizes = itemGrpdata[group];
+        var html = "";
+        $.each(sizes, function (index, val) {
+            html += "<option value='" + val + "'>" + val + "</option>";
+        });
+        $('#sizelist').html(html);
     });
-    $('#colorlist').on('change', function() {
+    $('#colorlist').on('change', function () {
         color = this.value;
     });
     $("input[name=group_type]").change(function () {
         group = this.value;
-        if(group == "all"){
+        if (group == "all") {
             $("#groupinput").hide();
-        }else if (group=="selected"){
+        } else if (group == "selected") {
             $("#groupinput").show();
-        } 
+        }
     });
     $("input[name=size]").change(function () {
         size = this.value;
-        if(size == "all"){
+        if (size == "all") {
             $("#sizeinput").hide();
-        }else if (size=="selected"){
+        } else if (size == "selected") {
             $("#sizeinput").show();
-        } 
+        }
     });
     $("input[name=color]").change(function () {
         color = this.value;
-        if(color == "all"){
+        if (color == "all") {
             $("#colorinput").hide();
-        }else if (color=="selected"){
+        } else if (color == "selected") {
             $("#colorinput").show();
             color = $('#colorlist').val();
         }
     });
-    $("#search").click(function(){
+    $("#search").click(function () {
         table.ajax.reload();
     });
 
-    function setItemsTable(){
+    function setItemsTable() {
         table = $('#item_table').DataTable({
             "processing": true,
             "serverSide": true,
-            "destroy" : true,
+            "destroy": true,
             "paging": true,
-            "lengthChange" : false,
-            "searching" : false,
+            "lengthChange": false,
+            "searching": false,
             "columns": [
                 {
                     "bSortable": false,
@@ -271,12 +284,12 @@
             "ajax": {
                 url: "<?= site_url('ItemController/getItems') ?>",
                 method: 'POST',
-                data : function(d){
-                    if(filter_type == "name"){
-                        d.filter_type="name";
+                data: function (d) {
+                    if (filter_type == "name") {
+                        d.filter_type = "name";
                         d.name = $("input[name=item_name]").val();
-                    }else if (filter_type=="barcode"){
-                        d.filter_type="barcode";
+                    } else if (filter_type == "barcode") {
+                        d.filter_type = "barcode";
                         d.barcode = $("input[name=barcode]").val();
                     } else {
                         d.color = color;
@@ -290,34 +303,39 @@
         });
     }
 
-    function setDropDownData(){
+    function setDropDownData() {
+
         $.ajax({
-          url: "<?= site_url('ItemController/getDropDownData') ?>",
-          dataType: 'json',
-          method : 'POST',
-          success: function(result) {
-            var select = document.getElementById("colorlist");
-            for(var i = 0; i < result.color.length; i++) {
-                var option = document.createElement('option');
-                option.text = option.value = result.color[i].color;
-                select.add(option);
-            }
+            url: "<?= site_url('ItemController/getDropDownData') ?>",
+            dataType: 'json',
+            method: 'POST',
+            success: function (result) {
+                var select = document.getElementById("colorlist");
+                for (var i = 0; i < result.color.length; i++) {
+                    var option = document.createElement('option');
+                    option.text = option.value = result.color[i].color;
+                    select.add(option);
+                }
 
-            var select = document.getElementById("sizelist");
-            for(var i = 0; i < result.size.length; i++) {
-                var option = document.createElement('option');
-                option.text = option.value = result.size[i].size;
-                select.add(option);
-            }
+                select = document.getElementById("sizelist");
+                for (var i = 0; i < result.size.length; i++) {
+                    var option = document.createElement('option');
+                    if (!itemGrpdata[result.size[i].group]) {
+                        itemGrpdata[result.size[i].group] = [];
+                    }
+                    itemGrpdata[result.size[i].group].push(result.size[i].size);
+                    option.text = option.value = result.size[i].size;
+                    select.add(option);
+                }
 
-            var select = document.getElementById("grouplist");
-            for(var i = 0; i < result.group.length; i++) {
-                var option = document.createElement('option');
-                option.text = result.group[i].name;
-                option.value = result.group[i].code;
-                select.add(option);
+                select = document.getElementById("grouplist");
+                for (var i = 0; i < result.group.length; i++) {
+                    var option = document.createElement('option');
+                    option.text = result.group[i].name;
+                    option.value = result.group[i].code;
+                    select.add(option);
+                }
             }
-          }
         });
     }
 </script>

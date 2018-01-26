@@ -367,10 +367,14 @@ die;*/
             <td colspan="4" class="fs-12 text-bold text-right">
                 Net Inclusive of Taxes :
                 <br>
+                <?php echo $billData->TROTH1 ?>
+                <br>
                 R.Off Rs. :
             </td>
             <td class="fs-12 text-bold text-right">
                 <?php echo $billData->grsamt; ?>
+                <br>
+                <?php echo number_format($billData->TROTH2, 2); ?>
                 <br>
                 <?php echo $billData->rndoff; ?>
             </td>
