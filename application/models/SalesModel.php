@@ -85,7 +85,7 @@ class SalesModel extends CI_Model
             'search' => $search
         );
 
-        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type,t.CANBL,(SELECT if(TRPH1 > "",count(TRPH1),"") FROM trbil t2 WHERE t2.TRPH1 = t.TRPH1 AND t2.fin_year = "' . fin_year() . '" GROUP BY t2.TRPH1) as repeatCount');
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type,t.CANBL,(SELECT if(TRPH1 > "",count(TRPH1),"") FROM trbil t2 WHERE t2.TRPH1 = t.TRPH1 AND t2.fin_year = "' . fin_year() . '" GROUP BY t2.TRPH1) as repeatCount,t.TROTH2 as other,t.TRDSPRAM as discount');
         $this->db->limit($length, $start);
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
         $this->db->group_by('t.TRBLNO');

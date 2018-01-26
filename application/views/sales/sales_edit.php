@@ -330,11 +330,11 @@
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Other </label>
                                             <div class="col-md-4">
-                                                <input type="text" name="TROTH1" class="form-control">
+                                                <input type="text" name="TROTH1" id="TROTH1" class="form-control">
                                             </div>
                                             <label class="col-md-1 text-right"> Amt </label>
                                             <div class="col-md-5">
-                                                <input type="number" value="0" name="TROTH2"
+                                                <input type="number" value="0" name="TROTH2" id="TROTH2"
                                                        class="form-control oth_amt">
                                             </div>
                                         </div>

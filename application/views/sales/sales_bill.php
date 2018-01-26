@@ -263,12 +263,12 @@
                 },
                 {
                     "bSortable": false,
-                    "data": null,
+                    "data": "discount",
                     "className": "col-md-1 text-center"
                 },
                 {
                     "bSortable": false,
-                    "data": null,
+                    "data": "other",
                     "className": "col-md-1 text-center"
                 },
                 {
@@ -305,8 +305,8 @@
                 if (repeatCount) {
                     $('td:eq(4)', nRow).html("Y(" + repeatCount + ")");
                 }
-                $('td:eq(8)', nRow).html("");
-                $('td:eq(9)', nRow).html("");
+                //$('td:eq(8)', nRow).html("");
+                //$('td:eq(9)', nRow).html("");
                 /*$('td:eq(10)', nRow).html("");*/
                 var printStr = "<a href='" + site_url + "salesPrint/" + aData.billno + "' target='_blank' class='btn btn-success btn-action'><i class=\"fa fa-print\" aria-hidden=\"true\"></i></a>";
                 var editStr = "<a href='" + site_url + "sales/edit/" + aData.billno + "' class='btn btn-info btn-action'><i class=\"fa fa-edit\" aria-hidden=\"true\"></i></a>";
