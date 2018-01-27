@@ -14,13 +14,13 @@
             </div>
             <div class="box-body">
                 <div class="row form-group">
-                    <label class="col-md-1 text-left">Fr Date : </label>
+                    <label class="col-md-1 no-pad-right">From Date : </label>
                     <div class="col-md-2">
                         <input id="from_date" type="text" class="form-control"
                                value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>">
                     </div>
-                    <label class="col-md-1 text-left"> To Date : </label>
-                    <div class="col-md-2">
+                    <label class="col-md-1 no-pad-right"> To Date : </label>
+                    <div class="col-md-2 no-pad-left">
                         <input id="to_date" type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>">
                     </div>
 

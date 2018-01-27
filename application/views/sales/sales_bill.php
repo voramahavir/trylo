@@ -14,14 +14,14 @@
                     <h2 class="box-title page-title text-primary"> Sales Bill Entry</h2>
                 </div>
                 <div class="col-md-10">
-                    <label class="col-md-2">From Date : </label>
-                    <div class="col-md-3">
+                    <label class="col-md-1 no-padding">From Date : </label>
+                    <div class="col-md-2">
                         <input id="from_date" type="text"
                                value="<?php echo date('d/m/Y', strtotime('first day of this month', time())); ?>"
                                class="form-control">
                     </div>
-                    <label class="col-md-2"> To Date : </label>
-                    <div class="col-md-3">
+                    <label class="col-md-1 no-pad-right"> To Date : </label>
+                    <div class="col-md-2 no-pad-left">
                         <input id="to_date" type="text" value="<?php echo date('d/m/Y'); ?>" class="form-control">
                     </div>
                 </div>
