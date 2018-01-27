@@ -341,7 +341,7 @@
                                         <div class="row">
                                             <label class="col-md-2 text-right"> Rnd Off </label>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control rndOff" name="TRRND">
+                                                <input type="text" class="form-control rndOff" name="TRRND" readonly>
                                             </div>
                                         </div>
                                     </div>

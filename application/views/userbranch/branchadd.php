@@ -16,37 +16,38 @@
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Branch Name : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control branch_name" name="branch_name" id="branch_name">
+                            <input type="text" class="form-control branch_name" name="branch_name" id="branch_name"
+                                   tabindex="1">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Address : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control address1" name="address1">
+                            <input type="text" class="form-control address1" name="address1" tabindex="3">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"></label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control address2" name="address2">
+                            <input type="text" class="form-control address2" name="address2" tabindex="4">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"></label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control address3" name="address3">
+                            <input type="text" class="form-control address3" name="address3" tabindex="5">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Telephone 1 : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control telephone1" name="telephone1">
+                            <input type="text" class="form-control telephone1" name="telephone1" tabindex="9">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Subject to Jurisdiction : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control jurisdiction" name="jurisdiction">
+                            <input type="text" class="form-control jurisdiction" name="jurisdiction" tabindex="12">
                         </div>
                     </div>
                 </div>
@@ -54,37 +55,38 @@
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Prefix : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control prefix" name="prefix">
+                            <input type="text" class="form-control prefix" name="prefix" tabindex="2">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> City : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control city">
+                            <input type="text" class="form-control city" tabindex="6">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> District : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control district">
+                            <input type="text" class="form-control district" tabindex="7">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> State : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control state">
+                            <input type="text" class="form-control state" tabindex="8">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Telephone 2 : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control telephone2" name="telephone2">
+                            <input type="text" class="form-control telephone2" name="telephone2" tabindex="10">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Branch Code : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control branch_code" name="branch_code" id="branch_code">
+                            <input type="text" class="form-control branch_code" name="branch_code" id="branch_code"
+                                   tabindex="11">
                         </div>
                     </div>
                 </div>
@@ -103,26 +105,27 @@
                     <div class="row form-group">
                         <label class="col-md-5 text-right"> Card Holder No. of Points : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control chnoofpoints" name="chnoofpoints">
+                            <input type="text" class="form-control chnoofpoints" name="chnoofpoints" tabindex="13">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-5 text-right"> Reference By No. of Points : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control refnoofpoints" name="refnoofpoints">
+                            <input type="text" class="form-control refnoofpoints" name="refnoofpoints" tabindex="14">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-5 text-right"> Redeem After Minimum Points : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control redaftminpoints" name="redaftminpoints">
+                            <input type="text" class="form-control redaftminpoints" name="redaftminpoints"
+                                   tabindex="15">
                         </div>
                         <label class="col-md-3"> On Purchase Of Card Holder </label>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-5 text-right"> Re-deem Per Point : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control redperpoints" name="redperpoints">
+                            <input type="text" class="form-control redperpoints" name="redperpoints" tabindex="16">
                         </div>
                     </div>
                 </div>
@@ -130,25 +133,25 @@
                     <div class="row form-group">
                         <label class="col-md-6 text-right"> Card Holder @ Rs. ( Multiple Factor ) : </label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control chrs">
+                            <input type="text" class="form-control chrs" tabindex="17">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-6 text-right"> Reference By @ Rs. ( Multiple Factor ) : </label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control refrs">
+                            <input type="text" class="form-control refrs" tabindex="18">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-6 text-right"> Round Off Limit ( +/- ) : </label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control roundofflimit">
+                            <input type="text" class="form-control roundofflimit" tabindex="19">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-6 text-right"> Re-Deem Value @ Rs. : </label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control redvaluers">
+                            <input type="text" class="form-control redvaluers" tabindex="20">
                         </div>
                     </div>
                 </div>
@@ -167,19 +170,19 @@
                     <div class="row form-group">
                         <label class="col-md-5 text-right"> SMS Code : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control smscode" name="smscode">
+                            <input type="text" class="form-control smscode" name="smscode" tabindex="21">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-5 text-right"> Negative Stock Alert On Mobile No. : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control mobileno" name="mobileno">
+                            <input type="text" class="form-control mobileno" name="mobileno" tabindex="22">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-5 text-right"> Type Of Exp. Petty Cash A/C : </label>
                         <div class="col-md-4">
-                            <select class="form-control pettycashtype">
+                            <select class="form-control pettycashtype" tabindex="23">
                                 <option value="1">CASH</option>
                                 <option value="145">PETTY CASH FOR EXPENSE</option>
                             </select>
@@ -190,19 +193,19 @@
                     <div class="row form-group">
                         <label class="col-md-6 text-right"> SMS Last Salutation : </label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control smslast">
+                            <input type="text" class="form-control smslast" tabindex="24">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-6 text-right"> Default Mail ID : </label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control defaultemail">
+                            <input type="text" class="form-control defaultemail" tabindex="25">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-6 text-right"> GSTIN No : </label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control gstinno">
+                            <input type="text" class="form-control gstinno" tabindex="26">
                         </div>
                     </div>
                 </div>
@@ -221,7 +224,7 @@
                     <div class="row form-group">
                         <label class="col-md-8 text-right"> Want To Send Card Holder Birthday SMS ? (Y/N) : </label>
                         <div class="col-md-4">
-                            <select class="form-control bdaysms">
+                            <select class="form-control bdaysms" tabindex="27">
                                 <option value="1">Yes</option>
                                 <option value="2">No</option>
                             </select>
@@ -230,19 +233,19 @@
                     <div class="row form-group">
                         <label class="col-md-8 text-right"> Discount Validity Period Days ? : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control bdaydiscdays" name="bdaydiscdays">
+                            <input type="text" class="form-control bdaydiscdays" name="bdaydiscdays" tabindex="28">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-8 text-right"> Discount(%) : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control bdaydisc" name="bdaydisc">
+                            <input type="text" class="form-control bdaydisc" name="bdaydisc" tabindex="29">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-8 text-right"> SMS Send Before : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control bdaysendbefore" name="bdaysendbefore">
+                            <input type="text" class="form-control bdaysendbefore" name="bdaysendbefore" tabindex="30">
                         </div>
                     </div>
                 </div>
@@ -251,7 +254,7 @@
                         <label class="col-md-8 text-right"> Want To Send Card Holder Marriage Anniversary SMS ? (Y/N)
                             : </label>
                         <div class="col-md-4">
-                            <select class="form-control mrgsms">
+                            <select class="form-control mrgsms" tabindex="31">
                                 <option value="1">Yes</option>
                                 <option value="2">No</option>
                             </select>
@@ -260,19 +263,19 @@
                     <div class="row form-group">
                         <label class="col-md-8 text-right"> Discount Validity Period Days ? : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control mrgdiscdays">
+                            <input type="text" class="form-control mrgdiscdays" tabindex="32">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-8 text-right"> Discount(%) : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control mrgdisc" name="mrgdisc">
+                            <input type="text" class="form-control mrgdisc" name="mrgdisc" tabindex="33">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-md-8 text-right"> SMS Send Before : </label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control mrgsendbefore" name="mrgsendbefore">
+                            <input type="text" class="form-control mrgsendbefore" name="mrgsendbefore" tabindex="34">
                         </div>
                     </div>
                 </div>
@@ -294,7 +297,8 @@
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> User Name : </label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control user_name" name="user_name" id="user_name">
+                            <input type="text" class="form-control user_name" name="user_name" id="user_name"
+                                   tabindex="35">
                         </div>
                     </div>
                 </div>
@@ -302,7 +306,7 @@
                     <div class="row form-group">
                         <label class="col-md-3 text-right"> Password : </label>
                         <div class="col-md-6">
-                            <input type="password" class="form-control password" name="password">
+                            <input type="password" class="form-control password" name="password" tabindex="36">
                         </div>
                     </div>
                 </div>

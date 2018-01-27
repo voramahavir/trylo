@@ -89,6 +89,7 @@ class SalesModel extends CI_Model
         $this->db->limit($length, $start);
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
         $this->db->group_by('t.TRBLNO');
+        $this->db->order_by("t.id", "DESC");
         $output['data'] = $this->db->get('trbil as t')->result();
 //        echo $this->db->last_query();die;
         $this->filterData();
@@ -126,7 +127,7 @@ class SalesModel extends CI_Model
         $select = array(
             'b.TRPRNM as party',
             'b.TRPH1 as phoneno',
-            'CONCAT(b.CRDPREF,"/",b.fin_year,"/",' . $billNo . ') as billno',
+            'CONCAT(b.CRDPREF,"/","/",' . $billNo . ') as billno',
             'b.TRBLDT as billdate',
             'b.TRTOTQTY as totqty',
             'b.TRGROS as grsamt',
