@@ -154,13 +154,14 @@ class MemberShipCardModel extends CI_Model
                 'CARDNO' => $cardNo
             );
             branchWhere('maincrd');
-            finYearWhere('crdtran', 'FINYEAR', array("full" => true));
+            //finYearWhere('crdtran', 'FINYEAR', array("full" => true));
             $this->db->select($select);
             $this->db->where($where);
             $this->db->group_by('CARDNO');
-            $this->db->join('crdtran', 'crdtran.CARDNO1 = maincrd.CARDNO', 'LEFT');
+            $this->db->join('crdtran', 'crdtran.CARDNO1 = maincrd.CARDNO AND FINYEAR = "' . fin_year(array("full" => true)) . '"', 'LEFT');
             $this->db->limit(1);
             $details = $this->db->get('maincrd')->row();
+            //echo $this->db->last_query();
             if ($details) {
                 $code = 1;
                 $msg = "Data fetched successfully";
