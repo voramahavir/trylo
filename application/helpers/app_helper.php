@@ -19,7 +19,7 @@ if (!function_exists('access')) {
     {
         $ci = &get_instance();
         $access = $ci->session->userdata('access');
-        return (null !== $access) && is_array($access) && isset($access['view_mode']) && count($access) > 0;
+        return (null !== $access) && is_array($access) && isset($access['view_mode']) && isset($access['branch_id']) && count($access) > 0;
     }
 }
 

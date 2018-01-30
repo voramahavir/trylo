@@ -110,15 +110,17 @@
                     </table>
                 </div>
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-4">
-                        <div class="row">
-                            <label class="col-md-2"> Total Qty </label>
+                    <div class="col-md-4 col-md-offset-8">
+                        <div class="label-default col-md-12" style="padding: 1% 0;">
+                            <label class="col-md-3 lblamt no-padding text-right"> Total Qty </label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control t_qty" value="0" disabled>
+                                <input type="text" class="form-control t_qty text-center text-bold fs-16" value="0"
+                                       disabled>
                             </div>
-                            <label class="col-md-2"> Nett Amount </label>
+                            <label class="col-md-3 lblamt no-padding text-right"> Nett Amount </label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control n_amt" value="0" disabled>
+                                <input type="text" class="form-control n_amt text-center text-bold fs-16" value="0"
+                                       disabled>
                             </div>
                         </div>
                     </div>
@@ -976,9 +978,9 @@
                 $('#TRCRDEXP').val(TRCRDEXP);
             }
 
-            function setSalesItemData(itemsData) {
+            function setSalesItemData(_itemsData) {
                 var html = "";
-                $.map(itemsData, function (items, key) {
+                $.map(_itemsData, function (items, key) {
                     itemsArray[items.TRITCD1] = items;
                     html += '<tr class="itemBarCode ' + items.BARCODF + '">';
                     html += '<td class="hide"> ' + items.TRITCD1 + '</td> ';
@@ -1008,6 +1010,7 @@
                 showTypeDetails();
                 getCardDetailsByMobile();
                 total_amt();
+                itemsData = setItemsData();
             }
 
             function getIteminfo() {

@@ -75,19 +75,19 @@
                 <button class="btn btn-block btn-primary trans">Transactions</button>
             </div>
         </div>
-
-        <!-- <div class="social-auth-links text-center">
-          <p>- OR -</p>
-          <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-            Facebook</a>
-          <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-            Google+</a>
-        </div> -->
-        <!-- /.social-auth-links -->
-
-        <!-- <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a> -->
-
+        <div class="branch-panel hide">
+            <p class="login-box-msg">Please select Branch to continue</p>
+            <div class="form-group has-feedback">
+                <select name="branch" id="branchId" class="form-control">
+                    <option value="">Select Branch</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-primary saveBranch pull-right">Save</button>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.login-box-body -->
 </div>
@@ -108,8 +108,14 @@
                 data: {view_mode: view_mode},
                 dataType: "json",
                 success: function (result) {
-                    var redirect_url = result.redirect_url;
-                    window.location.href = "<?php echo site_url(); ?>/" + redirect_url;
+                    if (view_mode == 1) {
+                        var redirect_url = result.redirect_url;
+                        window.location.href = "<?php echo site_url(); ?>/" + redirect_url;
+                    }
+                    else {
+                        $('.trans-panel').addClass('hide');
+                        $('.branch-panel').removeClass('hide');
+                    }
                 }
             });
         }
@@ -161,7 +167,54 @@
         });
         $('.trans').click(function () {
             setViewMode(2);
+            var saveBranchBtn = $('.saveBranch');
+            console.log(saveBranchBtn);
+            var branchDatas = {};
+            if (saveBranchBtn.length) {
+                $.ajax({
+                    url: "<?php echo site_url('LoginController/getAllBranches'); ?>",
+                    dataType: 'JSON',
+                    success: function (response) {
+                        if (response.code) {
+                            var html = '<option value="">Select Branch</option>';
+                            var data = response.data;
+
+                            $.each(data, function (index, value) {
+                                html += '<option value="' + value.branch_id + '">' + value.branch_name + '</option>';
+                                branchDatas[value.branch_id] = value;
+                            });
+                            $("#branchId").html(html);
+                            localStorage.setItem("branches", html);
+                            localStorage.setItem("branchDatas", JSON.stringify(branchDatas));
+                        }
+                    }
+                });
+                saveBranchBtn.on('click', function () {
+                    var branch_id = $("#branchId").val();
+                    if (branch_id) {
+                        var branchData = branchDatas[branch_id];
+                        $.ajax({
+                            url: "<?php echo site_url('LoginController/saveBranch'); ?>",
+                            dataType: 'JSON',
+                            type: 'POST',
+                            data: {
+                                branchData: branchData
+                            },
+                            success: function (response) {
+                                if (response.code) {
+                                    $('#branch-modal').modal('hide');
+                                }
+                                window.location.reload();
+                            }
+                        });
+                    }
+                    else {
+                        bootbox.alert("Please select Branch");
+                    }
+                });
+            }
         });
+
     });
 </script>
 </body>

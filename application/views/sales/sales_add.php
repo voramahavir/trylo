@@ -110,15 +110,17 @@
                     </table>
                 </div>
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-4">
-                        <div class="row">
-                            <label class="col-md-2"> Total Qty </label>
+                    <div class="col-md-4 col-md-offset-8">
+                        <div class="label-default col-md-12" style="padding: 1% 0;">
+                            <label class="col-md-3 lblamt no-padding text-right"> Total Qty </label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control t_qty" value="0" disabled>
+                                <input type="text" class="form-control t_qty text-center text-bold fs-16" value="0"
+                                       disabled>
                             </div>
-                            <label class="col-md-2"> Nett Amount </label>
+                            <label class="col-md-3 lblamt no-padding text-right"> Nett Amount </label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control n_amt" value="0" disabled>
+                                <input type="text" class="form-control n_amt text-center text-bold fs-16" value="0"
+                                       disabled>
                             </div>
                         </div>
                     </div>
@@ -380,6 +382,28 @@
                                                 <input type="text" class="form-control totBalPoint"
                                                        style="background: red;color: white"
                                                        disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row hide redpoints">
+                                            <div class="col-md-1 col-md-offset-1">
+                                                <input type="checkbox" id="redPoints">
+                                            </div>
+                                            <label class="col-md-7 no-padding"> RE-DEEM THIS POINT</label>
+                                            <div class="col-md-12 hide points-div">
+                                                <div class="row">
+                                                    <label class="col-md-7 text-right"> Re-Deem Point </label>
+                                                    <div class="col-md-5">
+                                                        <input type="text" name="CRREDPN"
+                                                               class="form-control redeem-point" value="0" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-md-7 text-right"> Re-Deem Amount </label>
+                                                    <div class="col-md-5">
+                                                        <input type="text" name="CRREDAM"
+                                                               class="form-control redeem-amt" value="0" readonly>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -755,6 +779,37 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="red-otp">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header search-bill-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>
+                            Please Collect Redeem OTP ID from Customer to Authenticate.
+                            An OTP ID message received on customer registered mobile
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label class="col-md-2">Code:</label>
+                        <div class="col-md-8">
+                            <input type="text" id="redotp" class="form-control" value="0"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary savePoints">Authenticate</button>
             </div>
         </div>
     </div>
@@ -1151,6 +1206,10 @@
                     return;
                 }
                 var salesData = $("#salesBill").serializeObject();
+                cardData.DBREDPN = $(".redeem-point").val();
+                cardData.DBREDVL = $(".redeem-amt").val();
+                console.log(cardData);
+                //return false;
                 $.ajax({
                     url: site_url + "salesCreate",
                     dataType: 'json',
@@ -1291,6 +1350,7 @@
                 var _pointAmt = 0;
                 var crdHolPoint = parseFloat("<?php echo getSessionData('chnoofpoints'); ?>");
                 var crdHolVal = parseFloat("<?php echo getSessionData('chrs'); ?>");
+                var redeemminpoints = parseFloat("<?php echo getSessionData('redaftminpoints'); ?>");
                 for (var i = 0; i < itemsData.length; i++) {
                     var TRDS1 = parseFloat(itemsData[i].TRDS1);
                     if (!TRDS1) {
@@ -1316,6 +1376,11 @@
                 totalPoints = isNaN(totalPoints) ? 0 : totalPoints;
                 $('.currBillPoint').val(currBillPoint);
                 $('.totBalPoint').val(totalPoints);
+                if (totalPoints > redeemminpoints) {
+                    $('.redpoints').removeClass("hide");
+                } else {
+                    $('.redpoints').addClass("hide");
+                }
             }
 
             function getSalesRetByCN(cnNo, el) {
@@ -1395,6 +1460,15 @@
                 search_bill_table.columns.adjust();
                 loadingStop();
             });
+
+            $('#bilsearch-modal').on('hidden.bs.modal', function () {
+                $('body').addClass("modal-open");
+            });
+
+            $('#red-otp').on('hidden.bs.modal', function () {
+                $('body').addClass("modal-open");
+            });
+
             $('.search-bill').click(function () {
                 if (search_bill_table) {
                     search_bill_table.ajax.reload();
@@ -1554,6 +1628,35 @@
                 search_bill_table.destroy();
                 search_bill_table = null;
                 $("#search_bill_item_table").find("tbody").html("");
+            });
+
+            $("#redPoints").on("change", function () {
+                if ($(this).is(":checked")) {
+                    $("#red-otp").modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                }
+                else {
+                    $(".points-div").addClass("hide");
+                    $(".redeem-point").val(0);
+                    $(".redeem-amt").val(0);
+                }
+            });
+            $(".savePoints").on("click", function () {
+                $(".points-div").removeClass("hide");
+                var totalPoints = parseFloat($(".totBalPoint").val());
+                $(".redeem-point").val(totalPoints);
+                var redperpoints = parseFloat("<?php echo getSessionData('redperpoints'); ?>");
+                var amtPerPoint = parseFloat("<?php echo getSessionData('redvaluers'); ?>");
+                var redeemAmt = parseFloat((totalPoints * amtPerPoint) / redperpoints);
+                $(".redeem-amt").val(redeemAmt);
+                $("#red-otp").modal("hide");
+                var grsAmt = parseFloat($(".gross").val());
+                var netAmt = grsAmt - redeemAmt;
+                var rndOff = Math.round(netAmt) - netAmt;
+                $(".net_amount").val(Math.round(netAmt));
+                $(".rndOff").val(rndOff.toFixed(2));
             });
         });
     }(jQuery));

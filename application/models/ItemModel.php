@@ -77,7 +77,7 @@ class ItemModel extends CI_Model
             ->order_by("SZCD")
             ->get('trsize')
             ->result();
-        $group = $this->db->select('PRDNM as name,PRDCD as code')->get('trprgrp')->result();
+        $group = $this->db->select('PRDNM as name,PRDCD as code')->order_by("PRDNM")->get('trprgrp')->result();
         // $color = $this->db->distinct('TRCOLOR as color')->get('tritem1')->result();
         $query = $this->db->query('select distinct TRCOLOR as color from tritem1 order by color');
         $color = $query->result_array();
