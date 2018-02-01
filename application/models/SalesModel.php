@@ -255,25 +255,18 @@ class SalesModel extends CI_Model
         $msg = "No data found with this number";
         $data = array();
         $select = array(
-            "MOBILEID",
-            "LONAME",
-            "LODOB",
-            "LOMAR",
-            "LODISCPR",
-            "TRPAD1",
-            "TRPAD2",
-            "TRPAD3",
-            "TRCITY",
+            "CARDNO",
         );
         $where = array(
-            "MOBILEID" => $mobileNo,
-            "ISACTIVE" => 0
+            "MOBILENO" => $mobileNo,
+            "ISACTIVE" => 1
         );
         $this->db->select($select);
         $this->db->where($where);
-        $this->db->join("trbil", "trbil.TRPH1 = trloyl.MOBILEID");
+        branchWhere('maincrd');
+        //$this->db->join("trbil", "trbil.TRPH1 = trloyl.MOBILEID");
         $this->db->limit(1);
-        $cardData = $this->db->get("trloyl")->row();
+        $cardData = $this->db->get("maincrd")->row();
         if (count($cardData)) {
             $code = 1;
             $msg = "Data fetched successfully";

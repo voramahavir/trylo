@@ -1311,7 +1311,9 @@
                         success: function (response) {
                             if (response.code) {
                                 data = response.data;
-                                var party = $('.party').val();
+                                var cardNo = data.CARDNO;
+                                $(".crdnum").val(cardNo).trigger("change");
+                                /*var party = $('.party').val();
                                 var ad1 = $('.ad1').val();
                                 var ad2 = $('.ad2').val();
                                 var ad3 = $('.ad3').val();
@@ -1338,7 +1340,7 @@
                                 total_amt();
                                 gTotalAmt = 0;
                                 itemsData = setItemsData();
-                                total_amt();
+                                total_amt();*/
                             }
                         }
                     });
