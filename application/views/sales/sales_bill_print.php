@@ -65,7 +65,7 @@ die;*/
             }
 
             .container, .row {
-                width: 178mm !important;
+                width: 300mm !important;
                 /*margin-left: 10mm !important;*/
                 margin: 0 !important;
                 /*margin-top: 0.1% !important;*/
@@ -82,6 +82,9 @@ die;*/
             table {
                 height: 235mm;
             }*/
+            #tab1 {
+                width: 297mm !important;
+            }
         }
 
         .container, .row {
