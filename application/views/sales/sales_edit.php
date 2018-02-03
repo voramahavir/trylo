@@ -392,6 +392,28 @@
                                                        disabled>
                                             </div>
                                         </div>
+                                        <div class="row hide redpoints">
+                                            <div class="col-md-1 col-md-offset-1">
+                                                <input type="checkbox" id="redPoints">
+                                            </div>
+                                            <label class="col-md-7 no-padding"> RE-DEEM THIS POINT</label>
+                                            <div class="col-md-12 hide points-div">
+                                                <div class="row">
+                                                    <label class="col-md-7 text-right"> Re-Deem Point </label>
+                                                    <div class="col-md-5">
+                                                        <input type="text" name="CRREDPN" id="CRREDPN"
+                                                               class="form-control redeem-point" value="0" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-md-7 text-right"> Re-Deem Amount </label>
+                                                    <div class="col-md-5">
+                                                        <input type="text" name="CRREDAM" id="CRREDAM"
+                                                               class="form-control redeem-amt" value="0" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -773,13 +795,44 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="red-otp">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header search-bill-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>
+                            Please Collect Redeem OTP ID from Customer to Authenticate.
+                            An OTP ID message received on customer registered mobile
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label class="col-md-2">Code:</label>
+                        <div class="col-md-8">
+                            <input type="text" id="redotp" class="form-control" value="0"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary savePoints">Authenticate</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- /.modal -->
 
 <?php $this->load->view('include/template/common_footer'); ?>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 <script type="text/javascript">
-    var search_bill_table = "", type = 1;
+    var search_bill_table = "", type = 1, showInitialRedeem = 0, hasInitialCard = 0;
     (function ($) {
         $(document).ready(function () {
             $('body').addClass("sidebar-collapse");
@@ -892,6 +945,7 @@
 
             $(document).on('change', ".ph1", function () {
                 getCardDetailsByMobile();
+                getLoyalty();
             });
 
             $('#searchItem').click(function () {
@@ -925,6 +979,7 @@
                 $('#TRTYPE').val(billData.TRTYPE);
                 $('#TRPRCD').val(billData.TRPRCD);
                 $('#CRDNUM').val(billData.CRDNUM);
+                if (billData.CRDNUM) hasInitialCard = 1;
                 $('#TRSALUT').val(billData.TRSALUT);
                 $('#TRPRNM').val(billData.TRPRNM);
                 $('#TRPAD1').val(billData.TRPAD1);
@@ -976,6 +1031,13 @@
                 $('#TRDOB').val(TRDOB);
                 $('#TRMAD').val(TRMAD);
                 $('#TRCRDEXP').val(TRCRDEXP);
+                if (billData.CRREDPN) {
+                    $("#redPoints").prop("checked", true);
+                    showInitialRedeem = 1;
+                    $(".points-div").removeClass("hide");
+                    $('#CRREDPN').val(billData.CRREDPN);
+                    $('#CRREDAM').val(billData.CRREDAM);
+                }
             }
 
             function setSalesItemData(_itemsData) {
@@ -1277,6 +1339,8 @@
                     return;
                 }
                 var salesData = $("#salesBill").serializeObject();
+                cardData.DBREDPN = $(".redeem-point").val();
+                cardData.DBREDVL = $(".redeem-amt").val();
                 $.ajax({
                     url: site_url + "sales/update",
                     dataType: 'json',
@@ -1377,7 +1441,9 @@
                         success: function (response) {
                             if (response.code) {
                                 data = response.data;
-                                var party = $('.party').val();
+                                var cardNo = data.CARDNO;
+                                $(".crdnum").val(cardNo).trigger("change");
+                                /*var party = $('.party').val();
                                 var ad1 = $('.ad1').val();
                                 var ad2 = $('.ad2').val();
                                 var ad3 = $('.ad3').val();
@@ -1404,7 +1470,7 @@
                                 total_amt();
                                 gTotalAmt = 0;
                                 itemsData = setItemsData();
-                                total_amt();
+                                total_amt();*/
                             }
                         }
                     });
@@ -1416,6 +1482,7 @@
                 var _pointAmt = 0;
                 var crdHolPoint = "<?php echo getSessionData('chnoofpoints'); ?>";
                 var crdHolVal = "<?php echo getSessionData('chrs'); ?>";
+                var redeemminpoints = parseFloat("<?php echo getSessionData('redaftminpoints'); ?>");
                 for (var i = 0; i < itemsData.length; i++) {
                     if (!parseFloat(itemsData[i].TRDS1)) {
                         _pointAmt += parseFloat(itemsData[i].TRBLAMT);
@@ -1435,10 +1502,16 @@
                         branch_code: "<?php echo getSessionData('branch_code');?>"
                     };
                 }
-                totalPoints = parseFloat(parseFloat(totalPoints) + parseFloat(currBillPoint)).toFixed(2);
+                if (!hasInitialCard)
+                    totalPoints = parseFloat(parseFloat(totalPoints) + parseFloat(currBillPoint)).toFixed(2);
                 totalPoints = isNaN(totalPoints) ? 0 : totalPoints;
                 $('.currBillPoint').val(currBillPoint);
                 $('.totBalPoint').val(totalPoints);
+                if (totalPoints > redeemminpoints || showInitialRedeem) {
+                    $('.redpoints').removeClass("hide");
+                } else {
+                    $('.redpoints').addClass("hide");
+                }
             }
 
             function loadParties() {
@@ -1481,6 +1554,15 @@
                 search_bill_table.columns.adjust();
                 loadingStop();
             });
+
+            $('#bilsearch-modal').on('hidden.bs.modal', function () {
+                $('body').addClass("modal-open");
+            });
+
+            $('#red-otp').on('hidden.bs.modal', function () {
+                $('body').addClass("modal-open");
+            });
+
             $('.search-bill').click(function () {
                 if (search_bill_table) {
                     search_bill_table.ajax.reload();
@@ -1641,6 +1723,62 @@
                 search_bill_table = null;
                 $("#search_bill_item_table").find("tbody").html("");
             });
+            $("#redPoints").on("change", function () {
+                if ($(this).is(":checked")) {
+                    $("#red-otp").modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    showInitialRedeem = 0;
+                }
+                else {
+                    $(".points-div").addClass("hide");
+                    $(".redeem-point").val(0);
+                    $(".redeem-amt").val(0);
+                }
+            });
+            $(".savePoints").on("click", function () {
+                $(".points-div").removeClass("hide");
+                var totalPoints = parseFloat($(".totBalPoint").val());
+                $(".redeem-point").val(totalPoints);
+                var redperpoints = parseFloat("<?php echo getSessionData('redperpoints'); ?>");
+                var amtPerPoint = parseFloat("<?php echo getSessionData('redvaluers'); ?>");
+                var redeemAmt = parseFloat((totalPoints * amtPerPoint) / redperpoints);
+                $(".redeem-amt").val(redeemAmt);
+                $("#red-otp").modal("hide");
+                var grsAmt = parseFloat($(".gross").val());
+                var netAmt = grsAmt - redeemAmt;
+                var rndOff = Math.round(netAmt) - netAmt;
+                $(".net_amount").val(Math.round(netAmt));
+                $(".rndOff").val(rndOff.toFixed(2));
+            });
+            function getLoyalty() {
+                var mobileNo = $("#TRPH1").val();
+                $.ajax({
+                    url: site_url + 'sales/getLoyalty',
+                    type: 'POST',
+                    data: {
+                        'mobileNo': mobileNo
+                    },
+                    dataType: 'JSON',
+                    success: function (response) {
+                        if(response.code){
+                            var discPer = response.data.LODISCPR;
+                            $(".d_per").each(function () {
+                                var itemDis = parseFloat($(this).val());
+                                discPer = itemDis > discPer ? itemDis : discPer;
+                                $(this).val(discPer);
+                            });
+
+                            total_amt();
+                            gTotalAmt = 0;
+                            itemsData = setItemsData();
+                            total_amt();
+                        }
+                    }
+
+                });
+            }
         });
 
     }(jQuery));

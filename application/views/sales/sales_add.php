@@ -977,7 +977,7 @@
                     html += '<td> <input type="number" class="form-control qty" min=1 value=1 /> </td> ';
                     html += '<td> <label class="nt_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
                     html += '<td> <label class="ntt_amt">' + 1 * parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
-                    html += '<td> <input type="number" class="form-control d_per" min=0 value="0.00" /> </td> ';
+                    html += '<td> <input type="number" class="form-control d_per" min=0 value="'+items.TRDSPR+'" /> </td> ';
                     html += '<td> <label class="d_amt">' + ((0).toFixed(2)) + '</label> </td> ';
                     html += '<td> <label class="t_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
                     html += '<td> <label class="i_salesCode">' + (items.BARCODF) + ' </label> </td> ';
@@ -1059,6 +1059,7 @@
 
             $(document).on('change', ".ph1", function () {
                 getCardDetailsByMobile();
+                getLoyalty();
             });
 
             $('#searchItem').click(function () {
@@ -1660,6 +1661,34 @@
                 $(".net_amount").val(Math.round(netAmt));
                 $(".rndOff").val(rndOff.toFixed(2));
             });
+
+            function getLoyalty() {
+                var mobileNo = $("#TRPH1").val();
+                $.ajax({
+                    url: site_url + 'sales/getLoyalty',
+                    type: 'POST',
+                    data: {
+                        'mobileNo': mobileNo
+                    },
+                    dataType: 'JSON',
+                    success: function (response) {
+                        if(response.code){
+                            var discPer = response.data.LODISCPR;
+                            $(".d_per").each(function () {
+                                var itemDis = parseFloat($(this).val());
+                                discPer = itemDis > discPer ? itemDis : discPer;
+                                $(this).val(discPer);
+                            });
+
+                            total_amt();
+                            gTotalAmt = 0;
+                            itemsData = setItemsData();
+                            total_amt();
+                        }
+                    }
+
+                });
+            }
         });
     }(jQuery));
 

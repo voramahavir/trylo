@@ -125,6 +125,7 @@ class SalesModel extends CI_Model
     {
         $printData = array();
         $select = array(
+            'b.id',
             'b.TRPRNM as party',
             'b.TRPH1 as phoneno',
             'CONCAT(b.CRDPREF,"/","/",' . $billNo . ') as billno',
@@ -157,6 +158,7 @@ class SalesModel extends CI_Model
             'b.TROTH1',
             'b.TROTH2',
             'm.CARDTYPE',
+            'b.USG6'
         );
         $where = array(
             'b.TRBLNO' => $billNo,
@@ -172,6 +174,15 @@ class SalesModel extends CI_Model
         $this->db->group_by("b.TRBLNO");
         $this->db->limit(1);
         $billData = $this->db->get('trbil b')->row();
+        $printCount = $billData->USG6;
+        if($printCount){
+            $printCount++;
+        }
+        else{
+            $printCount = 1;
+        }
+        $this->db->update('trbil',array('USG6'=>$printCount),array('id' => $billData->id));
+        $billData->USG6 = $printCount;
         if ($billData) {
             $select = array(
                 'CONCAT(i.TRIMGCD, " ", bi.TRSZ,"-",bi.TRCLR) as particular',
@@ -456,6 +467,36 @@ class SalesModel extends CI_Model
         $draw = $_POST['draw'];
         $recordsFiltered = $recordsTotal = count($data);
         $response = compact("draw", "data", "recordsFiltered", "recordsTotal");
+        echo json_encode($response);
+        exit;
+    }
+
+    public function getLoyaltyByMobile()
+    {
+        $mobileNo = $_POST['mobileNo'];
+        $code = 0;
+        $msg = "No data found with this number";
+        $data = array();
+        $select = array(
+            "LODISCPR"
+        );
+        $where = array(
+            "MOBILEID" => $mobileNo,
+            "ISACTIVE" => 1,
+            "LOENDT >=" => date('Y-m-d')
+        );
+        $this->db->select($select);
+        $this->db->where($where);
+        branchWhere();
+        $this->db->limit(1);
+        $cardData = $this->db->get("trloyl")->row();
+//        echo $this->db->last_query();
+        if (count($cardData)) {
+            $code = 1;
+            $msg = "Data fetched successfully";
+            $data = $cardData;
+        }
+        $response = compact("code", "msg", "data");
         echo json_encode($response);
         exit;
     }

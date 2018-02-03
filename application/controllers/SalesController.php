@@ -106,4 +106,8 @@ class SalesController extends CI_Controller
         $this->SalesModel->getSearchedBills();
     }
 
+    public function getLoyalty()
+    {
+        $this->SalesModel->getLoyaltyByMobile();
+    }
 }

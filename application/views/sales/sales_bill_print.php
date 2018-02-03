@@ -170,7 +170,8 @@ die;*/
 <div class="container no-margin" id="mainCon">
     <table class="table" id="tab1">
         <tr>
-            <td colspan="1" class="col-md-2 heading no-border">Original Copy</td>
+            <td colspan="1"
+                class="col-md-2 heading no-border"><?php echo $billData->USG6 == 1 ? "Original Copy" : "Duplicate Copy"; ?></td>
             <td colspan="9" class="no-border text-center" align="center">
                 <label class="underline fs-12">
                     RETAIL INVOICE
