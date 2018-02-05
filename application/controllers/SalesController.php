@@ -110,4 +110,9 @@ class SalesController extends CI_Controller
     {
         $this->SalesModel->getLoyaltyByMobile();
     }
+
+    public function getDenominations()
+    {
+        $this->SalesModel->getDenominations();
+    }
 }

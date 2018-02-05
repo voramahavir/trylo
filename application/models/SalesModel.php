@@ -175,13 +175,12 @@ class SalesModel extends CI_Model
         $this->db->limit(1);
         $billData = $this->db->get('trbil b')->row();
         $printCount = $billData->USG6;
-        if($printCount){
+        if ($printCount) {
             $printCount++;
-        }
-        else{
+        } else {
             $printCount = 1;
         }
-        $this->db->update('trbil',array('USG6'=>$printCount),array('id' => $billData->id));
+        $this->db->update('trbil', array('USG6' => $printCount), array('id' => $billData->id));
         $billData->USG6 = $printCount;
         if ($billData) {
             $select = array(
@@ -497,6 +496,132 @@ class SalesModel extends CI_Model
             $data = $cardData;
         }
         $response = compact("code", "msg", "data");
+        echo json_encode($response);
+        exit;
+    }
+
+    public function getDenominations()
+    {
+        $finalDenominations = array(
+            "F2000" => 0,
+            "F200" => 0,
+            "F500" => 0,
+            "F100" => 0,
+            "F50" => 0,
+            "F20" => 0,
+            "F10" => 0,
+            "F5" => 0,
+            "FMISC" => 0,
+        );
+        $select = array(
+            "(sum(A2000) - sum(B2000)) AS F2000",
+            "(sum(A200) - sum(B200)) AS F200",
+            "(sum(A500) - sum(B500)) AS F500",
+            "(sum(A100) - sum(B100)) AS F100",
+            "(sum(A50) - sum(B50)) AS F50",
+            "(sum(A20) - sum(B20)) AS F20",
+            "(sum(A10) - sum(B10)) AS F10",
+            "(sum(A5) - sum(B5)) AS F5",
+            "(sum(AMISC) - sum(BMISC)) AS FMISC"
+        );
+        $where = array("VOUDT" => date('Y-m-d'));
+        branchWhere();
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->group_by("VOUDT");
+        $denominations = $this->db->get("kdeno")->row();
+
+        $select = array(
+            "(sum(RC2000) - sum(PD2000)) AS F2000",
+            "(sum(RC200) - sum(PD200)) AS F200",
+            "(sum(RC500) - sum(PD500)) AS F500",
+            "(sum(RC100) - sum(PD100)) AS F100",
+            "(sum(RC50) - sum(PD50)) AS F50",
+            "(sum(RC20) - sum(PD20)) AS F20",
+            "(sum(RC10) - sum(PD10)) AS F10",
+            "(sum(RC5) - sum(PD5)) AS F5",
+            "(sum(RCMIS) - sum(PDMIS)) AS FMISC"
+        );
+        $where = array("TRBLDT" => date('Y-m-d'));
+        branchWhere("trbil", "branchcode");
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->group_by("TRBLDT");
+        $salesDenominations = $this->db->get("trbil")->row();
+
+        $select = array(
+            "(sum(ifnull(PD2000,0)) - sum(RC2000)) AS F2000",
+            "(sum(ifnull(PD200,0)) - sum(RC200)) AS F200",
+            "(sum(ifnull(PD500,0)) - sum(RC500)) AS F500",
+            "(sum(ifnull(PD100,0)) - sum(RC100)) AS F100",
+            "(sum(ifnull(PD50,0)) - sum(RC50)) AS F50",
+            "(sum(ifnull(PD20,0)) - sum(RC20)) AS F20",
+            "(sum(ifnull(PD10,0)) - sum(RC10)) AS F10",
+            "(sum(ifnull(PD5,0)) - sum(RC5)) AS F5",
+            "(sum(ifnull(PDMIS,0)) - sum(RCMIS)) AS FMISC"
+        );
+        $where = array("TRBLDT" => date('Y-m-d'));
+        branchWhere();
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->group_by("TRBLDT");
+        $salesRetDenominations = $this->db->get("trslret")->row();
+
+        $select = array(
+            "(sum(0) - sum(DEM11)) AS F2000",
+            "(sum(0) - sum(DEM12)) AS F200",
+            "(sum(0) - sum(DEM2)) AS F500",
+            "(sum(0) - sum(DEM3)) AS F100",
+            "(sum(0) - sum(DEM4)) AS F50",
+            "(sum(0) - sum(DEM5)) AS F20",
+            "(sum(0) - sum(DEM6)) AS F10",
+            "(sum(0) - sum(DEM7)) AS F5",
+            "(sum(0) - sum(DEM8A)) AS FMISC"
+        );
+        $where = array("VOUDT" => date('Y-m-d'));
+        branchWhere();
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->group_by("VOUDT");
+        $voucherDenominations = $this->db->get("trvou")->row();
+
+        $select = array(
+            "(sum(ifnull(LOR2000,0)) - sum(LOP2000)) AS F2000",
+            "(sum(ifnull(LOR200,0)) - sum(LOP200)) AS F200",
+            "(sum(ifnull(LOR500,0)) - sum(LOP500)) AS F500",
+            "(sum(ifnull(LOR100,0)) - sum(LOP100)) AS F100",
+            "(sum(ifnull(LOR50,0)) - sum(LOP50)) AS F50",
+            "(sum(ifnull(LOR20,0)) - sum(LOP20)) AS F20",
+            "(sum(ifnull(LOR10,0)) - sum(LOP10)) AS F10",
+            "(sum(ifnull(LOR5,0)) - sum(LOP5)) AS F5",
+            "(sum(ifnull(LOROTH,0)) - sum(LOPOTH)) AS FMISC"
+        );
+        $where = array("LOSTDT" => date('Y-m-d'));
+        branchWhere();
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->group_by("LOSTDT");
+        $loyaltyDenominations = $this->db->get("trloyl")->row();
+
+        foreach ($finalDenominations as $key => $denomination) {
+            if (isset($denominations->$key)) {
+                $finalDenominations[$key] += $denominations->$key;
+            }
+            if (isset($salesDenominations->$key)) {
+                $finalDenominations[$key] += $salesDenominations->$key;
+            }
+            if (isset($salesRetDenominations->$key)) {
+                $finalDenominations[$key] += $salesRetDenominations->$key;
+            }
+            if (isset($voucherDenominations->$key)) {
+                $finalDenominations[$key] += $voucherDenominations->$key;
+            }
+            if (isset($loyaltyDenominations->$key)) {
+                $finalDenominations[$key] += $loyaltyDenominations->$key;
+            }
+        }
+
+        $response = compact("finalDenominations");
         echo json_encode($response);
         exit;
     }

@@ -450,7 +450,7 @@
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control dr_value" value="0" disabled>
                                             </div>
                                         </div>
@@ -462,9 +462,10 @@
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control dr_value" value="0" disabled>
                                             </div>
+
                                         </div>
                                         <div class="row">
                                             <label class="col-md-1 text-right dr_amount"> 200 </label>
@@ -474,8 +475,12 @@
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button type="button" class="btn btn-success refund"><i
+                                                            class="fa fa-arrow-circle-right fa-lg"></i></button>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -486,9 +491,10 @@
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control dr_value" value="0" disabled>
                                             </div>
+
                                         </div>
                                         <div class="row">
                                             <label class="col-md-1 text-right dr_amount"> 50 </label>
@@ -498,8 +504,12 @@
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control dr_value" value="0" disabled>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button type="button" class="btn btn-primary show-denom"><i
+                                                            class="fa fa-line-chart fa-lg"></i></button>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -510,7 +520,7 @@
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control dr_value" value="0" disabled>
                                             </div>
                                         </div>
@@ -522,7 +532,7 @@
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control dr_value" value="0" disabled>
                                             </div>
                                         </div>
@@ -534,14 +544,15 @@
                                                        value="0">
                                             </div>
                                             <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control dr_value" value="0" disabled>
                                             </div>
+
                                         </div>
                                         <div class="row">
                                             <label class="col-md-5 text-right"> MISC. </label>
                                             <span class="col-md-1">'=</span>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" name="RCMIS"
                                                        class="form-control dr_misc dr_value"
                                                        value="0">
@@ -549,7 +560,7 @@
                                         </div>
                                         <div class="row">
                                             <label class="col-md-6 text-right"> Rcvd AMt. </label>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" name="EXRCVD" class="form-control dr_total"
                                                        value="0"
                                                        readonly>
@@ -700,6 +711,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -810,6 +822,97 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary savePoints">Authenticate</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="show-denom">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>
+                            View Currency Stock
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Currency
+                                </th>
+                                <th>
+                                    Qnty
+                                </th>
+                                <th>
+                                    Amount RS.
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Rs. 2000 X</td>
+                                <td class="F2000"></td>
+                                <td class="F2000A"></td>
+                            </tr>
+                            <tr>
+                                <td>Rs. 500 X</td>
+                                <td class="F500"></td>
+                                <td class="F500A"></td>
+                            </tr>
+                            <tr>
+                                <td>Rs. 200 X</td>
+                                <td class="F200"></td>
+                                <td class="F200A"></td>
+                            </tr>
+                            <tr>
+                                <td>Rs. 100 X</td>
+                                <td class="F100"></td>
+                                <td class="F100A"></td>
+                            </tr>
+                            <tr>
+                                <td>Rs. 50 X</td>
+                                <td class="F50"></td>
+                                <td class="F50A"></td>
+                            </tr>
+                            <tr>
+                                <td>Rs. 20 X</td>
+                                <td class="F20"></td>
+                                <td class="F20A"></td>
+                            </tr>
+                            <tr>
+                                <td>Rs. 10 X</td>
+                                <td class="F10"></td>
+                                <td class="F10A"></td>
+                            </tr>
+                            <tr>
+                                <td>Rs. 5 X</td>
+                                <td class="F5"></td>
+                                <td class="F5A"></td>
+                            </tr>
+                            <tr>
+                                <td>Rs. MISC X</td>
+                                <td class="FMISC"></td>
+                                <td class="FMISCA"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12">
+                        <label class="label-danger pull-right totalDenom col-sm-7">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -977,7 +1080,7 @@
                     html += '<td> <input type="number" class="form-control qty" min=1 value=1 /> </td> ';
                     html += '<td> <label class="nt_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
                     html += '<td> <label class="ntt_amt">' + 1 * parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
-                    html += '<td> <input type="number" class="form-control d_per" min=0 value="'+items.TRDSPR+'" /> </td> ';
+                    html += '<td> <input type="number" class="form-control d_per" min=0 value="' + items.TRDSPR + '" /> </td> ';
                     html += '<td> <label class="d_amt">' + ((0).toFixed(2)) + '</label> </td> ';
                     html += '<td> <label class="t_amt">' + parseFloat(items.TRMRP1).toFixed(2) + '</label> </td> ';
                     html += '<td> <label class="i_salesCode">' + (items.BARCODF) + ' </label> </td> ';
@@ -1672,7 +1775,7 @@
                     },
                     dataType: 'JSON',
                     success: function (response) {
-                        if(response.code){
+                        if (response.code) {
                             var discPer = response.data.LODISCPR;
                             $(".d_per").each(function () {
                                 var itemDis = parseFloat($(this).val());
@@ -1689,6 +1792,66 @@
 
                 });
             }
+
+            $('.show-denom').click(function () {
+                $.ajax({
+                    url: site_url + 'sales/getDenominations',
+                    dataType: 'JSON',
+                    success: function (response) {
+                        var data = response.finalDenominations;
+                        var totalDenom = 0;
+                        if (data) {
+                            $('.F2000').text(data.F2000);
+                            var F2000A = parseFloat(data.F2000 * 2000);
+                            $('.F2000A').text(F2000A);
+
+                            $('.F500').text(data.F500);
+                            var F500A = parseFloat(data.F500 * 500);
+                            $('.F500A').text(F500A);
+
+                            $('.F200').text(data.F200);
+                            var F200A = parseFloat(data.F200 * 200);
+                            $('.F200A').text(F200A);
+
+                            $('.F100').text(data.F100);
+                            var F100A = parseFloat(data.F100 * 100);
+                            $('.F100A').text(F100A);
+
+                            $('.F50').text(data.F50);
+                            var F50A = parseFloat(data.F50 * 50);
+                            $('.F50A').text(F50A);
+
+                            $('.F20').text(data.F20);
+                            var F20A = parseFloat(data.F20 * 20);
+                            $('.F20A').text(F20A);
+
+                            $('.F10').text(data.F10);
+                            var F10A = parseFloat(data.F10 * 10);
+                            $('.F10A').text(F10A);
+
+                            $('.F5').text(data.F5);
+                            var F5A = parseFloat(data.F5 * 5);
+                            $('.F5A').text(F5A);
+
+                            $('.FMISC').text(data.FMISC);
+                            var FMISC = data.FMISC;
+                            $('.FMISCA').text(FMISC);
+
+                            totalDenom = F2000A + F500A + F200A + F100A + F50A + F20A + F10A + F5A + FMISC;
+                            $('.totalDenom').text("Total Amount: " + totalDenom);
+                        }
+                        $('#show-denom').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                    }
+                });
+
+            });
+
+            $('#show-denom').on('hidden.bs.modal', function () {
+                $('body').addClass("modal-open");
+            });
         });
     }(jQuery));
 
