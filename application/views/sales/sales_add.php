@@ -349,7 +349,7 @@
                                             <label class="col-md-2 text-right"> Amount </label>
                                             <div class="col-md-4">
                                                 <input type="text" class="form-control" name="TRCN1AM" id="TRCN1AM"
-                                                       value="0">
+                                                       value="0" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -363,7 +363,7 @@
                                             <label class="col-md-2 text-right"> Amount </label>
                                             <div class="col-md-4">
                                                 <input type="text" class="form-control" name="TRCN2AM" id="TRCN2AM"
-                                                       value="0">
+                                                       value="0" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -479,7 +479,7 @@
                                                 <input type="text" class="form-control dr_value" value="0" disabled>
                                             </div>
                                             <div class="col-md-1">
-                                                <button type="button" class="btn btn-success refund"><i
+                                                <button type="button" class="btn btn-success set-denom"><i
                                                             class="fa fa-arrow-circle-right fa-lg"></i></button>
                                             </div>
                                         </div>
@@ -923,7 +923,7 @@
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 <script type="text/javascript">
-    var search_bill_table = "", type = 1;
+    var search_bill_table = "", type = 1, denomData = {};
     (function ($) {
         $(document).ready(function () {
 
@@ -1214,7 +1214,6 @@
 
             function nett_amt_rcvd() {
                 $('.nett_amt_rcvd').val(parseFloat($('.dr_total').val()) - parseFloat($('.dre_total').val()));
-                //console.log("netamtrcd", $('.nett_amt_rcvd').val());
                 $('.nett_amt_rcvd_label').text($('.nett_amt_rcvd').val());
                 var ret_cus = parseFloat($('.dr_total').val()) - parseFloat($('.net_amount').val()) - parseFloat($('.dre_total').val());
                 $('.ret_cus').text(ret_cus);
@@ -1300,6 +1299,10 @@
                     };
                     _itemsData.push(data);
                 });
+                $('#TRCN1').val(0);
+                $('#TRCN1AM').val(0);
+                $('#TRCN2').val(0);
+                $('#TRCN2AM').val(0);
                 return _itemsData;
             }
 
@@ -1312,7 +1315,6 @@
                 var salesData = $("#salesBill").serializeObject();
                 cardData.DBREDPN = $(".redeem-point").val();
                 cardData.DBREDVL = $(".redeem-amt").val();
-                console.log(cardData);
                 //return false;
                 $.ajax({
                     url: site_url + "salesCreate",
@@ -1511,6 +1513,9 @@
                                     }
                                     else {
                                         el.val(data.TRNET);
+                                        var _netAmt = parseFloat($('.net_amount').val());
+                                        _netAmt -= parseFloat(data.TRNET);
+                                        $('.net_amount').val(_netAmt);
                                     }
                                 }
                                 else {
@@ -1793,7 +1798,7 @@
                 });
             }
 
-            $('.show-denom').click(function () {
+            function getDenominations() {
                 $.ajax({
                     url: site_url + 'sales/getDenominations',
                     dataType: 'JSON',
@@ -1838,19 +1843,110 @@
                             $('.FMISCA').text(FMISC);
 
                             totalDenom = F2000A + F500A + F200A + F100A + F50A + F20A + F10A + F5A + FMISC;
+                            denomData = {
+                                F2000A: data.F2000,
+                                F500A: data.F500,
+                                F200A: data.F200,
+                                F100A: data.F100,
+                                F50A: data.F50,
+                                F20A: data.F20,
+                                F10A: data.F10,
+                                F5A: data.F5,
+                                FMISC: data.FMISC
+                            };
                             $('.totalDenom').text("Total Amount: " + totalDenom);
                         }
-                        $('#show-denom').modal({
-                            backdrop: 'static',
-                            keyboard: false
-                        });
+
                     }
                 });
+            }
 
+            getDenominations();
+            $('.show-denom').click(function () {
+                getDenominations();
+                $('#show-denom').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
             });
 
             $('#show-denom').on('hidden.bs.modal', function () {
                 $('body').addClass("modal-open");
+            });
+
+            function setDenom() {
+                var rcdTotal = parseFloat($('.dr_total').val());
+                var _netAmt = parseFloat($('.net_amount').val());
+                var netAmt = rcdTotal - _netAmt;
+                if (rcdTotal <= 0 || rcdTotal < _netAmt) {
+                    alert("Please Enter pending amount");
+                    return false;
+                }
+                var F2000 = 0;
+                var F500 = 0;
+                var F200 = 0;
+                var F100 = 0;
+                var F50 = 0;
+                var F20 = 0;
+                var F10 = 0;
+                var F5 = 0;
+                var FMISC = 0;
+                if (denomData.F2000A > 0 && netAmt >= 2000) {
+                    F2000 = Math.floor(netAmt / 2000);
+                    F2000 = F2000 > denomData.F2000A ? denomData.F2000A : F2000;
+                    netAmt -= (F2000 * 2000);
+                }
+                if (denomData.F500A > 0 && netAmt >= 500) {
+                    F500 = Math.floor(netAmt / 500);
+                    F500 = F500 > denomData.F500A ? denomData.F500A : F500;
+                    netAmt -= (F500 * 500);
+                }
+                if (denomData.F200A > 0 && netAmt >= 200) {
+                    F200 = Math.floor(netAmt / 200);
+                    F200 = F200 > denomData.F200A ? denomData.F200A : F200;
+                    netAmt -= (F200 * 200);
+                }
+                if (denomData.F100A > 0 && netAmt >= 100) {
+                    F100 = Math.floor(netAmt / 100);
+                    F100 = F100 > denomData.F100A ? denomData.F100A : F100;
+                    netAmt -= (F100 * 100);
+                }
+                if (denomData.F50A > 0 && netAmt >= 50) {
+                    F50 = Math.floor(netAmt / 50);
+                    F50 = F50 > denomData.F50A ? denomData.F50A : F50;
+                    netAmt -= (F50 * 50);
+                }
+                if (denomData.F20A > 0 && netAmt >= 20) {
+                    F20 = Math.floor(netAmt / 20);
+                    F20 = F20 > denomData.F20A ? denomData.F20A : F20;
+                    netAmt -= (F20 * 20);
+                }
+                if (denomData.F10A > 0 && netAmt >= 10) {
+                    F10 = Math.floor(netAmt / 10);
+                    F10 = F10 > denomData.F10A ? denomData.F10A : F10;
+                    netAmt -= (F10 * 10);
+                }
+                if (denomData.F5A > 0 && netAmt >= 5) {
+                    F5 = Math.floor(netAmt / 5);
+                    F5 = F5 > denomData.F5A ? denomData.F5A : F5;
+                    netAmt -= (F5 * 5);
+                }
+                FMISC = netAmt;
+                var dre_note = $('.dre_note');
+                dre_note[0].value = F2000;
+                dre_note[1].value = F500;
+                dre_note[2].value = F200;
+                dre_note[3].value = F100;
+                dre_note[4].value = F50;
+                dre_note[5].value = F20;
+                dre_note[6].value = F10;
+                dre_note[7].value = F5;
+                $('.dre_misc').val(FMISC).trigger('change');
+                dre_note.trigger('change');
+            }
+
+            $('.set-denom').click(function () {
+                setDenom();
             });
         });
     }(jQuery));
