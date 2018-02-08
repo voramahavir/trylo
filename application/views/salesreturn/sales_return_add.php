@@ -309,7 +309,7 @@
                                     <div class="col-md-3">
                                         <div class="row">
                                             <div class="col-md-1">
-                                                <input type="checkbox" class="chkRfnd">
+                                                <input type="checkbox" class="chkRfnd" name="TRREF" value="Y">
                                             </div>
                                             <label class="col-md-10">Goods Return Money Refunded</label>
                                         </div>
@@ -468,7 +468,7 @@
             loadingStop();
 
             $('#searchItem').click(function () {
-                window.open(site_url + "searchItem", "popupWindow", "width=1200, height=600, scrollbars=yes");
+                window.open(site_url + "searchItem", "popupWindow", "width=1300, height=600, scrollbars=yes");
             });
 
             var items, billItems, gTotalAmt = 0, itemsData;
@@ -535,6 +535,25 @@
                 }
             });
             $(".chkRfnd").trigger("change");
+
+            $(".dr_note").change(function () {
+                var p = $(this).parent().parent();
+                if ($(this).val() > 0) {
+                    p.find('.dr_value').val(p.find('.dr_amount').text().trim() * $(this).val());
+                } else {
+                    p.find('.dr_value').val(0);
+                }
+                dr_total();
+            });
+
+            function dr_total() {
+                var t = 0;
+                $.each($('.dr_value'), function () {
+                    t += parseFloat($(this).val());
+                });
+                $('.dr_total').val(t);
+            }
+
             function getIteminfo() {
                 var barCode = $(".barCode").val().trim();
                 if (barCode) {
@@ -591,10 +610,6 @@
             }
 
             function addNewItem() {
-                console.log("items", items);
-                console.log("itemsArray", itemsArray);
-                console.log("billItems", billItems);
-                console.log("billItemsArray", billItemsArray);
                 var barCode = $('.barCode').val().trim();
                 if (barCode && items && barCodeArray.indexOf(items.BARCODF) !== -1) {
                     $('tr.' + (itemsArray[billItems.TRITCD].BARCODF).replace("/", "-")).find('.qty').val(parseInt($('tr.' + (itemsArray[billItems.TRITCD].BARCODF).replace("/", "-")).find('.qty').val()) + 1);
@@ -801,7 +816,7 @@
                     },
                     success: function (response) {
                         bootbox.alert(response.msg,function(){
-                            window.location.href = site_url + "salesreturn/salesreturnList";
+                            window.location.href = site_url + "salesreturn";
                         });
                         $("#save-modal").modal('hide');
                     }

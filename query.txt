@@ -213,3 +213,14 @@ Bhavesh : 08-01-2018
 
 ALTER TABLE `forms` ADD `view_mode` INT NULL DEFAULT NULL AFTER `role_id`;
 ALTER TABLE `main_forms` ADD `view_mode` INT NOT NULL COMMENT '1. Reports 2. Transaction' AFTER `icon`;
+
+Bhavesh : 09-02-2018 Trigger for Sales Return Cancel and Delete
+
+DROP TRIGGER IF EXISTS DeleteSalesReturn;
+CREATE TRIGGER DeleteSalesReturn AFTER DELETE ON trslret1 FOR EACH ROW BEGIN DECLARE _cl_stock INTEGER; SELECT (ist.cl_stock - OLD.TRQTY) INTO @_cl_stock FROM item_cur_stock ist WHERE OLD.TRITCD = ist.itemcode AND OLD.TRSZ = ist.size AND OLD.TRCLR = ist.color AND OLD.branch_code = ist.branchcode; UPDATE item_cur_stock ist SET ist.cl_stock = @_cl_stock WHERE OLD.TRITCD = ist.itemcode AND OLD.TRSZ = ist.size AND OLD.TRCLR = ist.color AND OLD.branch_code = ist.branchcode; END;
+
+DROP TRIGGER IF EXISTS CancelRetBill;
+CREATE TRIGGER CancelRetBill AFTER UPDATE ON trslret FOR EACH ROW UPDATE item_cur_stock ics JOIN trslret1 t1 ON t1.TRITCD = ics.itemcode AND t1.TRCLR = ics.color AND t1.TRSZ = ics.size AND t1.branch_code = ics.branchcode JOIN trslret t ON t.TRBLNO = t1.TRBLNO1 AND t.branch_code = t1.branch_code AND t.fin_year = t1.fin_year SET cl_stock = cl_stock - TRQTY WHERE t.TRBLNO = OLD.TRBLNO AND t.branch_code = OLD.branch_code AND NEW.CANBL = 'T';
+
+DROP TRIGGER IF EXISTS DeleteRetBill;
+CREATE TRIGGER DeleteRetBill AFTER DELETE ON trslret FOR EACH ROW DELETE FROM trslret1 WHERE trslret1.TRBLNO1 = OLD.TRBLNO AND trslret1.branch_code = OLD.branch_code AND trslret1.fin_year = OLD.fin_year;

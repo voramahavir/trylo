@@ -49,4 +49,14 @@ class SalesReturnController extends CI_Controller
     {
         $this->SalesReturnModel->getSalesRetByCN($billNo);
     }
+
+    public function delete($id)
+    {
+        $this->SalesReturnModel->salesRetDelete($id);
+    }
+
+    public function cancel($id)
+    {
+        $this->SalesReturnModel->salesRetCancel($id);
+    }
 }

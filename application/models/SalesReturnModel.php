@@ -40,11 +40,13 @@ class SalesReturnModel extends CI_Model
             'search' => $search
         );
 
-        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRTYPE as type,t.TRCITY as city,t.CANBL,t.TRREF');
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,t.TRTOTQTY as qty,t.TRNET as bamount,t.TRTYPE as type,t.TRCITY as city,t.CANBL,t.TRREF,tb.TRBLNO as adjBill');
+        $this->db->join("trbil tb", "tb.TRCN1 = t.TRBLNO OR tb.TRCN2 = t.TRBLNO", "LEFT");
         $this->db->limit($length, $start);
         $output['data'] = $this->db->get('trslret as t')->result();
         $this->filterData();
-        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRTYPE as type,t.TRCITY as city,t.CANBL,t.TRREF');
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,t.TRTOTQTY as qty,t.TRNET as bamount,t.TRTYPE as type,t.TRCITY as city,t.CANBL,t.TRREF,tb.TRBLNO as adjBill');
+        $this->db->join("trbil tb", "tb.TRCN1 = t.TRBLNO OR tb.TRCN2 = t.TRBLNO", "LEFT");
         $output['recordsTotal'] = $this->db->get('trslret as t')->num_rows();
         $output['recordsFiltered'] = $output['recordsTotal'];
         if (!empty($output['data'])) {
@@ -70,9 +72,10 @@ class SalesReturnModel extends CI_Model
             if ($cn_type != null && $cn_type != 'all') {
                 if ($cn_type == "1") {
                     $this->db->where('t.TRREF', NULL);
+                    $this->db->where('tb.TRBLNO', NULL);
                     $this->db->where('t.CANBL IS NULL', NULL, FALSE);
                 } elseif ($cn_type == "2") {
-                    $this->db->where('t.TRREF', 'Y');
+                    $this->db->where('t.TRREF', 'Y')->or_where("tb.TRBLNO IS NOT NULL", NULL, FALSE);
                     $this->db->where('t.CANBL IS NULL', NULL, FALSE);
                 } elseif ($cn_type == "3") {
                     $this->db->where('t.CANBL IS NOT NULL', NULL, FALSE);
@@ -189,6 +192,34 @@ class SalesReturnModel extends CI_Model
         $response = compact("code", "msg", "data");
         echo json_encode($response);
         exit;
+    }
+
+    public function salesRetDelete($id)
+    {
+        branchWhere();
+        $this->db->where(array(
+            'fin_year' => fin_year(),
+            'TRBLNO' => $id
+        ))->delete("trslret");
+        $code = 1;
+        $response = "Sales Return Bill deleted successfully.";
+        echo json_encode(array("code" => $code, "response" => $response));
+        exit();
+    }
+
+    public function salesRetCancel($id)
+    {
+        branchWhere();
+        $this->db->where(array(
+            'fin_year' => fin_year(),
+            'TRBLNO' => $id
+        ))->set(array(
+            'CANBL' => 'T'
+        ))->update("trslret");
+        $code = 1;
+        $response = "Sales Return Bill cancelled successfully.";
+        echo json_encode(array("code" => $code, "response" => $response));
+        exit();
     }
 }
 
