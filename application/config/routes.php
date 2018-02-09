@@ -106,3 +106,4 @@ $route['dndmobile/(:any)/(:any)'] = 'DndMobileController/$1/$2';
 $route['purchaseorder'] = 'PurchaseOrderController';
 $route['purchaseorder/(:any)'] = 'PurchaseOrderController/$1';
 $route['purchaseorder/(:any)/(:any)'] = 'PurchaseOrderController/$1/$2';
+$route['mobilePayment'] = 'SalesController/mobilePayment';

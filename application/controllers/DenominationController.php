@@ -66,4 +66,9 @@ class DenominationController extends CI_Controller
     {
         $this->DenominationModel->getAccs();
     }
+
+    public function getOpBal($type)
+    {
+        $this->DenominationModel->getOpBal($type);
+    }
 }

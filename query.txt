@@ -224,3 +224,8 @@ CREATE TRIGGER CancelRetBill AFTER UPDATE ON trslret FOR EACH ROW UPDATE item_cu
 
 DROP TRIGGER IF EXISTS DeleteRetBill;
 CREATE TRIGGER DeleteRetBill AFTER DELETE ON trslret FOR EACH ROW DELETE FROM trslret1 WHERE trslret1.TRBLNO1 = OLD.TRBLNO AND trslret1.branch_code = OLD.branch_code AND trslret1.fin_year = OLD.fin_year;
+
+Bhavesh : 09-01-2018 Mobile Reference Entry
+
+UPDATE `main_forms` SET `active_tabs` = 'Sales Add,Sales Bill,Sales Return List,Sales Return Add,Edit Sales,Mobile Payment' WHERE `main_forms`.`id` = 2;
+INSERT INTO `forms` (`form_id`, `form_name`, `active_tab`, `main_form_id`, `icon`, `redirect_url`, `role_id`, `view_mode`) VALUES (NULL, 'Mobile Payment Reference Entry', 'Mobile Payment', '2', 'fa fa-circle-o', 'mobilePayment', '1,2', '2');

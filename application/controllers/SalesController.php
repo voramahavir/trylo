@@ -115,4 +115,21 @@ class SalesController extends CI_Controller
     {
         $this->SalesModel->getDenominations();
     }
+
+    public function mobilePayment()
+    {
+        $data['page_title'] = 'Mobile Payment';
+        checkRight($data['page_title']);
+        $this->load->view("sales/mobile_payment", $data);
+    }
+
+    public function getMobileRef()
+    {
+        $this->SalesModel->getMobileRef();
+    }
+
+    public function updateRef($id)
+    {
+        $this->SalesModel->updateRef($id);
+    }
 }

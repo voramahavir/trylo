@@ -85,9 +85,10 @@ class SalesModel extends CI_Model
             'search' => $search
         );
 
-        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type,t.CANBL,(SELECT if(TRPH1 > "",count(TRPH1),"") FROM trbil t2 WHERE t2.TRPH1 = t.TRPH1 AND t2.fin_year = "' . fin_year() . '" GROUP BY t2.TRPH1) as repeatCount,t.TROTH2 as other,t.TRDSPRAM as discount');
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type,t.CANBL,(SELECT if(TRPH1 > "",count(TRPH1),"") FROM trbil t2 WHERE t2.TRPH1 = t.TRPH1 AND t2.fin_year = "' . fin_year() . '" GROUP BY t2.TRPH1) as repeatCount,t.TROTH2 as other,t.TRDSPRAM as discount, tc.CARDTYPE');
         $this->db->limit($length, $start);
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
+        $this->db->join("trcrdty tc", "tc.CARDTYNO = t.TRPMCTY", "LEFT");
         $this->db->group_by('t.TRBLNO');
         $this->db->order_by("t.id", "DESC");
         $output['data'] = $this->db->get('trbil as t')->result();
@@ -95,6 +96,7 @@ class SalesModel extends CI_Model
         $this->filterData();
         $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRTOTQTY as qty,t.TRNET as bamount,t.TRCRAMT as ramount,t.TRTYPE as type,t.CANBL,(SELECT if(TRPH1 > "",count(TRPH1),"") FROM trbil t2 WHERE t2.TRPH1 = t.TRPH1 AND t2.fin_year = "' . fin_year() . '" GROUP BY t2.TRPH1) as repeatCount');
         $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
+        $this->db->join("trcrdty tc", "tc.CARDTYNO = t.TRPMCTY", "LEFT");
         $this->db->group_by('t.TRBLNO');
         $output['recordsTotal'] = $this->db->get('trbil as t')->num_rows();
         $output['recordsFiltered'] = $output['recordsTotal'];
@@ -622,6 +624,94 @@ class SalesModel extends CI_Model
         }
 
         $response = compact("finalDenominations");
+        echo json_encode($response);
+        exit;
+    }
+
+    public function getMobileRef()
+    {
+        $search = array('value' => '');
+        if (isset($_POST['search'])) {
+            $search = $_POST['search'];
+        }
+        if (isset($search['value'])) {
+            $search = $search['value'];
+        }
+        $start = 0;
+        if (isset($_POST['start'])) {
+            $start = $_POST['start'];
+        }
+        $length = 10;
+        if (isset($_POST['length'])) {
+            $length = $_POST['length'];
+        }
+        $draw = 1;
+        if (isset($_POST['draw'])) {
+            $draw = $_POST['draw'];
+        }
+
+        $this->filterMobRefData();
+        $output = array("code" => 0,
+            'draw' => $draw,
+            'recordsTotal' => 0,
+            'recordsFiltered' => 0,
+            'search' => $search
+        );
+
+        $this->db->select('t.id,t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRPMMOB,t.TRTYPE as type,TRPMNAM,TRPMREF, tc.CARDTYPE');
+        $this->db->limit($length, $start);
+        $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
+        $this->db->join("trcrdty tc", "tc.CARDTYNO = t.TRPMCTY");
+        $this->db->group_by('t.TRBLNO');
+        $this->db->order_by("t.id", "DESC");
+        $output['data'] = $this->db->get('trbil as t')->result();
+//        echo $this->db->last_query();die;
+        $this->filterMobRefData();
+        $this->db->select('t.TRBLNO as billno,t.TRBLDT as date,t.TRPRNM as name,TRPMMOB,t.TRTYPE as type, tc.CARDTYPE');
+        $this->db->join("trbil1 as t1", "t1.TRBLNO1 = t.TRBLNO AND t.branchcode = t1.branchcode1 AND t.fin_year = t1.fin_year1");
+        $this->db->join("trcrdty tc", "tc.CARDTYNO = t.TRPMCTY");
+        $this->db->group_by('t.TRBLNO');
+        $output['recordsTotal'] = $this->db->get('trbil as t')->num_rows();
+        $output['recordsFiltered'] = $output['recordsTotal'];
+        if (!empty($output['data'])) {
+            $output['code'] = 1;
+        }
+//        echo $this->db->last_query();
+        echo json_encode($output);
+        exit();
+    }
+
+    public function filterMobRefData()
+    {
+        branchWhere("t", "branchcode");
+        $this->db->where('t.TRTYPE', 4);
+        if (isset($_POST['to_date'])) {
+            $to_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['to_date'])));
+            $this->db->where('t.TRBLDT <= ', $to_date);
+        }
+        if (isset($_POST['from_date'])) {
+            $from_date = date("Y-m-d", strtotime(str_replace("/", "-", $_POST['from_date'])));
+            $this->db->where('t.TRBLDT >= ', $from_date);
+        }
+        if (isset($_POST['ref_mode'])) {
+            $ref_mode = $_POST['ref_mode'];
+            if ($ref_mode != null || $ref_mode != "") {
+                if ($ref_mode == 1) {
+                    $this->db->where("TRPMREF IS NULL", null, false);
+                } elseif ($ref_mode == 2) {
+                    $this->db->where("TRPMREF IS NOT NULL", null, false);
+                }
+            }
+        }
+    }
+
+    public function updateRef($id)
+    {
+        $TRPMREF = $_POST['TRPMREF'];
+        $this->db->update("trbil", array("TRPMREF" => $TRPMREF), array("id" => $id));
+        $code = 1;
+        $msg = "Reference Updated Successfully";
+        $response = compact("code", "msg");
         echo json_encode($response);
         exit;
     }

@@ -296,7 +296,7 @@
                 } else if (aData.type == 3) {
                     $('td:eq(2)', nRow).html("Master/Visa");
                 } else if (aData.type == 4) {
-                    $('td:eq(2)', nRow).html("PAYTM");
+                    $('td:eq(2)', nRow).html(aData.CARDTYPE);
                 }
                 var date = new Date(aData.date);
                 $('td:eq(1)', nRow).html(date.toString('d/M/yyyy'));
