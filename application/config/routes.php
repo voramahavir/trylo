@@ -107,3 +107,6 @@ $route['purchaseorder'] = 'PurchaseOrderController';
 $route['purchaseorder/(:any)'] = 'PurchaseOrderController/$1';
 $route['purchaseorder/(:any)/(:any)'] = 'PurchaseOrderController/$1/$2';
 $route['mobilePayment'] = 'SalesController/mobilePayment';
+$route['report/salesregister'] = 'SalesReportController';
+$route['salesreport/(:any)'] = 'SalesReportController/$1';
+$route['salesreport/(:any)/(:any)'] = 'SalesReportController/$1/$2';
