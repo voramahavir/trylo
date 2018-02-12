@@ -27,4 +27,9 @@ class SalesReportController extends CI_Controller
     {
         $this->SalesReportModel->getSalesRetRpt();
     }
+
+    public function getSalesCommRpt()
+    {
+        $this->SalesReportModel->getSalesCommRpt();
+    }
 }

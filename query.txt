@@ -234,3 +234,7 @@ Bhavesh : 10-02-2018 Reports
 
 INSERT INTO `main_forms` (`id`, `form_name`, `active_tabs`, `icon`, `view_mode`) VALUES (NULL, 'Sales Report', 'Sales Register', 'fa fa-dashboard', '1');
 INSERT INTO `forms` (`form_id`, `form_name`, `active_tab`, `main_form_id`, `icon`, `redirect_url`, `role_id`, `view_mode`) VALUES (NULL, 'Sales Register', 'Sales Register', '8', 'fa fa-circle-o', 'report/salesregister', '1,2', '1');
+
+Bhavesh : 12-02-2018 Commission field added
+
+ALTER TABLE `branch` ADD `comm_per` DECIMAL(5,2) NOT NULL DEFAULT '0' AFTER `branch_code`;

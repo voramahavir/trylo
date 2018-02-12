@@ -53,6 +53,7 @@
                         <?php } else { ?>
                             <input type="hidden" id="branch_code" value="<?php echo getSessionData("branch_code"); ?>">
                         <?php } ?>
+                        <input type="hidden" id="comm_per" value="<?php echo getSessionData("comm_per"); ?>">
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn btn-primary show-rpt"><i class="fa fa-search"> Preview</i>
@@ -193,6 +194,56 @@
                         </table>
                     </div>
                 </div>
+                <div class="row form-group salescomm hide">
+                    <div class="salescomm-info">
+                        <div class="col-md-12">
+                            <label class="branch-name">
+
+                            </label>
+                            <label>
+                                <?php echo fin_year(); ?>
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                            <label>
+                                Sales Summary GST
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="date-label">
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="bill-label">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-hover table-bordered" id="salescomm-table">
+                            <thead>
+                            <tr>
+                                <th class="col-md-2 text-center">
+                                    Description
+                                </th>
+                                <th class="col-md-1 text-center">
+                                    Amount Bef.Tax
+                                </th>
+                                <th class="col-md-1 text-center">
+                                    CGST
+                                </th>
+                                <th class="col-md-1 text-center">
+                                    SGST
+                                </th>
+                                <th class="col-md-1 text-center">
+                                    Total Amount
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="salescomm-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="overlay">
                 <i class="fa fa-refresh fa-spin"></i>
@@ -201,12 +252,6 @@
     </div>
 </div>
 <?php $this->load->view('include/template/common_footer'); ?>
-<!--<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>-->
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/dataTables.buttons.min.js'); ?>"></script>
@@ -218,6 +263,7 @@
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.html5.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.print.min.js'); ?>"></script>
 <script type="text/javascript">
+    var commData = [];
     $(document).ready(function () {
         $('#from_date').datepicker({
             autoclose: true,
@@ -238,6 +284,7 @@
                         var data = response.data;
                         $.each(data, function (i, v) {
                             html += "<option value='" + v.branch_code + "'>" + v.branch_name + "</option>";
+                            commData[v.branch_code] = v.comm_per;
                         });
                     }
                     $("#branch_code").html(html);
@@ -245,7 +292,13 @@
             })
         }
         loadingStop();
+
         $('.show-rpt').click(showRpt);
+
+        $("#branch_code").change(function () {
+            var code = $(this).val();
+            $("#comm_per").val(commData[code]);
+        });
 
         function showRpt() {
             var type = parseInt($("input[name=rpt_type]:checked").val());
@@ -257,26 +310,31 @@
             switch (type) {
                 case  1:
                     $('.datewise').removeClass('hide');
+                    $('.salescomm').addClass('hide');
                     $('.salesret').addClass('hide');
                     dateWiseRpt();
                     break;
                 case  2:
                     $('.datewise').addClass('hide');
+                    $('.salescomm').removeClass('hide');
                     $('.salesret').addClass('hide');
                     salesCommRpt();
                     break;
                 case  3:
                     $('.datewise').addClass('hide');
+                    $('.salescomm').addClass('hide');
                     $('.salesret').removeClass('hide');
                     salesRetRpt();
                     break;
                 case  4:
                     $('.datewise').addClass('hide');
+                    $('.salescomm').addClass('hide');
                     $('.salesret').addClass('hide');
                     commRpt();
                     break;
                 case  5:
                     $('.datewise').addClass('hide');
+                    $('.salescomm').addClass('hide');
                     $('.salesret').addClass('hide');
                     salesSumRpt();
                     break;
@@ -549,7 +607,278 @@
         }
 
         function salesCommRpt() {
+            loadingStart();
 
+            var _fromDate = $('#from_date').val();
+            var _toDate = $('#to_date').val();
+            var dateLabel = "From Date : " + _fromDate + " - " + _toDate;
+            _fromDate = _fromDate.split('/');
+            _toDate = _toDate.split('/');
+            var fromDate = _fromDate[2] + '-' + _fromDate[1] + '-' + _fromDate[0];
+            var toDate = _toDate[2] + '-' + _toDate[1] + '-' + _toDate[0];
+            $('.date-label').text(dateLabel);
+            var branchname = role_id == 1 ? $("#branch_code option:selected").text() : "<?php echo getSessionData('branch_name')?>";
+            $('.branch-name').text(branchname);
+
+            $.ajax({
+                url: site_url + 'salesreport/getSalesCommRpt',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    branchCode: $("#branch_code").val()
+                },
+                success: function (response) {
+                    console.log(response);
+                    var html = "";
+                    var grsAmt = 0;
+                    var cgstAmt = 0;
+                    var sgstAmt = 0;
+                    var netAmt = 0;
+                    var pointsRed = 0;
+                    $.each(response, function (i, v) {
+                        html += "<tr>";
+
+                        html += "<td>";
+                        html += v.description;
+                        html += "</td>";
+
+                        grsAmt += parseFloat(v.AMTBT);
+                        html += "<td>";
+                        html += v.AMTBT;
+                        html += "</td>";
+
+                        cgstAmt += parseFloat(v.CGST);
+                        html += "<td>";
+                        html += v.CGST;
+                        html += "</td>";
+
+                        sgstAmt += parseFloat(v.SGST);
+                        html += "<td>";
+                        html += v.SGST;
+                        html += "</td>";
+
+                        netAmt += parseFloat(v.TOTALAMT);
+                        html += "<td>";
+                        html += v.TOTALAMT;
+                        html += "</td>";
+
+                        html += "</tr>";
+                        if (v.POINTSRED) {
+                            pointsRed += parseFloat(v.POINTSRED);
+                        }
+                    });
+
+                    html += "<tr>";
+
+                    html += "<td>";
+                    html += "<label>";
+                    html += "Total: (A)-(B)";
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += "<label>";
+                    html += grsAmt.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += "<label>";
+                    html += cgstAmt.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += "<label>";
+                    html += sgstAmt.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += "<label>";
+                    html += netAmt.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td colspan='4' class='text-right'>";
+                    html += "<label>";
+                    html += "Nett Amount Before GST : ";
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td>";
+                    html += "<label>";
+                    html += grsAmt.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td colspan='4' class='text-right'>";
+                    html += "<label>";
+                    html += "Less : <br>";
+                    html += "Membership Point redeemed";
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td>";
+                    html += "<label>";
+                    html += pointsRed.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td colspan='4' class='text-right'>";
+                    html += "<label>";
+                    html += "Nett Commission eligible sales";
+                    html += "</label>";
+                    html += "</td>";
+                    var netSales = parseFloat(grsAmt - pointsRed);
+                    html += "<td>";
+                    html += "<label>";
+                    html += netSales.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td colspan='4' class='text-right'>";
+                    html += "<label>";
+                    html += "Less Commission: <br>";
+                    var commPer = parseFloat($("#comm_per").val());
+                    html += "Commission " + commPer + "% :";
+                    html += "</label>";
+                    html += "</td>";
+                    var comm = parseFloat((netSales * commPer) / 100);
+                    html += "<td>";
+                    html += "<label>";
+                    html += comm.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td colspan='4' class='text-right'>";
+                    html += "<label>";
+                    html += "Net Commission : ";
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td>";
+                    html += "<label>";
+                    html += comm.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td colspan='4' class='text-right'>";
+                    html += "<label>";
+                    var tdsPer = 5;
+                    html += "Less TDS: <br>";
+                    html += "TDS @ " + tdsPer + "%:";
+                    html += "</label>";
+                    html += "</td>";
+                    var tds = parseFloat((comm * tdsPer) / 100);
+                    html += "<td>";
+                    html += "<label>";
+                    html += tds.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td colspan='4' class='text-right'>";
+                    html += "<label>";
+                    html += "Nett Commission Paid : ";
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td>";
+                    html += "<label>";
+                    var netComm = comm - tds;
+                    html += netComm.toFixed(2);
+                    html += "</label>";
+                    html += "</td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+                    html += "<td style=\"display: none;border: none !important;\"></td>";
+
+                    html += "</tr>";
+
+                    $('.salescomm-body').html(html);
+                    var info = $('.salescomm-info');
+
+                    $('#salescomm-table').DataTable({
+                        'destroy': true,
+                        'ordering': false,
+                        'autowidth': false,
+                        'searching': false,
+                        'info': false,
+                        dom: 'B<".rpt-info col-md-12">frtip',
+                        buttons: [
+                            /*'copy', 'csv', 'excel',
+                            {
+                                extend: 'pdf',
+                                messageTop: function () {
+                                    return info.html();
+                                }
+                            },*/
+                            {
+                                extend: 'print',
+                                autoPrint: true,
+                                customize: function (win) {
+                                    $(win.document.body)
+                                        .prepend(
+                                            info.html()
+                                        );
+                                    $(win.document.body)
+                                        .css('margin', '5px')
+                                        .css('margin-bottom', '0');
+                                }
+                            }
+                        ]
+                    });
+                    $('.rpt-info').html(info.html());
+                    info.remove();
+                },
+                complete: function () {
+                    loadingStop();
+                }
+            });
         }
 
         function salesRetRpt() {

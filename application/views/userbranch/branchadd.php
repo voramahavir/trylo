@@ -50,6 +50,12 @@
                             <input type="text" class="form-control jurisdiction" name="jurisdiction" tabindex="12">
                         </div>
                     </div>
+                    <div class="row form-group">
+                        <label class="col-md-3 text-right"> Commission(%): </label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control comm_per" name="comm_per" tabindex="12">
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="row form-group">
@@ -396,7 +402,8 @@
             mrgdisc: $(".mrgdisc").val(),
             bdaysendbefore: $(".bdaysendbefore").val(),
             mrgsendbefore: $(".mrgsendbefore").val(),
-            branch_code: $(".branch_code").val()
+            branch_code: $(".branch_code").val(),
+            comm_per: $(".comm_per").val()
         };
         var userData = {
             user_name: $(".user_name").val(),
