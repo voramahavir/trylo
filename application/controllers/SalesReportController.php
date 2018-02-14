@@ -32,4 +32,9 @@ class SalesReportController extends CI_Controller
     {
         $this->SalesReportModel->getSalesCommRpt();
     }
+
+    public function getSalesSumRpt()
+    {
+        $this->SalesReportModel->getSalesSumRpt();
+    }
 }

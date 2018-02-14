@@ -86,7 +86,8 @@ class SalesReportModel extends CI_Model
             "round(sum(t.TROTH2), 2)                                 AS OTHER",
             "round(sum(t.TRRND), 2)                                  AS ROUNDOFF",
             "round(sum(t.TRNET), 2)                                  AS TOTALAMT",
-            '"sales"                                                     AS GROUPS'
+            '"sales"                                                 AS GROUPS',
+            'round(sum(t.CRREDAM), 2)                                AS POINTSRED'
         );
 
         $where = array(
@@ -176,6 +177,53 @@ class SalesReportModel extends CI_Model
         $salesRetData = $this->db->get('trslret t')->result();
 //        echo $this->db->last_query();
         $data = array_merge($salesData, $salesRetData);
+        echo json_encode($data);
+        exit;
+    }
+
+    function getSalesSumRpt()
+    {
+        $fromDate = $_POST['fromDate'];
+        $toDate = $_POST['toDate'];
+        $branchCode = $_POST['branchCode'];
+        $select = array(
+            "tp.PRDNM",
+            "sum(tb.TRQTY) AS qty",
+            "round(sum(tb.TRNETBT * tb.TRQTY) + sum(tb.TRDS2), 2)    AS GROSS",
+            "round(sum(tb.TRDS2), 2)                                 AS DISC",
+            "round(sum(tb.TRNETBT * tb.TRQTY), 2)                    AS AMTBT",
+            "round(sum(tb.TRHCGSTA), 2) + round(sum(tb.TRLCGSTA), 2) + round(sum(tb.TRHSGSTA), 2) + round(sum(tb.TRLSGSTA), 2) AS GST",
+            "round(sum(t.TRGROS), 2)                                 AS TOTAL",
+            'round(sum(t.CRREDAM), 2)                                AS POINTSRED'
+        );
+
+        $where = array(
+            'TRBLDT >=' => $fromDate,
+            'TRBLDT <=' => $toDate,
+            'branchcode' => $branchCode
+        );
+
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->join("trbil1 tb", "tb.TRBLNO1 = t.TRBLNO AND tb.branchcode1 = t.branchcode AND tb.fin_year1 = t.fin_year");
+        $this->db->join("tritem i", "tb.TRITCD = i.TRITCD");
+        $this->db->join("trprgrp tp", "i.TRPRDGRP = tp.PRDCD");
+        $this->db->group_by("tp.PRDCD");
+        $salesData = $this->db->get('trbil t')->result();
+
+        $select = array(
+            "round(sum(t.TRNET), 2) AS TOTALAMT"
+        );
+
+        $this->db->select($select);
+        unset($where['branchcode']);
+        $where['t.branch_code'] = $branchCode;
+        $where['t.TRREF'] = "Y";
+        $this->db->where($where);
+        $this->db->join("trslret1 tb", "tb.TRBLNO1 = t.TRBLNO AND tb.branch_code = t.branch_code AND tb.fin_year = t.fin_year");
+        $salesRetData = $this->db->get('trslret t')->row();
+//        echo $this->db->last_query();
+        $data = compact("salesData", "salesRetData");
         echo json_encode($data);
         exit;
     }
