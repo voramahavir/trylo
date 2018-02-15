@@ -1261,7 +1261,7 @@
                 $('.n_amt').val(_gTotalAmt);
                 $('.m_t_qty').val(gTotalQty);
                 $('.gross').val(gTotalAmt);
-                var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val())).toFixed(2);
+                var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val()) - parseFloat($('.redeem-amt').val())).toFixed(2);
                 var rndOff = parseFloat(Math.round(netAmt) - parseFloat(netAmt)).toFixed(2);
                 netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
                 $('.net_amount').val(netAmt);
@@ -1350,7 +1350,7 @@
                 } else {
                     // $('.ret_cus_div').hide();
                 }*/
-                var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val())).toFixed(2);
+                var netAmt = parseFloat(parseFloat(gTotalAmt) + parseFloat($('.oth_amt').val()) - parseFloat($('.redeem-amt').val())).toFixed(2);
                 var rndOff = parseFloat(Math.round(netAmt) - parseFloat(netAmt)).toFixed(2);
                 netAmt = parseFloat(parseFloat(netAmt) + parseFloat(rndOff)).toFixed(2);
                 $('.net_amount').val(netAmt);
@@ -1608,6 +1608,10 @@
                 $('.totBalPoint').val(totalPoints);
                 if (totalPoints > redeemminpoints || showInitialRedeem) {
                     $('.redpoints').removeClass("hide");
+                    var netAmt = parseFloat($('.net_amount').val());
+                    var redAmt = parseFloat($('.redeem-amt').val());
+                    netAmt -= redAmt;
+                    $('.net_amount').val(netAmt);
                 } else {
                     $('.redpoints').addClass("hide");
                 }

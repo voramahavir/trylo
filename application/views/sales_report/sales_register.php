@@ -1931,10 +1931,18 @@
                     var salesTaxAmt = 0;
                     var salesGstAmt = 0;
                     var salesTotAmt = 0;
+                    var cashAmt = 0;
+                    var debitAmt = 0;
+                    var cardAmt = 0;
+                    var mobileAmt = 0;
                     var totQty = 0;
                     var pointsRed = 0;
+                    var pointsBill = [];
+                    var advance = 0;
                     var salesRetAmt = parseFloat(response.salesRetData.TOTALAMT);
+                    var adjCNAmt = parseFloat(response.adjData.ADJCN);
                     salesRetAmt = isNaN(salesRetAmt) ? 0 : salesRetAmt;
+                    adjCNAmt = isNaN(adjCNAmt) ? 0 : adjCNAmt;
                     $.each(response.salesData, function (i, v) {
                         html += "<tr>";
 
@@ -1974,8 +1982,24 @@
 
                         html += "</tr>";
 
-                        if (v.POINTSRED)
+                        if (v.POINTSRED) {
                             pointsRed += parseFloat(v.POINTSRED);
+                            pointsBill.push(v.TRBLNO);
+                        }
+                        if (v.ADVANCE)
+                            advance += parseFloat(v.ADVANCE);
+                        if (v.CASH) {
+                            cashAmt += parseFloat(v.CASH);
+                        }
+                        if (v.DEBIT) {
+                            debitAmt += parseFloat(v.DEBIT);
+                        }
+                        if (v.CARD) {
+                            cardAmt += parseFloat(v.CARD);
+                        }
+                        if (v.MOBILE) {
+                            mobileAmt += parseFloat(v.MOBILE);
+                        }
                     });
                     html += "<tr>";
 
@@ -2023,17 +2047,20 @@
                     html += salesGrsAmt.toFixed(2);
                     html += "</td>";
 
-                    html += "<td>";
+                    html += "<td colspan='4' class='text-center'>";
+                    html += "<label>";
+                    html += "Credit Note Details: ";
+                    html += "</label>";
+                    html += "</td>";
+
+                    /*html += "<td>";
                     html += "</td>";
 
                     html += "<td>";
                     html += "</td>";
 
                     html += "<td>";
-                    html += "</td>";
-
-                    html += "<td>";
-                    html += "</td>";
+                    html += "</td>";*/
 
                     html += "</tr>";
 
@@ -2049,11 +2076,14 @@
                     html += salesDisAmt.toFixed(2);
                     html += "</td>";
 
-                    html += "<td>";
+                    html += "<td colspan='2'>";
+                    html += "<label>";
+                    html += "Today's CN (Not Refunded): ";
+                    html += "</label>";
                     html += "</td>";
 
-                    html += "<td>";
-                    html += "</td>";
+                    /*html += "<td>";
+                    html += "</td>";*/
 
                     html += "<td>";
                     html += "</td>";
@@ -2075,11 +2105,14 @@
                     html += salesTaxAmt.toFixed(2);
                     html += "</td>";
 
-                    html += "<td>";
+                    html += "<td colspan='2'>";
+                    html += "<label>";
+                    html += "Previous CN: ";
+                    html += "</label>";
                     html += "</td>";
 
-                    html += "<td>";
-                    html += "</td>";
+                    /*html += "<td>";
+                    html += "</td>";*/
 
                     html += "<td>";
                     html += "</td>";
@@ -2098,13 +2131,17 @@
                     html += "</td>";
 
                     html += "<td class='text-right'>";
+                    html += (adjCNAmt) ? adjCNAmt.toFixed(2) : "";
                     html += "</td>";
 
-                    html += "<td>";
+                    html += "<td colspan='2'>";
+                    html += "<label>";
+                    html += "Today's CN (Refunded): ";
+                    html += "</label>";
                     html += "</td>";
 
-                    html += "<td>";
-                    html += "</td>";
+                    /*html += "<td>";
+                    html += "</td>";*/
 
                     html += "<td>";
                     html += "</td>";
@@ -2126,11 +2163,14 @@
                     html += salesRetAmt.toFixed(2);
                     html += "</td>";
 
-                    html += "<td>";
+                    html += "<td colspan='2'>";
+                    html += "<label>";
+                    html += "Total: ";
+                    html += "</label>";
                     html += "</td>";
 
-                    html += "<td>";
-                    html += "</td>";
+                    /*html += "<td>";
+                    html += "</td>";*/
 
                     html += "<td>";
                     html += "</td>";
@@ -2152,17 +2192,20 @@
                     html += pointsRed.toFixed(2);
                     html += "</td>";
 
-                    html += "<td>";
+                    html += "<td colspan='4' class='text-center'>";
+                    html += "<label>";
+                    html += "Details of Previous CN [ CN No(CnAmt) ]: ";
+                    html += "</label>";
+                    html += "</td>";
+
+                    /*html += "<td>";
                     html += "</td>";
 
                     html += "<td>";
                     html += "</td>";
 
                     html += "<td>";
-                    html += "</td>";
-
-                    html += "<td>";
-                    html += "</td>";
+                    html += "</td>";*/
 
                     html += "</tr>";
 
@@ -2174,7 +2217,7 @@
                     html += "</label>";
                     html += "</td>";
 
-                    var netTaxAmt = salesTaxAmt - salesRetAmt - pointsRed;
+                    var netTaxAmt = salesTaxAmt - salesRetAmt - pointsRed - adjCNAmt;
                     html += "<td class='text-right'>";
                     html += netTaxAmt.toFixed(2);
                     html += "</td>";
@@ -2201,11 +2244,14 @@
                     html += "</label>";
                     html += "</td>";
 
-                    html += "<td>";
+                    html += "<td colspan='2'>";
+                    html += "<label>";
+                    html += "Today's CN Not Adjusted: ";
+                    html += "</label>";
                     html += "</td>";
 
-                    html += "<td>";
-                    html += "</td>";
+                    /*html += "<td>";
+                    html += "</td>";*/
 
                     html += "<td>";
                     html += "</td>";
@@ -2227,17 +2273,20 @@
                     html += salesTaxAmt.toFixed(2);
                     html += "</td>";
 
-                    html += "<td>";
+                    html += "<td colspan='4' class='text-center'>";
+                    html += "<label>";
+                    html += "Details of Not Adjusted CN: ";
+                    html += "</label>";
+                    html += "</td>";
+
+                    /*html += "<td>";
                     html += "</td>";
 
                     html += "<td>";
                     html += "</td>";
 
                     html += "<td>";
-                    html += "</td>";
-
-                    html += "<td>";
-                    html += "</td>";
+                    html += "</td>";*/
 
                     html += "</tr>";
 
@@ -2317,6 +2366,113 @@
                     html += "<td>";
                     html += "</td>";
 
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td colspan='2' class='text-right'>";
+                    html += "<label>";
+                    html += "Less Advance :";
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td class='text-right'>";
+                    html += advance.toFixed(2);
+                    html += "</td>";
+
+                    html += "<td colspan='2'>";
+                    html += "<label>";
+                    html += "Total Debit: ";
+                    html += "</label>";
+                    html += "</td>";
+
+                    /*html += "<td>";
+                    html += "</td>";*/
+
+                    html += "<td>";
+                    html += debitAmt.toFixed(2);
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += "</td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td colspan='2' class='text-right'>";
+                    html += "<label>";
+                    html += "Nett Bill Amount :";
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td class='text-right'>";
+                    var netBillAmt = salesTotAmt + advance;
+                    html += netBillAmt.toFixed(2);
+                    html += "</td>";
+
+                    html += "<td colspan='2'>";
+                    html += "<label>";
+                    html += "Total Mobile Payment: ";
+                    html += "</label>";
+                    html += "</td>";
+
+                    /*html += "<td>";
+                    html += "</td>";*/
+
+                    html += "<td>";
+                    html += mobileAmt.toFixed(2);
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += "</td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td class='text-right'>";
+                    html += "<label>";
+                    html += "Add LoyaltyCard: ";
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td colspan='2'>";
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += "<label>";
+                    html += "Total Cash: ";
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += cashAmt.toFixed(2);
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += "<label>";
+                    html += "Total Card: ";
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td>";
+                    html += cardAmt.toFixed(2);
+                    html += "</td>";
+
+                    html += "</tr>";
+
+                    html += "<tr>";
+
+                    html += "<td class='text-right'>";
+                    html += "<label>";
+                    html += "Redeem Point Bill: ";
+                    html += "</label>";
+                    html += "</td>";
+
+                    html += "<td colspan='6'>";
+                    html += pointsBill.join(',');
+                    html += "</td>";
                     html += "</tr>";
                     $('.salessum-body').html(html);
                     console.log(response);

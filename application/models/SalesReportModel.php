@@ -30,7 +30,8 @@ class SalesReportModel extends CI_Model
         $where = array(
             'TRBLDT >=' => $fromDate,
             'TRBLDT <=' => $toDate,
-            'branchcode' => $branchCode
+            'branchcode' => $branchCode,
+            'CANBL' => null
         );
 
         $this->db->select($select);
@@ -93,7 +94,8 @@ class SalesReportModel extends CI_Model
         $where = array(
             'TRBLDT >=' => $fromDate,
             'TRBLDT <=' => $toDate,
-            'branchcode' => $branchCode
+            'branchcode' => $branchCode,
+            'CANBL' => null
         );
 
         $this->db->select($select);
@@ -151,7 +153,8 @@ class SalesReportModel extends CI_Model
         $where = array(
             'TRBLDT >=' => $fromDate,
             'TRBLDT <=' => $toDate,
-            'branchcode' => $branchCode
+            'branchcode' => $branchCode,
+            'CANBL' => null
         );
 
         $this->db->select($select);
@@ -187,6 +190,7 @@ class SalesReportModel extends CI_Model
         $toDate = $_POST['toDate'];
         $branchCode = $_POST['branchCode'];
         $select = array(
+            "group_concat(if(t.CRREDAM IS NULL, NULL, if(t.CRREDAM = 0, NULL, t.TRBLNO)))                    AS TRBLNO",
             "tp.PRDNM",
             "sum(tb.TRQTY) AS qty",
             "round(sum(tb.TRNETBT * tb.TRQTY) + sum(tb.TRDS2), 2)    AS GROSS",
@@ -194,13 +198,19 @@ class SalesReportModel extends CI_Model
             "round(sum(tb.TRNETBT * tb.TRQTY), 2)                    AS AMTBT",
             "round(sum(tb.TRHCGSTA), 2) + round(sum(tb.TRLCGSTA), 2) + round(sum(tb.TRHSGSTA), 2) + round(sum(tb.TRLSGSTA), 2) AS GST",
             "round(sum(t.TRGROS), 2)                                 AS TOTAL",
-            'round(sum(t.CRREDAM), 2)                                AS POINTSRED'
+            "round(sum(t.TROTH2),2) + round(sum(t.TRRND),2)          AS ADVANCE",
+            'round(sum(t.CRREDAM), 2)                                AS POINTSRED',
+            'round(sum(if(t.TRTYPE = 1,t.TRNET,0)), 2)               AS CASH',
+            'round(sum(if(t.TRTYPE = 2,t.TRNET,0)), 2)               AS DEBIT',
+            'round(sum(if(t.TRTYPE = 3,t.TRNET,0)), 2)               AS CARD',
+            'round(sum(if(t.TRTYPE = 4,t.TRNET,0)), 2)               AS MOBILE',
         );
 
         $where = array(
             'TRBLDT >=' => $fromDate,
             'TRBLDT <=' => $toDate,
-            'branchcode' => $branchCode
+            'branchcode' => $branchCode,
+            'CANBL' => null
         );
 
         $this->db->select($select);
@@ -210,7 +220,7 @@ class SalesReportModel extends CI_Model
         $this->db->join("trprgrp tp", "i.TRPRDGRP = tp.PRDCD");
         $this->db->group_by("tp.PRDCD");
         $salesData = $this->db->get('trbil t')->result();
-
+//        echo $this->db->last_query();
         $select = array(
             "round(sum(t.TRNET), 2) AS TOTALAMT"
         );
@@ -222,8 +232,23 @@ class SalesReportModel extends CI_Model
         $this->db->where($where);
         $this->db->join("trslret1 tb", "tb.TRBLNO1 = t.TRBLNO AND tb.branch_code = t.branch_code AND tb.fin_year = t.fin_year");
         $salesRetData = $this->db->get('trslret t')->row();
+
+        $select = array(
+            "round(sum(t.TRCN1AM) + sum(t.TRCN2AM), 2) AS ADJCN"
+        );
+        $where = array(
+            'TRBLDT >=' => $fromDate,
+            'TRBLDT <=' => $toDate,
+            'branchcode' => $branchCode,
+            'CANBL' => null
+        );
+
+        $this->db->select($select);
+        $this->db->where($where);
+        $this->db->join("trbil1 tb", "tb.TRBLNO1 = t.TRBLNO AND tb.branchcode1 = t.branchcode AND tb.fin_year1 = t.fin_year");
+        $adjData = $this->db->get('trbil t')->row();
 //        echo $this->db->last_query();
-        $data = compact("salesData", "salesRetData");
+        $data = compact("salesData", "salesRetData", "adjData");
         echo json_encode($data);
         exit;
     }
