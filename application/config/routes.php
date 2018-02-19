@@ -110,3 +110,6 @@ $route['mobilePayment'] = 'SalesController/mobilePayment';
 $route['report/salesregister'] = 'SalesReportController';
 $route['salesreport/(:any)'] = 'SalesReportController/$1';
 $route['salesreport/(:any)/(:any)'] = 'SalesReportController/$1/$2';
+$route['report/stock'] = 'StockReportController';
+$route['stockreport/(:any)'] = 'StockReportController/$1';
+$route['stockreport/(:any)/(:any)'] = 'StockReportController/$1/$2';

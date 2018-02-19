@@ -1,6 +1,8 @@
 <?php $this->load->view('include/template/common_header'); ?>
 <link rel="stylesheet"
       href="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'); ?>">
+<!--<link rel="stylesheet"
+      href="<?php /*echo base_url('assets/custom/css/tableexport.css'); */ ?>">-->
 <style>
     @media print {
         @page {
@@ -10,6 +12,25 @@
 
     .no-border {
         border: none !important;
+    }
+
+    .fs-17, .fs-17 > td {
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .fs-16, .fs-16 > td {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .fs-18, .fs-18 > td {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    td {
+        font-size: 15px;
     }
 
     /*    table {
@@ -64,6 +85,13 @@
         </div>
         <div class="box rpt-box hide">
             <div class="box-body">
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <button id="generate-excel" class="btn btn-danger hide">
+                            Generate Excel
+                        </button>
+                    </div>
+                </div>
                 <div class="row form-group datewise hide">
                     <div class="datewise-info">
                         <div class="col-md-12">
@@ -91,7 +119,7 @@
                     <div class="col-md-12">
                         <table class="table table-hover table-bordered" id="datewise-table">
                             <thead>
-                            <tr>
+                            <tr class="info fs-16">
                                 <th class="col-md-1 text-center">
                                     Date
                                 </th>
@@ -147,7 +175,7 @@
                     <div class="col-md-12">
                         <table class="table table-hover table-bordered" id="salescomm-table">
                             <thead>
-                            <tr>
+                            <tr class="info fs-16">
                                 <th class="col-md-2 text-center">
                                     Description
                                 </th>
@@ -197,7 +225,7 @@
                     <div class="col-md-12">
                         <table class="table table-hover table-bordered" id="salesret-table">
                             <thead>
-                            <tr>
+                            <tr class="info fs-16">
                                 <th class="text-center">
                                     Bill No
                                 </th>
@@ -271,7 +299,7 @@
                     <div class="col-md-12">
                         <table class="table table-hover table-bordered" id="comm-table">
                             <thead>
-                            <tr>
+                            <tr class="info fs-16">
                                 <th class="text-center">
                                     Bill No
                                 </th>
@@ -345,7 +373,7 @@
                     <div class="col-md-12">
                         <table class="table table-hover table-bordered" id="salessum-table">
                             <thead>
-                            <tr>
+                            <tr class="info fs-16">
                                 <th class="text-center">
                                     Group
                                 </th>
@@ -392,8 +420,13 @@
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/vfs_fonts.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.html5.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.print.min.js'); ?>"></script>
+<!--<script type="text/javascript" src="--><?php //echo base_url('assets/custom/js/xlsx.full.min.js'); ?><!--"></script>-->
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/jszip.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/FileSaver.min.js'); ?>"></script>
+<!--<script type="text/javascript" src="--><?php //echo base_url('assets/custom/js/tableexport.min.js'); ?><!--"></script>-->
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/scripts/excel-gen.js'); ?>"></script>
 <script type="text/javascript">
-    var commData = [];
+    var commData = [], excel = "";
     $(document).ready(function () {
         $('#from_date').datepicker({
             autoclose: true,
@@ -437,6 +470,7 @@
                 return false;
             }
             $('.rpt-box').removeClass('hide');
+            $('#generate-excel').removeClass('hide');
             switch (type) {
                 case  1:
                     $('.datewise').removeClass('hide');
@@ -554,7 +588,7 @@
                             salesRetTotAmt += parseFloat(el.TOTALAMT);
                         }
                         if (salesCount == 1) {
-                            html += "<tr>";
+                            html += "<tr class='success fs-16'>";
                             html += "<td colspan='7' class='no-border'>";
                             html += "<strong>SALES(A)<strong>";
                             html += "</td>";
@@ -567,7 +601,7 @@
                             html += "</tr>";
                         }
                         else if (salesRetSt && salesRetCount == 1) {
-                            html += "<tr>";
+                            html += "<tr class=\"danger fs-17\">";
                             html += "<td>";
                             html += "&nbsp;";
                             html += "</td>";
@@ -591,7 +625,7 @@
                             html += "</td>";
                             html += "</tr>";
 
-                            html += "<tr>";
+                            html += "<tr class=\"success fs-16\">";
                             html += "<td colspan='7'>";
                             html += "<strong>SALES RETURN(B)<strong>";
                             html += "</td>";
@@ -637,7 +671,7 @@
                         html += "</tr>";
                     });
                     if (salesRetCount == 0) {
-                        html += "<tr>";
+                        html += "<tr class=\"danger fs-17\">";
                         html += "<td>";
                         html += "&nbsp;";
                         html += "</td>";
@@ -662,7 +696,7 @@
                         html += "</tr>";
                     }
                     else if (salesRetCount > 0) {
-                        html += "<tr>";
+                        html += "<tr class=\"danger fs-17\">";
                         html += "<td>";
                         html += "&nbsp;";
                         html += "</td>";
@@ -686,7 +720,7 @@
                         html += "</td>";
                         html += "</tr>";
                     }
-                    html += "<tr>";
+                    html += "<tr class=\"warning fs-18\">";
                     html += "<td>";
                     html += "&nbsp;";
                     html += "</td>";
@@ -743,12 +777,33 @@
                     });
                     $('.rpt-info').html(info.html());
                     info.remove();
+                    /*$.fn.tableExport.defaultFilename = 'Datewise Summary Report';
+                    $('#datewise-table').tableExport({
+                        formats: ["xls", "xlsx"],
+                        filename: 'Datewise Summary Report',
+                        headers: true,
+                        footers: true,
+                        bootstrap: true,
+                        position: "top",
+                        trimWhitespace: true
+                    });*/
+                    excel = new ExcelGen({
+                        "src_id": "datewise-table",
+                        "show_header": true,
+                        "author": "TRYLO",
+                        "file_name": "Datewise Summary Report.xlsx",
+                        "column_formats": ["19"]
+                    });
                 },
                 complete: function () {
                     loadingStop();
                 }
             });
         }
+
+        $("#generate-excel").click(function () {
+            excel.generate();
+        });
 
         function salesCommRpt() {
             loadingStart();
@@ -814,7 +869,7 @@
                         }
                     });
 
-                    html += "<tr>";
+                    html += "<tr class='warning fs-18'>";
 
                     html += "<td>";
                     html += "<label>";
@@ -1018,6 +1073,12 @@
                     });
                     $('.rpt-info').html(info.html());
                     info.remove();
+                    excel = new ExcelGen({
+                        "src_id": "salescomm-table",
+                        "show_header": true,
+                        "author": "TRYLO",
+                        "file_name": "Sales Commission Report.xlsx"
+                    });
                 },
                 complete: function () {
                     loadingStop();
@@ -1098,7 +1159,7 @@
                             salesRetNetAmt += parseFloat(el.TOTALAMT);
                         }
                         if (salesCount == 1) {
-                            html += "<tr>";
+                            html += "<tr class='success fs-16'>";
                             html += "<td colspan='13'>";
                             html += "<strong>SALES(A)<strong>";
                             html += "</td>";
@@ -1117,7 +1178,7 @@
                             html += "</tr>";
                         }
                         else if (salesRetSt && salesRetCount == 1) {
-                            html += "<tr>";
+                            html += "<tr class=\"danger fs-17\">";
                             html += "<td>";
                             html += "&nbsp;";
                             html += "</td>";
@@ -1158,7 +1219,7 @@
                             html += "</td>";
                             html += "</tr>";
 
-                            html += "<tr>";
+                            html += "<tr class=\"success fs-16\">";
                             html += "<td colspan='13'>";
                             html += "<strong>SALES RETURN(B)<strong>";
                             html += "</td>";
@@ -1241,7 +1302,7 @@
                         html += "</tr>";
                     });
                     if (salesRetCount == 0) {
-                        html += "<tr>";
+                        html += "<tr class=\"danger fs-17\">";
                         html += "<td>";
                         html += "&nbsp;";
                         html += "</td>";
@@ -1283,7 +1344,7 @@
                         html += "</tr>";
                     }
                     else if (salesRetCount > 0) {
-                        html += "<tr>";
+                        html += "<tr class=\"danger fs-17\">";
                         html += "<td>";
                         html += "&nbsp;";
                         html += "</td>";
@@ -1326,7 +1387,7 @@
                     }
 
                     var netTaxAmt = parseFloat(salesTaxAmt - salesRetTaxAmt);
-                    html += "<tr>";
+                    html += "<tr class=\"warning fs-18\">";
                     html += "<td>";
                     html += "&nbsp;";
                     html += "</td>";
@@ -1400,6 +1461,13 @@
                     });
                     $('.rpt-info').html(info.html());
                     info.remove();
+                    excel = new ExcelGen({
+                        "src_id": "salesret-table",
+                        "show_header": true,
+                        "author": "TRYLO",
+                        "file_name": "Sales and Return Register Report.xlsx",
+                        "column_formats ": ["0", "19"]
+                    });
                 },
                 complete: function () {
                     loadingStop();
@@ -1482,7 +1550,7 @@
                             salesRetNetAmt += parseFloat(el.TOTALAMT);
                         }
                         if (salesCount == 1) {
-                            html += "<tr>";
+                            html += "<tr class='success fs-16'>";
                             html += "<td colspan='13'>";
                             html += "<strong>SALES(A)<strong>";
                             html += "</td>";
@@ -1501,7 +1569,7 @@
                             html += "</tr>";
                         }
                         else if (salesRetSt && salesRetCount == 1) {
-                            html += "<tr>";
+                            html += "<tr class=\"danger fs-17\">";
                             html += "<td>";
                             html += "&nbsp;";
                             html += "</td>";
@@ -1542,7 +1610,7 @@
                             html += "</td>";
                             html += "</tr>";
 
-                            html += "<tr>";
+                            html += "<tr class=\"success fs-16\">";
                             html += "<td colspan='13'>";
                             html += "<strong>SALES RETURN(B)<strong>";
                             html += "</td>";
@@ -1625,7 +1693,7 @@
                         html += "</tr>";
                     });
                     if (salesRetCount == 0) {
-                        html += "<tr>";
+                        html += "<tr class=\"danger fs-17\">";
                         html += "<td>";
                         html += "&nbsp;";
                         html += "</td>";
@@ -1667,7 +1735,7 @@
                         html += "</tr>";
                     }
                     else if (salesRetCount > 0) {
-                        html += "<tr>";
+                        html += "<tr class=\"danger fs-17\">";
                         html += "<td>";
                         html += "&nbsp;";
                         html += "</td>";
@@ -1710,7 +1778,7 @@
                     }
 
                     var netTaxAmt = parseFloat(salesTaxAmt - salesRetTaxAmt);
-                    html += "<tr>";
+                    html += "<tr class=\"warning fs-18\">";
                     html += "<td>";
                     html += "&nbsp;";
                     html += "</td>";
@@ -1895,6 +1963,13 @@
                     });
                     $('.rpt-info').html(info.html());
                     info.remove();
+                    excel = new ExcelGen({
+                        "src_id": "comm-table",
+                        "show_header": true,
+                        "author": "TRYLO",
+                        "file_name": "Commission Report.xlsx",
+                        "column_formats ": ["0", "19"]
+                    });
                 },
                 complete: function () {
                     loadingStop();
