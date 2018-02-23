@@ -174,7 +174,11 @@
                     </div>
                 </div>
             </div>
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
         </div>
+
     </div>
 </div>
 <?php $this->load->view('include/template/common_footer'); ?>
@@ -310,6 +314,7 @@
 
         function getBrands() {
             loadingStart();
+
             $.ajax({
                 url: site_url + 'stockreport/getBrands',
                 dataType: 'JSON',
@@ -328,8 +333,22 @@
 
         function getStockData() {
             loadingStart();
+            var fromDate = $("#from_date").val();
+            fromDate = fromDate.split('/');
+            fromDate = fromDate.reverse().join('-');
+
+            var toDate = $("#to_date").val();
+            toDate = toDate.split('/');
+            toDate = toDate.reverse().join('-');
             $.ajax({
                 url: site_url + 'stockreport/getStockData',
+                type: 'POST',
+                data: {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    branchCode: $("#branch_code").val(),
+                    nillType: $('input[name="stk_type"]:checked').val()
+                },
                 dataType: 'JSON',
                 success: function (response) {
                     console.log(response);
@@ -338,14 +357,18 @@
                     var itemHtml = "";
                     var brandHeaderHtml = "";
                     var itemsData = {};
+                    var grpSizes = {};
                     if (response) {
-                        var sizeData = response[0];
+                        var mainData = response[0];
+                        var brandData = response[1];
+                        var stockData = response[2];
+                        var salesData = response[3];
                         var maxSizeCnt = 0;
-                        $.each(sizeData, function (i, v) {
+                        $.each(mainData, function (i, v) {
                             maxSizeCnt = parseInt(v.sizeCnt) > maxSizeCnt ? parseInt(v.sizeCnt) : maxSizeCnt;
-                            var brands = v.brand ? v.brand.split(',') : [];
+                            var brands = v.brand ? v.brand.split('|') : [];
                             var sizes = v.sizes ? v.sizes.split(',') : [];
-                            var items = v.items ? v.items.split('|') : [];
+                            grpSizes[v.PRDCD] = sizes;
                             if (sizes) {
                                 $.each(sizes, function (si, sv) {
                                     sizeHeaderHtml += "<th>";
@@ -353,79 +376,115 @@
                                     sizeHeaderHtml += "</th>";
                                 });
                             }
-                            /*if (items) {
-                                $.each(items, function (ii, iv) {
-                                    var _items = iv.split(',');
-                                    var name = _items[1];
-                                    var color = _items[2];
-                                    var i_size = _items[3];
-                                    var brand = _items[4];
-                                    var rate = _items[5];
-                                    var _itemData = {
-                                        name: name,
-                                        color: color,
-                                        size: i_size,
-                                        rate: rate
-                                    };
-                                    if (!itemsData[brand]) itemsData[brand] = [];
-                                    itemsData[brand].push(_itemData);
-                                    /!*itemHtml += "<tr>";
-                                    itemHtml += "<td>";
-                                    itemHtml += _items[1];
-                                    itemHtml += "</td>";
-                                    itemHtml += "<td>";
-                                    itemHtml += _items[2];
-                                    itemHtml += "</td>";
-                                    itemHtml += "<td>";
-                                    itemHtml += _items[5];
-                                    itemHtml += "</td>";
-                                    itemHtml += "</tr>";*!/
-                                });
-                            }*/
                             if (brands) {
                                 $.each(brands, function (bi, bv) {
-                                    brandHeaderHtml += "<tr>";
+                                    bv = bv.split(',');
+                                    brandHeaderHtml += "<tr class='item-sizes' data-size-count='" + v.sizeCnt + "'>";
                                     brandHeaderHtml += "<th>";
                                     brandHeaderHtml += "Group : " + v.PRDNM;
                                     brandHeaderHtml += "<br>";
-                                    brandHeaderHtml += "Brand : " + bv;
+                                    brandHeaderHtml += "Brand : " + bv[1];
                                     brandHeaderHtml += "</th>";
                                     brandHeaderHtml += "<th>";
                                     brandHeaderHtml += "</th>";
                                     brandHeaderHtml += sizeHeaderHtml;
-                                    brandHeaderHtml += "<th>";
+                                    brandHeaderHtml += "<th class='item-rate'>";
                                     brandHeaderHtml += "</th>";
                                     brandHeaderHtml += "<th>";
                                     brandHeaderHtml += "</th>";
                                     brandHeaderHtml += "</tr>";
-
-                                    /*var brandData = itemsData[bv];
-                                    $.each(brandData, function (bdi, bdv) {
-                                        brandHeaderHtml += "<tr>";
-                                        brandHeaderHtml += "<td>";
-                                        brandHeaderHtml += bdv.name;
-                                        brandHeaderHtml += "</td>";
-                                        brandHeaderHtml += "<td>";
-                                        brandHeaderHtml += bdv.color;
-                                        brandHeaderHtml += "</td>";
-                                        brandHeaderHtml += "<td colspan='" + maxSizeCnt + "'>";
-                                        brandHeaderHtml += "</td>";
-                                        brandHeaderHtml += "<td>";
-                                        brandHeaderHtml += bdv.rate;
-                                        brandHeaderHtml += "</td>";
-                                        brandHeaderHtml += "<td>";
-                                        brandHeaderHtml += "</td>";
-                                        brandHeaderHtml += "</tr>";
-                                    });*/
+                                    var _cls = v.PRDCD + "-" + bv[0] + "-initial";
+                                    brandHeaderHtml += "<tr class='" + _cls + " initial'>";
+                                    brandHeaderHtml += "</tr>";
                                 });
                             }
                             sizeHeaderHtml = "";
-
                         });
                         if (maxSizeCnt) $('.size').attr("colspan", maxSizeCnt);
+                        $('.stock-body').html(brandHeaderHtml);
+                        var itemSizesEl = $('.item-sizes');
+                        $.each(itemSizesEl, function (i, el) {
+                            var count = parseInt($(this).attr('data-size-count'));
+                            var remCount = maxSizeCnt - count;
+                            var html = "";
+                            for (var j = 0; j < remCount; j++) {
+                                html += "<th>";
+                                html += "</th>";
+                            }
+                            var itemSizeTr = $($('.item-rate')[i]);
+                            itemSizeTr.before(html);
+                            // $(this).append(html);
+                        });
+
+                        $.each(brandData, function (i, v) {
+                            var items = v.items ? v.items.split('|') : [];
+                            if (items) {
+                                $.each(items, function (ii, iv) {
+                                    var _items = iv.split(',');
+                                    var itemId = _items[0];
+                                    var name = _items[1];
+                                    var color = _items[2];
+                                    var prdGrp = _items[3];
+                                    var rate = _items[4];
+                                    var _itemData = {
+                                        name: name,
+                                        color: color,
+                                        rate: rate,
+                                        itemId: itemId
+                                    };
+                                    var brandCls = prdGrp + '-' + v.brandId + "-initial";
+                                    var trCls = prdGrp + '-' + v.brandId;
+                                    // console.log("brandCls", brandCls);
+                                    if (!itemsData[brandCls]) itemsData[brandCls] = [];
+                                    itemsData[brandCls].push(_itemData);
+                                    itemHtml = "";
+                                    itemHtml += "<tr class='" + trCls + "'>";
+                                    itemHtml += "<td>";
+                                    itemHtml += name;
+                                    itemHtml += "</td>";
+                                    itemHtml += "<td>";
+                                    itemHtml += color;
+                                    itemHtml += "</td>";
+                                    var _grpSize = grpSizes[prdGrp];
+                                    $.each(_grpSize, function (gi, gv) {
+                                        var itemCls = itemId + '-' + color + '-' + gv;
+                                        itemHtml += "<td class='" + itemCls + "'>";
+                                        itemHtml += "</td>";
+                                    });
+                                    var remCount = maxSizeCnt - _grpSize.length;
+                                    for (var k = 0; k < remCount; k++) {
+                                        itemHtml += "<td>";
+                                        itemHtml += "</td>";
+                                    }
+                                    itemHtml += "<td>";
+                                    itemHtml += rate;
+                                    itemHtml += "</td>";
+                                    var totalCls = itemId + '-' + color;
+                                    itemHtml += "<td class='" + totalCls + "'>";
+                                    itemHtml += "</td>";
+                                    itemHtml += "</tr>";
+                                    $('.' + trCls).length == 0 ? $('.' + brandCls).after(itemHtml) : $('.' + trCls + ':last').after(itemHtml);
+                                });
+                            }
+                        });
+                        $('.initial').remove();
+
+                        $.each(stockData, function (i, v) {
+                            var itemId = v.TRITCD;
+                            var color = v.TRCOLOR;
+                            var size = v.TRSZCD;
+
+                            var sizeCls = itemId + '-' + color + '-' + size;
+                            var totalCls = itemId + '-' + color;
+                            $('.' + sizeCls).text(v.stockQty);
+                            var totQty = parseInt(v.stockQty);
+                            if ($('.' + totalCls).length) {
+                                totQty += parseInt($('.' + totalCls).text());
+                            }
+                            $('.' + totalCls).text(totQty);
+                        });
                     }
-                    console.log(itemsData);
-                    $('.stock-body').html(brandHeaderHtml);
+
                     // $('#stock-table').DataTable();
                 },
                 complete: function () {

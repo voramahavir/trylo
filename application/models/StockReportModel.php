@@ -78,7 +78,10 @@ class StockReportModel extends CI_Model
 
     public function getStockData()
     {
-        $query = "CALL GetStockReport('2018-02-01','2018-02-28')";
+        $fromDate = $_POST['fromDate'];
+        $toDate = $_POST['toDate'];
+        $branchCode = $_POST['branchCode'];
+        $query = "CALL GetStockReport('$fromDate','$toDate',$branchCode)";
         $data = $this->GetMultipleQueryResult($query);
         echo json_encode($data);
         exit;
