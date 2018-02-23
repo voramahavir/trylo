@@ -243,3 +243,75 @@ Bhavesh : 16-02-2018 Stock Reports
 
 INSERT INTO `main_forms` (`id`, `form_name`, `active_tabs`, `icon`, `view_mode`) VALUES (NULL, 'Stock Report', 'Stock Report', 'fa fa-dashboard', '1');
 INSERT INTO `forms` (`form_id`, `form_name`, `active_tab`, `main_form_id`, `icon`, `redirect_url`, `role_id`, `view_mode`) VALUES (NULL, 'Stock/Sales/Mfg. Report', 'Stock Report', '9', 'fa fa-circle-o', 'report/stock', '1,2', '1');
+
+Bhavesh : 24-02-2018 Stock Rpt SP
+
+DROP PROCEDURE `GetStockReport`;
+CREATE PROCEDURE `GetStockReport`(IN `fromDate` DATE, IN `toDate` DATE, IN `branchCode` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN
+    SET SESSION group_concat_max_len = 1000000;
+    SELECT
+      p.PRDCD,
+      p.PRDNM,
+      count(DISTINCT s.SZCD)                                               AS sizeCnt,
+      group_concat(DISTINCT s.SZCD ORDER BY s.SZCD)                        AS sizes,
+      group_concat(DISTINCT concat(i.TRBRND, ",", a.TRNAME) SEPARATOR '|') AS brand
+    FROM trprgrp p
+      JOIN trsize s ON p.PRDCD = s.PRDGRP
+      JOIN tritem i ON p.PRDCD = i.TRPRDGRP
+      JOIN tritem1 i1 ON i.TRITCD = i1.TRITCD1
+      JOIN item_cur_stock ics ON ics.itemcode = i1.TRITCD1 AND ics.color = i1.TRCOLOR AND ics.size = i1.TRSZCD
+      JOIN trac a ON i.TRBRND = a.TRCODE
+    WHERE ics.branchcode = branchCode
+    GROUP BY p.PRDCD
+    ORDER BY p.PRDNM;
+
+    SELECT
+      a.TRNAME                    AS brand,
+      i.TRBRND                    AS brandId,
+      group_concat(DISTINCT
+                   concat(i.TRITCD, ",", i.TRITNM, ",", i1.TRCOLOR, ",", i.TRPRDGRP, ",", i.TRPURT)
+                   ORDER BY
+                   i.TRITCD
+                   SEPARATOR '|') AS items
+    FROM tritem i
+      JOIN tritem1 i1 ON i.TRITCD = i1.TRITCD1
+      JOIN trprgrp p ON p.PRDCD = i.TRPRDGRP
+      JOIN item_cur_stock ics ON ics.itemcode = i1.TRITCD1 AND ics.color = i1.TRCOLOR AND ics.size = i1.TRSZCD
+      JOIN trac a ON i.TRBRND = a.TRCODE
+    WHERE ics.branchcode = branchCode
+    GROUP BY i.TRBRND
+    ORDER BY i.TRBRND;
+
+SELECT
+  i.TRITCD,
+  i1.TRCOLOR,
+  i1.TRSZCD,
+  sum(ics.op_stock) AS stockQty
+FROM item_cur_stock ics
+  JOIN tritem1 i1 ON ics.itemcode = i1.TRITCD1 AND ics.size = i1.TRSZCD AND ics.color = i1.TRCOLOR
+  JOIN tritem i ON i1.TRITCD1 = i.TRITCD
+  JOIN trac a ON i.TRBRND = a.TRCODE
+  WHERE ics.branchcode = branchCode
+GROUP BY ics.itemcode, ics.size, ics.color;
+
+    SELECT
+      i.TRITCD,
+      i1.TRSZCD,
+      i1.TRCOLOR,
+      sum(ics.op_stock) - SUM(ifnull(tb.TRQTY, 0)) AS stockQty,
+      sum(ics.op_stock)                            AS opStockQty,
+      SUM(ifnull(tb.TRQTY, 0))                     AS salesQty,
+      group_concat(DISTINCT concat(i.TRITCD, ",", i.TRITNM, ",", i.TRBRND, ",", a.TRNAME, ",", i.TRPURT)
+                   ORDER BY
+                   i.TRITCD, i1.TRSZCD
+                   SEPARATOR '|')                  AS items
+    FROM item_cur_stock ics
+      JOIN tritem1 i1 ON ics.itemcode = i1.TRITCD1 AND ics.size = i1.TRSZCD AND ics.color = i1.TRCOLOR
+      JOIN tritem i ON i1.TRITCD1 = i.TRITCD
+      JOIN trac a ON i.TRBRND = a.TRCODE
+      LEFT JOIN trbil1 tb
+        ON tb.TRITCD = ics.itemcode AND tb.branchcode1 = ics.branchcode AND tb.TRSZ = ics.size AND tb.TRCLR = ics.color
+      LEFT JOIN trbil t ON t.TRBLNO = tb.TRBLNO1 AND t.branchcode = tb.branchcode1 AND t.fin_year = tb.fin_year1
+    WHERE t.TRBLDT >= fromDate AND t.TRBLDT <= toDate AND ics.branchcode = branchCode
+    GROUP BY ics.itemcode, ics.size, ics.color, ics.branchcode;
+  END
