@@ -426,7 +426,7 @@
 <!--<script type="text/javascript" src="--><?php //echo base_url('assets/custom/js/tableexport.min.js'); ?><!--"></script>-->
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/scripts/excel-gen.js'); ?>"></script>
 <script type="text/javascript">
-    var commData = [], excel = "";
+    var commData = [], excel = "", table = "";
     $(document).ready(function () {
         $('#from_date').datepicker({
             autoclose: true,
@@ -743,10 +743,12 @@
                     html += salesTotAmt.toFixed(2) - salesRetTotAmt.toFixed(2);
                     html += "</td>";
                     html += "</tr>";
-                    $('tbody.datewise-body').html(html);
-                    var info = $('.datewise-info');
 
-                    $('#datewise-table').DataTable({
+                    var info = $('.datewise-info');
+                    if (table)
+                        table.destroy();
+                    $('tbody.datewise-body').html(html);
+                    table = $('#datewise-table').DataTable({
                         'destroy': true,
                         'ordering': false,
                         'autowidth': false,
@@ -775,6 +777,8 @@
                             }
                         ]
                     });
+                    table.draw();
+
                     $('.rpt-info').html(info.html());
                     info.remove();
                     /*$.fn.tableExport.defaultFilename = 'Datewise Summary Report';
@@ -843,29 +847,29 @@
                         html += v.description;
                         html += "</td>";
 
-                        grsAmt += parseFloat(v.AMTBT);
+                        grsAmt += isNaN(parseFloat(v.AMTBT)) ? 0 : parseFloat(v.AMTBT);
                         html += "<td>";
-                        html += v.AMTBT;
+                        html += (v.AMTBT) ? v.AMTBT : 0;
                         html += "</td>";
 
-                        cgstAmt += parseFloat(v.CGST);
+                        cgstAmt += isNaN(parseFloat(v.CGST)) ? 0 : parseFloat(v.CGST);
                         html += "<td>";
-                        html += v.CGST;
+                        html += v.CGST ? v.CGST : 0;
                         html += "</td>";
 
-                        sgstAmt += parseFloat(v.SGST);
+                        sgstAmt += isNaN(parseFloat(v.SGST)) ? 0 : parseFloat(v.SGST);
                         html += "<td>";
-                        html += v.SGST;
+                        html += v.SGST ? v.SGST : 0;
                         html += "</td>";
 
-                        netAmt += parseFloat(v.TOTALAMT);
+                        netAmt += isNaN(parseFloat(v.TOTALAMT)) ? 0 : parseFloat(v.TOTALAMT);
                         html += "<td>";
-                        html += v.TOTALAMT;
+                        html += v.TOTALAMT ? v.TOTALAMT : 0;
                         html += "</td>";
 
                         html += "</tr>";
                         if (v.POINTSRED) {
-                            pointsRed += parseFloat(v.POINTSRED);
+                            pointsRed += isNaN(parseFloat(v.POINTSRED)) ? 0 : parseFloat(v.POINTSRED);
                         }
                     });
 
@@ -1037,11 +1041,12 @@
                     html += "<td style=\"display: none;border: none !important;\"></td>";
 
                     html += "</tr>";
-
+                    if (table)
+                        table.destroy();
                     $('.salescomm-body').html(html);
                     var info = $('.salescomm-info');
 
-                    $('#salescomm-table').DataTable({
+                    table = $('#salescomm-table').DataTable({
                         'destroy': true,
                         'ordering': false,
                         'autowidth': false,
@@ -1071,6 +1076,7 @@
                             }
                         ]
                     });
+                    table.draw();
                     $('.rpt-info').html(info.html());
                     info.remove();
                     excel = new ExcelGen({
@@ -1427,10 +1433,12 @@
                     html += parseFloat(salesNetAmt - salesRetNetAmt).toFixed(2);
                     html += "</td>";
                     html += "</tr>";
+                    if (table)
+                        table.destroy();
                     $('tbody.salesret-body').html(html);
                     var info = $('.salesret-info');
 
-                    $('#salesret-table').DataTable({
+                    table = $('#salesret-table').DataTable({
                         'destroy': true,
                         'ordering': false,
                         'autowidth': false,
@@ -1459,6 +1467,7 @@
                             }
                         ]
                     });
+                    table.draw();
                     $('.rpt-info').html(info.html());
                     info.remove();
                     excel = new ExcelGen({
@@ -1929,10 +1938,13 @@
                     html += "<td style=\"display: none;border: none !important;\"></td>";
 
                     html += "</tr>";
+                    if (table)
+                        table.destroy();
                     $('tbody.comm-body').html(html);
+
                     var info = $('.comm-info');
 
-                    $('#comm-table').DataTable({
+                    table = $('#comm-table').DataTable({
                         'destroy': true,
                         'ordering': false,
                         'autowidth': false,
@@ -1961,6 +1973,7 @@
                             }
                         ]
                     });
+                    table.draw();
                     $('.rpt-info').html(info.html());
                     info.remove();
                     excel = new ExcelGen({

@@ -387,13 +387,16 @@
                     var brandHeaderHtml = "";
                     var itemsData = {};
                     var grpSizes = [];
-                    $('tbody.stock-body').html(html);
+
+                    // $('tbody.stock-body').html(html);
                     if (response) {
                         var maxSizeCnt = response.maxSizeCnt;
                         var mainData = response.mainData;
                         html = "";
 
-                        $.each(mainData, function (i, row) {
+                        // $('.sizeEmpty').after(sizeHeaderHtml);
+
+                        /*$.each(mainData, function (i, row) {
                             html += "<tr>";
                             $.each(row, function (ic, col) {
                                 html += "<td>";
@@ -401,28 +404,33 @@
                                 html += "</td>";
                             });
                             html += "</tr>";
-                        });
+                        });*/
                         $('.size').attr("colspan", maxSizeCnt);
                         var thCounts = parseInt(maxSizeCnt) == 0 ? parseInt(maxSizeCnt) + 2 : parseInt(maxSizeCnt) + 1;
                         for (var i = 0; i < thCounts; i++) {
                             sizeHeaderHtml += "<th></th>";
                         }
+                        $('.sizeEmpty').nextAll('th').remove();
+                        $('.sizeEmpty').after(sizeHeaderHtml);
+
+                        var table = $('#stock-table').DataTable({
+                            'data': mainData,
+                            'destroy': true,
+                            'ordering': false,
+                            'searching': false,
+                            'info': false
+                        });
+                        $('b.grpHeader').parent().parent("tr").addClass("info  fs-16");
+                        $('b.brandHeader').parent().parent("tr").addClass("success fs-16");
+                        $('b.brandTotal').parent().parent("tr").addClass("warning fs-16");
                         console.log("html", html);
                     }
-                    $('tbody.stock-body').html(html);
-                    $('.sizeEmpty').nextAll('th').remove();
-                    $('.sizeEmpty').after(sizeHeaderHtml);
-                    // $('.sizeEmpty').after(sizeHeaderHtml);
-                    $('b.grpHeader').parent().parent("tr").addClass("info  fs-16");
-                    $('b.brandHeader').parent().parent("tr").addClass("success fs-16");
-                    $('b.brandTotal').parent().parent("tr").addClass("warning fs-16");
-                    var table = $('#stock-table').DataTable({
-                        'destroy': true,
-                        'ordering': false,
-                        'searching': false,
-                        'info': false
-                    });
-                    table.columns.adjust().draw();
+                    console.log("html1", html);
+
+                    // $('tbody.stock-body').html(html);
+
+
+                    // table.columns.adjust().draw();
                     // console.log("grpSizes", grpSizes['A'].indexOf('FS'));
                     // $('#stock-table').DataTable();
                 },
