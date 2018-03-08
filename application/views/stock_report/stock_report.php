@@ -121,7 +121,7 @@
 
             </div>
         </div>
-        <div class="box rpt-box">
+        <div class="box rpt-box hide">
             <div class="box-body">
                 <div class="row form-group">
                     <div class="stock-info">
@@ -135,7 +135,7 @@
                         </div>
                         <div class="col-md-12">
                             <label class="rpt-type-label">
-                                Stock
+                                STOCK REPORT
                             </label>
                         </div>
                         <div class="col-md-12">
@@ -148,7 +148,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <table class="table table-hover table-bordered" id="stock-table">
+                        <table class="table table-hover table-bordered" id="stock-table" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th class="text-center">
@@ -166,6 +166,13 @@
                                 <th class="text-center">
                                     Total
                                 </th>
+                            </tr>
+                            <tr class="hide">
+                                <th></th>
+                                <th></th>
+                                <th class="sizeEmpty"></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody class="stock-body">
@@ -333,6 +340,14 @@
 
         function getStockData() {
             loadingStart();
+            $('.rpt-box').removeClass('hide');
+            var _fromDate = $('#from_date').val();
+            var _toDate = $('#to_date').val();
+            var dateLabel = "From Date : " + _fromDate + " - " + _toDate;
+
+            $('.date-label').text(dateLabel);
+            var branchname = role_id == 1 ? $("#branch_code option:selected").text() : "<?php echo getSessionData('branch_name')?>";
+            $('.branch-name').text(branchname);
             var fromDate = $("#from_date").val();
             fromDate = fromDate.split('/');
             fromDate = fromDate.reverse().join('-');
@@ -340,151 +355,75 @@
             var toDate = $("#to_date").val();
             toDate = toDate.split('/');
             toDate = toDate.reverse().join('-');
+            var data = {
+                fromDate: fromDate,
+                toDate: toDate,
+                branchCode: $("#branch_code").val(),
+                nillType: $('input[name="stk_type"]:checked').val()
+            };
+            if ($("input[name=prd_type]:checked").val() == 2 && $("#prdGrp").val()) {
+                data['prdGrp'] = $("#prdGrp").val();
+            }
+            if ($("input[name=clr_type]:checked").val() == 2 && $("#color").val()) {
+                data['color'] = $("#color").val();
+            }
+            if ($("input[name=cup_type]:checked").val() == 2 && $("#cup").val()) {
+                data['cup'] = $("#cup").val();
+            }
+            if ($("input[name=brand_type]:checked").val() == 2 && $("#brand").val()) {
+                data['brand'] = $("#brand").val();
+            }
             $.ajax({
                 url: site_url + 'stockreport/getStockData',
                 type: 'POST',
-                data: {
-                    fromDate: fromDate,
-                    toDate: toDate,
-                    branchCode: $("#branch_code").val(),
-                    nillType: $('input[name="stk_type"]:checked').val()
-                },
+                data: data,
                 dataType: 'JSON',
                 success: function (response) {
                     console.log(response);
+
                     var html = "";
                     var sizeHeaderHtml = "";
                     var itemHtml = "";
                     var brandHeaderHtml = "";
                     var itemsData = {};
-                    var grpSizes = {};
+                    var grpSizes = [];
+                    $('tbody.stock-body').html(html);
                     if (response) {
-                        var mainData = response[0];
-                        var brandData = response[1];
-                        var stockData = response[2];
-                        var salesData = response[3];
-                        var maxSizeCnt = 0;
-                        $.each(mainData, function (i, v) {
-                            maxSizeCnt = parseInt(v.sizeCnt) > maxSizeCnt ? parseInt(v.sizeCnt) : maxSizeCnt;
-                            var brands = v.brand ? v.brand.split('|') : [];
-                            var sizes = v.sizes ? v.sizes.split(',') : [];
-                            grpSizes[v.PRDCD] = sizes;
-                            if (sizes) {
-                                $.each(sizes, function (si, sv) {
-                                    sizeHeaderHtml += "<th>";
-                                    sizeHeaderHtml += sv;
-                                    sizeHeaderHtml += "</th>";
-                                });
-                            }
-                            if (brands) {
-                                $.each(brands, function (bi, bv) {
-                                    bv = bv.split(',');
-                                    brandHeaderHtml += "<tr class='item-sizes' data-size-count='" + v.sizeCnt + "'>";
-                                    brandHeaderHtml += "<th>";
-                                    brandHeaderHtml += "Group : " + v.PRDNM;
-                                    brandHeaderHtml += "<br>";
-                                    brandHeaderHtml += "Brand : " + bv[1];
-                                    brandHeaderHtml += "</th>";
-                                    brandHeaderHtml += "<th>";
-                                    brandHeaderHtml += "</th>";
-                                    brandHeaderHtml += sizeHeaderHtml;
-                                    brandHeaderHtml += "<th class='item-rate'>";
-                                    brandHeaderHtml += "</th>";
-                                    brandHeaderHtml += "<th>";
-                                    brandHeaderHtml += "</th>";
-                                    brandHeaderHtml += "</tr>";
-                                    var _cls = v.PRDCD + "-" + bv[0] + "-initial";
-                                    brandHeaderHtml += "<tr class='" + _cls + " initial'>";
-                                    brandHeaderHtml += "</tr>";
-                                });
-                            }
-                            sizeHeaderHtml = "";
-                        });
-                        if (maxSizeCnt) $('.size').attr("colspan", maxSizeCnt);
-                        $('.stock-body').html(brandHeaderHtml);
-                        var itemSizesEl = $('.item-sizes');
-                        $.each(itemSizesEl, function (i, el) {
-                            var count = parseInt($(this).attr('data-size-count'));
-                            var remCount = maxSizeCnt - count;
-                            var html = "";
-                            for (var j = 0; j < remCount; j++) {
-                                html += "<th>";
-                                html += "</th>";
-                            }
-                            var itemSizeTr = $($('.item-rate')[i]);
-                            itemSizeTr.before(html);
-                            // $(this).append(html);
-                        });
+                        var maxSizeCnt = response.maxSizeCnt;
+                        var mainData = response.mainData;
+                        html = "";
 
-                        $.each(brandData, function (i, v) {
-                            var items = v.items ? v.items.split('|') : [];
-                            if (items) {
-                                $.each(items, function (ii, iv) {
-                                    var _items = iv.split(',');
-                                    var itemId = _items[0];
-                                    var name = _items[1];
-                                    var color = _items[2];
-                                    var prdGrp = _items[3];
-                                    var rate = _items[4];
-                                    var _itemData = {
-                                        name: name,
-                                        color: color,
-                                        rate: rate,
-                                        itemId: itemId
-                                    };
-                                    var brandCls = prdGrp + '-' + v.brandId + "-initial";
-                                    var trCls = prdGrp + '-' + v.brandId;
-                                    // console.log("brandCls", brandCls);
-                                    if (!itemsData[brandCls]) itemsData[brandCls] = [];
-                                    itemsData[brandCls].push(_itemData);
-                                    itemHtml = "";
-                                    itemHtml += "<tr class='" + trCls + "'>";
-                                    itemHtml += "<td>";
-                                    itemHtml += name;
-                                    itemHtml += "</td>";
-                                    itemHtml += "<td>";
-                                    itemHtml += color;
-                                    itemHtml += "</td>";
-                                    var _grpSize = grpSizes[prdGrp];
-                                    $.each(_grpSize, function (gi, gv) {
-                                        var itemCls = itemId + '-' + color + '-' + gv;
-                                        itemHtml += "<td class='" + itemCls + "'>";
-                                        itemHtml += "</td>";
-                                    });
-                                    var remCount = maxSizeCnt - _grpSize.length;
-                                    for (var k = 0; k < remCount; k++) {
-                                        itemHtml += "<td>";
-                                        itemHtml += "</td>";
-                                    }
-                                    itemHtml += "<td>";
-                                    itemHtml += rate;
-                                    itemHtml += "</td>";
-                                    var totalCls = itemId + '-' + color;
-                                    itemHtml += "<td class='" + totalCls + "'>";
-                                    itemHtml += "</td>";
-                                    itemHtml += "</tr>";
-                                    $('.' + trCls).length == 0 ? $('.' + brandCls).after(itemHtml) : $('.' + trCls + ':last').after(itemHtml);
-                                });
-                            }
+                        $.each(mainData, function (i, row) {
+                            html += "<tr>";
+                            $.each(row, function (ic, col) {
+                                html += "<td>";
+                                html += col;
+                                html += "</td>";
+                            });
+                            html += "</tr>";
                         });
-                        $('.initial').remove();
-
-                        $.each(stockData, function (i, v) {
-                            var itemId = v.TRITCD;
-                            var color = v.TRCOLOR;
-                            var size = v.TRSZCD;
-
-                            var sizeCls = itemId + '-' + color + '-' + size;
-                            var totalCls = itemId + '-' + color;
-                            $('.' + sizeCls).text(v.stockQty);
-                            var totQty = parseInt(v.stockQty);
-                            if ($('.' + totalCls).length) {
-                                totQty += parseInt($('.' + totalCls).text());
-                            }
-                            $('.' + totalCls).text(totQty);
-                        });
+                        $('.size').attr("colspan", maxSizeCnt);
+                        var thCounts = parseInt(maxSizeCnt) == 0 ? parseInt(maxSizeCnt) + 2 : parseInt(maxSizeCnt) + 1;
+                        for (var i = 0; i < thCounts; i++) {
+                            sizeHeaderHtml += "<th></th>";
+                        }
+                        console.log("html", html);
                     }
-
+                    $('tbody.stock-body').html(html);
+                    $('.sizeEmpty').nextAll('th').remove();
+                    $('.sizeEmpty').after(sizeHeaderHtml);
+                    // $('.sizeEmpty').after(sizeHeaderHtml);
+                    $('b.grpHeader').parent().parent("tr").addClass("info  fs-16");
+                    $('b.brandHeader').parent().parent("tr").addClass("success fs-16");
+                    $('b.brandTotal').parent().parent("tr").addClass("warning fs-16");
+                    var table = $('#stock-table').DataTable({
+                        'destroy': true,
+                        'ordering': false,
+                        'searching': false,
+                        'info': false
+                    });
+                    table.columns.adjust().draw();
+                    // console.log("grpSizes", grpSizes['A'].indexOf('FS'));
                     // $('#stock-table').DataTable();
                 },
                 complete: function () {
