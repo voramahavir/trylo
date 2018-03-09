@@ -81,6 +81,7 @@ class StockReportModel extends CI_Model
         ini_set("memory_limit", "256M");
         $fromDate = $_POST['fromDate'];
         $toDate = $_POST['toDate'];
+        $rptType = $_POST['rptType'];
         $branchCode = $_POST['branchCode'];
         $whereStr = "";
         if (isset($_POST['prdGrp'])) {
@@ -109,68 +110,86 @@ class StockReportModel extends CI_Model
 
         $productsData = array();
         $brandsData = array();
+        $EmptyData = array();
 
         $mainData = array();
+
         $brandProductsData = array();
+        $emptyProductsData = array();
         $brandTotalData = array();
+        $emptyTotalData = array();
         $merged = false;
         foreach ($data as $row) {
             if (!isset($brandProductsData[$row['PRDCD']])) {
                 $brandProductsData[$row['PRDCD']] = array();
+                $emptyProductsData[$row['PRDCD']] = array();
             }
             if (!isset($brandProductsData[$row['PRDCD']][$row['brandId']])) {
                 $brandProductsData[$row['PRDCD']][$row['brandId']] = array();
+                $emptyProductsData[$row['PRDCD']][$row['brandId']] = array();
             }
             if (!isset($brandTotalData[$row['PRDCD']])) {
                 $brandTotalData[$row['PRDCD']] = array();
             }
+
             if (!isset($brandTotalData[$row['PRDCD']][$row['brandId']])) {
                 $brandTotalData[$row['PRDCD']][$row['brandId']] = array(
                     "brandTotal" => "<b class='brandTotal'>Brand Total</b>",
                     "color" => ""
                 );
             }
-
+            $emptyTotalData = $brandTotalData;
             $sizes = explode(",", $row['sizes']);
             $_brandProData = array(
                 "itemcode" => $row['TRITCD'],
                 "itemName" => $row['TRITNM'],
                 "color" => $row['TRCOLOR'],
             );
+            $_emptyProData = $_brandProData;
             $total = 0;
             $brandTotal = 0;
             $_brandTotData = array();
+            $_emptyTotData = array();
             foreach ($sizes as $size) {
-                $_brandProData[$size] = 0;
-                $_brandTotData[$size] = 0;
-//                $brandTotalData[$row['PRDCD']][$row['brandId']][$size] = 0;
+                $_brandProData["'$size'"] = 0;
+                $_emptyProData["'$size'"] = 0;
+                $_brandTotData["'$size'"] = 0;
+                $_emptyTotData["'$size'"] = 0;
+//                $brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"] = 0;
                 if (isset($row[$size])) {
-                    $_brandProData[$size] = $row[$size];
-                    $_brandTotData[$size] = $row[$size];
+                    $_brandProData["'$size'"] = $row[$size];
+                    $_brandTotData["'$size'"] = $row[$size];
                 }
-                $brandTotalData[$row['PRDCD']][$row['brandId']][$size] = isset($brandTotalData[$row['PRDCD']][$row['brandId']][$size]) ? $brandTotalData[$row['PRDCD']][$row['brandId']][$size] + $_brandTotData[$size] : $_brandTotData[$size];
-                $total = $total + $_brandProData[$size];
-                $brandTotal = $brandTotal + $brandTotalData[$row['PRDCD']][$row['brandId']][$size];
-//                $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] = isset($brandTotalData[$row['PRDCD']][$row['brandId']]['total']) ? $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] + $_brandTotData[$size] : $_brandTotData[$size];
+                $brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"] = isset($brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"]) ? $brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"] + $_brandTotData["'$size'"] : $_brandTotData["'$size'"];
+                $emptyTotalData[$row['PRDCD']][$row['brandId']]["'$size'"] = $_emptyTotData["'$size'"];
+                $total = $total + $_brandProData["'$size'"];
+                $brandTotal = $brandTotal + $brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"];
+//                $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] = isset($brandTotalData[$row['PRDCD']][$row['brandId']]['total']) ? $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] + $_brandTotData["'$size'"] : $_brandTotData["'$size'"];
             }
 
 //            echo "BT" . $brandTotal . "<hr>";
             $zeroArray = array_fill(count($sizes) - 1, $maxSizeCnt - count($sizes), 0);
             $_brandProData = array_merge($_brandProData, $zeroArray);
+            $_emptyProData = array_merge($_emptyProData, $zeroArray);
             if (!isset($brandTotalData[$row['PRDCD']][$row['brandId']]['merged'])) {
                 $brandTotalData[$row['PRDCD']][$row['brandId']]['merged'] = true;
                 $brandTotalData[$row['PRDCD']][$row['brandId']] = array_merge($brandTotalData[$row['PRDCD']][$row['brandId']], $zeroArray);
+                $emptyTotalData[$row['PRDCD']][$row['brandId']] = array_merge($emptyTotalData[$row['PRDCD']][$row['brandId']], $zeroArray);
             }
             $brandTotalData[$row['PRDCD']][$row['brandId']]['rate'] = "";
+            $emptyTotalData[$row['PRDCD']][$row['brandId']]['rate'] = "";
             $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] = $brandTotal;
+            $emptyTotalData[$row['PRDCD']][$row['brandId']]['total'] = 0;
             $_rateData = array(
                 'rate' => $row['rate'],
                 'total' => $total
             );
 
             $_brandProData = array_merge($_brandProData, $_rateData);
+            $_emptyProData = array_merge($_emptyProData, $_rateData);
 
             array_push($brandProductsData[$row['PRDCD']][$row['brandId']], $_brandProData);
+            array_push($emptyProductsData[$row['PRDCD']][$row['brandId']], $_emptyProData);
 //            $brandTotalData[$row['PRDCD']][$row['brandId']] = array_merge($brandTotalData[$row['PRDCD']][$row['brandId']], $_brandTotData);
             /*$brandProductsData[$row['PRDCD']][$row['brandId']]['rate'] = $row['rate'];
             $brandProductsData[$row['PRDCD']][$row['brandId']]['total'] = 0;*/
@@ -183,6 +202,7 @@ class StockReportModel extends CI_Model
                     'brands' => array()
                 );
             }
+            $EmptyData[$row['PRDCD']] = $brandsData[$row['PRDCD']];
 //            $brandsData[$row['PRDCD']] = array_merge($brandsData[$row['PRDCD']], $sizesArray);
             /*if (!isset($brandsData[$row['PRDCD']][$row['brandId']])) {
                 $brandsData[$row['PRDCD']][$row['brandId']] = array();
@@ -195,31 +215,20 @@ class StockReportModel extends CI_Model
             $emptyData = array_fill(count($_brand), $maxSizeCnt - count($sizesArray) + 2, '');
             $_brand = array_merge($_brand, $emptyData);
             $brandsData[$row['PRDCD']]['brands'][$row['brandId']]['brandDetails'] = $_brand;
+            $EmptyData[$row['PRDCD']]['brands'][$row['brandId']]['brandDetails'] = $_brand;
             $brandsData[$row['PRDCD']]['brands'][$row['brandId']]['prodDetails'] = $brandProductsData[$row['PRDCD']][$row['brandId']];
+            $EmptyData[$row['PRDCD']]['brands'][$row['brandId']]['prodDetails'] = $emptyProductsData[$row['PRDCD']][$row['brandId']];
             $brandsData[$row['PRDCD']]['brands'][$row['brandId']]['total'] = $brandTotalData[$row['PRDCD']][$row['brandId']];
+            $EmptyData[$row['PRDCD']]['brands'][$row['brandId']]['total'] = $emptyTotalData[$row['PRDCD']][$row['brandId']];
         }
         $tempdata = array();
-        foreach ($salesData as $sales) {
-            $PRDCD = $sales['PRDCD'];
-            $brandId = $sales['TRBRND'];
-            if (isset($brandsData[$PRDCD]['brands'][$brandId]['prodDetails'])) {
-                $productDetails = $brandsData[$PRDCD]['brands'][$brandId]['prodDetails'];
-                $itemsCodeArray = array_column($productDetails, 'itemcode');
-                $productDetailsKey = array_search($sales['TRITCD'], $itemsCodeArray);
+        $calculatedData = $this->setReportData($brandsData, $salesData, $EmptyData);
+        $brandsData = $calculatedData['brandsData'];
+        $salesFinalData = $calculatedData['finalData'];
+//        print_r($salesFinalData);die;
 
-                if (isset($productDetails[$productDetailsKey]['itemcode']) && isset($productDetails[$productDetailsKey]['color'])) {
-
-                    $itemCode = $productDetails[$productDetailsKey]['itemcode'];
-                    $color = $productDetails[$productDetailsKey]['color'];
-                    $size = $sales['TRSZ'];
-
-                    if ($itemCode == $sales['TRITCD'] && $color == $sales['TRCLR'] && array_key_exists($size, $productDetails[$productDetailsKey])) {
-                        $brandsData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey][$size] = $productDetails[$productDetailsKey][$size] - $sales['qty'];
-                        $brandsData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]['total'] = $productDetails[$productDetailsKey]['total'] - $sales['qty'];
-                    }
-
-                }
-            }
+        if ($rptType == 2) {
+            $brandsData = $salesFinalData;
         }
         foreach ($brandsData as $value) {
             $value = array_values($value);
@@ -258,5 +267,76 @@ class StockReportModel extends CI_Model
     function filterData($data)
     {
         return array_filter($data, 'strlen');
+    }
+
+    function setReportData($brandsData = array(), $rptData = array(), $EmptyData = array(), $isPlus = false)
+    {
+//        print_r($brandsData);
+        $finalData = array();
+        foreach ($rptData as $data) {
+            $PRDCD = $data['PRDCD'];
+            $brandId = $data['TRBRND'];
+            if (isset($brandsData[$PRDCD]['brands'][$brandId]['prodDetails'])) {
+                $productDetails = $brandsData[$PRDCD]['brands'][$brandId]['prodDetails'];
+                $totalDetails = $brandsData[$PRDCD]['brands'][$brandId]['total'];
+                $emptyTotalDetails = $EmptyData[$PRDCD]['brands'][$brandId]['total'];
+                $itemsCodeArray = array_column($productDetails, 'itemcode');
+                $productDetailsKeys = array_keys($itemsCodeArray, $data['TRITCD']);
+                if ($productDetailsKeys) {
+                    foreach ($productDetailsKeys as $productDetailsKey) {
+                        if (isset($productDetails[$productDetailsKey]['itemcode']) && isset($productDetails[$productDetailsKey]['color'])) {
+                            $itemCode = $productDetails[$productDetailsKey]['itemcode'];
+                            $color = $productDetails[$productDetailsKey]['color'];
+                            $size = $data['TRSZ'];
+
+                            /*print_r($productDetails[$productDetailsKey]);
+                            echo "Pcode:" . $itemCode;
+                            echo "Scode:" . $data['TRITCD'];
+                            echo "Pcolor:" . $color;
+                            echo "Scolor:" . $data['TRCLR'];
+                            echo "Ssize:" . $size;
+                            echo "Psize:" . array_key_exists("'$size'", $productDetails[$productDetailsKey]) ? $productDetails[$productDetailsKey]["'$size'"] : 'false';
+                            echo "<hr>";*/
+                            if ($itemCode == $data['TRITCD'] && $color == $data['TRCLR'] && array_key_exists("'$size'", $productDetails[$productDetailsKey])) {
+//                                print_r($productDetails[$productDetailsKey]);
+                                if (!isset($finalData[$PRDCD])) {
+                                    $finalData[$PRDCD] = array(
+                                        'prodName' => $brandsData[$PRDCD]['prodName'],
+                                        'brands' => array()
+                                    );
+                                }
+                                if (!isset($finalData[$PRDCD]['brands'][$brandId])) {
+                                    $finalData[$PRDCD]['brands'][$brandId] = array();
+                                    $finalData[$PRDCD]['brands'][$brandId]['brandDetails'] = $EmptyData[$PRDCD]['brands'][$brandId]['brandDetails'];
+                                    $finalData[$PRDCD]['brands'][$brandId]['prodDetails'] = array();
+                                    $finalData[$PRDCD]['brands'][$brandId]['total'] = $emptyTotalDetails;
+                                }
+                                if (!isset($finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey])) {
+                                    $finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey] = $EmptyData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey];
+                                }
+                                if (isset($finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]['total'])) {
+                                    unset($finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]['total']);
+                                }
+                                $finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]["'$size'"] = $data['qty'];
+                                $finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]['Total'] = isset($finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]['Total']) ? $finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]['Total'] + $data['qty'] : $data['qty'];
+
+
+                                $finalData[$PRDCD]['brands'][$brandId]['total']["'$size'"] = $finalData[$PRDCD]['brands'][$brandId]['total']["'$size'"] + $data['qty'];
+                                $finalData[$PRDCD]['brands'][$brandId]['total']['total'] = $finalData[$PRDCD]['brands'][$brandId]['total']['total'] + $data['qty'];
+
+                                $brandsData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]["'$size'"] = $isPlus ? $productDetails[$productDetailsKey]["'$size'"] + $data['qty'] : $productDetails[$productDetailsKey]["'$size'"] - $data['qty'];
+                                $brandsData[$PRDCD]['brands'][$brandId]['total']["'$size'"] = $isPlus ? $totalDetails["'$size'"] + $data['qty'] : $totalDetails["'$size'"] - $data['qty'];
+                                $brandsData[$PRDCD]['brands'][$brandId]['total']['total'] = $isPlus ? $totalDetails['total'] + $data['qty'] : $totalDetails['total'] - $data['qty'];
+
+
+//                        array_push($salesFinalData, $brandsData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]);
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+        return compact('brandsData', 'finalData');
     }
 }

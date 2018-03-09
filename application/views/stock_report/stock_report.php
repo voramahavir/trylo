@@ -359,7 +359,8 @@
                 fromDate: fromDate,
                 toDate: toDate,
                 branchCode: $("#branch_code").val(),
-                nillType: $('input[name="stk_type"]:checked').val()
+                nillType: $('input[name="stk_type"]:checked').val(),
+                rptType: $('input[name="rpt_type"]:checked').val()
             };
             if ($("input[name=prd_type]:checked").val() == 2 && $("#prdGrp").val()) {
                 data['prdGrp'] = $("#prdGrp").val();
@@ -392,19 +393,6 @@
                     if (response) {
                         var maxSizeCnt = response.maxSizeCnt;
                         var mainData = response.mainData;
-                        html = "";
-
-                        // $('.sizeEmpty').after(sizeHeaderHtml);
-
-                        /*$.each(mainData, function (i, row) {
-                            html += "<tr>";
-                            $.each(row, function (ic, col) {
-                                html += "<td>";
-                                html += col;
-                                html += "</td>";
-                            });
-                            html += "</tr>";
-                        });*/
                         $('.size').attr("colspan", maxSizeCnt);
                         var thCounts = parseInt(maxSizeCnt) == 0 ? parseInt(maxSizeCnt) + 2 : parseInt(maxSizeCnt) + 1;
                         for (var i = 0; i < thCounts; i++) {
@@ -423,16 +411,7 @@
                         $('b.grpHeader').parent().parent("tr").addClass("info  fs-16");
                         $('b.brandHeader').parent().parent("tr").addClass("success fs-16");
                         $('b.brandTotal').parent().parent("tr").addClass("warning fs-16");
-                        console.log("html", html);
                     }
-                    console.log("html1", html);
-
-                    // $('tbody.stock-body').html(html);
-
-
-                    // table.columns.adjust().draw();
-                    // console.log("grpSizes", grpSizes['A'].indexOf('FS'));
-                    // $('#stock-table').DataTable();
                 },
                 complete: function () {
                     loadingStop();
