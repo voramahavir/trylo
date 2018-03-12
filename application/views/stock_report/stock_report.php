@@ -124,6 +124,13 @@
         <div class="box rpt-box hide">
             <div class="box-body">
                 <div class="row form-group">
+                    <div class="col-md-12">
+                        <button id="generate-excel" class="btn btn-danger">
+                            Generate Excel
+                        </button>
+                    </div>
+                </div>
+                <div class="row form-group">
                     <div class="stock-info">
                         <div class="col-md-12">
                             <label class="branch-name">
@@ -171,8 +178,8 @@
                                 <th></th>
                                 <th></th>
                                 <th class="sizeEmpty"></th>
-                                <th></th>
-                                <th></th>
+                                <!--<th></th>
+                                <th></th>-->
                             </tr>
                             </thead>
                             <tbody class="stock-body">
@@ -195,7 +202,7 @@
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/FileSaver.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/scripts/excel-gen.js'); ?>"></script>
 <script type="text/javascript">
-    var commData = [];
+    var commData = [], table = "", excel = "";
     $(document).ready(function () {
         $('#from_date').datepicker({
             autoclose: true,
@@ -394,23 +401,46 @@
                         var maxSizeCnt = response.maxSizeCnt;
                         var mainData = response.mainData;
                         $('.size').attr("colspan", maxSizeCnt);
-                        var thCounts = parseInt(maxSizeCnt) == 0 ? parseInt(maxSizeCnt) + 2 : parseInt(maxSizeCnt) + 1;
+                        var thCounts = parseInt(maxSizeCnt) === 0 ? parseInt(maxSizeCnt) + 2 : parseInt(maxSizeCnt) + 1;
                         for (var i = 0; i < thCounts; i++) {
-                            sizeHeaderHtml += "<th></th>";
+                            sizeHeaderHtml += "<th rowspan=\"1\" colspan=\"1\" style=\"width: 0px;\"></th>";
                         }
+                        if (table)
+                            table.destroy();
                         $('.sizeEmpty').nextAll('th').remove();
                         $('.sizeEmpty').after(sizeHeaderHtml);
+                        $.each(mainData, function (i, v) {
+                            html += "<tr>";
+                            $.each(v, function (_i, _v) {
+                                html += "<td>";
+                                html += _v;
+                                html += "</td>";
+                            });
+                            html += "</tr>";
+                        });
 
-                        var table = $('#stock-table').DataTable({
-                            'data': mainData,
+
+                        $('tbody.stock-body').html(html);
+                        var grpHeader = $('b.grpHeader');
+                        var brandHeader = $('b.brandHeader');
+                        var brandTotal = $('b.brandTotal');
+                        $.each(grpHeader, function (i, v) {
+                            $(this).parent().parent("tr").addClass("info  fs-16");
+                        });
+                        $.each(brandHeader, function (i, v) {
+                            $(this).parent().parent("tr").addClass("success  fs-16");
+                        });
+                        $.each(brandTotal, function (i, v) {
+                            $(this).parent().parent("tr").addClass("warning  fs-16");
+                        });
+                        table = $('#stock-table').DataTable({
                             'destroy': true,
                             'ordering': false,
                             'searching': false,
                             'info': false
                         });
-                        $('b.grpHeader').parent().parent("tr").addClass("info  fs-16");
-                        $('b.brandHeader').parent().parent("tr").addClass("success fs-16");
-                        $('b.brandTotal').parent().parent("tr").addClass("warning fs-16");
+
+
                     }
                 },
                 complete: function () {
@@ -418,5 +448,24 @@
                 }
             });
         }
+
+        $("#generate-excel").click(function () {
+            loadingStart();
+            table.destroy();
+            excel = new ExcelGen({
+                "src_id": "stock-table",
+                // "show_header": true,
+                "author": "TRYLO",
+                "file_name": "Stock Report.xlsx"
+            });
+            excel.generate();
+            table = $('#stock-table').DataTable({
+                'destroy': true,
+                'ordering': false,
+                'searching': false,
+                'info': false
+            });
+            loadingStop();
+        });
     });
 </script>
