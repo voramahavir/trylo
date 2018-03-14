@@ -119,6 +119,8 @@ class StockReportModel extends CI_Model
         $emptyProductsData = array();
         $brandTotalData = array();
         $emptyTotalData = array();
+        $grpTotalData = array();
+        $grpEmptyTotalData = array();
         $merged = false;
         $tempdata = array();
         foreach ($data as $row) {
@@ -133,6 +135,14 @@ class StockReportModel extends CI_Model
             if (!isset($brandTotalData[$row['PRDCD']])) {
                 $brandTotalData[$row['PRDCD']] = array();
                 $emptyTotalData[$row['PRDCD']] = array();
+                $grpTotalData[$row['PRDCD']] = array(
+                    "grpTotal" => "<b class='grpTotal'>Group Total</b>",
+                    "color" => ""
+                );
+                $grpEmptyTotalData[$row['PRDCD']] = array(
+                    "grpTotal" => "<b class='grpTotal'>Group Total</b>",
+                    "color" => ""
+                );
             }
 
             if (!isset($brandTotalData[$row['PRDCD']][$row['brandId']])) {
@@ -144,6 +154,7 @@ class StockReportModel extends CI_Model
                     "brandTotal" => "<b class='brandTotal'>Brand Total</b>",
                     "color" => ""
                 );
+
             }
             $sizes = explode(",", $row['sizes']);
             $_brandProData = array(
@@ -158,22 +169,35 @@ class StockReportModel extends CI_Model
             );
             $total = 0;
             $brandTotal = 0;
+            $grpTotal = 0;
             $_brandTotData = array();
             $_emptyTotData = array();
+            $_grpTotData = array();
+            $_grpEmptyTotData = array();
             foreach ($sizes as $size) {
                 $_brandProData["'$size'"] = 0;
                 $_emptyProData["'$size'"] = 0;
                 $_brandTotData["'$size'"] = 0;
                 $_emptyTotData["'$size'"] = 0;
+                $_grpTotData["'$size'"] = 0;
+                $_grpEmptyTotData["'$size'"] = 0;
 //                $brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"] = 0;
                 if (isset($row[$size])) {
                     $_brandProData["'$size'"] = $row[$size];
                     $_brandTotData["'$size'"] = $row[$size];
+                    $_grpTotData["'$size'"] = $row[$size];
                 }
                 $brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"] = isset($brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"]) ? $brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"] + $_brandTotData["'$size'"] : $_brandTotData["'$size'"];
                 $emptyTotalData[$row['PRDCD']][$row['brandId']]["'$size'"] = $_emptyTotData["'$size'"];
+
+
                 $total = $total + $_brandProData["'$size'"];
                 $brandTotal = $brandTotal + $brandTotalData[$row['PRDCD']][$row['brandId']]["'$size'"];
+
+                $grpTotalData[$row['PRDCD']]["'$size'"] = isset($grpTotalData[$row['PRDCD']]["'$size'"]) ? $grpTotalData[$row['PRDCD']]["'$size'"] + $_grpTotData["'$size'"] : $_grpTotData["'$size'"];
+                $grpEmptyTotalData[$row['PRDCD']]["'$size'"] = $_grpEmptyTotData["'$size'"];
+
+                $grpTotal = $grpTotal + $grpTotalData[$row['PRDCD']]["'$size'"];
 //                $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] = isset($brandTotalData[$row['PRDCD']][$row['brandId']]['total']) ? $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] + $_brandTotData["'$size'"] : $_brandTotData["'$size'"];
             }
             if ($maxSizeCnt != count($sizes)) {
@@ -181,6 +205,11 @@ class StockReportModel extends CI_Model
                 $zeroArray = array_fill(count($sizes) - 1, $maxSizeCnt - count($sizes), 0);
                 $_brandProData = array_merge($_brandProData, $zeroArray);
                 $_emptyProData = array_merge($_emptyProData, $zeroArray);
+                if (!isset($grpTotalData[$row['PRDCD']]['merged'])) {
+                    $grpTotalData[$row['PRDCD']]['merged'] = true;
+                    $grpTotalData[$row['PRDCD']] = array_merge($grpTotalData[$row['PRDCD']], $zeroArray);
+                    $grpEmptyTotalData[$row['PRDCD']] = array_merge($grpEmptyTotalData[$row['PRDCD']], $zeroArray);
+                }
                 if (!isset($brandTotalData[$row['PRDCD']][$row['brandId']]['merged'])) {
                     $brandTotalData[$row['PRDCD']][$row['brandId']]['merged'] = true;
                     $brandTotalData[$row['PRDCD']][$row['brandId']] = array_merge($brandTotalData[$row['PRDCD']][$row['brandId']], $zeroArray);
@@ -193,6 +222,11 @@ class StockReportModel extends CI_Model
             $emptyTotalData[$row['PRDCD']][$row['brandId']]['rate'] = "";
             $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] = $brandTotal;
             $emptyTotalData[$row['PRDCD']][$row['brandId']]['total'] = 0;
+
+            $grpTotalData[$row['PRDCD']]['rate'] = "";
+            $grpEmptyTotalData[$row['PRDCD']]['rate'] = "";
+            $grpTotalData[$row['PRDCD']]['total'] = $grpTotal;
+            $grpEmptyTotalData[$row['PRDCD']]['total'] = 0;
             $_rateData = array(
                 'rate' => $row['rate'],
                 'total' => $total
@@ -238,8 +272,11 @@ class StockReportModel extends CI_Model
             $EmptyData[$row['PRDCD']]['brands'][$row['brandId']]['prodDetails'] = $emptyProductsData[$row['PRDCD']][$row['brandId']];
             $brandsData[$row['PRDCD']]['brands'][$row['brandId']]['total'] = $brandTotalData[$row['PRDCD']][$row['brandId']];
             $EmptyData[$row['PRDCD']]['brands'][$row['brandId']]['total'] = $emptyTotalData[$row['PRDCD']][$row['brandId']];
+
+            $brandsData[$row['PRDCD']]['grpTotal'] = $grpTotalData[$row['PRDCD']];
+            $EmptyData[$row['PRDCD']]['grpTotal'] = $grpEmptyTotalData[$row['PRDCD']];
         }
-        /*print_r($emptyTotalData);
+        /*echo json_encode(compact('grpTotalData','brandTotalData','grpEmptyTotalData'));
         die;*/
         $calculatedData = $this->setReportData($brandsData, $salesData, $EmptyData);
         $brandsData = $calculatedData['brandsData'];
@@ -275,7 +312,9 @@ class StockReportModel extends CI_Model
                     array_push($mainData, array_values($row['total']));
                 }
             }
-
+            if (isset($value[2]['merged']))
+                unset($value[2]['merged']);
+            array_push($mainData, array_values($value[2]));
         }
         $filterData = compact('mainData', 'maxSizeCnt');
         echo json_encode($filterData);
@@ -347,6 +386,9 @@ class StockReportModel extends CI_Model
                                 $brandsData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey]['total'] = $isPlus ? $productDetails[$productDetailsKey]['total'] + $data['qty'] : $productDetails[$productDetailsKey]['total'] - $data['qty'];
                                 $brandsData[$PRDCD]['brands'][$brandId]['total']["'$size'"] = $isPlus ? $totalDetails["'$size'"] + $data['qty'] : $totalDetails["'$size'"] - $data['qty'];
                                 $brandsData[$PRDCD]['brands'][$brandId]['total']['total'] = $isPlus ? $totalDetails['total'] + $data['qty'] : $totalDetails['total'] - $data['qty'];
+
+                                $brandsData[$PRDCD]['grpTotal']["'$size'"] = $isPlus ? $brandsData[$PRDCD]['grpTotal']["'$size'"] + $data['qty'] : $brandsData[$PRDCD]['grpTotal']["'$size'"] - $data['qty'];
+                                $brandsData[$PRDCD]['grpTotal']['total'] = $isPlus ? $brandsData[$PRDCD]['grpTotal']['total'] + $data['qty'] : $brandsData[$PRDCD]['grpTotal']['total'] - $data['qty'];
 //                                print_r($emptyTotalDetails);
 
 

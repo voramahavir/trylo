@@ -202,7 +202,7 @@
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/FileSaver.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/scripts/excel-gen.js'); ?>"></script>
 <script type="text/javascript">
-    var commData = [], table = "", excel = "";
+    var commData = [], table = "", excel = "", body_rows = "";
     $(document).ready(function () {
         $('#from_date').datepicker({
             autoclose: true,
@@ -424,6 +424,7 @@
                         var grpHeader = $('b.grpHeader');
                         var brandHeader = $('b.brandHeader');
                         var brandTotal = $('b.brandTotal');
+                        var grpTotal = $('b.grpTotal');
                         $.each(grpHeader, function (i, v) {
                             $(this).parent().parent("tr").addClass("info  fs-16");
                         });
@@ -433,6 +434,11 @@
                         $.each(brandTotal, function (i, v) {
                             $(this).parent().parent("tr").addClass("warning  fs-16");
                         });
+                        $.each(grpTotal, function (i, v) {
+                            $(this).parent().parent("tr").addClass("danger  fs-16");
+                        });
+                        body_rows = $("tbody.stock-body tr");
+
                         table = $('#stock-table').DataTable({
                             'destroy': true,
                             'ordering': false,
@@ -450,11 +456,12 @@
         }
 
         $("#generate-excel").click(function () {
-            loadingStart();
+            // loadingStart();
             table.destroy();
             excel = new ExcelGen({
                 "src_id": "stock-table",
-                // "show_header": true,
+                // "body_rows": body_rows,
+                "show_header": false,
                 "author": "TRYLO",
                 "file_name": "Stock Report.xlsx"
             });
@@ -465,7 +472,7 @@
                 'searching': false,
                 'info': false
             });
-            loadingStop();
+            // loadingStop();
         });
     });
 </script>
