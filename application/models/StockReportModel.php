@@ -84,20 +84,47 @@ class StockReportModel extends CI_Model
         $rptType = $_POST['rptType'];
         $branchCode = $_POST['branchCode'];
         $whereStr = "";
+        $prdGrp = "";
+        $color = "";
+        $cup = "";
+        $brand = 'null';
         if (isset($_POST['prdGrp'])) {
-            $whereStr .= " AND p.PRDCD = ''" . $_POST['prdGrp'] . "''";
+            $prdGrp = $_POST['prdGrp'];
+            $whereStr .= " AND p.PRDCD = ''" . $prdGrp . "''";
         }
         if (isset($_POST['color'])) {
-            $whereStr .= " AND i1.TRCOLOR = ''" . $_POST['color'] . "''";
+            $color = $_POST['color'];
+            $whereStr .= " AND i1.TRCOLOR = ''" . $color . "''";
+        }
+        if (isset($_POST['cup'])) {
+            $cup = $_POST['cup'];
+            $whereStr .= " AND i.TRCUP = ''" . $cup . "''";
         }
         if (isset($_POST['brand'])) {
-            $whereStr .= " AND i.TRBRND = " . $_POST['brand'];
+            $brand = $_POST['brand'];
+            $whereStr .= " AND i.TRBRND = " . $brand;
         }
-        $query = "CALL GetStockReport('$fromDate','$toDate',$branchCode,'" . $whereStr . "')";
+        $query = "CALL GetStockReport('$fromDate','$toDate',$branchCode,'" . $whereStr . "','$prdGrp','$color','$cup',$brand)";
         $response = $this->GetMultipleQueryResult($query);
         $data = isset($response[0]) ? $response[0] : array();
         $salesData = isset($response[1]) ? $response[1] : array();
-//        print_r($salesData);die;
+        $salesRetData = isset($response[2]) ? $response[2] : array();
+        $purchaseData = isset($response[3]) ? $response[3] : array();
+        $purchaseRetData = isset($response[4]) ? $response[4] : array();
+        if ($rptType == 2 && empty($salesData)) {
+            echo json_encode(array());
+            exit;
+        } else if ($rptType == 3 && empty($salesRetData)) {
+            echo json_encode(array());
+            exit;
+        } else if ($rptType == 4 && empty($purchaseData)) {
+            echo json_encode(array());
+            exit;
+        } else if ($rptType == 5 && empty($purchaseRetData)) {
+            echo json_encode(array());
+            exit;
+        }
+//        print_r($salesRetData);die;
         $products = array_column($data, 'PRDCD');
         $products = array_unique($products);
 
@@ -278,13 +305,42 @@ class StockReportModel extends CI_Model
         }
         /*echo json_encode(compact('grpTotalData','brandTotalData','grpEmptyTotalData'));
         die;*/
-        $calculatedData = $this->setReportData($brandsData, $salesData, $EmptyData);
-        $brandsData = $calculatedData['brandsData'];
-        $salesFinalData = $calculatedData['finalData'];
+        $calculatedData = array();
+        $salesFinalData = array();
+        $salesRetFinalData = array();
+        $purchaseFinalData = array();
+        $purchaseRetFinalData = array();
+        if ($rptType == 1 || $rptType == 2) {
+            $calculatedData = $this->setReportData($brandsData, $salesData, $EmptyData);
+            $brandsData = $calculatedData['brandsData'];
+            $salesFinalData = $calculatedData['finalData'];
+        }
+        if ($rptType == 1 || $rptType == 3) {
+            $calculatedData = $this->setReportData($brandsData, $salesRetData, $EmptyData, true);
+            $brandsData = $calculatedData['brandsData'];
+            $salesRetFinalData = $calculatedData['finalData'];
+        }
+        if ($rptType == 1 || $rptType == 4) {
+            $calculatedData = $this->setReportData($brandsData, $purchaseData, $EmptyData, true);
+            $brandsData = $calculatedData['brandsData'];
+            $purchaseFinalData = $calculatedData['finalData'];
+        }
+        if ($rptType == 1 || $rptType == 5) {
+            $calculatedData = $this->setReportData($brandsData, $purchaseRetData, $EmptyData);
+            $brandsData = $calculatedData['brandsData'];
+            $purchaseRetFinalData = $calculatedData['finalData'];
+        }
 
         if ($rptType == 2) {
             $brandsData = $salesFinalData;
+        } else if ($rptType == 3) {
+            $brandsData = $salesRetFinalData;
+        } else if ($rptType == 4) {
+            $brandsData = $purchaseFinalData;
+        } else if ($rptType == 5) {
+            $brandsData = $purchaseRetFinalData;
         }
+//        print_r($brandsData);die;
         foreach ($brandsData as $value) {
             $value = array_values($value);
             $_proData = $value[0];
@@ -338,6 +394,7 @@ class StockReportModel extends CI_Model
                 $productDetails = $brandsData[$PRDCD]['brands'][$brandId]['prodDetails'];
                 $totalDetails = $brandsData[$PRDCD]['brands'][$brandId]['total'];
                 $emptyTotalDetails = $EmptyData[$PRDCD]['brands'][$brandId]['total'];
+                $emptyGrpTotalDetails = $EmptyData[$PRDCD]['grpTotal'];
                 $itemsCodeArray = array_column($productDetails, 'itemcode');
                 $productDetailsKeys = array_keys($itemsCodeArray, $data['TRITCD']);
                 if ($productDetailsKeys) {
@@ -368,6 +425,7 @@ class StockReportModel extends CI_Model
                                     $finalData[$PRDCD]['brands'][$brandId]['brandDetails'] = $EmptyData[$PRDCD]['brands'][$brandId]['brandDetails'];
                                     $finalData[$PRDCD]['brands'][$brandId]['prodDetails'] = array();
                                     $finalData[$PRDCD]['brands'][$brandId]['total'] = $emptyTotalDetails;
+                                    $finalData[$PRDCD]['grpTotal'] = $emptyGrpTotalDetails;
                                 }
                                 if (!isset($finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey])) {
                                     $finalData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey] = $EmptyData[$PRDCD]['brands'][$brandId]['prodDetails'][$productDetailsKey];
@@ -389,6 +447,9 @@ class StockReportModel extends CI_Model
 
                                 $brandsData[$PRDCD]['grpTotal']["'$size'"] = $isPlus ? $brandsData[$PRDCD]['grpTotal']["'$size'"] + $data['qty'] : $brandsData[$PRDCD]['grpTotal']["'$size'"] - $data['qty'];
                                 $brandsData[$PRDCD]['grpTotal']['total'] = $isPlus ? $brandsData[$PRDCD]['grpTotal']['total'] + $data['qty'] : $brandsData[$PRDCD]['grpTotal']['total'] - $data['qty'];
+
+                                $finalData[$PRDCD]['grpTotal']["'$size'"] = $finalData[$PRDCD]['grpTotal']["'$size'"] + $data['qty'];
+                                $finalData[$PRDCD]['grpTotal']['total'] = $finalData[$PRDCD]['grpTotal']['total'] + $data['qty'];
 //                                print_r($emptyTotalDetails);
 
 

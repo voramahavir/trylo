@@ -2,6 +2,13 @@
 <link rel="stylesheet"
       href="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css'); ?>">
 <!-- Main row -->
+<style>
+    @media print {
+        @page {
+            margin: 0mm;  /* this affects the margin in the printer settings */
+        }
+    }
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="box">
@@ -178,8 +185,6 @@
                                 <th></th>
                                 <th></th>
                                 <th class="sizeEmpty"></th>
-                                <!--<th></th>
-                                <th></th>-->
                             </tr>
                             </thead>
                             <tbody class="stock-body">
@@ -198,11 +203,18 @@
 <?php $this->load->view('include/template/common_footer'); ?>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net/js/jquery.dataTables.js'); ?>"></script>
 <script src="<?php echo base_url('assets/theme/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/dataTables.buttons.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.bootstrap.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.flash.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/jszip.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/pdfmake.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/vfs_fonts.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.html5.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.print.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/FileSaver.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/scripts/excel-gen.js'); ?>"></script>
 <script type="text/javascript">
-    var commData = [], table = "", excel = "", body_rows = "";
+    var commData = [], table = "", excel = "", cloneTable = "";
     $(document).ready(function () {
         $('#from_date').datepicker({
             autoclose: true,
@@ -437,13 +449,31 @@
                         $.each(grpTotal, function (i, v) {
                             $(this).parent().parent("tr").addClass("danger  fs-16");
                         });
-                        body_rows = $("tbody.stock-body tr");
+                        /*cloneTable = $("#stock-table").clone();
+                        cloneTable.attr("id", "excelTable");
+                        cloneTable.addClass("hide");
+                        $('#stock-table').after(cloneTable);
+                        console.log("cloneTable", cloneTable);*/
 
                         table = $('#stock-table').DataTable({
                             'destroy': true,
                             'ordering': false,
                             'searching': false,
-                            'info': false
+                            'info': false,
+                            dom: 'B<".rpt-info col-md-12">lfrtip',
+                            buttons: [
+                                /*'copy', 'csv', 'excel',
+                                {
+                                    extend: 'pdf',
+                                    messageTop: function () {
+                                        return info.html();
+                                    }
+                                },*/
+                                {
+                                    extend: 'print',
+                                    autoPrint: true
+                                }
+                            ]
                         });
 
 
@@ -456,12 +486,13 @@
         }
 
         $("#generate-excel").click(function () {
-            // loadingStart();
+            loadingStart();
             table.destroy();
+            /*$('#stock-table').addClass("hide");
+            cloneTable.removeClass("hide");*/
             excel = new ExcelGen({
                 "src_id": "stock-table",
-                // "body_rows": body_rows,
-                "show_header": false,
+                // "show_header": true,
                 "author": "TRYLO",
                 "file_name": "Stock Report.xlsx"
             });
@@ -470,9 +501,18 @@
                 'destroy': true,
                 'ordering': false,
                 'searching': false,
-                'info': false
+                'info': false,
+                dom: 'B<".rpt-info col-md-12">lfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        autoPrint: true
+                    }
+                ]
             });
-            // loadingStop();
+            /*cloneTable.addClass("hide");
+            $('#stock-table').removeClass("hide");*/
+            loadingStop();
         });
     });
 </script>

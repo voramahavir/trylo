@@ -247,36 +247,139 @@ INSERT INTO `forms` (`form_id`, `form_name`, `active_tab`, `main_form_id`, `icon
 Bhavesh : 24-02-2018 Stock Rpt SP
 
 DROP PROCEDURE `GetStockReport`;
-CREATE PROCEDURE `GetStockReport`(IN `fromDate` DATE, IN `toDate` DATE, IN `branchCode` INT(11), IN `whereStr` VARCHAR(256)) NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER BEGIN
-SET @sql = NULL;
-SET @sizeSql = NULL;
-SET @@group_concat_max_len = 100000000;
+CREATE PROCEDURE GetStockReport(IN fromDate DATE, IN toDate DATE, IN branchCode INT, IN whereStr VARCHAR(256),
+                                IN prdGrp   VARCHAR(256), IN color VARCHAR(256), IN cup VARCHAR(256), IN brand INT)
+  BEGIN
+    SET @sql = NULL;
+    SET @sizeSql = NULL;
+    SET @@group_concat_max_len = 100000000;
+    SET @salesRowCount = 0;
 
-SELECT group_concat(DISTINCT concat('MAX(IF(ics.size = ''',
-                                    ics.size,
-                                    ''', ics.op_stock, NULL)) AS ''',
-                                    ics.size, ''''))
-INTO @`sizeSql`
-FROM item_cur_stock ics;
-SET @sql = CONCAT('SELECT p.PRDCD,\r\n  p.PRDNM,\r\n  count(DISTINCT s.SZCD)                                               AS sizeCnt,\r\n  group_concat(DISTINCT s.SZCD ORDER BY s.SZCD)                        AS sizes,TRITCD,\r\n  i.TRITNM,\r\n  i1.TRCOLOR,i.TRBRND          AS brandId,\r\n  a.TRNAME          AS brand, i.TRPURT as rate, ', @sizeSql, ' FROM item_cur_stock ics\r\n  JOIN tritem1 i1 ON ics.itemcode = i1.TRITCD1 AND ics.size = i1.TRSZCD AND ics.color = i1.TRCOLOR\r\n  JOIN tritem i ON i1.TRITCD1 = i.TRITCD\r\n  JOIN trprgrp p ON i.TRPRDGRP = p.PRDCD\r\n  JOIN trsize s ON p.PRDCD = s.PRDGRP\r\n  JOIN trac a ON i.TRBRND = a.TRCODE\r\nWHERE ics.branchcode = ',branchCode,whereStr,'\r\nGROUP BY ics.itemcode, ics.color;');
+    SELECT group_concat(DISTINCT concat('MAX(IF(ics.size = ''',
+                                        ics.size,
+                                        ''', ics.op_stock, NULL)) AS ''',
+                                        ics.size, ''''))
+    INTO @`sizeSql`
+    FROM item_cur_stock ics;
+    SET @sql = CONCAT(
+        'SELECT p.PRDCD, p.PRDNM, count(DISTINCT s.SZCD)                                               AS sizeCnt, group_concat(DISTINCT s.SZCD ORDER BY s.SZCD)                        AS sizes,TRITCD, i.TRITNM, i1.TRCOLOR,i.TRBRND          AS brandId, a.TRNAME          AS brand, i.TRPURT as rate, ',
+        @sizeSql,
+        ' FROM item_cur_stock ics JOIN tritem1 i1 ON ics.itemcode = i1.TRITCD1 AND ics.size = i1.TRSZCD AND ics.color = i1.TRCOLOR JOIN tritem i ON i1.TRITCD1 = i.TRITCD JOIN trprgrp p ON i.TRPRDGRP = p.PRDCD JOIN trsize s ON p.PRDCD = s.PRDGRP JOIN trac a ON i.TRBRND = a.TRCODE WHERE ics.branchcode = ',
+        branchCode, whereStr, ' GROUP BY ics.itemcode, ics.color;');
 
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
 
-SELECT
-  p.PRDCD,
-  tb.TRSZ,
-  tb.TRCLR,
-  i.TRITNM,
-  tb.TRITCD,
-  i.TRBRND,
-  sum(tb.TRQTY) AS qty
-FROM trbil1 tb
-  JOIN trbil t ON tb.TRBLNO1 = t.TRBLNO AND tb.fin_year1 = t.fin_year AND tb.branchcode1 = t.branchcode
-  JOIN tritem1 i1 ON tb.TRITCD = i1.TRITCD1 AND tb.TRSZ = i1.TRSZCD AND tb.TRCLR = i1.TRCOLOR
-  JOIN tritem i ON tb.TRITCD = i.TRITCD AND i1.TRITCD1 = i.TRITCD
-  JOIN trprgrp p ON i.TRPRDGRP = p.PRDCD
-WHERE t.branchcode = 1 AND t.TRBLDT >= fromDate AND t.TRBLDT <= toDate
-GROUP BY tb.TRITCD, tb.TRCLR, tb.TRSZ;
-END
+    SELECT
+      p.PRDCD,
+      tb.TRSZ,
+      tb.TRCLR,
+      i.TRITNM,
+      tb.TRITCD,
+      i.TRBRND,
+      sum(tb.TRQTY) AS qty
+    FROM trbil1 tb
+      JOIN trbil t ON tb.TRBLNO1 = t.TRBLNO AND tb.fin_year1 = t.fin_year AND tb.branchcode1 = t.branchcode
+      JOIN tritem1 i1 ON tb.TRITCD = i1.TRITCD1 AND tb.TRSZ = i1.TRSZCD AND tb.TRCLR = i1.TRCOLOR
+      JOIN tritem i ON tb.TRITCD = i.TRITCD AND i1.TRITCD1 = i.TRITCD
+      JOIN trprgrp p ON i.TRPRDGRP = p.PRDCD
+    WHERE t.branchcode = branchCode AND t.TRBLDT >= fromDate AND t.TRBLDT <= toDate
+          AND CASE WHEN prdGrp IS NULL OR prdGrp = ''
+      THEN 1
+              ELSE p.PRDCD = prdGrp END
+          AND CASE WHEN color IS NULL OR color = ''
+      THEN 1
+              ELSE i1.TRCOLOR = color END
+          AND CASE WHEN cup IS NULL OR cup = ''
+      THEN 1
+              ELSE i.TRCUP = cup END
+          AND CASE WHEN brand IS NULL OR brand = ''
+      THEN 1
+              ELSE i.TRBRND = brand END
+    GROUP BY tb.TRITCD, tb.TRCLR, tb.TRSZ;
+
+    SELECT
+      p.PRDCD,
+      tb.TRSZ,
+      tb.TRCLR,
+      i.TRITNM,
+      tb.TRITCD,
+      i.TRBRND,
+      sum(tb.TRQTY) AS qty
+    FROM trslret1 tb
+      JOIN trslret t ON tb.TRBLNO1 = t.TRBLNO AND tb.fin_year = t.fin_year AND tb.branch_code = t.branch_code
+      JOIN tritem1 i1 ON tb.TRITCD = i1.TRITCD1 AND tb.TRSZ = i1.TRSZCD AND tb.TRCLR = i1.TRCOLOR
+      JOIN tritem i ON tb.TRITCD = i.TRITCD AND i1.TRITCD1 = i.TRITCD
+      JOIN trprgrp p ON i.TRPRDGRP = p.PRDCD
+    WHERE t.branch_code = branchCode AND t.TRBLDT >= fromDate AND t.TRBLDT <= toDate
+          AND CASE WHEN prdGrp IS NULL OR prdGrp = ''
+      THEN 1
+              ELSE p.PRDCD = prdGrp END
+          AND CASE WHEN color IS NULL OR color = ''
+      THEN 1
+              ELSE i1.TRCOLOR = color END
+          AND CASE WHEN cup IS NULL OR cup = ''
+      THEN 1
+              ELSE i.TRCUP = cup END
+          AND CASE WHEN brand IS NULL OR brand = ''
+      THEN 1
+              ELSE i.TRBRND = brand END
+    GROUP BY tb.TRITCD, tb.TRCLR, tb.TRSZ;
+
+    SELECT
+      p.PRDCD,
+      tb.TRSSZ,
+      tb.TRSCLR,
+      i.TRITNM,
+      tb.TRSITCD,
+      i.TRBRND,
+      sum(tb.TRSQTY) AS qty
+    FROM trpbil1 tb
+      JOIN trpbil t ON tb.TRSBL = t.TRBLNO AND tb.fin_year = t.fin_year AND tb.branch_code = t.branch_code
+      JOIN tritem1 i1 ON tb.TRSITCD = i1.TRITCD1 AND tb.TRSSZ = i1.TRSZCD AND tb.TRSCLR = i1.TRCOLOR
+      JOIN tritem i ON tb.TRSITCD = i.TRITCD AND i1.TRITCD1 = i.TRITCD
+      JOIN trprgrp p ON i.TRPRDGRP = p.PRDCD
+    WHERE t.branch_code = branchCode AND t.TRBLDT >= fromDate AND t.TRBLDT <= toDate
+          AND CASE WHEN prdGrp IS NULL OR prdGrp = ''
+      THEN 1
+              ELSE p.PRDCD = prdGrp END
+          AND CASE WHEN color IS NULL OR color = ''
+      THEN 1
+              ELSE i1.TRCOLOR = color END
+          AND CASE WHEN cup IS NULL OR cup = ''
+      THEN 1
+              ELSE i.TRCUP = cup END
+          AND CASE WHEN brand IS NULL OR brand = ''
+      THEN 1
+              ELSE i.TRBRND = brand END
+    GROUP BY tb.TRSITCD, tb.TRSCLR, tb.TRSSZ;
+
+    SELECT
+      p.PRDCD,
+      tb.TRSSZ,
+      tb.TRSCLR,
+      i.TRITNM,
+      tb.TRSITCD,
+      i.TRBRND,
+      sum(tb.TRSQTY) AS qty
+    FROM trpret1 tb
+      JOIN trpret t ON tb.TRSBL = t.TRBLNO AND tb.fin_year = t.fin_year AND tb.branch_code = t.branch_code
+      JOIN tritem1 i1 ON tb.TRSITCD = i1.TRITCD1 AND tb.TRSSZ = i1.TRSZCD AND tb.TRSCLR = i1.TRCOLOR
+      JOIN tritem i ON tb.TRSITCD = i.TRITCD AND i1.TRITCD1 = i.TRITCD
+      JOIN trprgrp p ON i.TRPRDGRP = p.PRDCD
+    WHERE t.branch_code = branchCode AND t.TRBLDT >= fromDate AND t.TRBLDT <= toDate
+          AND CASE WHEN prdGrp IS NULL OR prdGrp = ''
+      THEN 1
+              ELSE p.PRDCD = prdGrp END
+          AND CASE WHEN color IS NULL OR color = ''
+      THEN 1
+              ELSE i1.TRCOLOR = color END
+          AND CASE WHEN cup IS NULL OR cup = ''
+      THEN 1
+              ELSE i.TRCUP = cup END
+          AND CASE WHEN brand IS NULL OR brand = ''
+      THEN 1
+              ELSE i.TRBRND = brand END
+    GROUP BY tb.TRSITCD, tb.TRSCLR, tb.TRSSZ;
+  END;

@@ -421,7 +421,6 @@
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.html5.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/buttons.print.min.js'); ?>"></script>
 <!--<script type="text/javascript" src="--><?php //echo base_url('assets/custom/js/xlsx.full.min.js'); ?><!--"></script>-->
-<script type="text/javascript" src="<?php echo base_url('assets/custom/js/jszip.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/FileSaver.min.js'); ?>"></script>
 <!--<script type="text/javascript" src="--><?php //echo base_url('assets/custom/js/tableexport.min.js'); ?><!--"></script>-->
 <script type="text/javascript" src="<?php echo base_url('assets/custom/js/scripts/excel-gen.js'); ?>"></script>

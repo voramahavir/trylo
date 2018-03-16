@@ -374,9 +374,9 @@ function ExcelGen(options) {
             }
         }
         //process header if it exists
+        var outerThis = this;
         if (this.options.header_row) {
             var row = [];
-            var outerThis = this;
             var colCount = 1;
             this.options.header_row.children("th,td").each(function () {
                 //header text gets stored for table
