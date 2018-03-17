@@ -358,6 +358,10 @@
         }
 
         function getStockData() {
+            if (!$("#branch_code").val()) {
+                bootbox.alert("Please Select Branch");
+                return false;
+            }
             loadingStart();
             $('.rpt-box').removeClass('hide');
             var _fromDate = $('#from_date').val();

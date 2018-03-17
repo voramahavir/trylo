@@ -83,6 +83,7 @@ class StockReportModel extends CI_Model
         $toDate = $_POST['toDate'];
         $rptType = $_POST['rptType'];
         $branchCode = $_POST['branchCode'];
+        $nillType = $_POST['nillType'];
         $whereStr = "";
         $prdGrp = "";
         $color = "";
@@ -148,8 +149,11 @@ class StockReportModel extends CI_Model
         $emptyTotalData = array();
         $grpTotalData = array();
         $grpEmptyTotalData = array();
-        $merged = false;
-        $tempdata = array();
+        $grandTotal = array(
+            'grandTotal' => "<b class='grandTotal'>Grand Total</b>",
+            "color" => ""
+        );
+        $_grandTotal = 0;
         foreach ($data as $row) {
             if (!isset($brandProductsData[$row['PRDCD']])) {
                 $brandProductsData[$row['PRDCD']] = array();
@@ -201,6 +205,7 @@ class StockReportModel extends CI_Model
             $_emptyTotData = array();
             $_grpTotData = array();
             $_grpEmptyTotData = array();
+            $i = 0;
             foreach ($sizes as $size) {
                 $_brandProData["'$size'"] = 0;
                 $_emptyProData["'$size'"] = 0;
@@ -225,6 +230,9 @@ class StockReportModel extends CI_Model
                 $grpEmptyTotalData[$row['PRDCD']]["'$size'"] = $_grpEmptyTotData["'$size'"];
 
                 $grpTotal = $grpTotal + $grpTotalData[$row['PRDCD']]["'$size'"];
+                $grandTotal[$i] = isset($grandTotal[$i]) ? $grandTotal[$i] + $_brandTotData["'$size'"] : $_brandTotData["'$size'"];
+                $_grandTotal = $_grandTotal + $_brandTotData["'$size'"];
+                $i++;
 //                $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] = isset($brandTotalData[$row['PRDCD']][$row['brandId']]['total']) ? $brandTotalData[$row['PRDCD']][$row['brandId']]['total'] + $_brandTotData["'$size'"] : $_brandTotData["'$size'"];
             }
             if ($maxSizeCnt != count($sizes)) {
@@ -303,8 +311,8 @@ class StockReportModel extends CI_Model
             $brandsData[$row['PRDCD']]['grpTotal'] = $grpTotalData[$row['PRDCD']];
             $EmptyData[$row['PRDCD']]['grpTotal'] = $grpEmptyTotalData[$row['PRDCD']];
         }
-        /*echo json_encode(compact('grpTotalData','brandTotalData','grpEmptyTotalData'));
-        die;*/
+        $grandTotal['rate'] = "";
+        $grandTotal['total'] = $_grandTotal;
         $calculatedData = array();
         $salesFinalData = array();
         $salesRetFinalData = array();
@@ -330,16 +338,17 @@ class StockReportModel extends CI_Model
             $brandsData = $calculatedData['brandsData'];
             $purchaseRetFinalData = $calculatedData['finalData'];
         }
-
-        if ($rptType == 2) {
+        if ($rptType == 1)
+            $brandsData = $this->setNillData($brandsData, $nillType);
+        else if ($rptType == 2)
             $brandsData = $salesFinalData;
-        } else if ($rptType == 3) {
+        else if ($rptType == 3)
             $brandsData = $salesRetFinalData;
-        } else if ($rptType == 4) {
+        else if ($rptType == 4)
             $brandsData = $purchaseFinalData;
-        } else if ($rptType == 5) {
+        else if ($rptType == 5)
             $brandsData = $purchaseRetFinalData;
-        }
+
 //        print_r($brandsData);die;
         foreach ($brandsData as $value) {
             $value = array_values($value);
@@ -372,6 +381,8 @@ class StockReportModel extends CI_Model
                 unset($value[2]['merged']);
             array_push($mainData, array_values($value[2]));
         }
+        if (count($mainData))
+            array_push($mainData, array_values($grandTotal));
         $filterData = compact('mainData', 'maxSizeCnt');
         echo json_encode($filterData);
         exit;
@@ -379,7 +390,7 @@ class StockReportModel extends CI_Model
 
     function filterData($data)
     {
-        return array_filter($data, 'strlen');
+        return $data['total'] != 0;
     }
 
     function setReportData($brandsData = array(), $rptData = array(), $EmptyData = array(), $isPlus = false)
@@ -462,5 +473,45 @@ class StockReportModel extends CI_Model
             }
         }
         return compact('brandsData', 'finalData');
+    }
+
+    function setNillData($brandsData = array(), $nillType = 1)
+    {
+        $finalBrandData = array();
+        foreach ($brandsData as $prdCode => $proData) {
+            if (!isset($finalBrandData[$prdCode])) {
+                $finalBrandData[$prdCode] = $proData;
+            }
+            $brandData = $proData['brands'];
+            foreach ($brandData as $brand => $_brandData) {
+                $brandProData = $_brandData['prodDetails'];
+                $finalBrandData[$prdCode]['brands'][$brand]['prodDetails'] = array_filter($brandProData, function ($data) use (&$nillType) {
+                    if ($nillType == 1)
+                        return $data['total'] != 0;
+                    else if ($nillType == 3)
+                        return $data['total'] == 0;
+                    else if ($nillType == 4)
+                        return $data['total'] < 0;
+                    return $data['total'] != 0 || $data['total'] == 0;
+                });
+                if (!count($finalBrandData[$prdCode]['brands'][$brand]['prodDetails'])) {
+                    unset($finalBrandData[$prdCode]['brands'][$brand]['total']);
+                    unset($finalBrandData[$prdCode]['brands'][$brand]['brandDetails']);
+                    unset($finalBrandData[$prdCode]['brands'][$brand]['prodDetails']);
+                }
+                if (!count($finalBrandData[$prdCode]['brands'][$brand])) {
+                    unset($finalBrandData[$prdCode]['brands'][$brand]);
+                }
+                if (!count($finalBrandData[$prdCode]['brands'])) {
+                    unset($finalBrandData[$prdCode]['brands']);
+                    unset($finalBrandData[$prdCode]['prodName']);
+                    unset($finalBrandData[$prdCode]['grpTotal']);
+                }
+                if (!count($finalBrandData[$prdCode])) {
+                    unset($finalBrandData[$prdCode]);
+                }
+            }
+        }
+        return $finalBrandData;
     }
 }
